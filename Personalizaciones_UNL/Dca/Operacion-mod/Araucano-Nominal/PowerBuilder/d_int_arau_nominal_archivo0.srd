@@ -1,0 +1,61 @@
+$PBExportHeader$d_int_arau_nominal_archivo0.srd
+$PBExportComments$ARAUCANO NOMINAL - Archivo 0 de Alumnos.
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes identity=yes name=id_alumno dbname="int_araunom_alu.id_alumno" )
+ column=(type=long update=yes updatewhereclause=yes name=anio_academico dbname="int_araunom_alu.anio_academico" )
+ column=(type=long update=yes updatewhereclause=yes name=tipo_documento dbname="int_araunom_alu.tipo_documento" )
+ column=(type=char(15) update=yes updatewhereclause=yes name=nro_documento dbname="int_araunom_alu.nro_documento" )
+ column=(type=char(15) update=yes updatewhereclause=yes name=cuil_cuit dbname="int_araunom_alu.cuil_cuit" )
+ column=(type=long update=yes updatewhereclause=yes name=genero dbname="int_araunom_alu.genero" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=fecha_nacimiento dbname="int_araunom_alu.fecha_nacimiento" )
+ column=(type=char(4) update=yes updatewhereclause=yes name=horas_trabajo dbname="int_araunom_alu.horas_trabajo" )
+ column=(type=long update=yes updatewhereclause=yes name=nivel_inst_padre dbname="int_araunom_alu.nivel_inst_padre" )
+ column=(type=long update=yes updatewhereclause=yes name=nivel_inst_madre dbname="int_araunom_alu.nivel_inst_madre" )
+ column=(type=long update=yes updatewhereclause=yes name=nacimiento_pais dbname="int_araunom_alu.nacimiento_pais" )
+ column=(type=long update=yes updatewhereclause=yes name=nacimiento_loc dbname="int_araunom_alu.nacimiento_loc" )
+ retrieve="  SELECT int_araunom_alu.id_alumno,   
+         int_araunom_alu.anio_academico,   
+         int_araunom_alu.tipo_documento,   
+         int_araunom_alu.nro_documento,   
+         int_araunom_alu.cuil_cuit,   
+         int_araunom_alu.genero,   
+         int_araunom_alu.fecha_nacimiento,   
+         int_araunom_alu.horas_trabajo,   
+         int_araunom_alu.nivel_inst_padre,    
+         int_araunom_alu.nivel_inst_madre,   
+         int_araunom_alu.nacimiento_pais,   
+         int_araunom_alu.nacimiento_loc  
+    FROM int_araunom_alu   
+   WHERE int_araunom_alu.anio_academico = :anio_academico   
+" update="int_araunom_alu" updatewhere=1 updatekeyinplace=no arguments=(("anio_academico", string)) )
+text(band=header alignment="2" text="Id Alumno" border="0" color="0" x="5" y="4" height="64" width="329"  name=id_alumno_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Anio Academico" border="0" color="0" x="338" y="4" height="64" width="434"  name=anio_academico_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Tipo Documento" border="0" color="0" x="777" y="4" height="64" width="430"  name=tipo_documento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nro Documento" border="0" color="0" x="1211" y="4" height="64" width="439"  name=nro_documento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cuil Cuit" border="0" color="0" x="1655" y="4" height="64" width="443"  name=cuil_cuit_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Genero" border="0" color="0" x="2103" y="4" height="64" width="329"  name=genero_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Fecha Nacimiento" border="0" color="0" x="2437" y="4" height="64" width="480"  name=fecha_nacimiento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Horas Trabajo" border="0" color="0" x="2921" y="4" height="64" width="366"  name=horas_trabajo_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nivel Inst Padre" border="0" color="0" x="3291" y="4" height="64" width="411"  name=nivel_inst_padre_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nivel Inst Madre" border="0" color="0" x="3707" y="4" height="64" width="421"  name=nivel_inst_madre_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nacimiento Pais" border="0" color="0" x="4133" y="4" height="64" width="434"  name=nacimiento_pais_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nacimiento Loc" border="0" color="0" x="4571" y="4" height="64" width="411"  name=nacimiento_loc_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="329" format="[general]"  name=id_alumno edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=10 border="0" color="0" x="338" y="4" height="76" width="329" format="[general]"  name=anio_academico edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=20 border="0" color="0" x="777" y="4" height="76" width="329" format="[general]"  name=tipo_documento edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=30 border="0" color="0" x="1211" y="4" height="76" width="439" format="[general]"  name=nro_documento edit.limit=15 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=40 border="0" color="0" x="1655" y="4" height="76" width="443" format="[general]"  name=cuil_cuit edit.limit=15 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=50 border="0" color="0" x="2103" y="4" height="76" width="329" format="[general]"  name=genero edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="0" tabsequence=60 border="0" color="0" x="2437" y="4" height="76" width="247" format="[general]"  name=fecha_nacimiento edit.limit=8 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=70 border="0" color="0" x="2921" y="4" height="76" width="137" format="[general]"  name=horas_trabajo edit.limit=4 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=80 border="0" color="0" x="3291" y="4" height="76" width="329" format="[general]"  name=nivel_inst_padre edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="1" tabsequence=90 border="0" color="0" x="3707" y="4" height="76" width="329" format="[general]"  name=nivel_inst_madre edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="1" tabsequence=100 border="0" color="0" x="4133" y="4" height="76" width="329" format="[general]"  name=nacimiento_pais edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="1" tabsequence=110 border="0" color="0" x="4571" y="4" height="76" width="329" format="[general]"  name=nacimiento_loc edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

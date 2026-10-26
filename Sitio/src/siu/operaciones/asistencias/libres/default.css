@@ -1,0 +1,7 @@
+#libres .table thead tr {
+	background-color: #EAEAEA;
+}
+
+#libres .encabezado tbody tr.sin_borde td, #libres .encabezado tbody tr.sin_borde th{
+	border-top: 0;
+}

@@ -1,0 +1,162 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<div class="titulo_operacion">
+		<h2 class="clearfix"><span class="pull-left">{{"inscriptos_examen"|trans|capitalize}}</span>
+			<div class="pull-right">
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url_generar_pdf}}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url_generar_excel}}"><span class="acchide">{{'descargar_xls'|trans|capitalize}}</span><span class="g3w-icono-xls"></span></a>
+			</div>
+		</h2>
+	</div>
+	<div id="filtros" class="well well-small">
+		<form action="{{this.data.url_form_filtro}}" method="get" id="filtro_form">
+		<table summary="Filtros">
+        <tr><th colspan="3" class="pull-left" id="filtros_h"><h3>Mesas de Examen</h3></th></tr>
+			<tr>
+				<td scope="col" style="width  :30%" headers="filtros_h">
+				{% set filtros = this.get_filtros %}
+					<input type="radio" id="filtro" name="filtro" value="T" {% if filtros['filtro'] == 'T' %}checked="checked"{% endif %}/><strong> Todas</strong>				
+				</td>
+				<td scope="col" style="width : 30%" headers="filtros_h">
+					<input type="radio" id="filtro" name="filtro" value="C" {% if filtros['filtro'] == 'C' %}checked="checked"{% endif %} /> <strong> Con Inscripciones</strong>
+				</td>
+				<td scope="col" style="width : 30%" headers="filtros_h">		
+					<input type="radio" id="filtro" name="filtro" value="S" {% if filtros['filtro'] == 'S' %}checked="checked"{% endif %}/> <strong> Sin Inscripciones</strong>
+				</td>
+				<td scope="col" style="padding-top: 14px; width : 30%" headers="filtros_h">
+					<input type="submit" id="filtro_boton" name="filtro_boton" value="Filtrar" class="btn" />
+				</td>
+			</tr>
+		</table>
+		</form>
+	</div>
+	{% if this.data.datos %}
+		{% import "kernel/macro_pager.twig" as pager %}
+		<div class="pagination pagination-centered">
+			{{ pager.render_paginator(this.get_paginas, this.get_pagina) }}
+		</div>
+	{% endif %}
+
+	{% if this.data.datos or this.data.datos_corte %}
+		{% import "kernel/macro_columnas_tabla.twig" as macro_titulos %}
+		<table class="table table-striped table-bordered table-condensed" summary="Inscripciones de ex&aacute;menes , haga clic en la celda para ver inscripciones">
+			{% if this.data.datos_corte %}
+				{% for dato in this.data.datos_corte %}
+					{% if dato.titulo_corte %}
+					<tr>
+						<th id="mat{{loop.index}}" scope="colgroup" class="cc-titulo-nivel-0" colspan="{{this.data.cantidad_columnas}}">
+							{{dato.titulo_corte}}
+						</th>
+					</tr>
+					{% endif %}
+					
+					{{ macro_titulos.render_titulador(this.data.titulos, this.data.atributos_titulos, this.data.corte.campo,loop.index) }}
+					
+					{% if dato.datos %}
+						{% for clave, item in dato.datos %}
+						<tr{% if (item.URL_LINEA) %} class="link-in-data" data-link="{{item.URL_LINEA}}"{% endif %}>
+						{% for keyline, linea in item %}
+							{% if (keyline != "URL_LINEA") %}
+                                                        {% set ind = loop.parent.loop.parent.loop.index %}
+							<td headers="mat{{ind}} {{keyline~ind}}">
+								{{linea}}
+							</td>
+							{% endif %}
+						{% endfor %}
+						</tr>
+						{% endfor %}
+
+						{% if dato.funciones_pie_corte %}
+						{% for funcion in dato.funciones_pie_corte %}
+						<tr>
+							{% for col_fn, titulo in dato.datos[0] %}
+								{% if col_fn != this.data.corte.campo %}
+								<td><strong>{{funcion[col_fn]}}</strong></td>
+								{% endif %}
+							{% endfor %}
+						</tr>
+						{% endfor %}
+						{% endif %}
+
+						{% if dato.mensaje_pie_corte %}								
+						{% for funcion in dato.mensaje_pie_corte %}
+						<tr>
+							<td colspan="{{this.data.cantidad_columnas}}"><strong>{{funcion}}</strong></td>
+						</tr>
+						{% endfor %}
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+				{% if this.data.datos_corte.funciones_pie_reporte or this.data.datos_corte.mensaje_pie_reporte %}
+				<!-- Pie de reporte -->
+				<tr>
+					<td colspan="{{this.data.cantidad_columnas}}"><br><br></td>
+				</tr>
+				{% endif %}
+				{% if this.data.datos_corte.funciones_pie_reporte %}			
+				{% for funcion in this.data.datos_corte.funciones_pie_reporte %}			
+				<tr>
+					{% for col_fn, nombre in this.data.datos_corte[0].datos[0] %}
+					{% if col_fn != this.data.corte.campo %}
+					<td><strong>{{funcion[col_fn]}}</strong></td>
+					{% endif %}
+					{% endfor %}
+				</tr>
+				{% endfor %}
+				{% endif %}
+
+				{% if this.data.datos_corte.mensaje_pie_reporte %}								
+				{% for funcion in this.data.datos_corte.mensaje_pie_reporte %}
+				<tr>
+					<td colspan="{{this.data.cantidad_columnas}}"><strong>{{funcion}}</strong></td>
+				</tr>
+				{% endfor %}
+				{% endif %}
+			{% endif %}
+			{% if this.data.datos %}
+				<!-- Titulos -->
+				<thead>
+				<tr>
+					{% if this.data.titulos %}
+						{% for clave, titulo in this.data.titulos %}
+							<th id="{{clave}}">
+								{{titulo}}
+								{% if this.data.atributos_titulos %}
+									{% for clav, atrib in this.data.atributos_titulos %}
+										{% if clav == clave %}											
+											<div class="btns-orden">
+												{% for clase, url in atrib %}
+												<a href="{{url}}">
+													<span class="{% if clase == "asc" %}icon-arrow-up{% else %}icon-arrow-down{% endif %}"></span>
+												</a>
+												{% endfor %}
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% endif %}
+							</th>
+						{% endfor %}
+					{% endif %}
+				</tr>
+				</thead>
+
+				<!-- Datos -->
+				{% for columnas in this.data.datos %}
+				<tr>
+					{% for keyline, columna in columnas %}
+						{% if (keyline != "URL_LINEA") %}
+							<td headers="{{keyline}}">
+								{{columna}}
+							</td>
+							{% endif %}					
+					{% endfor %}
+				</tr>
+				{% endfor %}       
+			{% endif %}
+		</table>
+	{% else %}
+		<div role="alert" class="alert">
+			{{"reporte.no_hay_datos.inscripcion_a_examenes"|trans|capitalize}}
+		</div>
+	{% endif %}
+{% endblock %}

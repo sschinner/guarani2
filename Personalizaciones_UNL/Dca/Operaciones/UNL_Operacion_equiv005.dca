@@ -1,0 +1,5 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.6.3
+-- *******************************************************************************
+Execute procedure dba.sp_cambiaparametro( 'equiv005', 2 , 8, "dl820_acta_rectif_equivalencia" );

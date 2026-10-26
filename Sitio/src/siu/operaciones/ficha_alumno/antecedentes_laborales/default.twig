@@ -1,0 +1,37 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_ficha_alumno.twig" as ficha_alumno %}
+{% block contenido %}
+    {{ ficha_alumno.render_menu(this.data.menu_reportes, this.data.categoria_actual, this.data.reporte_actual) }}
+	<div id="reporte_contenido">
+		<h3>{{ 'ficha_alumno.rep_antecedentes_laborales' | trans }}</h3>
+		{% if (this.data.datos) %}
+
+		<table class='table table-condensed table-hover table-striped'>
+			<thead>
+				<tr>
+					<th>{{'ficha_alumno.rep_antecedentes_laborales.empresa'|trans| capitalize}}</th>
+					<th>{{'ficha_alumno.rep_antecedentes_laborales.cargo'|trans| capitalize}}</th>
+					<th>{{'ficha_alumno.rep_antecedentes_laborales.area'|trans| capitalize}}</th>
+					<th>{{'ficha_alumno.rep_antecedentes_laborales.fecha_desde'|trans| capitalize}}</th>
+					<th>{{'ficha_alumno.rep_antecedentes_laborales.fecha_hasta'|trans| capitalize}}</th>	
+					<th>{{'ficha_alumno.rep_antecedentes_laborales.hs_semanales_trabajadas'|trans| capitalize}}</th>	
+				</tr>
+			</thead>
+			<tbody>
+				{% for linea in this.data.datos %}
+					<tr>
+						<td>{{ficha_alumno.mostrar(linea.empresa)}}</td>
+						<td>{{ficha_alumno.mostrar(linea.cargo)}}</td>
+						<td>{{ficha_alumno.mostrar(linea.area)}}</td>
+						<td>{{ficha_alumno.formatear_fecha(linea.fecha_desde)}}</td>
+						<td>{{ficha_alumno.formatear_fecha(linea.fecha_hasta)}}</td>
+						<td>{{ficha_alumno.mostrar(linea.hs_semanales_trabajadas)}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{% else %}
+		<div class="alert alert-block">{{'ficha_alumno.no_hay_informacion'|trans| capitalize}}</div>
+		{% endif %}
+	</div>
+{% endblock %}

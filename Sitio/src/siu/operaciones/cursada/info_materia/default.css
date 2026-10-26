@@ -1,0 +1,312 @@
+#info_materia {
+	margin-bottom: 15px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	border-left: 1px solid #E5E5E5;
+	border-bottom: 1px solid #E5E5E5;
+	-webkit-border-bottom-left-radius: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+#info_materia .comprobante-actions .btn {
+	padding-left: 2px;
+}
+#info_materia .comprobante-actions .icon {
+	margin-top: 1px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+#info_materia .js-mis-inscripciones td:first-child {
+	width: 80%;
+}
+
+#info_materia .js-mis-inscripciones td {
+	vertical-align: middle;
+}
+
+#info_materia .catedra {
+	margin-bottom: 25px;
+	padding-bottom: 10px;
+}
+
+#info_materia .catedra_ver_info {
+	font-size: 12px;
+	background: url('../../../img/sprite.png') 43px -222px no-repeat;
+	padding-right: 10px;
+	font-weight: normal;
+	color: #58B1D1;
+	cursor: pointer;
+}
+
+#info_materia .catedra_ver_info:hover {
+	text-decoration: underline;
+}
+
+#info_materia .catedra_ver_info a {
+    color: #0094D9;
+}
+
+#info_materia span.activo {
+    background: url('../../../img/sprite.png') 43px -234px no-repeat;
+}
+
+#info_materia .toggle_info_catedra {
+	margin: 0 0 15px 20px;
+	padding: 0 0 8px 8px;
+	border-left: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	overflow: hidden;
+	clear: both;
+	color: #919395;
+}
+
+#materia-nombre:focus {
+    outline: 0;  
+}
+
+#filtro_comisiones {
+	font-size: 10px;
+	padding: 4px 5px;
+	background-color: #f5f5f5;
+	margin-bottom: 20px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+#filtro_comisiones .wrapper {
+	margin-right: 10px;
+}
+
+#filtro_comisiones div > span:first-child {
+	padding-top: 5px;
+	margin-right: 5px;
+	display: block;
+}
+
+/* -- FILTROS -- */
+
+#info_materia .filtros {
+	display: inline-block;
+	margin-bottom: 0;
+	border: 1px solid #ccc;
+	background: #fefefe; /* Old browsers */
+	background: -moz-linear-gradient(top, #fefefe 50%, #fefefe 50%, #f5f5f5 50%, #f5f5f5 50%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#fefefe), color-stop(50%,#fefefe), color-stop(50%,#f5f5f5), color-stop(50%,#f5f5f5)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #fefefe 50%,#fefefe 50%,#f5f5f5 50%,#f5f5f5 50%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #fefefe 50%,#fefefe 50%,#f5f5f5 50%,#f5f5f5 50%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, #fefefe 50%,#fefefe 50%,#f5f5f5 50%,#f5f5f5 50%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#f5f5f5',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, #fefefe 50%,#fefefe 50%,#f5f5f5 50%,#f5f5f5 50%); /* W3C */
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+#info_materia #filtro_comisiones select {
+	height: 23px;
+	padding: 0;
+	width: auto;
+	margin-bottom: 0;
+}
+
+#info_materia .filtros li {
+	float: left;
+	border-right: 1px solid #ccc;
+}
+
+#info_materia .filtros li:last-child {
+	border: none;
+}
+
+#info_materia .filtros li span {
+	padding: 2px 5px;
+	display: inline-block;
+	cursor: pointer;
+}
+
+#info_materia .filtros li.seleccionado {
+	background-color: #0088CC;
+	color: white;
+}
+
+#info_materia .filtros li:first-child.seleccionado,
+#info_materia .filtros li:first-child:hover {
+	-webkit-border-top-left-radius: 2px;
+	-webkit-border-bottom-left-radius: 2px;
+	-moz-border-radius-topleft: 2px;
+	-moz-border-radius-bottomleft: 2px;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+}
+
+#info_materia .filtros li:last-child.seleccionado,
+#info_materia .filtros li:last-child:hover {
+	-webkit-border-top-right-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	-moz-border-radius-topright: 3px;
+	-moz-border-radius-bottomright: 3px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+/* -- COMISIONES -- */
+
+#info_materia #comisiones .comision {
+	padding-bottom: 10px;
+	margin-bottom: 5px;
+	border-bottom: 1px dashed #eeeeee;
+}
+
+#info_materia .comision_info {}
+
+#info_materia .acciones {
+	text-align: right;
+}
+
+#info_materia form {
+	margin-bottom: 0;
+}
+
+#info_materia label {
+	font-size: 10px;
+}
+
+#info_materia #comisiones h4 { margin-bottom: 2px; color: #000000; }
+
+#info_materia .turno { color: #000000; }
+
+#info_materia .docente, 
+#info_materia .sede { 
+	color: #999999;
+}
+
+/* -- SUBCOMISIONES -- */
+
+#info_materia .subcomisiones fieldset {
+	background-color: #F1F1F2;
+	margin-bottom: 10px;
+	padding: 10px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+#info_materia .subcomisiones fieldset.error {
+	background: none repeat scroll 0 0 #FBE3E4;
+}
+
+#info_materia .subcomision_nombre {
+	font-weight: bold;
+}
+
+#info_materia .subcomisiones ul.radio li {
+	padding: 10px 5px 10px 0;
+	margin-left: 10px;
+}
+
+#info_materia .subcomision_detalle {
+	width: 95%;
+}
+
+#info_materia .subcomisiones input[type=submit] {
+	float: right;
+}
+
+/* -- INFO INSCRIPCION -- */
+
+#info_materia h3 {
+	margin-bottom: 0;
+	color: #212121;
+}
+
+#info_materia .wrapper-detalle {
+	border-left: 2px solid #BACFB1;
+	border-bottom: 2px solid #BACFB1;
+}
+
+#info_materia .info_inscripcion {
+	padding-left: 10px;
+}
+
+#info_materia .inscripcion {
+	padding-left: 19px;
+}
+
+#info_materia .inscripcion .acciones {
+	text-align: right;
+	margin-top: 6px;
+	background-color: #DFF0D8;
+	padding: 5px;
+}
+
+.info_inscripcion span {
+	display: block;
+	margin-bottom: 5px;
+}
+
+.inscripcion > p {
+	color: #6D6E71;
+	font-weight: bold;
+}
+
+#info_materia .comprobante-cursada {
+	display: inline-block;
+}
+
+#info_materia .comprobante-cursada .comprobante {
+	background: url('../../../img/sprite.png') 0 -80px no-repeat;
+	height: 17px;
+	width: 17px;
+	display: inline-block;
+	position: relative;
+	top: 4px;
+}
+
+#info_materia .comprobante-actions {
+	margin: 10px 0;
+}
+
+#info_materia .comprobante-cursada img {
+	margin-bottom: 10px;
+}
+
+#info_materia .wrapper-carga {
+	width: 50px;
+	border: 1px solid;
+	border-radius: 2px;
+	height: 7px;
+	margin: 0 2px;
+	display: inline-block;
+}
+
+#info_materia .progreso-carga {
+	height: 7px;
+	background-color: #0086b8;
+}
+
+@media (max-width: 767px) {
+	
+	#info_materia {
+		padding-left: 0;
+		border: 0;
+	}
+	
+	#info_materia h3 {
+		line-height: 22px;
+	}
+	
+}
+
+#info_materia .mis-inscripciones li {
+	padding: 7px;
+}
+#info_materia .mis-inscripciones li:hover {
+	background-color: #eee;
+}
+
+#info_materia .mis-inscripciones .btn {
+	float: right;
+}

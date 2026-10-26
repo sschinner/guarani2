@@ -1,0 +1,10 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.6.3
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones( 'netexa01', 'Impresión de un Acta de Examen', 'Impresión de un Acta de Examen por parte de un docente.', null );
+Begin;
+set constraints all deferred;
+DELETE FROM dba.acc_operaciones WHERE operacion = "netexa01";
+DELETE FROM acc_operacion_mod where operacion = "netexa01";
+Commit;

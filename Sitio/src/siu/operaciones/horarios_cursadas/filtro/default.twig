@@ -1,0 +1,17 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	{% set vista_form = this.get_vista_form() %}
+	{{ vista_form.render_encabezado() | raw }}
+	<div class="titulo_operacion">
+		<h2 class="clearfix">
+			<span class="pull-left">
+				{{"Horarios de Cursada"|trans|capitalize}}
+			</span>
+			<span class="pull-right">
+			{{ vista_form.render_acciones() | raw }}
+			</span>
+		</h2>
+	</div>
+	{{ vista_form.render_cuerpo() | raw }}
+	{{ vista_form.render_cierre() | raw }}
+{% endblock %}

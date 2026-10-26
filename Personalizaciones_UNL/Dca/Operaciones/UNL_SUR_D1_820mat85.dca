@@ -1,0 +1,7 @@
+Execute procedure dba.sui_operaciones('820mat85','U.N.L. Aspirantes por Sexo','U.N.L. Aspirantes por Sexo',NULL);
+DELETE FROM acc_operacion_mod WHERE operacion = '820mat85';
+INSERT INTO acc_operacion_mod VALUES ('00000010','820mat85','Reportes',535);
+INSERT INTO acc_parametros VALUES ('820mat85',1,'w_reporte', 'uo_dw_filtros,dp_carrera_anio_academico,uo_dw,dl820_aspirantes_x_sexo,dl820_aspirantes_x_sexo',NULL,	NULL,'N');
+INSERT INTO acc_acciones_oper VALUES ('820mat85','C');
+
+

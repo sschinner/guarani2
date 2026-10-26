@@ -1,0 +1,73 @@
+#filtro_debug ul {
+    list-style-type: none;
+    float: left;
+}
+
+#filtro_debug ul li {
+    float: left;
+    margin: 0 5px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 3px;
+    border: 1px solid #fff;
+}
+
+#filtro_debug ul li.seleccionado {
+    background: yellow;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border: 1px solid gold;
+}
+#info {
+    clear: both;
+    height: 500px;
+    overflow-y: scroll;
+	font-family: Courier;
+	font-size: 10px;
+	color: black;
+}
+
+
+table.debug {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 3px;
+}
+
+table.debug tr.contenido.even {
+    background: #fefc88
+}
+table.debug tr.contenido.odd {
+    background: gold
+}
+
+table.debug td {
+    margin:0;
+    padding:0;
+}
+table.debug td .key {
+    font-style: italic;
+}
+table.debug td pre {
+     white-space: pre-wrap;       /* css-3 */
+     white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+     white-space: -pre-wrap;      /* Opera 4-6 */
+     white-space: -o-pre-wrap;    /* Opera 7 */
+     word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+table.debug tr.titulo {
+    font-size: 13px;
+    font-style: italic;
+    font-weight: bold;
+    background-color: #fa8544
+}
+table.debug tr.contenido {
+    background-color: #fefc88
+}
+
+#info pre {
+	white-space: pre !important;
+	word-break: keep-all !important;
+	word-wrap: inherit !important;
+}

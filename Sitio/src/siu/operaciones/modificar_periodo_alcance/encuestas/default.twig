@@ -1,0 +1,65 @@
+{% extends "kernel/pagelet_polite.twig" %}
+{% block contenido %}
+
+    <div id="mensaje-guardar" class='alert' style="display: none;"></div>
+
+    <div class="row-fluid">
+        <div class="span12">
+
+            {% if this.data.encuestas_alcances %}
+
+                <div class="accordion" id="alcances">
+
+                    {% for key_encuesta, encuesta in this.data.encuestas_alcances %}
+                        <div class="accordion-group">
+                            <div class="accordion-heading">
+                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#alcances" data-target="#{{ "encuesta"~loop.index }}">
+                                    ({{ key_encuesta }}) {{ encuesta.titulo }}{% if encuesta.kolla_id_encuesta %} ({{ 'modificar_periodo_alcance.kolla'|trans }}: {{ encuesta.kolla_id_encuesta }}){% endif %}
+                                </a>
+                            </div>
+                            <div id="{{ "encuesta"~loop.index }}" class="accordion-body collapse{% if loop.first %} in{% endif %}">
+                                <div class="accordion-inner">
+
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>{{ 'modificar_periodo_alcance.alcance'|trans|capitalize }}</th>
+                                            <th>{{ 'modificar_periodo_alcance.fecha_desde'|trans|capitalize }}</th>
+                                            <th>{{ 'modificar_periodo_alcance.fecha_hasta'|trans|capitalize }}</th>
+                                            <th class="centrado">{{ 'modificar_periodo_alcance.vinculado_con_kolla'|trans }}</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for key_alcance, alcance in encuesta.alcances %}
+
+                                            <tr>
+                                                <td>({{ key_alcance }}) {{ alcance.titulo }}</td>
+                                                <td><div class="control-group"><div class="controls"><input id="fecha_desde_alcance_{{ key_alcance }}" class="input-small uneditable-input fecha_desde" type="text" value="{{ alcance.fecha_desde }}" data-alcance="{{ key_alcance }}" data-fecha-original="{{ alcance.fecha_desde }}" {% if not alcance.modificar_fecha_desde %}disabled{% endif %}></div></div></td>
+                                                <td><div class="control-group"><div class="controls"><input id="fecha_hasta_alcance_{{ key_alcance }}" class="input-small uneditable-input fecha_hasta" type="text" value="{{ alcance.fecha_hasta }}" data-alcance="{{ key_alcance }}" data-fecha-original="{{ alcance.fecha_hasta }}"></div></div></td>
+                                                <td class="centrado">{% if alcance.kolla_id_habilitacion %}{{ 'modificar_periodo_alcance.si'|trans({ '%habilitacion%': alcance.kolla_id_habilitacion }) }}{% else %}{{ 'modificar_periodo_alcance.no'|trans }}{% endif %}</td>
+                                                <td>
+                                                    <button id="boton_guardar_alcance_{{ key_alcance }}" class="btn btn-small btn-primary guardar" type="button" data-alcance="{{ key_alcance }}" >{{ 'modificar_periodo_alcance.guardar'|trans|capitalize }}</button>
+                                                </td>
+                                            </tr>
+
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+                <div id="no-hay-mas-alcances" class='alert alert-notice' style="display: none;">{{ 'modificar_periodo_alcance.no_hay_alcances_definidos' | trans }}</div>
+
+            {% else %}
+                <div class='alert alert-notice'>{{ 'modificar_periodo_alcance.no_hay_alcances_definidos' | trans }}</div>
+            {% endif %}
+
+        </div>
+    </div>
+
+{% endblock %}

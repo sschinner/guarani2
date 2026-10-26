@@ -1,0 +1,36 @@
+{% extends "kernel/dos_columnas.twig" %}
+{% block titulo_operacion %}
+<div class="encabezado-datos-censales borde-inferior clearfix">
+	<div class="span6">
+		<h2 class='pull-left titulo-datos-censales'>{{"titulo.datos_personales"|trans}}</h2>
+	</div>
+	<div class="span6">
+		<div class="pull-right">
+			<form id="form_confirmar" action="{{this.get_action_confirmar()}}" method="post">
+				<input type="hidden" id="input_form_id" name="form_id" value="{{this.get_form_actual()}}">
+				<button id="btnConfirmar" class="btn btn-info" type="submit">
+					<i class="icon-white icon-ok"></i>&nbsp;{{'datos_censales.confirmar'|trans|capitalize}}
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block columna_1 %}
+	{{ lista_forms.render }}
+	<p><b>Última actualización:  <span id="ultima_actualizacion">{{ultima_actualizacion}}</span></b></p>
+	<p>{{ 'datos_censales.msj_confirmacion'|trans|raw }} </p>
+{% endblock %}
+{% block columna_2 %}
+		<div id="msj_datos_vigentes" class="alerta alert alert-info text-center info-icon {% if datos_vigentes != 1 %}hidden{%endif%}"  role="alert">
+			<div class="dc-mensaje">
+				{{ 'datos_censales.msj_datos_vigentes'|trans|raw }}
+			</div>
+		</div>
+		<div id="msj_datos_no_vigentes" class="alerta alert alert-warning text-center warning-icon {% if datos_vigentes == 1 %}hidden{%endif%}"   role="alert">
+			<div class="dc-mensaje">
+				{{ 'datos_censales.msj_datos_no_vigentes'|trans|raw }}
+			</div>
+		</div>
+	{{ formulario.render }}
+{% endblock %}

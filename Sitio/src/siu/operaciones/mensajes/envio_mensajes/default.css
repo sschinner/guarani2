@@ -1,0 +1,119 @@
+#envio_mensajes {
+	color: #666;
+}
+
+#envio_mensajes #mensaje {
+	height: 150px;
+	font-size: 14px;
+}
+
+#envio_mensajes #titulo {
+	font-size: 14px;
+}
+
+#envio_mensajes .form-horizontal .control-label {
+	width: 90px;
+}
+
+#envio_mensajes .form-horizontal .controls {
+	margin-left: 110px;
+}
+
+#envio_mensajes .adjuntos .control-group {
+	margin-bottom: 0;
+}
+
+#envio_mensajes .adjuntos .icon-remove {
+	margin-top: 5px;
+}
+
+#envio_mensajes .form-horizontal .form-actions {
+	padding: 5px;
+}
+
+#envio_mensajes #js-desc-comision li {
+	display: none;
+}
+
+#envio_mensajes #js-desc-mesa li {
+	display: none;
+}
+
+#envio_mensajes #js-descripcion {
+	margin: 39px 0 0 90px;
+	width: 360px;
+}
+
+#envio_mensajes #js-descripcion ul {
+	background-color: whiteSmoke;
+	border: 1px solid #E3E3E3;
+	border-radius: 8px 8px 8px 8px;
+	list-style: none outside none;
+	padding: 10px;
+}
+
+#envio_mensajes .error {
+/*    border: 1px solid red;*/
+	background-color: #EED3D7;
+}
+
+#envio_mensajes .btn {
+	font-weight: normal;
+	margin-right: 5px;
+	width: auto;
+}
+
+#envio_mensajes h2 {
+	overflow: hidden;
+}
+
+#envio_mensajes .mensajes {
+	margin: 0 0 0 10px;
+}
+
+#envio_mensajes textarea, #envio_mensajes input[type='text'] {
+	width: 334px;
+}
+
+#envio_mensajes select {
+	width: 345px;
+}
+
+#envio_mensajes .formulario{
+	width: 454px;
+}
+
+#envio_mensajes #fechas {
+	margin-bottom: 18px;
+}
+
+#envio_mensajes #fecha_hasta, #envio_mensajes #fecha_desde {
+	width: 106px;
+}
+
+#envio_mensajes #grp_fecha_hasta label {
+	width: 60px;
+}
+
+#envio_mensajes #grp_fecha_hasta .controls {
+	margin-left: 80px;
+}
+
+#envio_mensajes #grp_fecha_hasta {
+	width: 196px;
+}
+
+#envio_mensajes .close {
+	margin-top: 10px;
+	float: right;
+	top: -5px;
+}
+
+#envio_mensajes .archivo {
+	overflow: hidden;
+}
+
+#envio_mensajes #js-btn-agregar-archivo {
+	margin-bottom: 10px;
+	margin-right: 0;
+}

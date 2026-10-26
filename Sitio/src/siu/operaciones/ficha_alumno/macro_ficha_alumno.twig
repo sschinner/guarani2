@@ -1,0 +1,46 @@
+{% macro render_menu(menu_reportes, categoria_actual, reporte_actual) %}
+	{% if (menu_reportes) %}
+	<div id="cuadro_menu_reportes" class="pull-left">
+		<span id="js-btn_esconder">
+			<i class="icon-chevron-left icon-white" style="margin-top: 18px;"></i>
+		</span>
+
+        <div class="accordion" id="menu_reportes" class="pull-left well">
+        {% for categoria in menu_reportes %}
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#menu_reportes" data-target="#{{loop.index}}">
+                        {{categoria.categoria_nombre}}
+                    </a>
+                </div>
+                <div id="{{loop.index}}" class="accordion-body collapse{% if categoria.categoria_nombre == categoria_actual %} in{% endif %}">
+                    <div class="accordion-inner">
+                        <ul class="nav nav-pills nav-stacked">
+                            {% for item in categoria.items %}
+                                <li{% if item.id == reporte_actual %} class="active"{% endif %}>
+                                    <a href="{{item.link}}">{{item.texto}}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+
+	</div>
+	{% endif %}
+{% endmacro %}
+
+{% macro mostrar(dato) %}
+	{% if (dato) %}
+		{{dato|raw}}
+	{% else %}
+		{{'ficha_alumno.sin_informacion'|trans |capitalize}}
+	{% endif %}
+{% endmacro %}
+
+{# La fecha debe estar en el formato Y-m-d #}
+{% macro formatear_fecha(fecha) %}
+	{{ fecha is empty ? 'ficha_alumno.sin_informacion'|trans |capitalize : fecha|date("d/m/Y") }}
+{% endmacro %}

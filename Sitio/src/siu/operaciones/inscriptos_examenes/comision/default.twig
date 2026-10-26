@@ -1,0 +1,131 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    <div class="titulo_operacion">
+		<h2 class="clearfix">
+			<button class='btn btn-primary btn-small js-btn-back pull-left' data-url-back="{{this.data.url_back}}" alt="Volver"><span class="icon-chevron-left icon-white"></span></button>
+			<span class="pull-left">{{"inscriptos_examen"|trans|capitalize}}</span>
+			<div class="pull-right">
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url_pdf}}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url_xls}}"><span class="acchide">{{'descargar_xls'|trans|capitalize}}</span><span class="g3w-icono-xls"></span></a>
+			</div>
+		</h2>
+    </div>
+        {% set titulos = this.data.alumnos_comision.titulos %}
+
+        <table width="100%" class="table table-striped table-bordered table-condensed" summary="Datos examen">
+		<tr>
+			<th width="20%">
+                {{'info_materia.materia' | trans | capitalize}}:</th>
+                            <td> {{titulos.MATERIA_NOMBRE_COMPLETO}}</td>
+        </tr>
+		{% if titulos.SEDE %}
+        <tr>
+            <th>
+                {{'nombre_sede' | trans | capitalize}}:</th><td> {{titulos.SEDE}}
+            </td>
+        </tr> 
+		{% endif %}
+		{% if titulos.ANIO_ACADEMICO %}
+        <tr>
+            <th>
+                {{'anio' | trans | capitalize}}:</th><td> {{titulos.ANIO_ACADEMICO}}
+            </td>
+        </tr>
+		{% endif %}
+		{% if titulos.TURNO_EXAMEN %}
+        <tr>
+            <th>
+                {{'info_materia.turno' | trans | capitalize}}:</th><td> {{titulos.TURNO_EXAMEN}}
+            </td>
+        </tr>
+		{% endif %}
+		{% if titulos.MESA_EXAMEN %}
+        <tr>
+            <th>
+                {{'info_materia.mesa' | trans | capitalize}}:</th><td> {{titulos.MESA_EXAMEN}}
+            </td>
+        </tr>
+		{% endif %}
+		{% if titulos.LLAMADO %}
+        <tr>
+            <th>
+                {{'info_materia.llamado' | trans | capitalize}}:</th><td> {{titulos.LLAMADO}}
+            </td>
+        </tr>
+		{% endif %}
+        </table>
+    {% if this.data.alumnos_comision.alumnos %}
+        <table class="table table-striped table-bordered table-condensed" summary="Inscripciones">
+        <thead>
+        <tr>
+            <th id="orden">
+                {{'#' | trans | capitalize}}
+            </th>
+            <th id="legajo">
+                {{'legajo' | trans | capitalize}}
+				<a href="{{this.data.url_filtro ~ "L"}}">
+					<span class="icon-arrow-up"></span>
+					<span class="acchide">Ordenar en forma ascendente por Legajo</span>
+				</a>					
+            </th>
+            <th id="nombre">
+                {{'nombre' | trans | capitalize}}
+				<a href="{{this.data.url_filtro ~ "N"}}">
+					<span class="icon-arrow-up"></span>
+					<span class="acchide">Ordenar en forma ascendente por Apellido y Nombre</span>					
+				</a>			
+            </th>
+            <th id="fecha_inscripcion">
+                {{'fecha de inscripción' | trans | capitalize}}
+				<a href="{{this.data.url_filtro ~ "F"}}">
+					<span class="icon-arrow-up"></span>
+					<span class="acchide">Ordenar en forma ascendente por Fecha de inscripción</span>					
+				</a>							
+            </th>
+            <th id="calidad">
+                {{'calidad' | trans | capitalize}}
+            </th>
+            <th id="estado">
+                {{'estado_inscripcion' | trans | capitalize}}
+            </th>
+            <th id="carrera">
+                {{'carrera' | trans | capitalize}}
+            </th>
+            <th id="ficha_alumno">
+                {{'inscriptos_examenes.tit_ficha_alumno' | trans | capitalize}}
+            </th>
+        </tr>
+        </thead>
+        {% for alumno in this.data.alumnos_comision.alumnos %}
+        <tr>
+            <td headers="orden">
+                {{alumno.ORDEN}}
+            </td>
+            <td headers="legajo">
+                {{alumno.LEGAJO}}
+            </td>
+            <td headers="nombre">
+                {{alumno.APELLIDO_NOMBRE}}
+            </td>
+            <td headers="fecha_inscripcion">
+                {{alumno.FECHA_INSCRIPCION}}
+            </td>
+            <td headers="calidad">
+                {{alumno.TIPO_INSCRIPCION}}
+            </td>
+            <td headers="estado">
+                {{alumno.ESTADO}}
+            </td>
+            <td headers="carrera">
+                {{alumno.CARRERA_NOMBRE}}
+            </td>
+            <td headers="ficha_alumno">
+                <span class="btn btn-mini js-ficha_alumno" data-url-ficha="{{ alumno.URL_FICHA }}">{{'inscriptos_examenes.btn_ficha_alumno' | trans | capitalize}}</span>
+            </td>
+        </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <div class="alert">{{'inscriptos_examenes.mesa_vacia' | trans | capitalize}}</div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{
+    "name": "siu/toba",
+    "description": "Framework de desarrollo web",
+    "authors": [
+        {
+            "name": "SIU",
+            "email": "toba@siu.edu.ar"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/SIU-Toba/rest"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable" : true, 
+    "require": {
+        "siu-toba/rest": "^1.0.0",
+        "guzzlehttp/guzzle": "5.1.0",
+        "onelogin/php-saml": "2.3.0"
+	},
+    "require-dev": {
+        "phpunit/phpunit": "4.5.*"
+    }
+}

@@ -1,0 +1,6 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 1.3.0
+-- *******************************************************************************
+Execute procedure dba.sp_cambiaparametro( '820cur05', 1, 4, "dl820_fce_inscripciones" );
+Execute procedure dba.sp_cambiaparametro( '820cur05', 1, 5, "dl820_fce_inscripciones" );

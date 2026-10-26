@@ -1,0 +1,6 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 1.9.0
+-- *******************************************************************************
+Execute procedure dba.sp_cambiaparametro( 'mat00122', 1 , 4 , "dr820_cantidad_alumnos_por_situacion" );
+Execute procedure dba.sp_cambiaparametro( 'mat00122', 1 , 5 , "dl820_cantidad_alumnos_por_situacion" );

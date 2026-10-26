@@ -1,0 +1,121 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<div class="titulo_operacion">
+		<h2 class="clearfix"><span class="pull-left">{{"plan_de_estudio"|trans|capitalize}}</span>
+			{#<form id="pdf_form" name="pdf_form" action="{{this.data.url_pdf}}" method="post" class="pull-right">#}
+                        <div class="pull-right" >
+				<a tabindex="0" id="pdf_btn" class="btn" target="_blank" title="{{ 'descargar_pdf'|trans|capitalize }}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+                        </div>
+			{#</form>#}
+		</h2>
+	</div>
+
+	<table class="table table-bordered table-condensed" summary="Plan de estudios" tabindex="0">
+		<caption>{{ "plan.plan" | trans | capitalize }}: {{this.data.plan.datos_carrera.plan}}</caption>
+		<thead>
+			<tr>
+				<th scope="col" id="mat" title="{{ "plan.materia" | trans | capitalize }}">{{ "plan.materia" | trans | capitalize }}</th>
+				<th scope="col" id="nom_mat" title="{{ "plan.nombre_materia" | trans | capitalize }}">{{ "plan.nombre_materia" | trans | capitalize }}</th>
+				<th scope="col" id="estado" title="{{ "plan.estado" | trans | capitalize }}">{{ "plan.estado" | trans | capitalize }}</th>
+				<th scope="col" id="tipo" title="{{ "plan.tipo_materia" | trans | capitalize }}">{{ "plan.tipo_materia" | trans | capitalize }}</th>
+				<th scope="col" id="ano" title="{{ "plan.ano_cursada" | trans | capitalize }}">{{ "plan.ano_cursada" | trans | capitalize }}</th>
+				<th scope="col" id="per_dic" title="{{ "plan.periodo_dictado" | trans | capitalize }}">{{ "plan.periodo_dictado" | trans | capitalize }}</th>
+				<th scope="col" id="cred" title="{{ "plan.credito" | trans | capitalize }}">{{ "plan.credito" | trans | capitalize }}</th>
+				<th scope="col" id="cor" title="{{ "plan.correlatividades" | trans | capitalize }}">{{ "plan.correlatividades" | trans | capitalize }}</th>
+			</tr>
+		</thead>
+	<tbody>
+	{% for key, materia in this.data.plan.detalle %}
+		{% if materia.TIPO != "O" %}
+		<tr>
+		<td headers="mat" scope="row">{{materia.MATERIA}}</td>
+		<td headers="nom_mat">{{materia.NOMBRE_MATERIA}}</td>
+		<td headers="estado" class="nota">
+			{% if materia.INFO_ACT_ACAD_MATERIA.NOTA %}
+				{{ materia.INFO_ACT_ACAD_MATERIA.NOTA }} 
+			{% endif %}
+			{% if materia.INFO_ACT_ACAD_MATERIA.RESULTADO_DESCRIPCION %}
+				({{ materia.INFO_ACT_ACAD_MATERIA.RESULTADO_DESCRIPCION }})
+			{% endif %}
+		</td>
+		<td headers="tipo">
+			{% if materia.TIPO == "G" %}
+				<a aria-controls="optativa_{{materia.MATERIA}}" class="ver_materias " linea="optativa_{{materia.MATERIA}}" >{{materia.TIPO_DETALLE}}</a>
+			{% else %}
+				<span>{{materia.TIPO_DETALLE}}</span>
+			{% endif %}			
+		</td>
+		<td headers="ano" style="text-align: right;">{{materia.ANIO}}</td>
+		<td headers="per_dic" class="periodo">{{materia.PERIODO}}</td>
+		<td headers="cred" style="text-align: right;">{{materia.CREDITO}}</td>
+		<td headers="cor" style="text-align: center; vertical-align: middle;">
+			{% if materia.TIPO != "G" %}
+			<a class="btn btn-info btn-mini ver_correlatividades" linea="{{materia.MATERIA}}" aria-controls="{{materia.MATERIA}}" >{{'ver'|trans|capitalize}}</a>
+			{% endif %}
+		</td>
+		</tr>
+                <tr class="correlatividades"  id="{{materia.MATERIA}}" aria-live="assertive" linea="{{materia.MATERIA}}">
+			<!-- aca escribe el ajax -->
+		</tr> {# nuevo #}
+		{% endif %}
+		{% if materia.TIPO == "G" %}
+			<tr class="optativa_{{materia.MATERIA}} genericas">
+				<td headers="tipo" colspan="8" class="td-table-optativas">
+				{% if materia.OPTATIVAS %}
+					<table class="table table-condensed table-bordered table-optativas" summary="Materias optativas - Tabla de materia generica: {{materia.NOMBRE_MATERIA}}" id="optativa_{{materia.MATERIA}}" aria-live="assertive">
+					<thead>
+					<tr>
+					<th scope="col" id="gmat{{key}}" title="{{ "plan.materia" | trans | capitalize }}">{{ "plan.materia" | trans | capitalize }}</th>
+					<th scope="col" id="gnom_mat{{key}}" title="{{ "plan.nombre_materia" | trans | capitalize }}">{{ "plan.nombre_materia" | trans | capitalize }}</th>
+					<th scope="col" id="gplan{{key}}" title="{{ "plan.tipo_materia" | trans | capitalize }}">{{ "plan.tipo_materia" | trans | capitalize }}</th>
+                                        <th scope="col" id="gvalor{{key}}"title="Creditos">Cr&eacute;ditos</th>
+                                        <th scope="col" id="gestado{{key}}"title="{{ "plan.estado" | trans | capitalize }}">{{ "plan.estado" | trans | capitalize }}</th>
+					<th scope="col" id="gco{{key}}" title="{{ "plan.correlatividades" | trans | capitalize }}">{{ "plan.correlatividades" | trans | capitalize }}</th>
+					</tr>
+					</thead>
+					<tbody>
+                                         
+					{% for key, mat in materia.OPTATIVAS %}
+						<tr>
+							<td scope="row" headers="gmat{{loop.parent.key}}">
+								{{mat.MATERIA_OPTATIVA}}
+							</td>
+							<td headers="gnom_mat{{loop.parent.key}}">
+								{{mat.NOMBRE}}
+							</td>
+							<td headers="gplan{{loop.parent.key}}">
+								{{ "plan.optativa" | trans | capitalize }}
+							</td>
+                                                        <td headers="gvalor{{loop.parent.key}}"  style="text-align: right;">
+								{{mat.CREDITO_OPT}}
+							</td>
+							<td class="nota" headers="gestado{{loop.parent.key}}">
+								{% if mat.INFO_ACT_ACAD_MATERIA.NOTA %}
+									{{ mat.INFO_ACT_ACAD_MATERIA.NOTA }} 
+								{% endif %}
+								{% if mat.INFO_ACT_ACAD_MATERIA.RESULTADO_DESCRIPCION %}
+									({{ mat.INFO_ACT_ACAD_MATERIA.RESULTADO_DESCRIPCION }})
+								{% endif %}
+							</td>
+							<td headers="gco{{loop.parent.key}}">
+								<a class="btn btn-info btn-mini ver_correlatividades" linea="{{mat.MATERIA_OPTATIVA}}" >{{'ver'|trans|capitalize}}</a>
+							</td>
+						</tr>
+						<tr class="correlatividades" id="{{mat.MATERIA_OPTATIVA}}">
+							<!-- aca escribe el ajax -->
+						</tr>
+					{% endfor %}
+					</tbody>
+					</table>
+				{% else %}
+				{% endif %}
+			</td>
+		</tr>
+		{% endif %}
+		{#  <tr class="correlatividades"  id="{{materia.MATERIA}}" aria-live="assertive" linea="{{materia.MATERIA}}">
+			<!-- aca escribe el ajax -->
+		</tr> #}
+	{% endfor %}
+	</tbody>
+	</table>
+{% endblock %}

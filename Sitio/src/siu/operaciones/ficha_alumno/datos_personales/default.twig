@@ -1,0 +1,43 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_ficha_alumno.twig" as ficha_alumno %}
+{% block contenido %}
+    {{ ficha_alumno.render_menu(this.data.menu_reportes, this.data.categoria_actual, this.data.reporte_actual) }}
+	<div id="reporte_contenido">
+		<h3>{{ 'ficha_alumno.rep_datos_personales' | trans }}</h3>
+
+		{% if (this.data.datos) %}
+			<div class="row-fluid">
+				<div class="span8">
+					<ul class="ficha_alumno_ul">
+						<li><strong>{{ 'ficha_alumno.anio_ingreso' | trans | capitalize }}:</strong> {{this.data.datos.anio_ingreso}}</li>
+						<li><strong>{{ 'ficha_alumno.nro_inscripcion' | trans | capitalize }}:</strong> {{this.data.datos.nro_inscripcion}}</li>
+						<li><strong>{{ 'ficha_alumno.apellido_nombres' | trans | capitalize }}:</strong> {{this.data.datos.apellido}}, {{this.data.datos.nombres}}</li>
+						<li><strong>{{ 'ficha_alumno.tipo_numero_doc' | trans | capitalize }}:</strong> {{this.data.datos.documento_tipo}} {{this.data.datos.documento_numero}}</li>
+						<li><strong>{{ 'ficha_alumno.fecha_inscripcion' | trans | capitalize }}:</strong> {{ficha_alumno.formatear_fecha(this.data.datos.fecha_inscripcion)}}</li>
+						<li><strong>{{ 'ficha_alumno.titulo_secundario' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(this.data.datos.titulo_secundario)}}</li>
+						<li><strong>{{ 'ficha_alumno.ultima_residencia_declarada' | trans | capitalize }}:</strong></li>
+						<li><strong>{{ 'ficha_alumno.fecha_actualizacion' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(this.data.datos.domicilio_fecha_actualiza)}}</li>
+						<li><strong>{{ 'ficha_alumno.calle' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(this.data.datos.domcilio_calle)}}</li>
+						<li><strong>{{ 'ficha_alumno.numero' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(this.data.datos.domicilio_nro)}}</li>
+						<li><strong>{{ 'ficha_alumno.piso' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(this.data.datos.domicilio_piso)}}</li>
+						<li><strong>{{ 'ficha_alumno.departamento' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(this.data.datos.domicilio_dpto)}}</li>
+						<li><strong>{{ 'ficha_alumno.unidad' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(this.data.datos.domicilio_unidad)}}</li>
+						<li><strong>{{ 'ficha_alumno.telefono_linea' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(this.data.datos.telefono_linea)}} </li>
+						<li><strong>{{ 'ficha_alumno.telefono_celular' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(this.data.datos.cel_nro)}}</li>
+						<li><strong>{{ 'ficha_alumno.email' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(this.data.datos.email)}}</li>
+						<li><strong>{{ 'ficha_alumno.localidad' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(this.data.datos.localidad)}}</li>
+						<li><strong>{{ 'ficha_alumno.provincia' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(this.data.datos.pcia)}}</li>
+						<li><strong>{{ 'ficha_alumno.nacionalidad' | trans | capitalize }}:</strong> {{this.data.datos.nacionalidad}}</li>
+						<li><strong>{{ 'ficha_alumno.fecha_nac' | trans | capitalize }}:</strong> {{this.data.datos.fecha_nac}}</li>
+						<li><strong>{{ 'ficha_alumno.localidad_nac' | trans }}:</strong> {{this.data.datos.localidad_nac}} ({{this.data.datos.partido_nac}} - {{this.data.datos.provincia_nac}} - {{this.data.datos.pais_nac}})</li>
+						<li><strong>{{ 'ficha_alumno.colegio_sec' | trans }}:</strong> {{this.data.datos.colegio_secundario}} ({{this.data.datos.localidad_colegio}} - {{this.data.datos.partido_colegio}} - {{this.data.datos.provincia_colegio}} - {{this.data.datos.pais_colegio}})</li>
+					</ul>
+				</div>
+				<div class="span4">
+					<div class='pull-left foto-perfil'><img src='{{ this.data.datos.URL_IMAGEN_MEDIANA }}' alt="Imagen ficha" style="border: solid 10px #ccc; width: 150px; height: auto;" /></div>
+				</div>
+			</div>		
+
+		{% endif %}
+	</div>
+{% endblock %}

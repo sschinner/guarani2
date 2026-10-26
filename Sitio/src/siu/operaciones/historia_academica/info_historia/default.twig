@@ -1,0 +1,140 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    <div class="titulo_operacion">
+        <h2 class="clearfix"><span class="pull-left">{{"historia_academica"|trans|capitalize }}</span>
+            <div class="pull-right" >
+                <a tabindex="0" id="pdf_btn" target="_blank" class="btn" title="{{ 'descargar_pdf'|trans|capitalize }}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+                <a tabindex="0" id="xls_btn" target="_blank" class="btn" title="{{ 'descargar_xls'|trans|capitalize }}"><span class="acchide">{{'descargar_xls'|trans|capitalize}}</span><span class="g3w-icono-xls"></span></a>
+            </div>
+        </h2>
+    </div>
+
+	<div class="filtros">
+		<span tabindex="0">{{'ver_por' |trans}}</span>
+		<input id="filtro_modo" type="hidden" value="{{ this.data.orden == 'anio' ? 'a': 'm' }}" />
+		<div class="btn-group filtro" data-toggle="buttons-radio">
+			<a href="anio" id="orden_anio" data-valor="a" class="btn {{ this.data.orden == 'anio' ? 'active': '' }}">{{'anio' |trans |capitalize}}</a>
+			<a href="materia" id="orden_materia" data-valor="m" class="btn {{ this.data.orden == 'materia' ? 'active': '' }}">{{'materia' |trans | capitalize}}</a>
+		</div>
+		<div class="filtro">
+			{% if (this.data.orden == 'anio') %}
+			<label for="anos" class="acchide">A&ntilde;os</label>
+				<select id="anos">
+					<optgroup label="A&ntilde;os">
+					<option value="">{{'todos_los_anios' |trans}}</option>
+					{% for key, ano in this.data.anos %}
+						<option value="{{ano}}" {{key == this.data.param_modo ? 'selected'}}>{{ano}}</option>
+					{% endfor %}
+					</optgroup>
+				</select>
+			{% else %}
+				<label for="materias" class="acchide">Materias</label>
+				<select id="materias">
+					<optgroup label="Materias">
+					<option value="">{{ 'todas_las_materias' | trans}}</option>
+					{% for key, materia in this.data.materias %}
+					<option value="{{key}}" {{key == this.data.param_modo ? 'selected'}}>{{materia}}</option>
+					{% endfor %}
+					</optgroup>
+				</select>
+			{% endif %}
+		</div>
+	</div>
+
+	<div id="listado">
+	{% if this.data.historia %}
+		{% for key1, materias in this.data.historia %}
+			<div class='catedras' {% if (this.data.anos) %}ano{% else %}materia{% endif %}="{{key1}}" tabindex="0">
+				{% set titulo = true %}
+				{% for key, materia in materias %}
+					{% if titulo %}
+						<h3 class="titulo-corte">{% if (this.data.anos) %}{{key1}}{% else %}{{materia.MATERIA_NOMBRE}} ({{materia.MATERIA}}){% endif %}</h3>
+						{% set titulo = false %}
+					{% endif %}
+					<div class="catedra" {% if materia.ORIGEN_CLASS == "En_Curso" %}
+											{{ materia.ORIGEN_CLASS }}="Aprobado"
+										{% else %}
+											{{ materia.ORIGEN_CLASS }}="{{materia.RESULTADO_DESCRIPCION }}"
+										{% endif %} >
+
+						<div class='catedra_nombre' tabindex="0">
+							{% if (this.data.orden == 'anio') %}
+							<h4 class="{{ materia.ORIGEN }}">{{materia.MATERIA_NOMBRE}} ({{materia.MATERIA}})</h4>
+							{% endif %}
+							<span class="{{materia.RESULTADO_DESCRIPCION}}">
+
+						    {{ materia.ORIGEN_DESC }}
+
+							{% if materia.EQUIVALENCIA_TIPO == "ET" %}
+								 {{'total' | trans | capitalize}}
+							{% endif %}
+							{% if materia.EQUIVALENCIA_TIPO == "EP" %}
+								{{'parcial' | trans | capitalize}}
+							{% endif %}
+							{% if materia.ORIGEN_CLASS != "EnCurso" %}	
+								:
+							{% endif %}
+							{% if materia.NOTA %}
+							{{materia.NOTA}} ({{materia.NOTA_DESCRIPCION}})
+							{% endif %}
+							{{materia.RESULTADO_DESCRIPCION}}
+{#							{% if materia.ORIGEN_CLASS == "EnCurso" %}
+								{{'inicio_periodo_lectivo' | trans | capitalize}}:
+							{% endif %} #}
+							{% if materia.ORIGEN_CLASS != "EnCurso" %}
+								{{materia.FECHA_DISPLAY}}
+							{% endif %}	
+
+							</span> - 
+							{% set id_detalle = materia.id_detalle %}
+							<a href="#" id="{{id_detalle}}" data-origen="{{ materia.ORIGEN }}" aria-controls="mat_{{id_detalle}}" >
+							Detalle
+							</a>
+						</div>
+						<div class='toggle_info_catedra' id="mat_{{id_detalle}}" style="display:none;">
+							<div>{% if materia.FECHA_FIN_VIGENCIA %}
+								{{"vencimiento" | trans | capitalize }}: {{materia.FECHA_FIN_VIGENCIA}}
+							{% endif %}
+							{% if materia.ORIGEN_OTRA_CARRERA %}
+								<i class="icon-info-sign"></i> {{"equivalente_de_otra_carrera" |trans|capitalize}}
+							{% endif %}
+							</div>
+							<div id="info_det_{{id_detalle}}" aria-live="assertive"><!-- Acï¿½ escribe el Ajax--></div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% endfor %}
+			<div>
+			<h3>Promedios</h3>
+			{% for titulo in this.data.promedios %}
+			<strong>{{ 'plan.titulo' | trans | capitalize }}: </strong> {{titulo.nombre}}
+			<ul>
+				<li><strong>{{ 'plan.promedio_general' | trans | capitalize }}: </strong> {{titulo.promedio_general |number_format(2, '.', ',')}}</li>
+				<li><strong>{{ 'plan.promedio_sin_aplazos' | trans | capitalize }}: </strong> {{titulo.promedio_sin_aplazos |number_format(2, '.', ',')}}</li>
+			</ul>
+			{%endfor%}	
+			</div>
+			<div>
+			<h3>Porcentaje de Aprobación</h3>
+			{% for porcentaje in this.data.porcentaje %}
+			<strong>{{ 'historia_academica.titulo' | trans | capitalize }}: </strong> {{porcentaje.titulo_nombre}}
+				{% for orientacion in porcentaje.orientaciones %}
+					<ul>
+					{% if orientacion.orientacion == 0 %}
+						<li><strong>{{ 'historia_academica.plan_basico' | trans | capitalize }}: </strong> {{orientacion.porcentaje_aprobacion_orientacion}}%</li>
+					{%endif%}
+					{% if orientacion.orientacion != 0 %}
+						<li><strong>{{ 'historia_academica.orientacion' | trans | capitalize }} {{orientacion.orientacion_nombre}}: </strong> {{orientacion.porcentaje_aprobacion_orientacion}}% - <strong>% {{ 'historia_academica.titulo' | trans | capitalize }}: {{orientacion.porcentaje_aprobacion_titulo}}%</strong></li>
+					{%endif%}
+					</ul>				
+				{% endfor%}
+			{%endfor%}
+			</div>
+	{% else %}
+		<div class="alert" style="margin-top: 25px;">
+			{{"reporte.no_hay_datos.historia_academica"|trans|capitalize}}
+		</div>
+	{% endif %}
+	</div>
+{% endblock %}

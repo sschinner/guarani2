@@ -1,0 +1,73 @@
+{#
+	Entrada:  clases
+#}
+
+{% if clases %}
+<h4>Clases</h4>
+<ul class="nav">
+	<li class='clase'>
+		<div class="row-fluid">
+		<div class="span2">
+			<span><strong> {{ "fecha"|trans|capitalize }}</strong></span> 
+		</div>
+		<div class="span2">
+			<span><strong> {{ "subcomision"|trans|capitalize }}</strong></span> 
+		</div>
+		<div class="span2">
+			<span><strong> {{ "tipo"|trans|capitalize }}</strong></span> 
+		</div>
+				
+		<div class="span1">
+			<span><strong> {{ "hora_inicio"|trans|capitalize }}</strong> </span> 
+		</div>
+		<div class="span1">
+			<span><strong> {{ "hora_fin"|trans|capitalize }}</strong> </span> 
+		</div>
+
+
+		<div class="span1">
+			<span> <strong>{{ "cantidad_horas"|trans|capitalize }}</strong></span> 
+		</div>
+			<div class="span3" style="text-align: right;">
+			{#<a href='{{ url_editar }}' class="btn btn-mini"><i class="icon-chevron-down"></i> {{ "ver_mas"|trans |capitalize}}</a>#}
+			<button class="mostrar_todas btn btn-mini" aria-live="polite"> {{ "ver_todas"|trans |capitalize}}</button>
+			</div>						
+	</li>
+	{% for clase in clases %}
+	<li class='clase {{ clase.TIPO_CLASE }}'>
+		<div class="row-fluid clase-seleccion">
+			<div class="span2">
+				<span> {{ clase.FECHA_CLASE }}</span> 
+			</div>
+			<div class="span2">
+				<span> {{ clase.SUBCOMISION_NOMBRE }}</span> 
+			</div>
+			<div class="span2">
+				<span> {{ clase.TIPO_CLASE }}</span> 
+			</div>
+			<div class="span1">
+				<span> {{ clase.HS_COMIENZO_CLASE }}</span> 
+			</div>
+
+			<div class="span1">
+				<span> {{ clase.HS_FINALIZ_CLASE }}</span> 
+			</div>
+
+			<div class="span1">
+				<span> {{ clase.CANTIDAD_HORAS }}</span> 
+			</div>			
+
+			<div class="span3" style="text-align: right;">
+				{#<a href='{{ url_listar }}' class="btn btn-mini"><i class="icon-list"></i> {{ "listar"|trans |capitalize}}</a>#}
+				<a href='{{ clase.URL_EDITAR }}' class="btn btn-mini"><div class="icon-pencil"></div>{{ "asistencias"|trans |capitalize}}</a>
+			</div>			
+		</div>
+	</li>
+
+	{% endfor %}
+</ul>
+{% else %}
+	<div class="alert">
+		{{"no_hay_datos.clases"|trans|capitalize}}
+	</div>
+{% endif %}

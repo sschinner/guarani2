@@ -1,0 +1,14 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+{% if this.data.modo_reinscripcion %}
+	<div class='alert alert-warning'>
+		{{ 'modo_reinscripcion'|trans|capitalize }}
+
+	{% if this.data.reinscripcion_completa %}
+		<a href='{{this.data.url_reinscripcion}}'>{{ 'reinscribirse'|trans|capitalize }}</a>
+	{% endif %}
+	</div>
+{% endif %}
+	<div id="mensaje"></div>
+{% include 'formulario/'~ this.data.form_template ~ '.twig' %}
+{% endblock %}

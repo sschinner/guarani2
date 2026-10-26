@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jasperTemplate PUBLIC "-//JasperReports//DTD Template//EN" "http://jasperreports.sourceforge.net/dtds/jaspertemplate.dtd">
+
+<jasperTemplate>
+	<style name="reporte_titulo" hAlign="Center" vAlign="Middle" fontName="Arial" fontSize="14" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfFontName="" isPdfEmbedded="true"/>
+	<style name="reporte_subtitulo" hAlign="Center" vAlign="Middle" fontName="Arial" fontSize="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold"/>
+	<style name="reporte_encabezado_pie" fontName="Arial" fontSize="8" pdfFontName="Times-Roman"/>
+	<style name="reporte_texto" fontName="Arial" pdfFontName=""/>
+	<style name="reporte_texto_negrita" fontName="Arial" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold"/>
+	<style name="tabla_titulo" forecolor="#000000" backcolor="#C0C0C0" hAlign="Center" fontName="Arial" fontSize="8" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Times-Bold">
+		<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+			<pen lineWidth="0.5"/>
+			<topPen lineWidth="0.5"/>
+			<leftPen lineWidth="0.5"/>
+			<bottomPen lineWidth="0.5"/>
+			<rightPen lineWidth="0.5"/>
+		</box>
+	</style>
+	<style name="tabla_celda" isBlankWhenNull="true" fontName="Arial" fontSize="8" pdfFontName="Times-Roman">
+		<box topPadding="1" leftPadding="2" bottomPadding="1" rightPadding="2">
+			<pen lineWidth="0.5"/>
+			<topPen lineWidth="0.5"/>
+			<leftPen lineWidth="0.5"/>
+			<bottomPen lineWidth="0.5"/>
+			<rightPen lineWidth="0.5"/>
+		</box>
+	</style>
+	<style name="tabla_celda_no_borde" isBlankWhenNull="true" fontName="Arial" fontSize="8" pdfFontName="Times-Roman">
+		<box topPadding="1" leftPadding="2" bottomPadding="1" rightPadding="2">
+			<pen lineWidth="0.5"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.0"/>
+			<bottomPen lineWidth="0.0"/>
+			<rightPen lineWidth="0.0"/>
+		</box>
+	</style>
+</jasperTemplate>

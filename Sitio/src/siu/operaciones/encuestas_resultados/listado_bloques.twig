@@ -1,0 +1,64 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+    <div class="titulo_operacion">
+
+        <div>
+            <h2 class="clearfix">
+                <span class="pull-left">
+                    {{ "header.menu.encuesta_resultado"|trans|capitalize~data.bloques_encuesta.nombre }}
+                </span>
+            </h2>
+        </div>
+
+    </div>
+
+    <div id="grupo_expandir_contraer" class="btn-group pull-right">
+        <button id="expandir" type="button" class="btn btn-primary" data-formulario="{{ data.id_formulario }}" data-elemento="{{ data.id_elemento }}"
+                data-habilitacion="{{ data.id_habilitacion }}" data-encuesta="{{ data.id_encuesta }}" data-cargado="false">
+                {{ 'encuestas_resultados.expandir' | trans }}
+        </button>
+        <button id="contraer" type="button" class="btn">{{ 'encuestas_resultados.contraer' | trans }}</button>
+    </div>
+    </br>
+    </br>
+
+    <div class="accordion bloque-param" id="accordion{{ bloque_encuesta.bloque }}"
+         data-formulario="{{ data.id_formulario }}" data-elemento="{{ data.id_elemento }}"
+         data-habilitacion="{{ data.id_habilitacion }}">
+
+    {% for  bloque_encuesta  in data.bloques_encuesta.bloques %}
+
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle bloque"
+                       url="{{ data.url_ver_preguntas~bloque_encuesta.__ID__ }}"
+                       id="#accordion{{ bloque_encuesta.bloque }}"
+                       data-parent="#accordion{{ bloque_encuesta.bloque }}"
+                       data-target="#collapse{{ bloque_encuesta.bloque }}" data-cargado="false">
+
+                        {{ bloque_encuesta.nombre }}
+
+                    </a>
+                </div>
+                <div id="collapse{{ bloque_encuesta.bloque }}" class="accordion-body collapse">
+                    <div class="accordion-inner">
+
+                        {% if bloque_encuesta.preguntas %}
+
+                            {% include 'listado_preguntas.twig' with {
+                            'preguntas': bloque_encuesta.preguntas,
+                            'id_bloque': bloque_encuesta.bloque
+                            } only %}
+
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+
+    {% endfor %}
+
+    </div>
+
+{% endblock %}

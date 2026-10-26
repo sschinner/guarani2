@@ -1,0 +1,41 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_ficha_alumno.twig" as ficha_alumno %}
+{% block contenido %}
+    {{ ficha_alumno.render_menu(this.data.menu_reportes, this.data.categoria_actual, this.data.reporte_actual) }}
+	<div id="reporte_contenido">
+		<h3>{{ 'ficha_alumno.rep_porcentaje_aprobacion' | trans }}</h3>
+		{% if (this.data.datos) %}
+		{% for carrera in this.data.datos %}
+			<ul class="ficha_alumno_ul">
+				<li><strong>{{ 'ficha_alumno.rep_porcentaje_aprobacion.carrera' | trans | capitalize }}:</strong> {{'('~ficha_alumno.mostrar(carrera.carrera)~')'~ficha_alumno.mostrar(carrera.carrera_nombre)}}</li>
+				<li><strong>{{ 'ficha_alumno.rep_porcentaje_aprobacion.legajo' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.legajo)}}</li>
+				<li><strong>{{ 'ficha_alumno.rep_porcentaje_aprobacion.plan' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.plan)}}</li>
+				<li><strong>{{ 'ficha_alumno.rep_porcentaje_aprobacion.version' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.version)}}</li>
+				<li><strong>{{ 'ficha_alumno.rep_porcentaje_aprobacion.titulo' | trans | capitalize }}:</strong> {{'('~ficha_alumno.mostrar(carrera.titulo)~')'~ficha_alumno.mostrar(carrera.titulo_nombre)}}</li>
+			</ul>			
+			<table class='table table-condensed table-hover table-striped'>
+				<thead>
+					<tr>
+						<th>{{'ficha_alumno.rep_porcentaje_aprobacion.orientacion'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_porcentaje_aprobacion.porcentaje_aprobado_orientacion'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_porcentaje_aprobacion.porcentaje_aprobado_titulo'|trans| capitalize}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for orientacion in carrera.orientaciones %}
+					<tr>
+						<td>{{ficha_alumno.mostrar('('~orientacion.orientacion~') '~ orientacion.orientacion_nombre)}}</td>
+						<td>{{ficha_alumno.mostrar(orientacion.porc_aprob_orient)}}</td>
+						<td>{{ficha_alumno.mostrar(orientacion.porc_aprob_titulo)}}</td>
+					</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+		{% endfor %}
+		
+		
+		{% else %}
+		<div class="alert alert-block">{{'ficha_alumno.no_hay_informacion'|trans| capitalize}}</div>
+		{% endif %}
+	</div>
+{% endblock %}

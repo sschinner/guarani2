@@ -1,0 +1,21 @@
+#certificado_evaluacion h3.titulo-certificado {
+    border-bottom: 1px solid #EEE;
+    line-height: 31px;
+}
+
+#certificado_evaluacion .nota_titulo {
+    color: #08C;
+    font-size: 14px;
+}
+
+#certificado_evaluacion a.accordion-toggle:hover{
+    text-decoration: none;
+}
+
+#certificado_evaluacion .accordion-group{
+    margin-bottom: 20px;
+}
+
+#certificado_evaluacion table tr td.centrado {
+    text-align: center;
+}

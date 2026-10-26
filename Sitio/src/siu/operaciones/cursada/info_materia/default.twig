@@ -1,0 +1,97 @@
+{% extends "kernel/pagelet_polite.twig" %}
+{% block contenido %}
+	{% if this.estado == 'inicial' %}
+		{% include 'info_materia/estado_inicial.twig' with {
+			'inscripciones': this.data.inscripciones, 
+			'mensajes': this.data.mensajes,
+			'csrf':		this.data.csrf,
+			'param_insc_cur_bajas': this.data.param_insc_cur_baja
+		} only %}
+	{% elseif this.estado == 'error_mat_sel' %}
+		<h3 id='materia-nombre'>{{this.data.materia_nombre}}</h3>
+		{% import "kernel/macro_notificaciones.twig" as notificaciones %}
+		{{ notificaciones.render_notif(this.data.mensajes) }}
+	{% else %}
+		{% if this.data.mensajes %}
+			{% import "kernel/macro_notificaciones.twig" as notificaciones %}
+			{{ notificaciones.render_notif(this.data.mensajes) }}
+		{% endif %}
+		<h3 id="materia-nombre" tabindex="-1">{{this.data.materia_nombre}}</h3>
+		
+		{%if not this.es_mobile %}
+			{{ _self.filtro_comisiones(this.data.param_usar_horarios, this.data.sedes, this.data.param_maneja_sedes) }}
+		{% endif %}
+
+		<ul id='comisiones' class="unstyled">
+			{% if not this.data.comisiones %}
+				<div class='alert alert-warning'>{{ 'mensaje_no_hay_comisiones'|trans|capitalize }}</div>
+			{% else %}
+				{% for comision in this.data.comisiones %}
+					{% if comision.INSCRIPTO %}
+						<li id="{{comision.ID}}" class='comision inscripto'>
+							{% include 'info_materia/default_inscripto.twig' with {
+								'comision':	comision,
+								'csrf':		this.data.csrf,
+								'param_insc_cur_bajas': this.data.param_insc_cur_baja
+							} only %}
+						</li>
+					{% else %}
+						<li id="{{comision.ID}}" class='comision no-inscripto'>
+							{% include 'info_materia/default_no_inscripto.twig' with {
+								'comision':	comision,
+								'csrf':		this.data.csrf,
+								'param_controla_cupo' : this.data.param_controla_cupo
+							} only %}
+						</li>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		</ul>
+	{% endif %}
+{% endblock %}
+
+{% macro filtro_comisiones(usa_horarios, sedes, maneja_sedes) %}
+
+    {% if usa_horarios or maneja_sedes %}
+	<div id='filtro_comisiones' class="clearfix" tabindex="-1">
+
+	{% if usa_horarios %}
+	<div class='wrapper pull-left' tabindex="0">
+		<span>{{'dia'|trans|capitalize}}:</span>
+		<ul id='filtro_dias' class='filtros unstyled'>
+			<li class="seleccionado"><span role='checkbox' class='lunes' tabindex='0' aria-checked='true'>Lun</span></li>
+			<li class="seleccionado"><span role='checkbox' class='martes' tabindex='0' aria-checked='true'>Mar</span></li>
+			<li class="seleccionado"><span role='checkbox' class='miércoles' tabindex='0' aria-checked='true'>Mié</span></li>
+			<li class="seleccionado"><span role='checkbox' class='jueves' tabindex='0' aria-checked='true'>Jue</span></li>
+			<li class="seleccionado"><span role='checkbox' class='viernes' tabindex='0' aria-checked='true'>Vie</span></li>
+			<li class="seleccionado"><span role='checkbox' class='sabado' tabindex='0' aria-checked='true'>Sab</span></li>
+			<li class='seleccionado'><span role='checkbox' class='domingo' tabindex='0' aria-checked='true'>Dom</span></li>
+			<li class='ultimo seleccionado'><span role='checkbox' class='no_informado' tabindex='0' aria-checked='true'>Sin Horario</span></li>
+		</ul>
+	</div>
+	<div class='wrapper pull-left' tabindex="0">
+		<span>{{'turno'|trans|capitalize}}:</span>
+		<ul id='filtro_turnos' class='filtros unstyled'>
+			<li class="seleccionado"><span role='checkbox' class='m' tabindex="0" aria-checked='true'>Ma&ntilde;</span></li>
+			<li class="seleccionado"><span role='checkbox' class='t' tabindex="0" aria-checked='true'>Tar</span></li>
+			<li class="seleccionado"><span role='checkbox' class='n' tabindex="0" aria-checked='true'>Noc</span></li>
+			<li class='ultimo seleccionado'><span role='checkbox' class='st' tabindex="0" aria-checked='true'>Sin Turno</span></li>
+		</ul>
+	</div>
+	{% endif %}
+
+	{% if maneja_sedes %}
+	<div class='wrapper pull-left' tabindex="0">
+		<label for="filtro_sedes">{{'sede'|trans|capitalize}}:</label>
+		<select id='filtro_sedes'>
+			<option value='todas'>{{'todas'|trans|capitalize}}</option>
+			{% for sede in sedes %}
+			<option value='{{ sede.NOMBRE }}'>{{ sede.NOMBRE }}</option>
+			{% endfor %}
+		</select>
+	</div>
+	{% endif %}
+
+	</div>
+	{% endif %}
+{% endmacro %}

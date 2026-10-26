@@ -1,0 +1,30 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.5.2
+-- Autor: Jorge Azcoaga
+-- Certificado de Cancelación de Matrícula por un  Alumno en una Carrera determinada.
+-- *******************************************************************************
+
+Execute procedure dba.sui_operaciones('820cer25','Certificado de Cancelación de Matrícula','Certificado de Cancelación de Matrícula',NULL);
+DELETE FROM acc_operacion_mod WHERE operacion = '820cer25';
+INSERT INTO acc_operacion_mod VALUES ('00000035','820cer25','Certif',	100);
+INSERT INTO acc_parametros VALUES ('820cer25',1,'w_reporte_vacio',
+    'uo_dw_filtros,dp820_alumno_carrera_cancelacion,uo_dw,dr820_certif_cancelacion_mat, dl820_certif_cancelacion_mat, dr820_sin_certif_cancelacion_mat, dl820_sin_certif_cancelacion_mat',NULL,NULL,'N');
+INSERT INTO acc_acciones_oper VALUES ('820cer25','C');
+
+-- Agregar el certificado
+Begin;
+Set constraints all deferred;
+DELETE FROM sga_certif_argum WHERE certificado = 12;
+DELETE FROM sga_certificados WHERE certificado = 12;
+DELETE FROM sga_certif_param WHERE certificado = 12 and interfaz = 2;
+INSERT INTO sga_certificados VALUES (12, 'Certificado de Cancelación de Matrícula', 2, null, 'A', 'Manual', 'N', 90);
+INSERT INTO sga_certif_argum VALUES (12, 1, 'unidad_academica', 'char(', '', 'N', 'unidad_academica' );
+INSERT INTO sga_certif_argum VALUES (12, 2, 'carrera', 'char(', '', 'N', 'carrera' );
+INSERT INTO sga_certif_argum VALUES (12, 3, 'legajo', 'char(', '', 'N', 'legajo' );
+INSERT INTO sga_certif_argum VALUES (12, 4, 'observaciones', 'char(', 'Sin Observación', 'N', 'Observaciones' );
+INSERT INTO sga_certif_argum VALUES (12, 5, 'interesado', 'char(', 'A quien corresponda', 'S', 'Para presentar a' );
+INSERT INTO sga_certif_argum VALUES (12, 6, 'expediente', 'char(', 'S/N', 'S', 'Expediente' );
+INSERT INTO sga_certif_param VALUES (12, 1, 'dp_alumno_carrera_cancelacion', 'dr820_sin_certif_cancelacion_mat', 'dl820_sin_certif_cancelacion_mat');
+
+Commit;

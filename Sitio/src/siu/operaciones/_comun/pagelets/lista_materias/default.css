@@ -1,0 +1,115 @@
+#lista_materias ul {
+	padding: 0;
+}
+
+#lista_materias li a {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	padding-left: 37px;
+	width: 82%;
+}
+
+#lista_materias li:hover {
+	background-color: #eee;
+}
+
+#lista_materias li a:hover {
+	text-decoration: none;
+	overflow: visible;
+	background: none;
+}
+
+#lista_materias li a:hover > span {
+	background-color: #eee;
+	padding: 5px 5px 5px 0;
+	position: relative;
+}
+
+#lista_materias li.insc a:hover,
+#lista_materias li.active a:hover {
+	overflow: hidden;
+}
+
+#lista_materias li.insc a:hover span,
+#lista_materias li.active a:hover span {
+	background: none;
+}
+
+#lista_materias li.insc {
+	background-image: url('../../../../img/sprite.png');
+	background-position: 2px -3px;
+	background-repeat: no-repeat;
+}
+
+#lista_materias li.active {
+	border: 1px solid #8ad8fd;
+	background-color: #e8f5fe;
+	background-image: url('../../../../img/sprite.png');
+	background-position: 201px -184px;
+	background-repeat: no-repeat;
+}
+
+#lista_materias li.active a {
+	color: #000;
+	background: none;
+	text-shadow: none;
+}
+
+#lista_materias li.insc.active {
+	background-image: url('../../../../img/sprite.png'), url('../../../../img/sprite.png');
+	background-position: 201px -184px, 2px -3px;
+	background-repeat: no-repeat, no-repeat;
+}
+
+#filtro_materias input {
+	color: #bbb;
+	width: 168px;
+}
+
+#filtro_materias .limpiar_lista {
+	background: url('../../../../img/sprite.png') no-repeat 0px -143px;
+	float: right;
+	width: 16px;
+	height: 16px;
+	margin: 4px 3px 0 0;
+	cursor: pointer;
+}
+
+#lista_materias .highlight {
+	background-color: #ffe45c;
+}
+
+#lista_materias .js-filtro-inscriptas label {
+	font-weight: bold;
+	margin-right: 10px;
+}
+
+#lista_materias #filtro-estado {
+	width: 100%;
+	max-width: 80%;
+	padding: 0;
+	height: 20px;	
+}
+
+#lista_materias .filtro-materia {
+	margin-bottom: 5px;
+}
+
+#lista_materias .js-filtro span {
+	display: inline-block;
+}
+
+#lista_materias .filtro-materia span {
+	margin-right: 12px;
+}
+
+#lista_materias .filtro-plan span {
+	margin-right: 6px;
+}
+
+#lista_materias .filtro-plan .btn,
+#lista_materias .filtro-materia .btn {
+	margin-right: 0;
+}
+

@@ -1,0 +1,7 @@
+#herramientas .js-barra-herramientas { padding-bottom: 10px; }
+#herramientas #preset_campo { width: 140px; }
+#herramientas label, input, select { margin-right: 5px; }
+#herramientas .well { padding: 8px; margin-bottom: 0;}
+#herramientas .form-inline { margin-bottom: 0; }
+#herramientas input#notas_cursada_query, #herramientas label.notas_cursada_query { margin-right: 0; }
+#herramientas .autoerror {margin: 10px 0 0 2px; color: red;}

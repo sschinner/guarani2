@@ -1,0 +1,116 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}	
+	{% if (this.data.id_form) %}
+
+        {% if this.data.id_form == 1 %}
+
+            {% if this.data.mostrar_error_no_regular %}
+                <div class="alert alert-error">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    {{ 'form.alumno_no_regular'|trans }}
+                </div>
+            {% endif %}
+
+            {% if this.data.mostrar_error_al_generar_certificado %}
+                <div class="alert alert-error">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    {{ 'form.error_al_generar_certificado'|trans }}
+                </div>
+            {% endif %}
+
+        {% endif %}
+
+		<form method="post" action="{{this.data.url_form}}" id="js-form-certificado" class="form-horizontal">
+		{% if (this.data.id_form and this.data.form_argumentos) %}
+				
+		<h3 class="clearfix"><span class="pull-left">
+			{{this.data.form_argumentos.nombre|trans|capitalize}}
+			{{ this.data.form_argumentos.solicitud_pendiente == "S" ? '<span class="icon-ok"><span class="acchide">Solicitud pendiente</span></span>' : ''}}</span>
+
+            {% if (this.data.form_argumentos.generacion_web == 'OnLine') %}
+				{{this.get_url_cert_online(this.data.id_form)}}
+                <a class="btn no-ajax pull-right btn_imprimir_car" href="{{ this.data.url_generar_car }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'solicitud_certificados_online.descripcion'|trans }}">
+                    <span class="acchide">{{'solicitud_certificados_online'|trans}}</span>
+                    <span class="g3w-icono-pdf"></span>
+                    {{"solicitud_certificados_online"|trans}}
+                </a>
+
+            {% endif %}
+
+			{% if (this.data.form_argumentos.generacion_web == 'Manual') %}	
+				<button type="button" name="solicitar" class="btn btn-info js-btn-solicitar pull-right" data-toggle="tooltip" data-placement="bottom" title="{{'solicitud_certificados_manual.descripcion'|trans|capitalize}}" >{{"solicitud_certificados_manual"|trans|capitalize}}</button>
+			{% endif %}	
+		</h3>
+				
+		<div class="form-container">
+			<div id="mensaje" role="alert" class="alert alert-error hide">				
+			</div>
+			<div class="row">
+				<input type="hidden" value="{{this.data.form_argumentos.id}}" name="nro_certificado" id="nro_certificado" />
+			{% for argumento in this.data.form_argumentos.argumentos %}
+		   {% if (argumento.1 == 'unidad_academica' or argumento.1 == 'carrera') %}	
+			     <div class="control-group">			
+					<div class="control-label">
+						<label for="{{argumento.1}}">{{argumento.5|trans}}: </label>
+					</div>
+					<div class="controls">						
+						<input type="text" maxlength="255" value="{{argumento.nombre}}" name="{{argumento.1}}" id="{{argumento.1}}" {{ argumento.4 == "N" ? 'readonly="readonly"' : ''}} />
+					</div>
+				</div>
+				<input type="hidden" maxlength="255" value="{{argumento.3}}" name="args[{{argumento.0}}]" id="{{argumento.1}}" {{ argumento.4 == "N" ? 'readonly="readonly"' : ''}} />				
+		   {% elseif (argumento.1 == 'observaciones')%}
+				<div class="control-group">			
+						<div class="control-label">
+							<label for="{{argumento.1}}">{{argumento.5|trans}}: </label>
+						</div>
+						<div class="controls">						
+							<textarea type="text" maxlength="255" value="{{argumento.3}}" name="args[{{argumento.0}}]" id="{{argumento.1}}" {{ argumento.4 == "N" ? 'readonly="readonly"' : ''}}></textarea>
+						</div>
+					</div>
+		   {% else %}
+		     <div class="control-group">			
+					<div class="control-label">
+						<label for="{{argumento.1}}">{{argumento.5|trans}}: </label>
+					</div>
+					<div class="controls">						
+						<input type="text" maxlength="255" value="{{argumento.3}}" name="args[{{argumento.0}}]" id="{{argumento.1}}" {{ argumento.4 == "N" ? 'readonly="readonly"' : ''}} />
+					</div>
+				</div>
+			{% endif %}	
+			
+						
+			{% endfor %}
+				<div class="control-group">
+					<div class="control-label">
+						<label for="cantidad">{{"form.cantidad_copias"|trans|capitalize}}: </label>
+					</div>
+					<div class="controls">
+						<select name="cantidad" id="cantidad">
+							{% for i in 1..this.data.form_argumentos.maximo_copias %}
+								<option value="{{ i }}">{{ i }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+
+           {# {% if (this.data.id_form == 1) %}
+
+                <a class="btn no-ajax pull-right btn_imprimir_car" href="{{ this.data.url_generar_car }}"  title="{{ 'descargar_pdf'|trans|capitalize }}">
+                    <span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span>
+                    <span class="g3w-icono-pdf"></span>
+                    {{"descargar_pdf"|trans|capitalize}}
+                </a>
+
+            {% endif %}
+
+		<button type="button" name="solicitar" class="btn btn-info js-btn-solicitar pull-right">{{"form.solicitar"|trans|capitalize}}</button>#}
+		</form>
+	{% else %}
+	<div id="mensaje" class="alert alert-info">
+		<strong>Seleccione un certificado</strong>
+	</div>
+	{% endif %}
+{% endblock %}

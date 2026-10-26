@@ -1,0 +1,44 @@
+{#
+	Entrada:  tipo, nombre, cant_inscriptos, porcentaje, url_listar, url_editar, evaluacion_id, fecha
+#}
+<li data-evaluacion-tipo='{{tipo}}' class='evaluacion'>
+    <div class="row-fluid">
+	<div class="span4">
+	    <span>{{ nombre }} {{ fecha }}</span> 
+	</div>
+
+	<div class="span4">
+	    <div class='wrapper-carga'>
+		<div class='progreso-carga' style='width: {{ porcentaje ~ '%' }}'></div>
+	    </div>
+	    {{ porcentaje ~ '%' }}
+	</div>
+    
+	<div class="span4" style="text-align: right;">
+	    {% if cant_inscriptos > 0 %}
+		<a href='{{ url_listar }}' class="btn btn-mini"><span class="icon-list"></span> {{ "listar"|trans |capitalize}}</a>
+	    {% endif %}
+
+	    {% if cant_inscriptos > 0 %}
+                
+                {% if puede_cargar_notas %}
+                    {% set href_editar = url_editar %}
+                    {% set clase_tooltip = '' %}
+                    {% set disabled = '' %}
+                {% else %}
+                    {% set href_editar = '#' %}
+                    {% set clase_tooltip = 'js-no-puede-cargar-notas' %}
+                    {% set disabled = 'disabled' %}
+                {% endif %}
+                
+		<a href='{{ href_editar }}' class="btn btn-mini {{ clase_tooltip }}" {{ disabled }}><span class="icon-pencil"></span> {{ "cargar"|trans |capitalize}}</a>
+	    {% endif %}
+		
+		{% if porcentaje == 0 %}
+	    <button class='btn btn-mini btn-warning boton-borrar' data-evaluacion-id='{{evaluacion_id}}'>
+			<span class="icon-remove"></span> {{ "borrar"|trans |capitalize}}
+		</button>
+		{% endif %}
+	</div>
+    </div>
+</li>

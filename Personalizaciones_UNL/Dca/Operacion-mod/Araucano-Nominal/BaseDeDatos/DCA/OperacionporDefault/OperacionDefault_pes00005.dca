@@ -1,0 +1,6 @@
+-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-- Operacion: pes00005
+-- Módulo: 00000070 - Interfaces
+-- Version: 2.9.2
+-- ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INSERT INTO dba.acc_operacion_mod ( modulo, operacion, submodulo, orden ) VALUES ( '00000070', 'pes00005', 'Guar_Ara', 87);

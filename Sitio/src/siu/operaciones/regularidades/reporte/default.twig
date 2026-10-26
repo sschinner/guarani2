@@ -1,0 +1,129 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<div class="titulo_operacion">
+		<h2 class="clearfix"><span class="pull-left">{{"header.menu.regularidades"|trans|capitalize}}</span>
+			<div class="pull-right">
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url.generar_pdf}}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url.generar_excel}}"><span class="acchide">{{'descargar_xls'|trans|capitalize}}</span><span class="g3w-icono-xls"></span></a>
+			</div>
+		</h2>
+	</div>
+	{% if this.data.datos or this.data.datos_corte %}
+		{% import "kernel/macro_pager.twig" as pager %}
+		<div class="pagination pagination-centered">
+			{{ pager.render_paginator(this.get_paginas, this.get_pagina) }}
+		</div>
+	{% endif %}
+	{% if this.data.datos or this.data.datos_corte %}
+		{% import "kernel/macro_columnas_tabla.twig" as macro_titulos %}
+		<table tabindex="0" class="table table-bordered table-condensed" summary="Tabla con regularidades, haga clic en una celda para ampliar">
+			{% if this.data.datos_corte %}
+				{% for dato in this.data.datos_corte %}
+					{% if dato.titulo_corte %}
+					<tr>
+						<td class="cc-titulo-nivel-0" colspan="{{this.data.cantidad_columnas}}">
+							{{dato.titulo_corte}}
+						</td>
+					</tr>
+					{% endif %}
+					<!-- T�tulos -->
+					{{ macro_titulos.render_titulador(this.data.titulos, this.data.atributos_titulos, this.data.corte.campo) }}
+					
+					{% if dato.datos %}
+						{% for clave, item in dato.datos %}
+						<tr{% if (item.URL_LINEA) %} class="link-in-data" data-link="{{item.URL_LINEA}}"{% endif %}>
+						{% for keyline, linea in item %}
+							{% if (keyline != "URL_LINEA") %}
+							<td>
+								{{linea}}
+							</td>
+							{% endif %}
+						{% endfor %}
+						</tr>
+						{% endfor %}
+
+						{% if dato.funciones_pie_corte %}
+						{% for funcion in dato.funciones_pie_corte %}
+						<tr>
+							{% for col_fn, titulo in dato.datos[0] %}
+								{% if col_fn != this.data.corte.campo %}
+								<td><strong>{{funcion[col_fn]}}</strong></td>
+								{% endif %}
+							{% endfor %}
+						</tr>
+						{% endfor %}
+						{% endif %}
+
+						{% if dato.mensaje_pie_corte %}								
+						{% for funcion in dato.mensaje_pie_corte %}
+						<tr>
+							<td colspan="{{this.data.cantidad_columnas}}"><strong>{{funcion}}</strong></td>
+						</tr>
+						{% endfor %}
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+				<!-- Pie de reporte -->
+				<tr>
+					<td colspan="{{this.data.cantidad_columnas}}"><br><br></td>
+				</tr>
+				{% if this.data.datos_corte.funciones_pie_reporte %}
+				{% for funcion in this.data.datos_corte.funciones_pie_reporte %}
+				<tr>
+					{% for col_fn, nombre in this.data.datos_corte[0].datos[0] %}
+					{% if col_fn != this.data.corte.campo %}
+					<td><strong>{{funcion[col_fn]}}</strong></td>
+					{% endif %}
+					{% endfor %}
+				</tr>
+				{% endfor %}
+				{% endif %}
+
+				{% if this.data.datos_corte.mensaje_pie_reporte %}
+				{% for funcion in this.data.datos_corte.mensaje_pie_reporte %}
+				<tr>
+					<td colspan="{{this.data.cantidad_columnas}}"><strong>{{funcion}}</strong></td>
+				</tr>
+				{% endfor %}
+				{% endif %}
+			{% endif %}
+			{% if this.data.datos %}
+				<!-- T�tulos -->
+				<thead>
+					{{ macro_titulos.render_titulador(this.data.titulos, this.data.atributos_titulos, this.data.corte.campo) }}
+				</thead>
+
+				<!-- Datos -->
+				{% for clave, columnas in this.data.datos %}
+				<tr{% if (columnas.URL_LINEA) %} class="link-js" data-link="detalle_{{clave}}" aria-controls="detalle_{{clave}}"{% endif %}>
+
+					{% for keyline, columna in columnas %}
+						{% if (keyline != "URL_LINEA" and  keyline != "DETALLE") %}
+                                                                <td scope="row" headers="{{keyline}}"{% if keyline == "MATERIA_NOMBRE" %} scope="row"><span class="toggle icon-chevron-up"></span>	
+                                                                {% else %}>{%endif%}
+								{{columna}}
+							</td>
+						{% endif %}
+					{% endfor %}
+				</tr>
+					{% if (columnas.DETALLE) %}
+					<tr id="detalle_{{clave}}" class="detalle" aria-live="assertive">
+						<td headers="MATERIA_NOMBRE" colspan="{{this.data.cantidad_columnas}}">
+							<ul>
+								{% if (columnas.DETALLE.ANIO_ACADEMICO) %}<li>{{'regularidades.anio_academico' |trans|capitalize}}: {{columnas.DETALLE.ANIO_ACADEMICO}}</li>{% endif %}
+								{% if (columnas.DETALLE.PER_LEC) %}<li>{{'regularidades.periodo_lectivo' |trans|capitalize}}: {{columnas.DETALLE.PER_LEC}}</li>{% endif %}
+								{% if (columnas.DETALLE.ORIGEN) %}<li>{{'regularidades.origen' |trans|capitalize}}: {{columnas.DETALLE.ORIGEN}}</li>{% endif %}
+								{% if (columnas.DETALLE.NOTA) %}<li>{{'regularidades.nota' |trans|capitalize}}: {{columnas.DETALLE.NOTA}}</li>{% endif %}
+							</ul>
+						</td>
+					</tr>
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		</table>
+	{% else %}
+		<div class="alert">
+			{{"reporte.no_hay_datos.regularidades"|trans|capitalize}}
+		</div>
+	{% endif %}
+{% endblock %}

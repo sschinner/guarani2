@@ -1,0 +1,35 @@
+body
+{
+	background-color: #F2FBFF;
+  font-size: 11px;
+	font-weight: normal;
+  font-style: normal;
+  font-family: Arial, Helvetica, sans-serif;
+}
+table.menu
+{
+	border: 1px outset #5858C7;
+	border-collapse: collapse;
+}
+th.menu
+{
+	background-color: #4180BE;
+	padding-left: 3px;
+	padding-right: 3px;
+	text-align: left;
+	color: #F2FBFF;
+}
+td.menu
+{
+	background-color: #F2FBFF;
+	padding-left: 3px;
+	padding-right: 3px;
+	text-align:left;
+}
+input
+{
+	font-weight: bold;
+	color: #333399;
+	background-color: #CCDDFF;
+  border: thin solid #4180BE;
+}

@@ -1,0 +1,18 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.6.3
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones( 'neteg100', 'Impresión Tasa Expedición Diploma', 'Impresión Tasa Expedición Diploma', null );
+
+Begin;
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = 'neteg100';
+DELETE FROM acc_operaciones WHERE operacion = "neteg100";
+DELETE FROM par_puntos_x_pag WHERE operacion = "neteg100";
+DELETE FROM par_eventos_x_oper WHERE operacion = "neteg100";
+DELETE FROM par_puntos_x_oper WHERE operacion = "neteg100";
+DELETE FROM par_cont_x_oper WHERE operacion = "neteg100";
+DELETE FROM sga_conf_controles WHERE operacion = "neteg100";
+Commit;
+
+

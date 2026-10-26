@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="guarani" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="993d0857-f614-4e89-918c-91ebc22ac827">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="14" isBold="true" isUnderline="true" pdfFontName="Times-Bold"/>
+	<style name="Resalt" fontSize="9" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+	<parameter name="logo" class="java.lang.String"/>
+	<parameter name="fecha_reporte" class="java.lang.String"/>
+	<queryString language="xPath">
+		<![CDATA[/InicioExpediente/datos/item]]>
+	</queryString>
+	<field name="nombre_titulo" class="java.lang.String">
+		<fieldDescription><![CDATA[nombre_titulo]]></fieldDescription>
+	</field>
+	<field name="fecha_egreso" class="java.lang.String">
+		<fieldDescription><![CDATA[fecha_egreso]]></fieldDescription>
+	</field>
+	<field name="carrera" class="java.lang.String">
+		<fieldDescription><![CDATA[carrera]]></fieldDescription>
+	</field>
+	<field name="nroDocumento" class="java.lang.String">
+		<fieldDescription><![CDATA[nroDocumento]]></fieldDescription>
+	</field>
+	<field name="tipoDocumento" class="java.lang.String">
+		<fieldDescription><![CDATA[tipoDocumento]]></fieldDescription>
+	</field>
+	<field name="nombres" class="java.lang.String">
+		<fieldDescription><![CDATA[nombres]]></fieldDescription>
+	</field>
+	<field name="apellido" class="java.lang.String">
+		<fieldDescription><![CDATA[apellido]]></fieldDescription>
+	</field>
+	<field name="ua_completo" class="java.lang.String">
+		<fieldDescription><![CDATA[ua_completo]]></fieldDescription>
+	</field>
+	<field name="tipoCertificado" class="java.lang.Integer">
+		<fieldDescription><![CDATA[tipoCertificado]]></fieldDescription>
+	</field>
+	<field name="certificacionMinisterial" class="java.lang.String">
+		<fieldDescription><![CDATA[/InicioExpediente/datos/item/certificacionMinisterial]]></fieldDescription>
+	</field>
+	<title>
+		<band height="112" splitType="Stretch">
+			<image hAlign="Center" onErrorType="Icon">
+				<reportElement x="249" y="21" width="80" height="65" uuid="ca015ce7-b8da-4be7-86f9-357460df89f4"/>
+				<imageExpression><![CDATA["../img/efebo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="351" y="21" width="149" height="20" uuid="7684adfb-5c4b-4c75-b92a-1b9ddd1119d0"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Universidad Nacional del Litoral]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="327" y="92" width="228" height="20" uuid="3c7a23af-89fb-42b1-8524-6be14b2efc28"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["SANTA FE, " + $P{fecha_reporte}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RetainShape" hAlign="Left" isUsingCache="false" onErrorType="Blank">
+				<reportElement x="53" y="21" width="150" height="60" isRemoveLineWhenBlank="true" uuid="1b15b6a2-d08f-45ce-b825-e04e2fd82f99"/>
+				<imageExpression><![CDATA["../img/logo-100.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="461" splitType="Stretch">
+			<textField>
+				<reportElement x="53" y="12" width="447" height="23" uuid="6f7cb5fc-2ad2-4e03-bdd4-3c7275fd3104"/>
+				<textElement textAlignment="Left" markup="none">
+					<font fontName="Arial" size="10" isBold="false" isUnderline="false" pdfFontName="Helvetica-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Trámite de "+
+($F{tipoCertificado} == 102 ? "Diploma Digital"
+    : ($F{tipoCertificado} == 100 ? "Certificado Analítico de Estudios"
+        : ($F{tipoCertificado} == 5 ? "Certificado de Materias Aprobadas"
+            : ($F{tipoCertificado} == 9 ? "Certificado de Historia Académica" : null)
+            )
+        )
+)
++" de:"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="53" y="34" width="447" height="69" uuid="8d1853bb-7ab2-41aa-be13-0e1a584497af"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial" size="10" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apellido}+", "+$F{nombres}+", "+$F{tipoDocumento}+": "+$F{nroDocumento}+ ", de la unidad académica "+$F{ua_completo}+
+
+($F{tipoCertificado} == 102 || $F{tipoCertificado} == 100 ? ", de la carrera "+$F{carrera}
+    : ", alumno/a de la carrera "+$F{carrera}
+)
++
+($F{tipoCertificado} == 102 ? ", egresado el "+$F{fecha_egreso}+" solicita su título de "+$F{nombre_titulo}
+    : ($F{tipoCertificado} == 100 ? ", egresado el "+$F{fecha_egreso}+" solicita su Certificado Analítico de Estudios de "+$F{nombre_titulo}+ ($F{certificacionMinisterial}.equals("S") ? ", con intervención ministerial." : ", sin intervención ministerial.")
+        : ($F{tipoCertificado} == 5 ? " solicita su Certificado de Materias Aprobadas."
+            : ($F{tipoCertificado} == 9 ? " solicita su Certificado de Historia Académica."
+                : null
+                )
+            )
+        )
+    )]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

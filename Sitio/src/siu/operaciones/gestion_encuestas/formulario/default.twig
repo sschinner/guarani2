@@ -1,0 +1,59 @@
+{% extends "kernel/pagelet_polite.twig" %}
+{% block contenido %}
+
+<div id="mensaje-vincular" class='alert' style="display: none;"></div>
+
+<div class="row-fluid">
+	<div class="span12">
+
+    {% if this.data.encuestas_alcances %}
+
+        <div class="accordion" id="alcances">
+
+        {% for key_encuesta, encuesta in this.data.encuestas_alcances %}
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#alcances" data-target="#{{ "encuesta"~loop.index }}">
+                        ({{ key_encuesta }}) {{ encuesta.encuesta_titulo }}{% if encuesta.kolla_id_encuesta %} ({{ 'gestion_encuestas.kolla'|trans }}: {{ encuesta.kolla_id_encuesta }}){% endif %}
+                    </a>
+                </div>
+                <div id="{{ "encuesta"~loop.index }}" class="accordion-body collapse{% if loop.first %} in{% endif %}">
+                    <div class="accordion-inner">
+
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>{{ 'gestion_encuestas.alcance'|trans|capitalize }}</th>
+                                <th>{{ 'gestion_encuestas.fecha_desde'|trans|capitalize }}</th>
+                                <th>{{ 'gestion_encuestas.fecha_hasta'|trans|capitalize }}</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                        {% for key_alcance, alcance in encuesta.alcances %}
+
+                                <tr>
+                                    <td>({{ key_alcance }}) {{ alcance.alcance_titulo }}</td>
+                                    <td>{{ alcance.fecha_desde }}</td>
+                                    <td>{{ alcance.fecha_hasta }}</td>
+                                    <td><button class="btn btn-small btn-primary vincular" type="button" data-alcance="{{ key_alcance }}">{{ 'gestion_encuestas.vincular'|trans|capitalize }}</button></td>
+                                </tr>
+
+                        {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        </div>
+
+        <div id="no-hay-mas-alcances" class='alert alert-notice' style="display: none;">{{ 'gestion_encuestas.no_hay_alcances_definidos' | trans }}</div>
+
+    {% else %}
+        <div class='alert alert-notice'>{{ 'gestion_encuestas.no_hay_alcances_definidos' | trans }}</div>
+    {% endif %}
+	</div>
+</div>
+{% endblock %}

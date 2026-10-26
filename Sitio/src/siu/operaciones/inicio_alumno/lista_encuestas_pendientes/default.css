@@ -1,0 +1,22 @@
+#lista_carreras .box-materia {
+    border-bottom: 1px solid #E5E5E5;
+    border-left: 1px solid #E5E5E5;
+    padding: 0px 0 10px 10px;
+    margin: 0 0 25px 15px;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+#lista_encuestas_pendientes .colapsar {
+	cursor: pointer;
+}
+
+#lista_encuestas_pendientes #js-btn_esconder {
+	float:left;
+	background-color: #08c;
+	border-radius: 4px 0 0 4px;
+	cursor: pointer;
+	margin-right: 5px;
+	height: 20px;
+}

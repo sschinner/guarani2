@@ -1,0 +1,6 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.05.0
+-- *******************************************************************************
+Execute procedure dba.sp_cambiaparametro( 'mat00127', 1 , 2 , "dp820_seleccion_requisitos_inscripcion" );
+

@@ -1,0 +1,72 @@
+
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.0.0
+-- *******************************************************************************
+
+
+INSERT INTO acc_modulos values ('Net00200', 'Pasantías', null);
+
+Execute procedure dba.sui_operaciones('netpas01',
+	'Anulación',
+	'Anular Iscripción a Pasantía',
+	NULL);
+
+INSERT INTO acc_operacion_mod VALUES (
+	'Net00200',
+	'netpas01',
+	'Internet',
+	1);
+
+INSERT INTO acc_acciones_oper VALUES (
+	'netpas01',
+	'C');
+
+Execute procedure dba.sui_operaciones('netpas02',
+	'Consulta',
+	'Consultar Inscripción a Pasantías',
+	NULL);
+
+INSERT INTO acc_operacion_mod VALUES (
+	'Net00200',
+	'netpas02',
+	'Internet',
+	2);
+
+INSERT INTO acc_acciones_oper VALUES (
+	'netpas02',
+	'C');
+
+Execute procedure dba.sui_operaciones('netpas03',
+	'Inscripción',
+	'Iscripción a Pasantía',
+	NULL);
+
+INSERT INTO acc_operacion_mod VALUES (
+	'Net00200',
+	'netpas03',
+	'Internet',
+	3);
+
+INSERT INTO acc_acciones_oper VALUES (
+	'netpas03',
+	'C');
+
+
+INSERT INTO dba.acc_oper_nom_x_int ( operacion, interfaz, nombre )  VALUES ( 'netpas01', 3, 'Eliminar Insc. a Pasantías' );
+Insert into acc_parametros_net values ('netpas01', 1, 'a_alumnos/u820_eliminarInscPasantia.php', null, 'Eliminar Insc. a Pasantías');
+Insert into acc_parametros_net values ('netpas01', 2, 'a_alumnos/u820_desinscribirsePasantia.php', null, 'Resultado Anular Pasantías');
+
+
+INSERT INTO dba.acc_oper_nom_x_int ( operacion, interfaz, nombre )  VALUES ( 'netpas02', 3, 'Consultar Insc. a Pasantías' );
+Insert into acc_parametros_net values ('netpas02', 1, 'a_alumnos/u820_consultarInscPasantias.php', null, 'Consultar Insc. a Pasantías');
+
+INSERT INTO dba.acc_oper_nom_x_int ( operacion, interfaz, nombre )  VALUES ( 'netpas03', 3, 'Inscripciones a Pasantías' );
+
+Insert into acc_parametros_net values ('netpas03', 1, 'a_alumnos/elegirCarrera.php', null, 'Elegir Carrera');
+Insert into acc_parametros_net values ('netpas03', 2, 'a_alumnos/u820_elegirInscPasantia.php', null, 'Inscripciones a Pasantías');
+Insert into acc_parametros_net values ('netpas03', 3, 'a_alumnos/u820_inscribirsePasantia.php', null, 'Resultado Insc. a Pasantías');
+
+
+
+

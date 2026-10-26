@@ -1,0 +1,29 @@
+-- FORMATO ACTUAL:
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.5.2
+-- Autor: Jorge Azcoaga
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones('820cer05','Certificado de Historia Académica','Certificado de Historia Académica',NULL);
+DELETE FROM acc_operacion_mod WHERE operacion = '820cer05';
+INSERT INTO acc_operacion_mod VALUES ('00000035','820cer05','Certif',	100);
+INSERT INTO acc_parametros VALUES ('820cer05',1,'w_reporte_vacio', 'uo_dw_filtros, dp_alumno_carrera_corresponda, uo_dw,dr820_certif_historia_academica2, dl820_certif_historia_academica2, dr820_sin_historia_academica, dl820_sin_historia_academica',NULL,NULL,'N');
+
+INSERT INTO acc_acciones_oper VALUES ('820cer05','C');
+
+-- Agregar el certificado
+Begin;
+Set constraints all deferred;
+DELETE FROM sga_certif_argum WHERE certificado = 9;
+DELETE FROM sga_certificados WHERE certificado = 9;
+DELETE FROM sga_certif_param WHERE certificado = 9 and interfaz = 2;
+INSERT INTO sga_certificados VALUES (9, 'Certificado de Historia Académica', 2, null, 'A', 'Manual', 'N', 90);
+INSERT INTO sga_certif_argum VALUES (9, 1, 'unidad_academica', 'char(', '', 'N', 'unidad_academica' );
+INSERT INTO sga_certif_argum VALUES (9, 2, 'carrera', 'char(', '', 'N', 'carrera');
+INSERT INTO sga_certif_argum VALUES (9, 3, 'legajo', 'char(', '', 'N', 'legajo');
+INSERT INTO sga_certif_argum VALUES (9, 4, 'interesado', 'char(', 'A quien corresponda', 'S', 'Para presentar a');
+INSERT INTO sga_certif_param VALUES (9, 1, 'dp_alumno_carrera_corresponda', 'dr820_certif_historia_academica2', 'dl820_certif_historia_academica2');
+
+Commit;
+
+

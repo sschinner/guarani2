@@ -1,0 +1,133 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+    {% set datos=this.get_data_reporte() %}
+    {% set nombre='Encuesta Graduados'%}
+    <script>
+        $(document).ready(function () {
+            $("#fechaNac").datepicker();
+            $("#nroDocumento").keyup(function () {
+                this.value = (this.value + '').replace(/[^0-9]/g, '');
+            });
+        });
+
+        function verifica() {
+
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            var mensaje = "";
+            if ($("#apellido").val().trim() == "") {
+                mensaje = mensaje + "Debe completar el Apellido. \n";
+            }
+            if ($("#nombre").val().trim() == "") {
+                mensaje = mensaje + "Debe completar el Nombre. \n";
+            }
+            if ($("#nroDocumento").val().trim() == "") {
+                mensaje = mensaje + "Debe completar el n\u00famero de documento. \n";
+            }
+            if ($("#fechaNac").val().trim() == "") {
+                mensaje = mensaje + "Debe completar la fecha de nacimineto. \n";
+            }
+
+            if (regex.test($("#email").val()) === false) {
+                mensaje = mensaje + "Debe ingresar un E-mail v\u00e1lido. \n";
+            }
+
+            if (mensaje != "") {
+                alert(mensaje);
+
+            } else {
+                //("#guardaDatos").attr('action',$("#url").val());
+                document.guardaDatos.submit();
+            }
+        }
+    </script>
+
+    <form id="principales" action="{{this.data.url.guardar}}" method="post" name="guardaDatos" id="guardaDatos">
+        <fieldset>
+            <legend class="clearfix">
+                <span class="pull-left"><h3 class="resaltar">{{datos.nombreTitulo|trans}}</h3></span>
+
+            </legend>
+
+            <br>
+            {%if(datos.calidad==1)%}
+                <div class='alert' style="width:75%;">
+                    {% import "kernel/macro_notificaciones.twig" as notificaciones %}
+                    <p><h3 style="color:#8099B2">
+                        Momentaneamente la encuesta se encuentra deshabilitada por razones de reestructuraci&oacute;n.
+                        <br><br>
+                        Por favor intente realizarla luego del 13 de Junio del 2016.
+                    </h3>
+                    </p>
+                </div>
+                {#   <div class="clearfix">
+                       <div class="pull-left">
+                           <label>Apellido: </label>
+                           <input type="text" id="apellido" name="apellido" value="{{datos.datosAlu.0}}" style="background-color: #bce8f1">
+                       </div>
+                       <div class="pull-left" style="margin-left: 50px;">
+                           <label>Nombre: </label>
+                           <input type="text" id="nombre" name="nombre" value="{{datos.datosAlu.1}}" style="background-color: #bce8f1" >
+                       </div>
+                   </div>
+       
+       
+                   <div class="clearfix">
+                       <div class="pull-left">
+                           <label>Tipo Documento: </label>
+                           <select id="tipoDni"name="tipoDni">
+                               <option value="0" {%if (datos.datosAlu.3 ==0) %}selected{%endif%}>DNI</option>
+                               <option value="2" {%if (datos.datosAlu.3 ==2) %}selected{%endif%}>CI</option>
+                               <option value="18"{%if (datos.datosAlu.3 ==18) %}selected{%endif%}>LE</option>
+                               <option value="19"{%if (datos.datosAlu.3 ==19) %}selected{%endif%} >LC</option>
+                               <option value="90"{%if (datos.datosAlu.3 ==90) %}selected{%endif%} >PAS</option>
+                               <option value="1" {%if (datos.datosAlu.3 ==1) %}selected{%endif%} >DNT</option>
+                           </select>
+       
+                       </div>
+                       <div class="pull-left" style="margin-left: 50px;">
+                           <label>Nro Documento: </label>
+                           <input type="text" style="background-color: #bce8f1" id="nroDocumento" name="nroDocumento" value="{{datos.datosAlu.4}}">
+                       </div>
+                   </div>
+       
+                   <div class="clearfix">
+                       <div class="pull-left">
+                           <label>Sexo: </label>
+                           <select id="sexo"name="sexo">
+                               <option value="0" {%if (datos.datosAlu.5 ==0) %}selected{%endif%}>Masculino</option>
+                               <option value="1" {%if (datos.datosAlu.5 ==1) %}selected{%endif%} >Femenino</option>
+                           </select>
+                       </div>
+                       <div class="pull-left" style="margin-left: 50px;">
+                           <label>Fecha de Nacimiento: </label>
+                           <input type="text" style="background-color: #bce8f1" id="fechaNac" name="fechaNac" value="{{datos.datosAlu.6}}">
+                       </div>
+                   </div>
+       
+                   <div class="clearfix" style="width:300px;">
+                       <div class="pull-left" style="width:300px;">
+                           <label>Email: </label>
+                           <input type="text" id="email" style="background-color: #bce8f1" name="email" value="{{datos.datosAlu.2}}" style="size:200px;">
+                       </div>
+                   </div>#}
+            {%else%}
+                <div align="center">
+                    <span style="font-size: 12pt;"> Usted no es Egresado. Para completar la encuesta primero debe iniciar el tr&aacute;mite de egreso. </span>
+                </div>
+            {%endif%}
+        </fieldset>
+        {# {%if(datos.calidad==1)%}
+        <a role="button" tabindex="0" class="guardar btn btn-info btn-small pull-right" onclick="verifica();" >{{ "guardado"|trans|capitalize }}</a>
+               
+                {%endif%}
+        #}
+        {% if this.data.mensajes %}
+            <div class='alert alert-error' style="width:300px;">
+                {% import "kernel/macro_notificaciones.twig" as notificaciones %}
+                {{ notificaciones.render_notif(this.data.mensajes) }}
+            </div>
+        {% endif %}
+    </form>  
+
+{% endblock contenido %}

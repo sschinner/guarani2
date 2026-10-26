@@ -1,0 +1,21 @@
+-- inserta la operacion - sui_operaciones limpia todo
+execute procedure dba.sui_operaciones ('820cur55', 'Alumnos en condiciones de cursar una materia', 'Alumnos en condiciones de cursar una materia',NULL);
+
+
+Begin;
+
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = "820cur55";
+
+
+-- inserta operacion_mod
+insert into dba.acc_operacion_mod (modulo, operacion, submodulo, orden) VALUES
+   ('82000001', '820cur55', '820cursa', 20); 
+insert into dba.acc_parametros (operacion, orden, ventana, parametros, cierra_anterior) VALUES
+               ('820cur55', 1, 'w_reporte', 'uo_dw, dp_carrera_materia_anio_academico, uo_dw, dl_alumnos_que_pueden_cursar, dl820_alumnos_que_pueden_cursar', 'N');
+
+insert into dba.acc_acciones_oper (operacion, accion) VALUES
+      ('820cur55', 'C');
+commit;
+
+

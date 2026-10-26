@@ -1,0 +1,11 @@
+-- Alta del mensaje
+-- Mensaje: 82002036.dca
+
+--********************************************
+-- mensaje 82002036, asociado al control de Turno Castigo.
+-- 
+--********************************************
+DELETE FROM mme_mensajes WHERE mensaje = 82002036;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82002036, "Tenés un turno Castigo para la materia: %s; carrera: %s2",  "Tenés un turno Castigo para la materia: %s; carrera: %s2", 2, 1);
+
+

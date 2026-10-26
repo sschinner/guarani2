@@ -1,0 +1,44 @@
+{#
+	Entrada:  comision, csrf
+#}
+<div>
+{% if comision.CATEDRA %}
+	<h4><div class="icon-arrow-right"></div> {{ comision.CATEDRA }} - {{ comision.PERIODO_LECTIVO }}</h4>
+{% else %}
+	<h4><div class="icon-arrow-right"></div> {{ comision.COMISION_NOMBRE }} - {{ comision.PERIODO_LECTIVO }}</h4>
+{% endif %}
+<div class='inscripcion' tabindex="0">
+	<div class="wrapper-detalle">
+		<div class='info_inscripcion'>
+			<div class="comision">
+				<span>{{'info_materia.inscripto_comision'|trans({'%1%': comision.NOMBRE_COMISION})}}</span>
+				<span class="docente">{{'info_materia.inscripto_docente'|trans({'%1%': comision.DOCENTE})}}</span>
+			</div>
+
+			<div class='comprobante-cursada' data-img='{{comision.URL_COMP}}' data-msg-toggle='<div class="comprobante"></div> {{"esconder_comprobante"|trans|capitalize}}'>
+				<a href='#'><div class="comprobante"></div> {{"mostrar_comprobante"|trans|capitalize}}</a>
+				<div class='img-placeholder hide'>
+					<div class="comprobante-actions">
+						<a class='btn btn-small js-print-comprobante' href='#' data-img='{{ comision.URL_IMP_COMP }}'><div class="icon icon-print"></div>{{'imprimir'|trans|capitalize}}</a>
+						<a class='btn btn-small js-mail-comprobante' href='{{comision.URL_MAIL_COMP}}'><div class="icon icon-envelope"></div>{{'enviar_por_mail'|trans|capitalize}}</a>
+						<span class="acchide"> N&uacute;mero transacci&oacute;n: {{ comision.NRO_TRANSACCION }}, Record&aacute; que el n&uacute;mero de transacci&oacute;n te ser&aacute; &uacute;til ante cualquier consulta en la Oficina de Alumnos </span>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+
+		<div class='acciones'>
+			<form class='form_baja' action='{{ comision.URL_BAJA }}' method='POST'>
+				{% import "kernel/macro_csrf.twig" as input_csrf %}
+				{{ input_csrf.mostrar(csrf) }}
+				<input type="hidden" name="materia" value="{{ comision.MATERIA }}" />
+				<input type="hidden" name="comision" value="{{ comision.ID }}" />
+				{% if param_insc_cur_bajas %}
+					<button class="btn btn-small" type='submit'><div class="icon-remove"></div> {{'dar_baja'|trans|capitalize }}</button>
+				{% endif %}	
+			</form>
+		</div>
+	</div>
+</div>
+</div>

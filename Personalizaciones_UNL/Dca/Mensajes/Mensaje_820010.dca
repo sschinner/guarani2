@@ -1,0 +1,11 @@
+-- Alta del mensaje
+-- Mensaje: 820010.dca
+
+--********************************************
+-- mensaje 820010, asociado al control: Controla si la persona tiene las condiciones para solicitar certificado pagos.
+-- 
+--********************************************
+
+DELETE FROM mme_mensajes WHERE mensaje = 820010;
+insert into mme_mensajes (tipo,	mensaje, mascara_original,mascara,clasificacion,boton)
+values (5, 820010, "No sos egresado o no has obtenido un título intermedio.","No sos egresado o no has obtenido un título intermedio.", 1, 1);

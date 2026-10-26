@@ -1,0 +1,85 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<div class="titulo_operacion">
+		<h2 class="clearfix">
+			<button class='btn btn-primary btn-small js-btn-back pull-left' data-url-back="{{this.data.url_back}}" alt="Volver"><span class="icon-chevron-left icon-white"></span></button>
+			<span class="pull-left">{{"header.menu.historial_asistencias"|trans|capitalize}}</span>
+			{% if this.data.datos  %}
+			<div class="pull-right">
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url.generar_pdf}}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url.generar_excel}}"><span class="acchide">{{'descargar_xls'|trans|capitalize}}</span><span class="g3w-icono-xls"></span></a>
+			</div>
+			{% endif  %}
+		</h2>
+	</div>
+	{% if this.data.datos  %}
+		{% for comision in this.data.datos %}
+			<table class="table table-condensed table-bordered">
+				<tr>
+					<th>{{"materia"|trans|capitalize}}</th>
+					<td>{{ comision.materia_nombre ~ ' ('~ comision.materia ~')'}}</td>
+				</tr>
+				<tr>
+					<th>{{"año académico"|trans|capitalize}}</th>
+					<td>{{ comision.anio_academico}}</td>
+				</tr>
+				<tr>
+					<th>{{"período lectivo"|trans|capitalize}}</th>
+					<td>{{ comision.periodo_lectivo}}</td>
+				</tr>
+				<tr>
+					<th>{{"comisión"|trans|capitalize}}</th>
+					<td>{{ comision.comision_nombre}}</td>
+				</tr>
+				{% if comision.subcomision_nombre  %}
+				<tr>
+					<th>{{"subcomisión"|trans|capitalize}}</th>
+					<td>{{ comision.subcomision_nombre}}</td>
+				</tr>
+				{% endif  %}
+				<tr>
+					<th>{{"porcentaje de inasistencias permitidas"|trans|capitalize}}</th>
+					<td>
+						<ul>
+							<li>{{"para regularizar"|trans|capitalize}}: {{ comision.porc_asist_regular}} %</li>
+							<li>{{"para promocionar"|trans|capitalize}}: {{ comision.porc_asist_promocion}} %</li>
+						</ul>
+					</td>
+				</tr>
+			</table>	
+
+			<table class='table table-condensed table-hover table-striped'>
+				<thead>
+					<tr>
+						<th>{{'fecha'|trans| capitalize}}</th>
+						<th>{{'inasistencias'|trans| capitalize}}</th>
+						<th>{{'descripción'|trans| capitalize}}</th>
+						<th>{{'justificadas'|trans| capitalize}}</th>
+						<th>{{'motivo justificación'|trans| capitalize}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for clase in comision.clases %}
+					<tr>
+						<td>{{clase.clase_fecha}}</td>
+						<td>{{clase.cant_inasistencias}}</td>
+						<td>{{clase.desc_inasistencias}}</td>
+						<td>{{clase.cant_justificadas}}</td> 
+						<td>{{clase.desc_justificacion}}</td> 
+					</tr>			
+				{% endfor %}
+					</tbody>
+				</table>
+				<strong>Totales</strong>
+						<ul>
+							<li>{{"clases"|trans|capitalize}}: {{ comision.cant_clases}}</li>
+							<li>{{"inasistencias"|trans|capitalize}}: {{ comision.cant_inasistencias}}</li>
+							<li>{{"justificadas"|trans|capitalize}}: {{ comision.cant_justificadas}}</li>
+						</ul>
+		{% endfor %}
+	{% else %}
+		<div class="alert">
+			{{"reporte.no_hay_datos.historial_asistencias"|trans|capitalize}}
+		</div>
+	{% endif %}
+{% endblock %}

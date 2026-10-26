@@ -1,0 +1,28 @@
+#guarani_form_reset_pass .error_val {
+ background-color: #EED3D7;
+ color: #B94A48; 
+}
+
+#guarani_form_reset_pass p.alert-error {
+	background: none;
+    border: 0;
+    color: #B94A48;
+    font-size: 11px;
+    line-height: 15px;
+    margin: 2px 0;
+}
+
+#guarani_form_reset_pass .g3w-icono-fail {
+	position: relative;
+	cursor: auto;
+	margin-right: 5px;
+}
+
+#guarani_form_reset_pass #password, #guarani_form_reset_pass #rpassword, #guarani_form_reset_pass #password-error, #guarani_form_reset_pass #rpassword-error{
+	float: left;
+}
+
+#guarani_form_reset_pass #password-error, #guarani_form_reset_pass #rpassword-error{
+	padding: 6px;
+	display: none;
+}

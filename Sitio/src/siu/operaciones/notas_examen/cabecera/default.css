@@ -1,0 +1,41 @@
+#cabecera .titulo-navbar {
+	background-color: #EAEAEA;
+	padding: 3px 10px 4px 10px;
+	color: #555;
+	margin-top: 0;
+	margin-bottom: 10px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+#cabecera .wrapper-expand {
+	width: 100%;
+	text-align: center
+}
+#cabecera .table-expander {
+	color: #58B1D1;
+	cursor: pointer;
+}
+#cabecera .triangle {
+	width: 8px;
+	height: 8px;
+	display: inline-block;
+	margin-left: 4px;
+}
+
+#cabecera .triangle.down {
+	background: url('../../../img/triangle-down.png') no-repeat;	
+}
+
+#cabecera .triangle.up {
+	background: url('../../../img/triangle-up.png') no-repeat;
+}
+
+#cabecera .js-detalle-materia {
+	padding-bottom: 10px;
+}
+
+#cabecera h3 span {
+	color: #333;
+}

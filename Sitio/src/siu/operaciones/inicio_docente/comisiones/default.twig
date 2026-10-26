@@ -1,0 +1,64 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<h3>{{'ultimas_actividades_comisiones'|trans|capitalize}}</h3>
+	{% if this.data.items %}
+        <table id="comisiones" class="table table-bordered table-condensed" summary="Actividades" >
+		{% set cant = 0 %}
+			
+			{% for item in this.data.items %}
+				{% if item.TIPO == 'EVALUACION'%}
+				<tr style='background-color:#eee' {% if cant >= this.get_cant_comisiones_visibles %} class='js-comisiones-oculto hide' {% endif %}>
+					<td>
+						<span>{{ item.EVALUACION_FECHA }}</span>
+						<span class="horario">{{ item.HORARIO }}</span>
+					</td>
+					<td>
+						<div class="icono_tipo"><span class="tipo_{{ item.TIPO_ABREV | lower }}">{{ item.TIPO_ABREV }}</span></div>
+					</td>
+					<td>
+						<span class="materia">{{ item.MATERIA_NOMBRE }}  ({{ item.MATERIA }})</span>
+						<span class="comision">{{ item.COMISION_NOMBRE }} | {{ item.PERIODO_LECTIVO }} | {{ item.ANIO_ACADEMICO }}</span>
+						<span class="evaluacion">{{ item.EVALUACION_NOMBRE }} </span>
+					</td>
+					<td width='100px'> 
+						{%if item.MOSTRAR_BARRA_PORC %}
+							<div class='wrapper-carga'>
+							<div class='progreso-carga' style='width: {{ item.PORCENTAJE_CARGA ~ '%' }}'></div>
+							</div>
+							{{ item.PORCENTAJE_CARGA ~ '%' }}
+							<a class="btn btn-mini" href="{{ item.LINK }}">{{"notas" | trans | capitalize }}</a>
+						{% endif %}	
+					</td>
+				
+				{% else %}  
+					<tr {% if cant >= this.get_cant_comisiones_visibles %} class='js-comisiones-oculto hide' {% endif %}>
+					
+					<td>
+						<span>{{ item.FECHA_CLASE }}</span>
+						<span class="horario">{{ item.HORARIO }}</span>
+					</td>
+					<td>
+						<div class="icono_tipo"><span class="tipo_{{ item.TIPO_ABREV | lower }}">{{ item.TIPO_ABREV }}</span></div>
+					</td>
+					<td>
+						<span class="materia">{{ item.MATERIA_NOMBRE }}  ({{ item.MATERIA }})</span>
+						<span class="comision">{{ item.COMISION_NOMBRE }}  </span>
+						<span class="evaluacion">{{ item.TIPO_CLASE }} </span>
+					</td>
+					<td class="columna-accion" width=100px>
+						<a class="btn btn-mini" href="{{ item.LINK }}">{{"asistencia" | trans | capitalize }}</a>
+					</td>
+				{% endif %}  
+			</tr>
+			{% set cant = cant + 1 %}
+		{% endfor %}
+			{% if cant > this.get_cant_comisiones_visibles %} 
+			<tr class='comisiones-ver'><td colspan="4"><a id="js-link-ver-todo">{{ 'ver_mas'|trans|capitalize }}</a></td></tr>
+			{% endif %}
+        </table>
+	{% else %}
+		<div class="alert">{{ 'no_hay_datos_de_comisiones'|trans|capitalize }}</div>
+	{% endif %}
+         
+{% endblock %}
+	

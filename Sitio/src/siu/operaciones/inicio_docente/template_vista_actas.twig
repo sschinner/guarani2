@@ -1,0 +1,22 @@
+{% extends "kernel/una_columna.twig" %}
+{% block titulo_operacion %}<h2>{{ 'bienvenido'|trans|capitalize }}</h2>{% endblock %}
+{% block columna_1 %}
+
+<div class='row-fluid'>
+    <div class='span6'>
+	{#{ actas_examen.render }#}
+	{{ comisiones.render }}
+    </div>
+    <div class='span6'>
+	{#{ reporte.render }#}
+	{{ actas.render }}
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span12">
+        {{ lista_encuestas_pendientes.render }}
+    </div>
+</div>
+
+{% endblock %}

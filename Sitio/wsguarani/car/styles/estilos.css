@@ -1,0 +1,37 @@
+
+body {
+    background-color: #efefef;
+    background-image: url("../imagenes/bgpattern.png");
+    background-repeat: repeat;
+    border-top: 5px solid #008bb8;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 0.9em;
+    margin: 0;
+    padding: 0;
+}
+
+.cabecera {
+    padding: 5px;
+    width: 99%;
+}
+.cabecera div {
+    color: #5e5e5e;
+    font-size: 13px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    position: relative;
+    width: 920px;
+}
+
+.cabecera div span {
+    float: right;
+    margin-right: 20px;
+    margin-top: 15px;
+}
+fieldset {   
+  -moz-border-radius:5px;  
+  border-radius: 8px;  
+  -webkit-border-radius: 5px; //edit :D
+}
+#main {max-width:960px; min-width:320px; margin:0 auto;}

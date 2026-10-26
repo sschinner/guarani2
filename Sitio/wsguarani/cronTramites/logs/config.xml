@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns="http://logging.apache.org/log4php/">
+     
+    <appender name="archivoLog" class="LoggerAppenderFile">
+        <layout class="LoggerLayoutPattern">
+            <param name="conversionPattern" value="[%level] %date{Y-m-d H:i:s} - %message%newline" />
+        </layout>
+        <param name="file" value="logs/analitico.log" />
+    </appender>
+    
+    <appender name="envioMail" class="LoggerAppenderMail">
+        <layout class="LoggerLayoutSimple" />
+        <param name="to" value="guarani@rectorado.unl.edu.ar" />
+        <param name="from" value="noresponder@servicios.unl.edu.ar" />
+        <param name="subject" value="Log en Tramite de Certificado Analitico" />
+    </appender>
+     
+    <logger name="logTramiteAnalitico" additivity="false">
+        <level value="Info" />
+        <appender_ref ref="archivoLog" />
+    </logger>
+    
+    <logger name="mailTramiteAnalitico">
+        <appender_ref ref="envioMail" />
+    </logger>
+        
+</configuration>

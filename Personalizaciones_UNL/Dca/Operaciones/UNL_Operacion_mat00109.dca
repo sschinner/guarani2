@@ -1,0 +1,27 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.5.2
+-- Autor: Jorge Azcoaga
+-- *******************************************************************************
+Execute procedure dba.sp_cambiaparametro( 'mat00109', 1 , 4 , "dr820_certif_alumno_legal2" );
+Execute procedure dba.sp_cambiaparametro( 'mat00109', 1 , 5 , "dl820_certif_alumno_legal2" );
+Execute procedure dba.sp_cambiaparametro( 'mat00109', 1 , 2 , "dp820_alumno_carrera_corresponda" );
+
+
+-- Actualizacion de certificados a imprimir Automaticamente.
+
+begin;
+update sga_certif_param set masc_captura_param = 'dp820_alumno_carrera_corresponda', 
+	mascara_pantalla = 'dr820_certif_alumno_legal2', 
+	masc_impresion = 'dl820_certif_alumno_legal2' 
+where certificado = 1 and interfaz = 1;
+commit;
+
+
+begin;
+delete from sga_certif_argum where certificado = 1 and orden = 5;
+insert into sga_certif_argum values (1, 5, 'observaciones', 'char(', '', 'S', 'observaciones');
+commit;
+
+
+

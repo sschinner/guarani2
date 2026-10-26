@@ -1,0 +1,33 @@
+#examenes {
+	margin-top: 40px;
+}
+
+#examenes .motivo {
+	display: none;
+	background-color: #fff;
+}
+
+#examenes a {
+	cursor: pointer;
+}
+
+#examenes #examenes_historicos {
+	margin: 0;
+}
+
+#examenes label {
+	vertical-align: bottom;
+}
+
+#examenes .nota_titulo {
+	color: #08C; 
+	font-size: 14px;
+}
+
+#examenes .table {
+	margin-bottom: 0;
+}
+
+#examenes table tr td.centrado {
+    text-align: center;
+}

@@ -1,0 +1,41 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+    {# Si el certificado es valido #}
+    {% if this.data.certificado_valido %}
+
+        {# Si el certificado es de Alumno Regular #}
+        {% if this.data.tipo_certificado == 1 %}
+
+            <div class="hero-unit">
+                <h1>{{ this.data.titulo }}</h1>
+                <div id="descripcion" class="alert alert-block alert-success">
+                    {{ this.data.descripcion }}
+                </div>
+                <p>
+                    <a href="{{ this.data.url_volver }}" class="btn btn-primary btn-large">
+                        {{ 'volver' | trans | capitalize }}
+                    </a>
+                </p>
+            </div>
+
+        {% endif %}
+
+    {# Si el certificado es invalido #}
+    {% else %}
+
+        <div class="hero-unit">
+            <h1>{{ 'validador_certificados.certificado_invalido' | trans }}</h1>
+            <div id="descripcion" class="alert alert-block alert-error">
+                {{ 'validador_certificados.certificado_invalido_desc' | trans }}
+            </div>
+            <p>
+                <a href="{{ this.data.url_volver }}" class="btn btn-primary btn-large">
+                    {{ 'volver' | trans | capitalize }}
+                </a>
+            </p>
+        </div>
+
+    {% endif %}
+
+{% endblock %}

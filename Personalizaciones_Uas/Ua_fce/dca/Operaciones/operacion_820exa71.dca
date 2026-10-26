@@ -1,0 +1,19 @@
+-- inserta la operacion - sui_operaciones limpia todo
+execute procedure dba.sui_operaciones ('820exa71', 'Alumnos que pierden la regularidad', 'Alumnos que pierden la regularidad',NULL);
+-- inserta operacion_mod
+Begin;
+
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = "820exa71";
+
+
+insert into dba.acc_operacion_mod (modulo, operacion, submodulo, orden) VALUES
+   ('82000001', '820exa71', '820exame', 910); 
+insert into dba.acc_parametros (operacion, orden, ventana, parametros, cierra_anterior) VALUES
+               ('820exa71', 1, 'w_reporte', 'uo_dw, dp820_carreras_aplazos, uo_dw, dl820_alumnos_perdida_regul, dl820_alumnos_perdida_regul', 'N');
+
+insert into dba.acc_acciones_oper (operacion, accion) VALUES
+      ('820exa71', 'C');
+
+
+commit;

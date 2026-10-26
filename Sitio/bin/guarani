@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+#	Disparo la consola!!!
+#
+dir_actual=`pwd`
+cd `dirname $0`
+g3w2_dir=`pwd`
+
+cd $dir_actual
+php $g3w2_dir/../src/siu/util/consola/run.php $*

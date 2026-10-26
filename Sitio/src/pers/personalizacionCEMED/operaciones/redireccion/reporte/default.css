@@ -1,0 +1,202 @@
+#formulario .bloque {
+	margin-bottom: 15px;
+}
+
+#formulario input, #formulario select { margin-right: 5px; }
+
+.fix-boton { padding-top: 23px; }
+
+#acordeon {
+	margin: 0 0 10px 0;
+}
+
+#acordeon a {
+	padding: 0 0 0 10px;
+	display: block;
+	line-height: 17px;
+	font-size: 17px;
+}
+
+#acordeon .cuadro {
+	margin: 10px 0 10px 0;
+	background-color: #fafafa; 
+	border: 1px solid #eee;
+	padding: 15px 0 15px 15px;
+}
+
+#acordeon a.colapsar {
+	background: url("../../../img/sprite.png") no-repeat 0 -233px;
+}
+
+#acordeon a.descolapsar {
+	background: url("../../../img/sprite.png") no-repeat 0 -221px;	
+}
+
+.errorCenso {
+	border-color: #FBC2C4;
+	color: #8A1F11;
+}
+
+/* CUADRO BUSQUEDA */
+
+#pais, #provincia, #cps, #localidad {
+	width: 288px;
+	font-size: 13px;
+}
+
+#pais, #provincia, #cps {
+	width: 302px;	
+}
+
+#cuadroBuscarLocalidad {
+	width:400px;
+	background: none repeat scroll 0 0 #F6F6F6;
+	border: 10px solid #fff;
+	color: #514721;
+}
+
+#cuadroBuscarLocalidad label{
+	font-size: 14px;
+}
+
+#cuadroBuscarLocalidad h2 {
+	margin: 10px 10px 0 10px;
+	font-weight: normal;
+	font-size: 17px;
+	border-bottom: 1px dotted #224552;
+	color: #2093D1;
+	line-height: 21px;
+}
+
+#cuadroBuscarLocalidad #ajax-loader {
+	float: right; margin: 1px 10px 0 0; width: 20px; display: none;
+}
+
+#cuadroBuscarLocalidad #error_busqueda_provincia, #cuadroBuscarLocalidad #error_busqueda_localidad, #cuadroBuscarLocalidad #error_busqueda_cp {
+	display: none;
+	font-size: 11px;
+	line-height: 13px;
+}
+
+#cuadroBuscarLocalidad hr {
+	color: #224552;
+	border-bottom: 1px dotted #224552;
+}
+
+.oculto { display: none; }
+.cuadroLocalidad { clear: both; margin: 10px;width: 93.7% /*375px*/; }
+/* FIN CUADRO BUSQUEDA */
+
+/* FINANCIAMIENTO */
+
+#financiamiento input {
+	float: left;
+	clear: left;
+}
+
+#otro_financiamiento {
+	margin-right: 5px;
+}
+
+
+/* TRABAJO */
+
+#datos_trabajo_adicionales input {
+	float: left;
+	clear: left;
+}
+
+/* TECNOLOGIA */
+#tecnologia input {
+	float: left;
+	clear: left;
+}
+
+/* DEPORTE */
+#deporte input {
+	float: left;
+	clear: left;
+}
+	
+.require {
+	border: 1px solid #af1b1b !important;
+}
+
+#CENS_NUMERO_PER_LECT, 
+#CENS_PISO_PER_LECT, 
+#CENS_DPTO_PER_LECT, 
+#CENS_UNIDAD_PER_LECT, 
+#CENS_CP_PER_LECT,
+#CENS_NUMERO_PROC, 
+#CENS_PISO_PROC, 
+#CENS_DPTO_PROC, 
+#CENS_UNIDAD_PROC, 
+#CENS_CP_PROC,
+#CENS_NRO_PERS_ALLEG, 
+#CENS_PISO_PERS_ALLEG, 
+#CENS_DPTO_PERS_ALLEG, 
+#CENS_UNIDAD_PERS_ALLEG, 
+#CENS_CP_PERS_ALLEG {
+	width: 80px;
+}
+
+#CENS_CALLE_PER_LECT{
+	width: 378px;
+}
+
+#CENS_LOC_PER_LECT_TEXTO{
+	width: 360px;
+}
+
+#CENS_CALLE_PROC{
+	width: 376px;
+}
+
+#CENS_LOC_PROC_TEXTO{
+	width: 344px;
+}
+
+#CENS_NOMBRE_PERS_ALLEG{
+	width: 378px;
+}
+
+#CENS_CALLE_PERS_ALLEG{
+	width: 378px;
+}
+
+#CENS_LOC_PERS_ALLEG_TEXTO{
+	width: 344px;
+}
+
+
+#estudios input{
+	width: 400px;
+}
+
+#estudios select{
+	width: 414px;
+}
+
+#idioma dt {
+	width: 100px;
+}
+
+#formulario label {
+	height: 18px;
+	text-align: bottom;
+}
+
+#formulario span.obligatorio {
+	margin-left: 10px;
+	background: url(../../../img/error-dev.png) no-repeat 0px 2px;
+	width: 27px;	
+	display: inline-block;
+	height: 18px;
+}
+
+.btn-borrar, .btn-borrar:hover {
+	height: 27px;
+	padding-left: 29px;
+	font-size: 10.5px;
+	background-position: -450px 6px;
+}

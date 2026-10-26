@@ -1,0 +1,7 @@
+{% if modo == 'skeleton' %}
+    <div id='{{ this.get_id }}' aria-live='polite' class="pagelet"></div>
+{% else %}
+    {% if modo == 'completo' %}<div id='{{ this.get_id }}' aria-live='polite' class="pagelet">{% endif %}
+    {% block contenido %}{% endblock %}
+    {% if modo == 'completo' %}</div>{% endif %}
+{% endif %}

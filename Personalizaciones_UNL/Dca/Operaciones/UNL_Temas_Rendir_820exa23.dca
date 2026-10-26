@@ -1,0 +1,11 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión Alfa 6.0
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones( '820exa23', 'Alumnos que Rinden Temas Parciales', 'Reporte de alumnos que rinden temas particulares por Equivalencia Parcial', null );
+DELETE FROM acc_operacion_mod WHERE operacion = '820exa23';
+INSERT INTO acc_operacion_mod VALUES ('00000020','820exa23','Reportes', 1080);
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( '820exa23', 1, 'w_filtros_busqueda', 'uo_dw_filtros, dk820_mesas_ex_en_actas_impreso, 10, uo_dw_anio_turno_examen, dp_anio_academico_turno_examen, No existen Mesas de Examen con Alumnos que rindan Temas Parciales', 'N' );
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( '820exa23', 2, 'w_actas_de_examen', '11, uo_dw, d_acta_de_examen, 1, uo_folios_acta,d820_detalle_acta_con_notas, 15, folio, renglon,dr820fiq_acta_temas_a_rendir, d_folios_acta_examen, dk_insc_ex_no_incluidas_en_acta', 'N' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '820exa23', 'C' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '820exa23', 'M' );

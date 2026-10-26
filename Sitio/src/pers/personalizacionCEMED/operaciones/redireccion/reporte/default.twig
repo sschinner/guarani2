@@ -1,0 +1,36 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+    {% set datos=this.get_data_reporte() %}
+  
+    <script>
+        $(document).ready(function () {
+           
+           document.forms['inicio'].submit();
+           alert('RECUERDE CERRAR LA SESION DE GUARANI AL FINALIZAR.');
+        });
+
+
+
+    </script>
+   <!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+      <div>
+            <legend class="clearfix">
+                <span class="pull-left"><h3 class="resaltar">{{datos.nombreTitulo|trans}}</h3></span>
+
+            </legend>
+            <form name="inicio" id="inicio" action="{{datos.urlRedir}}" method="POST">
+                 <input type="text" name="fUsuario" id="fUsuario" size="25" maxlength="50" value="{{datos.usuario}}" style="display: none;"><br><br>
+                 <input type="password" name="fClave" id="fClave" size="35" maxlength="100" value="{{datos.pass}}" style="display: none;">
+                <br><br>
+                
+                
+            </form>
+        </div>
+
+{% endblock contenido %}

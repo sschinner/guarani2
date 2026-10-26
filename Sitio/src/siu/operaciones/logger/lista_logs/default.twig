@@ -1,0 +1,16 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    <div class='filtro_lista_wrapper'>
+        <div id='filtro_logs'>
+            <input type="text" name="filtro" value="" />
+        </div>
+    </div>
+    <div id='lista_logs' class="well sidebar-nav">
+        <ul class="nav nav-list">
+	    <li class="nav-header">Listado de logs</li>
+            {% for log in this.data %}
+                <a href='{{ log.url }}'><li>{{ log.nombre }}</li></a>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

@@ -1,0 +1,67 @@
+body {
+  padding-top: 40px;
+  position: relative;
+}
+.navbar .btn-navbar-inverse {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #0e0e0e;
+  *background-color: #040404;
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#151515), to(#040404));
+  background-image: -webkit-linear-gradient(top, #151515, #040404);
+  background-image: -o-linear-gradient(top, #151515, #040404);
+  background-image: linear-gradient(to bottom, #151515, #040404);
+  background-image: -moz-linear-gradient(top, #151515, #040404);
+  background-repeat: repeat-x;
+  border-color: #040404 #040404 #000000;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:dximagetransform.microsoft.gradient(startColorstr='#ff151515', endColorstr='#ff040404', GradientType=0);
+  filter: progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+.navbar .btn-navbar-inverse:hover,
+.navbar .btn-navbar-inverse:active,
+.navbar .btn-navbar-inverse.active,
+.navbar .btn-navbar-inverse.disabled,
+.navbar .btn-navbar-inverse[disabled] {
+  color: #ffffff;
+  background-color: #040404;
+  *background-color: #000000;
+}
+.navbar .btn-navbar-inverse:active,
+.navbar .btn-navbar-inverse.active {
+  background-color: #000000 \9;
+}
+@media (min-width: 768px) and (max-width: 980px) {
+  body {
+    padding-top: 0;
+  }
+  .main-nav .nav > li > a {
+    border-right: none;
+  }
+}
+@media (max-width: 767px) {
+  body {
+    padding-top: 0;
+  }
+  #kernel_contenido {
+    margin-top: 0;
+  }
+  .navbar-fixed-top {
+    margin-bottom: 0;
+  }
+  .main-nav .nav > li > a {
+    border-right: none;
+  }
+  #select_materias {
+    width: 100%;
+  }
+  .navbar-inner {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+@media (max-width: 480px) {
+  body {
+    padding-top: 0;
+  }
+}

@@ -1,0 +1,13 @@
+-- *******************************************************************************
+-- SIU - SIU - Guarani­. Sistema de Gestion Academica
+-- Version 2.0.7
+-- Reemplazar el valor hasta del parametro en base al cual se actualiza (finaliza) la regularidad en la materia, si rindio mas de 'cant_veces_rendir_examen' veces mal.
+-- Solicitado por FCV-FCA
+-- *******************************************************************************
+
+begin;
+
+update par_parametros_sis set valor_hasta = 99 where 
+parametro = 'cant_veces_rendir_examen';
+
+commit;

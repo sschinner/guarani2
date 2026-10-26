@@ -1,0 +1,10 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Operacion: pes00005
+-- Version: 2.9.2
+-- *******************************************************************************
+
+Execute procedure dba.sui_operaciones( 'pes00005', 'Información Nominal de alumnos SIU-ARAUCANO', 'Alumnos Nominal Araucano 2016', null );
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( 'pes00005', 1, 'w_int_arau_nominal_alumnos', 'd_int_arau_nominal_archivo0, d_int_arau_nominal_archivo1, d_int_arau_nominal_archivo2', 'N' );
+
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( 'pes00005', 'C' );

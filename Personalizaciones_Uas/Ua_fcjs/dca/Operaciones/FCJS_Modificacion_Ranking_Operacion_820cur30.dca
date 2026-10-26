@@ -1,0 +1,14 @@
+Execute procedure "dba".sui_operaciones('820cur30',
+	'Modificación Ranking de Alumnos Inscriptos a Cursar',
+	'Modificación Ranking de Alumnos Inscriptos a Cursar',
+	NULL);
+
+DELETE FROM acc_operacion_mod WHERE operacion = '820cur30';
+INSERT INTO acc_operacion_mod VALUES ('00000015', '820cur30', 'Abm', 350);
+
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( '820cur30', 1, 'w_filtros_busqueda', 'uo_dw, dk820_com_actas_reg, 15,uo_dw_filtros,dp_anio_periodo_lectivo,No se encontraron comisiones', 'N' );
+
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, titulo, cierra_anterior ) VALUES ( '820cur30', 2, 'w_abm_detalle', 'uo_dw, d820_com_rank, 10', NULL, 'N' );
+
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '820cur30', 'C' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '820cur30', 'M' );

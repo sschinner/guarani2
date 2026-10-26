@@ -1,0 +1,43 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.5.0
+-- *******************************************************************************
+-- Operacion: egr05030
+Execute procedure dba.sp_cambiaparametro( 'egr05030', 2 , 2 , "d820_abm_titulos_otorg" );
+
+Execute procedure dba.sui_ventanas( 'w820_am_detalle_egr_titulo' );
+
+update acc_parametros set ventana = 'w820_am_detalle_egr_titulo'
+where operacion = 'egr05030' and orden = 2;
+
+-- Se permite modificar los datos de la operacion.
+DELETE FROM dba.acc_acciones_oper WHERE operacion = 'egr05030' and accion = 'M';
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( 'egr05030', 'M' );
+
+-- Operacion: egr05060
+Execute procedure dba.sp_cambiaparametro( 'egr05060', 2 , 2 , "d820_m_titulos_otorg_disp_decano" );
+
+-- Operacion: egr05190
+Execute procedure dba.sp_cambiaparametro( 'egr05190', 2 , 2 , "d820_m_titulos_otorg" );
+
+-- Operacion: egr05200
+Execute procedure dba.sp_cambiaparametro( 'egr05200', 2 , 2 , "d820_m_titulos_otorg_colacion" );
+
+
+Execute procedure dba.sui_ventanas( 'w820_abm_detalle_maq_estados' );
+
+update acc_parametros set ventana = 'w820_abm_detalle_maq_estados'
+where operacion = 'egr05200' and orden = 2;
+
+
+-- Operacion: egr05070
+Execute procedure dba.sp_cambiaparametro( 'egr05070', 2 , 2 , "d820_m_titulos_otorg_rect" );
+
+Execute procedure dba.sui_ventanas( 'w820_abm_detalle_maq_estados_2' );
+
+update acc_parametros set ventana = 'w820_abm_detalle_maq_estados_2'
+where operacion = 'egr05070' and orden = 2;
+
+-- Operacion: egr10001
+Execute procedure dba.sp_cambiaparametro( 'egr10001', 2 , 2, "d820_m_titulos_otorg" );
+

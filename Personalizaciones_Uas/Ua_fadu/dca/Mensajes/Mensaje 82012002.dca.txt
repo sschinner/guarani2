@@ -1,0 +1,9 @@
+-- Alta del mensaje
+-- Mensaje: 82012002.dca
+
+--********************************************
+-- mensaje 82012002, asociado al control de créditos.
+-- 
+--********************************************
+DELETE FROM mme_mensajes WHERE mensaje = 82012002;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82012002, "No tenés los créditos necesarios para cursar esta materia.",  "No tenés los créditos necesarios para cursar esta materia.", 2, 1);

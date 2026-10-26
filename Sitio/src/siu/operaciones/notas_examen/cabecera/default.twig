@@ -1,0 +1,67 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+<h3 class="titulo-navbar clearfix">
+	<div class="pull-left">
+		{{ this.data.MATERIA_NOMBRE }} ({{ this.data.MATERIA }}) - {{ this.data.DIA }}
+	</div>
+	<div class="pull-right">
+		<button class="btn btn-small" id="js-colapsar-info-mesa"><span class="icon-th-list"></span> <span>Detalles</span></button>
+		<button class="btn btn-small" id="js-colapsar-herramientas"><span class="icon-wrench"></span> <span>Autocompletar</span></button>
+	</div>
+</h3>
+
+<div class="js-detalle-materia" id="tabla_detalle" aria-live="assertive" style="display: none;">
+
+	<table  class="table table-condensed" summary="Detalles de materia y examen">
+		<tr>
+			<th id="mat" scope="row"><strong>{{'materia'|trans|capitalize}}:</strong></td>
+			<td headers="mat">{{ this.data.MATERIA_NOMBRE }} ({{ this.data.MATERIA }})</td>
+			<th id="acta" scope="row"><strong>{{'acta_examen'|trans|capitalize}}:</strong></td>
+			<td headers="acta">{{ this.data.ACTA }}</td>
+		</tr>
+		<tr>
+			<th id="anio" scope="row"><strong>{{'anio'|trans|capitalize}}:</strong></td>
+			<td headers="anio">{{ this.data.ANIO_ACADEMICO }}</td>
+			<th id="folios" scope="row"><strong>{{'folios'|trans|capitalize}}:</strong></td>
+			<td headers="folios">{{ this.data.FOLIOS }}</td>
+		</tr>
+
+		<tr>
+			<th id="turno" scope="row"><strong>{{'turno'|trans|capitalize}}:</strong></td>
+			<td headers="turno">{{ this.data.TURNO_EXAMEN }}</td>
+			<th id="mesa" scope="row"><strong>{{'mesa_examen'|trans|capitalize}}:</strong></td>
+			<td headers="mesa">{{ this.data.MESA_EXAMEN }}</td>
+		</tr>
+
+		<tr>
+			<th id="libro" scope="row"><strong>{{'libro'|trans|capitalize}}:</strong></td>
+			<td headers="libro" >{{ this.data.LIBRO }}</td>
+			<th id="tipo_acta" scope="row"><strong>{{'tipo_acta'|trans|capitalize}}:</strong></td>
+			<td headers="tipo_acta"> {{ this.data.TIPO_ACTA_NOMBRE }}</td>
+		</tr>
+
+		<tr>
+			<th id="llamado" scope="row"><strong>{{'llamado'|trans|capitalize}}:</strong></td>
+			<td headers="llamado" >{{ this.data.LLAMADO }}</td>
+			<th id="sede" scope="row"><strong>{{'sede'|trans|capitalize}}:</strong></td>
+			<td headers="sede" >({{ this.data.SEDE }}) {{ this.data.SEDE_NOMBRE }}</td>
+		</tr>
+
+		<tr>
+			<th id="aula" scope="row"><strong>{{'aula'|trans|capitalize}}:</strong></td>
+			<td headers="aula">{{ this.data.AULA_NOMBRE }}</td>
+			<th id="edi" scope="row"><strong>{{'edificio'|trans|capitalize}}:</strong></td>
+			<td headers="edi">{{ this.data.EDIFICIO_NOMBRE }}</td>
+		</tr>
+
+		<tr>
+			<th id="obs" scope="row" colspan="4"><strong>{{'observaciones'|trans|capitalize}}:</strong></th><td headers="obs"> {{ this.data.OBSERVACIONES }}</td>
+		</tr>
+	</table>
+
+	<a id='ver_escala' class="btn"href="#"><span class="icon-eye-open"></span> {{ 'ver_escala_notas'|trans|capitalize }}</a>
+
+</div>
+
+{% endblock %}

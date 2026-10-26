@@ -1,0 +1,6 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.6.3
+-- *******************************************************************************
+Execute procedure dba.sp_cambiaparametro( 'egr00102', 1, 4, "dr820_padron_de_egresados" );
+Execute procedure dba.sp_cambiaparametro( 'egr00102', 1, 5, "dl820_padron_de_egresados" );

@@ -1,0 +1,9 @@
+-- Alta del mensaje
+-- Mensaje: 8209902.dca
+
+--********************************************
+-- mensaje 8209902, asociado al control:Controla si el Alumno tiene la Materia Regularizada en otra UA!. CAPIC
+-- 
+--********************************************
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 8209902, "Tenés regularizada por integración, la Materia %s de la Carrera %s2, en la %s3.",  "Tenés regularizada por Integración, la Materia %s de la Carrera %s2, en la %s3.", 2, 1);
+

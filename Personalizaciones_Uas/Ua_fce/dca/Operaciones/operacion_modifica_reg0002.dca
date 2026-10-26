@@ -1,0 +1,12 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 1.5.0
+-- Ultima ver de modificacion: 2.05.0
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones( 'reg00002', 'Readmisión', 'Pasa el alumno a regular con una readmisión', null );
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, titulo, cierra_anterior) VALUES ( 'reg00002', 1, 'w_filtros_busqueda', 'uo_dw, dr820_fce_alumnos_irregulares, 15, uo_dw_filtros, dp_carreras_vigentes, No se encontraron alumnos no regulares', 'Alumnos no Regulares','N');
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, titulo, cierra_anterior ) VALUES ( 'reg00002', 2, 'w_abm_readmision', 'uo_dw, d_readmision', 'Datos readmisión', 'N');
+
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( 'reg00002', 'M' );
+
+

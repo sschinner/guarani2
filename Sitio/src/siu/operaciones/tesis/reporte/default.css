@@ -1,0 +1,15 @@
+/*#items table > tbody > tr > td:first-child {
+	width: 40%;
+}*/
+
+#items table #titulo {
+	width: 25%;
+}
+
+#items table #carrera {
+	width: 25%;
+}
+
+#items table #legajo {
+	width: 8%;
+}

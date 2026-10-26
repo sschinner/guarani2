@@ -1,0 +1,61 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+{% if this.data %}
+
+<button aria-live="polite" class="btn btn-small" id="js-toggle-all" data-toggle-texto="{{'mostrar_informacion_parcial_todo'|trans|capitalize}}">{{'esconder_informacion_parcial_todo'|trans|capitalize}}</button>
+
+<ul class='lista'>
+    {% for materia in this.data %}
+	<li class='materia'>
+	    <div class='materia-nombre js-materia-cabecera' tabindex='0'>{{ materia.NOMBRE }} ({{ materia.MATERIA }})</div>
+		<div class="js-materia-contenido">
+			{% for orden, comision in materia.COMISIONES %}
+			<ul class='lista-comisiones'>
+				<li id='{{ comision.URL }}'
+					data-comision-id='{{ comision.URL }}' 
+					class='comision'
+                                        tabindex='0'
+					data-fecha-ini-per-lect='{{ comision.FECHA_INICIO_PER }}'
+				>
+				<div class='comision-nombre clearfix'>
+					{% if comision.EVALUACIONES %}<span class="js-toggle_icon abierto"></span>{% endif %}<strong>Comisi&oacute;n:</strong> {{ comision.NOMBRE }} - <strong>Per&iacute;odo Lectivo:</strong> {{comision.PERIODO_LECTIVO}} - <strong>Turno:</strong> {{comision.TURNO}} - <strong>Inscriptos:</strong> {{ comision.CANT_INSCRIPTOS }} {{ _self.boton_crear(not comision.COMPLETA) }}
+				</div>			
+				<ul class='parciales-comision unstyled' orden='{{orden}}'>
+				{% if comision.EVALUACIONES %}
+					{% for evaluacion in comision.EVALUACIONES %}
+						{% include 'lista_materias/parcial.twig' with {
+							'nombre': evaluacion.NOMBRE, 
+							'tipo': evaluacion.EVALUACION,
+							'porcentaje': evaluacion.PORCENTAJE_CARGA,
+							'cant_inscriptos': evaluacion.CANT_INSCRIPTOS,
+							'url_listar': evaluacion.URL_LISTAR,
+							'url_editar': evaluacion.URL_EDITAR,
+							'evaluacion_id': evaluacion.ID,
+							'fecha': evaluacion.FECHA,
+							'puede_cargar_notas': evaluacion.PUEDE_CARGAR_NOTAS,
+						} only %}
+					{% endfor %}
+				{% endif %}
+				</ul>
+				</li>
+			</ul>
+			{% endfor %}
+		</div>
+	</li>
+    {% endfor %}
+</ul>
+{% else %}
+	<div class="alert">
+		{{"no_hay_datos.comisiones"|trans|capitalize}}
+	</div>
+{% endif %}
+{% endblock %}
+
+{% macro boton_crear(puede_crear) %}
+    {% if puede_crear %}
+	<button class='crear btn btn-mini pull-right'>{{ "crear_parcial"|trans|capitalize }}</button>
+	{% else %}
+	<button class='crear btn btn-mini pull-right' style='display:none;'>{{ "crear_parcial"|trans|capitalize }}</button>
+    {% endif %}
+{% endmacro %}

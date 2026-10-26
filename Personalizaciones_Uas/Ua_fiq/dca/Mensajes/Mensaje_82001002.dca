@@ -1,0 +1,9 @@
+-- Alta del mensaje
+-- Mensaje: 82001002.dca
+
+--********************************************
+-- mensaje 82001002, asociado al control: 820_cant_de_mat_turno_esp, cantidad de materias faltantes para egresar, para poder inscribirse en un Turno Especial.
+-- 
+--********************************************
+DELETE FROM mme_mensajes WHERE mensaje = 82001002;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82001002, "Te faltan mas de %s materias para Egresar",  "Te faltan mas de %s materias para Egresar", 2, 1);

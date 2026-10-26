@@ -1,0 +1,10 @@
+-- Alta del mensaje
+-- Mensaje: 82012001.dca
+
+--********************************************
+-- mensaje 82012001, asociado al control de Cursado Vertical.
+-- 
+--********************************************
+
+DELETE FROM mme_mensajes WHERE mensaje = 82012001;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82012001, "Verificar Turno y Cátedra de la correlativa anterior",  "Verificar Turno y Cátedra de la correlativa anterior", 2, 1);

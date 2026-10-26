@@ -1,0 +1,21 @@
+#operaciones #guardar{
+    margin-top: 10px;
+}
+
+#operaciones form .accordion-group {
+    background-color: #fff !important;
+}
+
+#operaciones .titulo_operacion h2 {
+    border-bottom: none !important;
+}
+
+#operaciones .accordion-heading{
+    background-color: #e7f0f7 !important;
+    border: 1px solid #c3d9ec;
+}
+
+#operaciones .accordion-heading a{
+    color: #000 !important;
+}
+

@@ -1,0 +1,59 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_ficha_alumno.twig" as ficha_alumno %}
+{% block contenido %}
+    {{ ficha_alumno.render_menu(this.data.menu_reportes, this.data.categoria_actual, this.data.reporte_actual) }}
+	<div id="reporte_contenido">
+		<h3>{{ 'ficha_alumno.rep_regularidades' | trans | capitalize }}</h3>
+		{% for carrera in this.data.carreras %}
+		
+			<ul class="ficha_alumno_ul">
+				
+					<li><strong>{{ 'ficha_alumno.carrera' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.carrera)}}</li>
+					<li><strong>{{ 'ficha_alumno.legajo' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.legajo)}}</li>
+					<li><strong>{{ 'ficha_alumno.indicador_materia_aprobada' | trans | capitalize }}</li>
+					
+			</ul>
+			{% if carrera.materias %}
+				<table class='table table-condensed table-hover table-striped'>
+						<thead>
+							<tr>
+								<th>{{'ficha_alumno.materia'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.comision'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.nota'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.resultado'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.fecha_regularizacion'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.fecha_fin_vigencia'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.origen'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.acta_o_resolucion'|trans}}</th>
+								<th>{{'ficha_alumno.anio'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.periodo_lectivo'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.plan'|trans|capitalize}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for materia in carrera.materias %}
+								<tr{% if materia.link %} class="link-in-data" data-link="{{materia.link}}"{% endif %}>
+									<td class="col_izq">{{ficha_alumno.mostrar(materia.materia)}}</td>
+									<td>{{ficha_alumno.mostrar(materia.comision)}}</td>
+									<td>{{materia.nota}}</td>
+									<td>{{ficha_alumno.mostrar(materia.resultado)}}</td>
+									<td>{{ficha_alumno.mostrar(materia.fecha_regularizacion)}}</td>
+									<td>{{ficha_alumno.mostrar(materia.fecha_fin_vigencia)}}</td>
+									<td>{{ficha_alumno.mostrar(materia.origen)}}</td>
+									<td>{{ficha_alumno.mostrar(materia.acta_resolucion)}}</td>
+									<td>{{ficha_alumno.mostrar(materia.anio)}}</td>
+									<td>{{ficha_alumno.mostrar(materia.per_lec)}}</td>
+									<td>{{ficha_alumno.mostrar(materia.plan)}}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+			{% else %}
+				<div class="alert text-warning">{{'ficha_alumno.no_hay_regularidades'|trans}}</div>
+			{% endif %}
+		
+		{% else %}
+			<div class="alert text-warning">{{'ficha_alumno.no_hay_informacion'|trans}}</div>
+		{% endfor %}
+	</div>
+{% endblock %}

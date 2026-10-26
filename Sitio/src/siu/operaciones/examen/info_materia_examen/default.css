@@ -1,0 +1,319 @@
+#info_materia_examen {
+	margin-bottom: 15px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    border-left: 1px solid #E5E5E5;
+    border-bottom: 1px solid #E5E5E5;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+#info_materia_examen .js-mis-inscripciones td:first-child {
+	width: 80%;
+}
+
+#info_materia_examen .js-mis-inscripciones td {
+	vertical-align: middle;
+}
+
+#info_materia_examen h3 {
+	color: #212121;
+}
+
+#info_materia_examen .fecha { 
+	color: #6D6E71; 
+	font-weight: bold; 
+}
+
+#info_materia_examen .docente, #info_materia_examen .catedra { color: #999999; }
+
+#info_materia_examen .catedra_ver_info {
+    font-size: 12px;
+    background: url('../../../img/sprite.png') 46px -222px no-repeat;
+    padding-right: 10px;
+}
+
+#info_materia_examen .catedra_ver_info a {
+    color: #0094D9;
+}
+
+#info_materia_examen span.activo {
+    background: url('../../../img/sprite.png') 46px -234px no-repeat;
+}
+
+#info_materia_examen .toggle_info_catedra {
+    margin: 0 0 15px 20px;
+    padding: 0 0 8px 8px;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    overflow: hidden;
+    clear: both;
+    color: #919395;
+}
+
+#materia-nombre:focus {
+    outline: 0;  
+}
+
+#filtro_comisiones {
+    font-size: 10px;
+    padding: 4px 10px;
+    background-color: #f5f5f5;
+    margin-bottom: 20px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+#filtro_comisiones .wrapper {
+    margin-right: 10px;
+}
+
+#filtro_comisiones div > span:first-child {
+    padding-top: 5px;
+    margin-right: 5px;
+    display: block;
+}
+
+/* -- FILTROS -- */
+
+#info_materia_examen .filtros {
+    display: inline-block;
+    margin-bottom: 0;
+    border: 1px solid #ccc;
+    background: #fefefe; /* Old browsers */
+    background: -moz-linear-gradient(top, #fefefe 50%, #fefefe 50%, #f5f5f5 50%, #f5f5f5 50%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#fefefe), color-stop(50%,#fefefe), color-stop(50%,#f5f5f5), color-stop(50%,#f5f5f5)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #fefefe 50%,#fefefe 50%,#f5f5f5 50%,#f5f5f5 50%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #fefefe 50%,#fefefe 50%,#f5f5f5 50%,#f5f5f5 50%); /* Opera11.10+ */
+    background: -ms-linear-gradient(top, #fefefe 50%,#fefefe 50%,#f5f5f5 50%,#f5f5f5 50%); /* IE10+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#f5f5f5',GradientType=0 ); /* IE6-9 */
+    background: linear-gradient(top, #fefefe 50%,#fefefe 50%,#f5f5f5 50%,#f5f5f5 50%); /* W3C */
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+#info_materia_examen .filtros li {
+    float: left;
+    border-right: 1px solid #ccc;
+}
+
+#info_materia_examen .filtros li:last-child {
+    border: none;
+}
+
+#info_materia_examen .filtros li span {
+    padding: 2px 5px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+#info_materia_examen .filtros li:hover,
+#info_materia_examen .filtros li.seleccionado {
+    background-color: #0088CC;
+	color: white;
+}
+
+#info_materia_examen .filtros li:first-child.seleccionado,
+#info_materia_examen .filtros li:first-child:hover {
+	-webkit-border-top-left-radius: 2px;
+	-webkit-border-bottom-left-radius: 2px;
+	-moz-border-radius-topleft: 2px;
+	-moz-border-radius-bottomleft: 2px;
+	border-top-left-radius: 2px;
+	border-bottom-left-radius: 2px;
+}
+
+#info_materia_examen .filtros li:last-child.seleccionado,
+#info_materia_examen .filtros li:last-child:hover {
+	-webkit-border-top-right-radius: 3px;
+	-webkit-border-bottom-right-radius: 3px;
+	-moz-border-radius-topright: 3px;
+	-moz-border-radius-bottomright: 3px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+#info_materia_examen .acciones {
+	text-align: right;
+}
+
+#info_materia_examen .acciones form {
+	margin-bottom: 0;
+}
+
+/* -- COMISIONES -- */
+
+#info_materia_examen #comisiones .comision {
+    padding: 10px;
+    border-bottom: 1px dashed #e5e5e5;
+}
+
+#info_materia_examen .comision h5 {
+    margin-bottom: 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#info_materia_examen .comision_detalle {
+    width: 78%;
+}
+
+#info_materia_examen .comision_detalle p {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+#info_materia_examen .comision_docente p {
+    color: #919395;
+    font-weight: normal;
+}
+
+#info_materia_examen .subcomisiones {
+    clear: both;
+}
+
+#info_materia_examen .subcomisiones fieldset {
+    background-color: #F1F1F2;
+    margin-bottom: 10px;
+    padding: 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+#info_materia_examen .subcomisiones fieldset.error {
+    background: none repeat scroll 0 0 #FBE3E4;
+}
+
+#info_materia_examen .subcomision_nombre {
+    font-weight: bold;
+}
+
+#info_materia_examen .subcomisiones ul.radio li {
+    padding: 10px 5px 10px 0;
+    margin-left: 10px;
+}
+
+#info_materia_examen .subcomision_detalle {
+    width: 95%;
+    float: left;
+}
+
+#info_materia_examen .subcomision_inscribirse {
+    float: right;
+}
+
+#info_materia_examen .subcomisiones input[type=submit] {
+    float: right;
+}
+
+/* -- INFO INSCRIPCION -- */
+
+#info_materia_examen .inscripcion {}
+
+#info_materia_examen .form-actions {
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 5px 20px 6px;
+}
+
+#info_materia_examen .form-actions form {
+    margin: 0 0 0;
+}
+
+#info_materia_examen .info_inscripcion span {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#info_materia_examen .comision span {
+    display: block;
+}
+
+.inscripcion > p {
+    color: #6D6E71;
+}
+
+#info_materia_examen .horario {
+    font-weight: normal;
+    line-height: 14px;
+    margin-bottom: 12px;
+}
+
+#info_materia_examen .comprobante-examen {
+	display: inline-block;
+}
+
+#info_materia_examen .comprobante-examen .comprobante {
+	background: url('../../../img/sprite.png') 0 -80px no-repeat;
+	height: 17px;
+	width: 17px;
+	display: inline-block;
+	position: relative;
+	top: 4px;
+}
+
+#info_materia_examen .comprobante-actions {
+	margin: 10px 0;
+}
+
+#info_materia_examen .comprobante-examen img {
+	margin-bottom: 10px;
+}
+
+#info_materia_examen .llamado_mesa_info_no_inscripto {}
+
+#info_materia_examen .docente,
+#info_materia_examen .catedra {
+	color: #999999;
+}
+
+#info_materia_examen .llamado_mesa {
+	border-bottom: 1px dashed #E5E5E5;
+	padding-bottom: 10px;
+	margin-bottom: 5px;
+}
+
+#info_materia_examen .llamado_mesa.inscripto {
+	border-left: 2px solid #BACFB1;
+	border-bottom: 2px solid #BACFB1;
+	margin-left: 19px;
+	padding-bottom: 0;
+}
+
+#info_materia_examen .inscripto .info-inscripcion {
+	padding-left: 10px;
+}
+
+#info_materia_examen .llamado_mesa.inscripto .form-actions {
+	margin-top: 6px;
+	background-color: #DFF0D8;
+	border-top-color: #D6E9C6;
+}
+
+#info_materia_examen .inscripto .acciones {
+	text-align: right;
+	margin-top: 6px;
+	background-color: #DFF0D8;
+	padding: 5px;
+}
+
+@media (max-width: 767px) {
+	
+	#info_materia_examen {
+		padding-left: 0;
+		border: 0;
+	}
+	
+	#info_materia_examen h3 {
+		line-height: 22px;
+	}
+	
+}
+
+#info_materia_examen .js-detalle-insc {
+	cursor: pointer;
+}

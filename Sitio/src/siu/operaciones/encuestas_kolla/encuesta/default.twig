@@ -1,0 +1,20 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    <div id="mensaje-error" class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <span id="mensaje-error-texto"></span>
+    </div>
+    {% if this.data.url_encuesta %}
+        <!--position: relative para bug en chrome. Si se cambia, testear en chrome
+        http://stackoverflow.com/questions/12021248/chrome-bug-iframe-rendering-lines-on-screen-when-scrolling-up-->
+        <iframe src="{{ this.data.url_encuesta }}" width='680px' height='600px' name="ifkolla" id="ifkolla" style="position: relative !important; border:0"></iframe>
+    {% else %}
+        <h3>{{ 'elegir_encuesta'|trans|capitalize }}</h3>
+        <p><i class="icon-arrow-left"></i> {{ 'texto_elegir_encuesta'|trans }}</p>
+    {% endif %}
+    <input type="hidden" id="encuesta_seleccionada_id" value="{{ this.data.encuesta_seleccionada_id }}">
+{% endblock %}
+
+	
+	
+	

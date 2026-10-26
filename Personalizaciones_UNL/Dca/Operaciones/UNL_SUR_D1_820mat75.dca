@@ -1,0 +1,7 @@
+Execute procedure dba.sui_operaciones('820mat75','U.N.L. Ingresantes (SUR - D1)','U.N.L. Ingresantes (SUR - D1)',NULL);
+DELETE FROM acc_operacion_mod WHERE operacion = '820mat75';
+INSERT INTO acc_operacion_mod VALUES ('00000010','820mat75','Reportes',525);
+INSERT INTO acc_parametros VALUES ('820mat75',1,'w_reporte', 'uo_dw_filtros,dp_carrera_anio_academico,uo_dw,dl820_sur_d1,dl820_sur_d1',NULL,	NULL,'N');
+INSERT INTO acc_acciones_oper VALUES ('820mat75','C');
+
+

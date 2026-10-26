@@ -1,0 +1,10 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.6.0
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones( '820exa00', 'Reporte Seguimiento de tesis', 'Reporte de tesis', null );
+DELETE FROM acc_operacion_mod WHERE operacion = '820exa00';
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( '820exa00', 1, 'w_reporte', 'uo_dw, dp_tesis, uo_dw, dr820_tesis_seguimiento, dl820_tesis_seguimiento', 'N' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '820exa00', 'C' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '820exa00', 'M' );
+

@@ -1,0 +1,172 @@
+{#
+	Entrada:  comision, csrf, param_controla_cupo
+#}
+
+{% if comision.CATEDRA %}
+	<h4><div class="icon-arrow-right"></div> {{ comision.CATEDRA }}</h4>
+{% else %}
+	<h4><div class="icon-arrow-right"></div> {{ comision.COMISION_NOMBRE }}</h4>
+{% endif %}
+<div class='comision_info'>
+{% if comision.SUBCOMISIONES %}
+	</div> {# comision_info #}
+
+	<div class='subcomisiones'>
+		{{_self.subcomisiones(comision.MATERIA, comision.ID, comision.SUBCOMISIONES, comision.URL_INSCRIBIRSE, csrf, param_controla_cupo)}}
+	</div>
+{% else %}
+	{% if comision.TIENE_CUPO and param_controla_cupo %}
+		<div class='wrapper-carga'>
+		<div class='progreso-carga' style='width: {{ comision.PORCENTAJE_CUPO  ~ '%' }}'></div>
+	    </div>
+	    {{ comision.PORCENTAJE_CUPO  ~ '%' }} ocupación ( {{ comision.COMISION_INSCRIPTOS }} de {{ comision.COMISION_CUPO }} )
+	{% endif %}
+
+	<ul class="unstyled">
+		<li><span>{{"comision"|trans|capitalize}}: {{ comision.COMISION_NOMBRE }}</span></li>
+		<li><span>{{"período lectivo"|trans|capitalize}}: {{ comision.PERIODO_LECTIVO }}</span></li>
+		<li><span class='turno {{ (comision.TURNO | trim) ? (comision.TURNO | lower) : 'st' }}'>{{"turno"|trans|capitalize}}: {{comision.TURNO_NOMBRE}}</span></li>
+
+		{% if this.data.param_maneja_sedes %}
+			<li><span class='sede'>{{"sede"|trans|capitalize}}: {{comision.SEDE_NOMBRE}}</span></li>
+		{% endif %}
+		<li class='docente'>{{"Docente"|trans|capitalize}}: {{ comision.DOCENTE }}</li>
+		<li class='sede'>{{ comision.SEDE_NOMBRE }}</li>
+            
+        {{_self.cuadro_horarios(comision.HORARIO, comision.ID)}}
+	</ul>
+
+	</div> {# comision_info #}
+
+	{% if (comision.TIENE_CUPO and param_controla_cupo and comision.PORCENTAJE_CUPO < 100) %}	
+		<div class='acciones'>
+			{{_self.form_inscribirse(csrf, comision.URL_INSCRIBIRSE, comision.MATERIA, comision.ID)}}
+		</div>
+	{% elseif not param_controla_cupo %}
+		<div class='acciones'>
+			{{_self.form_inscribirse(csrf, comision.URL_INSCRIBIRSE, comision.MATERIA, comision.ID)}}
+		</div>	
+	{% elseif not comision.TIENE_CUPO and comision.COMISION_CUPO == '10000' %}
+		<div class='acciones'>
+			{{_self.form_inscribirse(csrf, comision.URL_INSCRIBIRSE, comision.MATERIA, comision.ID)}}
+		</div>	
+	{% else %}
+		No hay cupo disponible para inscribirte
+	{% endif%}
+{% endif %}
+
+{% macro subcomisiones(materia, comision, subcomisiones, url, csrf, param_controla_cupo) %}
+<form class='form_inscribir form_inscribir_subcomisiones clearfix' action='{{ url }}' method='POST'>
+	{% for tipo, subcom_por_tipo in subcomisiones %}
+		{{ _self.fieldset_radio(tipo, subcom_por_tipo,materia, comision, param_controla_cupo) }}
+	{% endfor %}
+
+	<input type="hidden" name="materia" value="{{ materia }}" />
+	<input type="hidden" name="comision" value="{{ comision }}" />
+	{% import "kernel/macro_csrf.twig" as input_csrf %}
+	{{ input_csrf.mostrar(csrf) }}
+	<input type='submit' tabindex="0" value='{{'inscribirse'|trans|capitalize }}' class="btn btn-small" />
+</form>
+{% endmacro %}	
+
+{% macro form_inscribirse(csrf, url, materia, comision) %}
+<form class='form_inscribir' action='{{ url }}' method='POST'>
+	<input type="hidden" name="materia" value="{{ materia }}" />
+	<input type="hidden" name="comision" value="{{ comision }}" />
+	{% import "kernel/macro_csrf.twig" as input_csrf %}
+	{{ input_csrf.mostrar(csrf) }}
+	<input type='submit' tabindex="0"  value='{{'inscribirse'|trans|capitalize }}' class="btn btn-small" />
+</form>
+{% endmacro %}
+
+{% macro fieldset_radio(tipo, subcomisiones,materia, comision, param_controla_cupo) %}
+<fieldset>
+	<ul class="unstyled">
+		{% for subcomision in subcomisiones %}
+		<li class="clearfix comision no-inscripto">
+			<div class='subcomision_detalle pull-left'>
+				<label for="subcomision_{{ subcomision.__ID__ }}">
+				<h5>{{ subcomision.SUBCOMISION_NOMBRE }}</h5>
+				
+				{% if subcomision.TIENE_CUPO == 'S' and param_controla_cupo %}
+					<div class='wrapper-carga'>
+					<div class='progreso-carga' style='width: {{ subcomision.PORCENTAJE_CUPO  ~ '%' }}'></div>
+					</div>
+					{{ subcomision.PORCENTAJE_CUPO  ~ '%' }}  ocupación ( {{ subcomision.COMISION_INSCRIPTOS }} de {{ subcomision.COMISION_CUPO }} )
+				{% endif %}
+				
+                {% if subcomision.DOCENTE %}
+                    {{"docente"|trans|capitalize}}: {{ subcomision.DOCENTE }}
+                {% endif %}
+                
+                <!-- Si se sacan los turnos no funciona el filtro -->
+                <ul class="unstyled">
+                <li><span class='turno {% if subcomision.TURNO %}{{ subcomision.TURNO|lower }}{% else %}st{% endif %}'>{{"turno"|trans|capitalize}}: {% if subcomision.TURNO %}{{subcomision.TURNO_NOMBRE}}{% else %}--{% endif %}</span></li>
+                </ul>
+				</label>
+                
+                {{_self.cuadro_horarios(subcomision.HORARIO, subcomision.__ID__)}}
+			</div>
+				
+			{% if subcomision.TIENE_CUPO == 'S' and param_controla_cupo and subcomision.PORCENTAJE_CUPO < 100 %}	
+				<div class='pull-right'>
+					<input 
+						id="subcomision_{{subcomision.__ID__}}" 
+						type="radio" 
+						name="subcomisiones[{{tipo}}]" 
+						value="{{subcomision.__ID__}}" 
+					/>
+				</div>
+			{% elseif subcomision.TIENE_CUPO == 'N' and subcomision.COMISION_CUPO == '10000' %}
+				<div class='pull-right'>
+					<input 
+						id="subcomision_{{subcomision.__ID__}}" 
+						type="radio" 
+						name="subcomisiones[{{tipo}}]" 
+						value="{{subcomision.__ID__}}" 
+					/>
+				</div>	
+			{% elseif not param_controla_cupo %}
+				<div class='pull-right'>
+					<input 
+						id="subcomision_{{subcomision.__ID__}}" 
+						type="radio" 
+						name="subcomisiones[{{tipo}}]" 
+						value="{{subcomision.__ID__}}" 
+					/>
+				</div>	
+			{% else %}
+				<div class='pull-right'>
+					<input 
+						id="subcomision_{{subcomision.__ID__}}" 
+						type="radio" 
+						name="subcomisiones[{{tipo}}]" 
+						value="0" 
+						disabled=true
+						data-toggle="tooltip" 
+						title="Sin cupo disponible"						
+					/>
+
+				</div>
+			{% endif%}				
+		</li>
+		{% endfor %}
+	</ul>
+</fieldset>
+{% endmacro %}
+
+{% macro cuadro_horarios(horarios, id) %}
+    {% if horarios %}
+    <div class='horario'>
+        <p>{{'insc_mat.horarios.encabezado'|trans|capitalize }}</p>
+        <table class='table table-bordered table-condensed horario_{{ id }}'>
+            <tr><th>{{'insc_mat.horarios.dia'|trans|capitalize}}</th><th>{{'insc_mat.horarios.tipo'|trans|capitalize}}</th><th>{{'insc_mat.horarios.horario'|trans|capitalize}}</th><th>{{'insc_mat.horarios.lugar'|trans|capitalize}}</th></tr>
+            {% for item in horarios %}
+            <tr><td>{{ item.DIA }}</td><td>{{ item.TIPO_CLASE }}</td><td>{{ item.HORA_DESDE_HASTA }}</td><td>{{ item.NOMBRE_AULA }}</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% else %}
+        <div class='horario' style="display: none;">no_informado</div>
+    {% endif %}
+{% endmacro %}

@@ -1,0 +1,88 @@
+{% macro cursada(datos) %}
+	<table class='table table-condensed table-hover table-striped'>
+		<thead>
+			<tr>
+				<th>{{'actas.cuadro.acta'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.anio_academico'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.periodo_lectivo'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.sede'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.materia'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.estado'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.fecha_cierre'|trans|capitalize}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for cursada in datos %}
+				<tr class="link-in-data" data-link="{{cursada.LINK}}">
+					<td>{{cursada.ACTA}}</td>
+					<td>{{cursada.ANIO_ACADEMICO}}</td>
+					<td>{{cursada.TURNO_PERIODO}}</td>
+					<td>{{cursada.SEDE_NOMBRE}}</td>
+					<td>{{cursada.MATERIA_NOMBRE}} ({{cursada.MATERIA}})</td>
+					<td>{{cursada.ESTADO_DESC}}</td>
+					<td>{{cursada.FECHA_CIERRE}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endmacro %}
+
+{% macro promocion(datos) %}
+	<table class='table table-condensed table-hover table-striped'>
+		<thead>
+			<tr>
+				<th>{{'actas.cuadro.acta'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.anio_academico'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.periodo_lectivo'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.sede'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.materia'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.estado'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.fecha_cierre'|trans|capitalize}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for promocion in datos %}
+				<tr class="link-in-data" data-link="{{promocion.LINK}}">
+					<td>{{promocion.ACTA}}</td>
+					<td>{{promocion.ANIO_ACADEMICO}}</td>
+					<td>{{promocion.TURNO_PERIODO}}</td>
+					<td>{{promocion.SEDE_NOMBRE}}</td>
+					<td>{{promocion.MATERIA_NOMBRE}} ({{promocion.MATERIA}})</td>
+					<td>{{promocion.ESTADO_DESC}}</td>
+					<td>{{promocion.FECHA_CIERRE}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endmacro %}
+
+{% macro examen(datos) %}
+	<table class='table table-condensed table-hover table-striped'>
+		<thead>
+			<tr>
+				<th>{{'actas.cuadro.acta'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.anio_academico'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.turno_examen'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.sede'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.tipo_acta'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.materia'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.estado'|trans|capitalize}}</th>
+				<th>{{'actas.cuadro.fecha_cierre'|trans|capitalize}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for examen in datos %}
+				<tr class="link-in-data" data-link="{{examen.LINK}}">
+					<td>{{examen.ACTA}}</td>
+					<td>{{examen.ANIO_ACADEMICO}}</td>
+					<td>{{examen.TURNO_EXAMEN}}</td>
+					<td>{{examen.SEDE_NOMBRE}}</td>
+					<td>{{examen.TIPO_ACTA_DESC}}</td>
+					<td>{{examen.MATERIA_NOMBRE}} ({{examen.MATERIA}})</td>
+					<td>{{examen.ESTADO_DESC}}</td>
+					<td>{{examen.FECHA_CIERRE}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endmacro %}

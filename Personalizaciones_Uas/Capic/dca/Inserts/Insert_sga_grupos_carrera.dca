@@ -1,0 +1,10 @@
+-- REEMPLAZAR LA CADENA 'capic', por la sigla de la unidad academica.
+-- VERIFICAR EN GUARANI, QUE LAS CARRERAS DE INTEGRACIÓN ESTEN ASIGNADAS A ESTE GRUPO
+
+insert into sga_grupos_carrera (UNIDAD_ACADEMICA, GRUPO_CARRERA,NOMBRE, OBSERVACIONES) values ('capic', 'i0001', 'Carreras de Integración', 'En este grupo esta la carrera que contiene a alumnos externos por electivas y a alumnos externos por movilidad académica');
+
+-- REEMPLAZAR LA CADENA 'EXTERNA', por la sigla de la CARRERA.
+-- VERIFICAR EN GUARANI, QUE LA CARREA DE INTEGRACIÓN SE LLAME: 'Alumnos de Integración'
+
+update sga_carreras set nombre = 'Alumnos de Integración', nombre_reducido = 'Alumnos de Integración' where carrera = 'EXTERNA';
+

@@ -1,0 +1,15 @@
+{% extends "kernel/una_columna_sin_titulo.twig" %}
+{% block titulo_operacion %}<h2>{{ 'bienvenido'|trans|capitalize }}</h2>{% endblock %}
+{% block columna_1 %}
+<div class='row-fluid'>
+	<div class='span12' id="contenedor_cursadas">
+	{{ cursadas.render }}
+    </div>
+</div>
+
+<div class='row-fluid'>
+    <div class='span12'>
+	{{ examenes.render }}
+    </div>
+</div>
+{% endblock %}

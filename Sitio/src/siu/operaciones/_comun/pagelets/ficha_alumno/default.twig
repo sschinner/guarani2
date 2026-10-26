@@ -1,0 +1,42 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+<div class="container-fluid" style="padding: 0;">
+	<div class="row-fluid">
+		<div class="span4">
+			<img alt="imagen ficha" src='{{this.data.url_imagen}}' />
+		</div>
+		<div class="span8">
+			<h3>{{this.data.ficha.alumno.NOMBRE_ALUMNO}}</h3>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span12">
+			<table class="table table-condensed table-bordered table-striped" summary="Ficha de alumno">
+				<thead>
+					<tr>
+						<th>{{'evaluacion'|trans|capitalize}}</th>
+						<th>{{'fecha'|trans|capitalize}}</th>
+						<th>{{'nota'|trans|capitalize}}</th>
+						<th>{{'resultado'|trans|capitalize}}</th>
+					</tr>
+				</thead>
+				<tbody>
+			{% for parcial in this.data.ficha.parciales %}
+				<tr>
+					<td>{{parcial.EVALUACION_DESC}}</td>
+					<td>{{parcial.SFECHA}}</td>
+					<td>{{parcial.NOTA}} ({{parcial.NOTA_DESCRIPCION}})</td>
+					<td>{{parcial.RESULTADO_DESC}}</td>
+				</tr>
+			{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row-fluid">
+		<div class="span12">
+		
+		</div>
+	</div>
+</div>
+{% endblock %}

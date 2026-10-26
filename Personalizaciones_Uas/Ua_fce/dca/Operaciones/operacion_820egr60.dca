@@ -1,0 +1,23 @@
+-- inserta la operacion  de reporte simple - sui_operaciones limpia todo
+execute procedure dba.sui_operaciones ('820egr60', 'FCE-Egresados en un rango de fechas ', 'FCE-Egresados en un rango de fechas',NULL);
+
+Begin;
+
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = "820egr60";
+
+
+-- inserta operacion_mod
+insert into dba.acc_operacion_mod (modulo, operacion, submodulo, orden) VALUES
+   ( '00000060','820egr60', 'Reportes',600); 
+insert into dba.acc_parametros (operacion, orden, ventana, parametros, cierra_anterior) VALUES
+               ('820egr60', 1, 'w_reporte', 'uo_dw_filtros, dk820_egresados_carrera_fecha, uo_dw,dl820_egresados_a_fecha,dl820_egresados_a_fecha', 'N');
+
+insert into dba.acc_acciones_oper (operacion, accion) VALUES
+      ('820egr60', 'C');
+
+
+commit;
+
+
+

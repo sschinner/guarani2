@@ -1,0 +1,8 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaran�. Sistema de Gesti�n Acad�mica
+-- Versi�n 1.5.0
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones( 'exa00112', 'Citación de Docentes a fechas de exámenes', 'Reporte con el formato de Citación de Docentes a fechas de exámenes.', null );
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( 'exa00112', 1, 'w_reporte', 'uo_dw_anio_turno_examen, dp_docentes_anio_turno_examen, uo_dw, dr820_citacion_examen_a_docente , dl820_citacion_examen_a_docente', 'N' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( 'exa00112', 'C' );
+

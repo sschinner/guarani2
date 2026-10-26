@@ -1,0 +1,5 @@
+AuthType Basic
+AuthName "Consultar Regularidad"
+AuthUserFile /srv/www/comedor/.htpassword
+
+Require valid-user

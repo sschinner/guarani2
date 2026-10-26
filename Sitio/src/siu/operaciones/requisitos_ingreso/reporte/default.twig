@@ -1,0 +1,43 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<div class="titulo_operacion">
+		<h2 class="clearfix"><span class="pull-left">{{"header.menu.requisitos_ingreso"|trans|capitalize}}</span></h2>
+	</div>
+	{% if this.data.datos.requisitos  %}
+			<table class="table table-condensed table-bordered">
+				<tr>
+					<th>{{"carrera"|trans|capitalize}}</th>
+					<td>{{ '('~ this.data.datos.carrera ~') '~ this.data.datos.carrera_nombre }}</td>
+				</tr>
+				<tr>
+					<th>{{"legajo"|trans|capitalize}}</th>
+					<td>{{ this.data.datos.legajo }}</td>
+				</tr>
+				<tr>
+					<th>{{"periodo de inscripción"|trans|capitalize}}</th>
+					<td>{{ this.data.datos.periodo_inscripcion }}</td>
+				</tr>
+			</table>	
+
+			<table class='table table-condensed table-hover table-striped'>
+				<thead>
+					<tr>
+						<th>{{'requisito'|trans| capitalize}}</th>
+						<th>{{'fecha límite presentacion'|trans| capitalize}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for requisito in this.data.datos.requisitos %}
+					<tr>
+						<td>{{requisito.REQUISITO_NOMBRE}}</td>
+						<td>{{requisito.F_TOPE_PRESENT}}</td>
+					</tr>			
+				{% endfor %}
+					</tbody>
+				</table>
+	{% else %}
+		<div class="alert">
+			{{"reporte.no_hay_datos.requisitos_pendientes"|trans|capitalize}}
+		</div>
+	{% endif %}
+{% endblock %}

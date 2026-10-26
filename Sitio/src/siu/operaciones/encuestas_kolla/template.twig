@@ -1,0 +1,10 @@
+{% extends "kernel/dos_columnas.twig" %}
+{% block titulo_operacion %}
+	<h2>{{"header.menu.encuestas_kolla"|trans|capitalize}}</h2>
+{% endblock %}
+{% block columna_1 %}
+	{{ listado_encuestas.render }}
+{% endblock %}
+{% block columna_2 %}
+	{{ encuesta.render }}
+{% endblock %}

@@ -1,0 +1,12 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión Alfa 6.0
+-- Ultima modificacion: Version 1.8
+-- *******************************************************************************
+Execute procedure "dba".sui_ventanas( 'w820_rectificativas_examen_sin_fecha_ini' );
+
+INSERT INTO "dba".acc_menu_ventana ( ventana, orden, evento, menuitem, visible, enabled, separador, descripcion ) VALUES ( 'w820_rectificativas_examen_sin_fecha_ini', 1, 'ue_seleccionar_originales', 'Rectificar', 'S', 'S', 'S', 'Seleccionar registros a rectificar' );
+INSERT INTO "dba".acc_menu_ventana ( ventana, orden, evento, menuitem, visible, enabled, separador, descripcion ) VALUES ( 'w820_rectificativas_examen_sin_fecha_ini', 2, 'ue_ver_original', 'Ver acta original', 'S', 'S', 'N', 'Muestra el acta original' );
+INSERT INTO "dba".acc_menu_ventana ( ventana, orden, evento, menuitem, visible, enabled, separador, descripcion ) VALUES ( 'w820_rectificativas_examen_sin_fecha_ini', 3, 'ue_ver_rectificativa', 'Ver acta rectificativa', 'S', 'S', 'S', 'Muestra el acta rectificativa' );
+INSERT INTO "dba".acc_menu_ventana ( ventana, orden, evento, menuitem, visible, enabled, separador, descripcion ) VALUES ( 'w820_rectificativas_examen_sin_fecha_ini', 4, 'ue_insertar_alumnos', 'Agregar alumno', 'S', 'S', 'N', 'Permite ingresar un alumno en el acta rectificativa, sin seleccionarlo del acta normal' );
+INSERT INTO "dba".acc_menu_ventana ( ventana, orden, evento, menuitem, visible, enabled, separador, descripcion ) VALUES ( 'w820_rectificativas_examen_sin_fecha_ini', 5, 'ue_borrar_alumnos', 'Eliminar alumno', 'S', 'S', 'N', 'Permite eliminar un alumno del acta rectificativa' );

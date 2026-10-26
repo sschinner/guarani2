@@ -1,0 +1,12 @@
+#encuestas .accordion-heading{;
+    background-color: #e7f0f7 !important;
+    border: 1px solid #c3d9ec;
+}
+
+#encuestas .accordion-heading a{
+    color: #000 !important;
+}
+
+#encuestas .centrado{
+    text-align: center;
+}

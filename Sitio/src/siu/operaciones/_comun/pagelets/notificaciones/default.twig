@@ -1,0 +1,47 @@
+{% extends "kernel/pagelet_polite.twig" %}
+
+{% block contenido %}
+        <h3>{{ 'inscripciones'|trans|capitalize }}</h3>
+        {#% if this.data.asignaciones %#}
+		<select id='eleccion-periodo' class="span12">
+		    <option value='quincena'>{{ 'quincena'|trans|capitalize }}</option> 
+		    <option value='mes'>{{ 'mes'|trans|capitalize }}</option> 
+		    <option value='trimestre'>{{ 'trimestre'|trans|capitalize }}</option> 
+		    <option value='cuatrimestre' selected>{{ 'cuatrimestre'|trans|capitalize }}</option> 
+		    <option value='semestre'>{{ 'semestre'|trans|capitalize }}</option> 
+		</select>
+
+	    <div class="coda-slider-wrapper">
+		    <div class="scrollable" id="asignaciones_cursada"></div>
+		    <!--<div>
+			    <div id="coda-nav-left-1" class="coda-nav-left"><a href="#" title="Slide left">&#171;</a></div>
+			    <div id="coda-nav-right-1" class="coda-nav-right"><a href="#" title="Slide right">&#187;</a></div>
+		    </div>-->
+	    </div>
+	    <div id="asignaciones_cursada_mensajes">
+	    </div>
+        {#% else %}
+        	<p>{% trans %}notificacion.cursada.vacio{% endtrans %}</p>
+        {% endif %#}
+        <hr/>
+        <h3>{% trans %}notificacion.examen.titulo{% endtrans %}</h3>
+        <p id="inscripcion_examenes_notificacion"{% if this.data.info_examenes %} style="display: none";{% endif %}>{% trans %}notificacion.examen.vacio{% endtrans %}</p>
+
+			<ul class="notif_examenes_listado">
+				{% for inscripcion in this.data.info_examenes %}
+					<li class="notif_examen_inscripto" data-title="&lt;span style='font-weight: bold'&gt;({{inscripcion.MATERIA}}) {{inscripcion.materia}}&lt;/span&gt;" data-content="{{ 'fecha_examen'|trans }}: {{inscripcion.fecha_dia}} {{inscripcion.fecha_hora}}">
+						({{inscripcion.MATERIA}}) {{inscripcion.materia}} - {{inscripcion.fecha_dia}} {{inscripcion.fecha_hora}}
+					</li>
+				{% endfor %}
+			</ul>
+            {% if this.data.info_examenes %}
+                <script>
+                    $('.notif_examen_inscripto').popover({
+                        html: true,
+                        placement: 'top',
+                        container: 'body',
+                        trigger: 'hover'
+                    })
+                </script>
+			{% endif %}
+{% endblock %}

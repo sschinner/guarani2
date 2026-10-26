@@ -1,0 +1,39 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+<script>
+function verifica(){
+        
+        document.ir_encuesta.submit(); 
+        
+    }
+</script>
+{% set nombre='Ir a Encuesta Graduados'%}
+{% set datos=this.get_data_reporte() %}
+
+<form method="POST" action="{{datos.url}}" target="_blank" name="ir_encuesta" id="ir_encuesta">
+    <input type="hidden" value="{{datos.usuario}}" name="usuario" id="usuario">
+           <input type="hidden" value="{{datos.clave}}" name="clave" id="clave">
+           <fieldset>
+
+        <legend class="clearfix">
+            <span class="pull-left"><h3 class="resaltar">{{nombre|trans}}</h3></span>
+
+        </legend>
+
+        <br>
+        <div class="clearfix">
+            <div class="pull-left">
+                <p style="font-style: oblique;font-size: 9pt;"> Los datos se grabaron correctamente, ya puede acceder a la encuesta. </p> 
+            </div>
+        </div>
+        <div class="clearfix">
+            <div class="pull-left">
+                <a role="button" tabindex="0" class="guardar btn btn-info btn-small pull-right" onclick="verifica();" >{{ "Ir a encuesta"|trans|capitalize }}</a>
+            </div>
+        </div>
+    </fieldset>
+
+</form>  
+
+
+{% endblock contenido %}

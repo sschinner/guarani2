@@ -1,0 +1,25 @@
+#encuestas .centrado{
+    text-align: center;
+}
+
+#encuestas .tr-encabezado th{
+   border-top-color: #0088cc;
+}
+
+#encuestas .td-pregunta, #encuestas .td-componente{
+    width: 50%;
+}
+
+#encuestas #alert-no-hay-preguntas{
+    margin-top: 30px;
+}
+
+#encuestas .modal-table{
+    margin-top: 30px;
+}
+
+#encuestas .th-bloque{
+    color: #0088cc;
+    font-weight: bold;
+    font-size: 20px;
+}

@@ -1,0 +1,77 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+<ul class='unstyled'>
+    <h3>{{ 'periodos_lectivos'|trans|capitalize }}</h3>
+    {% for periodo in this.data.periodos_lectivos %}
+    <li>
+	<h4>{{ periodo.PERIODO_LECTIVO }}</h4>
+	
+	<div class="box-materia">
+	    <ul>
+		<li>
+		    <strong>{{"tipo"|trans|capitalize}}: </strong> 
+		    <span>{{ periodo.TIPO_DE_PERIODO }}</span>
+		</li>
+		<li>
+		    <strong>{{"fecha_inicio"|trans|capitalize}}: </strong> 
+		    <span>{{ periodo.F_INICIO_DICTADO }}</span>
+		</li>
+		<li>
+		    <strong>{{"fecha_fin"|trans|capitalize}}: </strong> 
+		    <span>{{ periodo.F_FIN_DICTADO }}</span>
+		</li>
+	    </ul>
+			{% for periodo_insc in periodo.PER_INSCR_CURSADAS%}
+				<h4>Período de Inscripción a Cursadas {{periodo_insc.NOMBRE_INSC}}</h4>
+				<ul>
+				<li>
+					<strong>{{"fecha_inicio_llamado"|trans|capitalize}}: </strong> 
+					<span>{{ periodo_insc.F_INICIO_INSC }}</span>
+				</li>
+				<li>
+					<strong>{{"fecha_fin_llamado"|trans|capitalize}}: </strong> 
+					<span>{{ periodo_insc.F_FIN_INSC }}</span>
+				</li>
+				</ul>	
+			{%endfor%}			
+	</div>
+    </li>
+    {% endfor %}
+</ul>
+
+<ul class='unstyled'>
+    <h3>{{ 'turnos_examen'|trans|capitalize }}</h3>
+    {% for periodo in this.data.turnos_examen %}
+    <li>
+	<h4>{{ periodo.TURNO_EXAMEN }}</h4>
+	<div class="box-materia">
+	    <ul>
+		<li>
+		    <strong>{{"fecha_inicio_turno"|trans|capitalize}}: </strong> 
+		    <span>{{ periodo.F_INICIO_TURNO }}</span>
+		</li>
+		<li>
+		    <strong>{{"fecha_fin_turno"|trans|capitalize}}: </strong> 
+		    <span>{{ periodo.F_FIN_TURNO }}</span>
+		</li>
+	    </ul>
+			{% for llamado in periodo.LLAMADOS%}
+				<h4>Llamado {{ llamado.LLAMADO }}</h4>
+				<ul>
+				<li>
+					<strong>{{"fecha_inicio_llamado"|trans|capitalize}}: </strong> 
+					<span>{{ llamado.F_INICIO_INSC_LLAM }}</span>
+				</li>
+				<li>
+					<strong>{{"fecha_fin_llamado"|trans|capitalize}}: </strong> 
+					<span>{{ llamado.F_FIN_INSC_LLAM }}</span>
+				</li>
+				</ul>	
+			{%endfor%}
+	</div>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

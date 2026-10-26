@@ -1,0 +1,43 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+    {% if this.data.encuestas_respondidas %}
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th class="centrado">{{ 'encuestas_respondidas.encuesta' | trans }}</th>
+                    <th class="centrado">{{ 'encuestas_respondidas.titulo' | trans }}</th>
+                    <th class="centrado">{{ 'encuestas_respondidas.fecha_respuesta' | trans }}</th>
+                    <th class="centrado">{{ 'encuestas_respondidas.es_anonima' | trans }}</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+        {% for encuesta_respondida in this.data.encuestas_respondidas %}
+            <tr>
+                <td>{{ encuesta_respondida.ENCUESTA_TITULO }}</td>
+                <td>{{ encuesta_respondida.FORMULARIO_TITULO }}</td>
+                <td class="centrado">{{ encuesta_respondida.SFECHA_RESPUESTA }}</td>
+                <td class="centrado">{{ encuesta_respondida.ANONIMA == 'S' ? 'encuestas_respondidas.si'|trans : 'encuestas_respondidas.no'|trans }}</td>
+                <td class="centrado">
+                    <button class="btn btn-small btn-primary ver" type="button" data-habilitacion="{{ encuesta_respondida.KOLLA_ID_HABILITACION }}" data-formulario="{{ encuesta_respondida.FORMULARIO }}" data-codigo-externo="{{ encuesta_respondida.RESPUESTA }}" data-password="{{ encuesta_respondida.KOLLA_PASSWORD }}" data-anonima="{{ encuesta_respondida.ANONIMA == 'S' ? '1' : '0' }}">
+                        {{ 'encuestas_respondidas.ver' | trans }}
+                    </button>
+                </td>
+            </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+
+        <div id="codigo_recuperacion" class="modal hide fade"></div>
+        <div id="encuesta_respondida_kolla" class="modal hide fade"></div>
+
+    {% else %}
+
+        <div class="alert">{{ 'encuestas_respondidas.no_hay_encuestas_respondidas' | trans }}</div>
+
+    {% endif %}
+
+{% endblock %}

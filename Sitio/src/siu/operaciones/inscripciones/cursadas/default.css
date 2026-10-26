@@ -1,0 +1,29 @@
+#cursadas .motivo {
+	display: none;
+	background-color: #fff;
+}
+
+#cursadas a {
+	cursor: pointer;
+}
+
+#cursadas #cursadas_historicas {
+	margin: 0;
+}
+
+#cursadas label {
+	vertical-align: bottom;
+}
+
+#cursadas .nota_titulo {
+	color: #08C; 
+	font-size: 14px;
+}
+
+#cursadas .table {
+	margin-bottom: 0;
+}
+
+#cursadas table tr td.centrado {
+	text-align: center;
+}

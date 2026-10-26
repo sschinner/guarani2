@@ -1,0 +1,20 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.5.2
+-- Autor: Jorge Azcoaga
+-- Certificado de Inclusión en Padrón.
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones('820cer10','Certificado de Inclusión en Padrón','Certificado de Inclusión en Padrón',NULL);
+DELETE FROM acc_operacion_mod WHERE operacion = '820cer10';
+INSERT INTO acc_operacion_mod VALUES ('00000035','820cer10','Certif',	100);
+INSERT INTO acc_parametros VALUES ('820cer10',1,'w_reporte','uo_dw_filtros,dp820_alumno_carrera_eleccion,uo_dw,dr820_inclusion_padron, dl820_inclusion_padron',NULL,NULL,'N');
+INSERT INTO acc_acciones_oper VALUES ('820cer10','C');
+
+-- Agregar el certificado
+Begin;
+Set constraints all deferred;
+DELETE FROM sga_certif_argum WHERE certificado = 11;
+DELETE FROM sga_certificados WHERE certificado = 11;
+INSERT INTO sga_certificados VALUES (11, 'Certificado de Inclusión en Padrón', 2, null, 'A', 'Manual', 'N', 90);
+
+Commit;

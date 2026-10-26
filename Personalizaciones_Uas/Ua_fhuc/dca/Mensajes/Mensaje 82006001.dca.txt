@@ -1,0 +1,9 @@
+-- Alta del mensaje
+-- Mensaje: 82006001.dca
+
+--********************************************
+-- mensaje 82006001, asociado a la correlativa especial.
+-- 
+--********************************************
+DELETE FROM mme_mensajes WHERE mensaje = 82006001;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82006001, "Para rendir materias del segundo bloque necesitas %s.",  "Para rendir materias del segundo bloque necesitas %s.", 2, 1);

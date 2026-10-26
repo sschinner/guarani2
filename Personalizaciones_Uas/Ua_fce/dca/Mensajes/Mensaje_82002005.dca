@@ -1,0 +1,11 @@
+-- Alta del mensaje
+-- Mensaje: 82002005.dca
+
+--********************************************
+-- mensaje 82002005, asociado al control de Inscripcion a Cursadas.
+-- 
+--********************************************
+
+
+DELETE FROM mme_mensajes WHERE mensaje = 82002005;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82002005, "Ya estas inscripto en la Materia %s",  "Ya estas inscripto en la Materia %s", 2, 1);

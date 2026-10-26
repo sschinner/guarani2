@@ -1,0 +1,85 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    <style>
+        .g3w-icono-hoja {
+                        background: url('./../../../www/img/item_dcensal_ok.png') no-repeat;
+                        width: 12px;
+                        height: 12px;
+                        cursor: pointer;
+                        position: absolute;
+                      }
+    </style>
+    <script>
+
+        /*  function imprimir(path) {
+         
+         $("#path_descarga").val(path);
+         document.imprimirPdf.submit();
+         
+         
+         }*/
+
+    </script>
+    <div class="row">
+        <div id="mensaje" role="alert" class="alert alert-info" style="margin-left:10%;">
+            <p style="font-size:11pt;">El tr&aacute;mite de expedici&oacute;n de Diploma Digital incluye la emisi&oacute;n de certificado anal&iacute;tico de estudios con intervenci&oacute;n Ministerial. Adem&aacute;s incluye certificaciones provisorias de t&iacute;tulo en tr&aacute;mite y de certificado anal&iacute;tico.</p>
+            <p style="font-size:11pt;">No debe solicitarse certificado anal&iacute;tico por separado ya que el tr&aacute;mite es conjunto</p>
+        </div>
+        <br>
+    </div>
+    
+    {# El trámite de expedición de Diploma Digital incluye la emisión de certificado analítico de estudios con intervención Ministerial. Además incluye certificaciones provisorias de título en trámite y de certificado analítico.”
+No debe solicitarse certificado analítico por separado ya que el trámite es conjunto
+ #}
+    <table class='table table-condensed table-hover table-striped'>
+        <thead>
+            <tr>
+                <th width="60%" style="font-size:12pt;">Diplomas</th>
+                <th width="3%"  style="text-align: center"></th>
+                <th width="13%" style="text-align: center">T&iacute;tulo en Tr&aacute;mite</th>
+                <th width="12%" style="text-align: center">Certif. Anal&iacute;tico</th>
+                <th width="12%" style="text-align: center">Diploma Digital</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {%if this.data.lista_certificados is not empty%}
+                {% for fila in this.data.lista_certificados %}
+                    <tr>
+                        <td><font size="2pt"><strong>Diploma {%if this.data.sexo == '1'%} {{ fila.NOMBRE }}{%else%}{{ fila.NOMBRE_FEMENINO }}{%endif%}</strong></font></td>
+                        <td style="text-align: center"><a href="{{ this.data.url_visualizar }}?titulo={{fila.TITULO}}" 
+                                                                         class="btn btn-info btn-mini" >{{'ver'|trans|capitalize}}           
+                               
+                            </a></td>
+                        <td  style="text-align: center">{%if (fila.URL_TITULO_TRAMITE != '') %}<a href="{{this.data.accionTituloTramite}}?url={{fila.URL_TITULO_TRAMITE}}" target="_blank" tabindex="0"  class="btn no-ajax btn-mini" ><span class="g3w-icono-pdf" ></span></a>{%endif%}</td>
+                        <td  style="text-align: center">{%if (fila.URL_CERTIFICADO_ANALITICO != '') %}<a href="{{this.data.accionCertificadoAnalitico}}?url={{fila.URL_CERTIFICADO_ANALITICO}}" target="_blank" tabindex="0"  class="btn no-ajax btn-mini" ><span class="g3w-icono-pdf" ></span></a>{%endif%}</td>
+                        <td  style="text-align: center">{%if (fila.URL_DESCARGA != '') %}<a href="{{this.data.accionDiploma}}?url={{fila.URL_DESCARGA}}" target="_blank" tabindex="0"  class="btn no-ajax btn-mini" ><span class="g3w-icono-pdf" ></span></a>{%endif%}</td>
+                    </tr>
+                {% endfor %}
+            {%else%}
+                <tr>
+                    <td colspan="5">
+                        <div align="center">
+                            <br>
+                            <br>
+                            <p> <b>NO EXISTEN SOLICITUDES INICIADAS</b></p>
+                        </div>
+                    </td>
+                </tr>
+
+            {%endif%}
+        </tbody>
+    </table>
+    <div class="titulo_operacion">
+
+        <div class="pull-right" >
+            <a href="{{ this.data.url_nueva_solicitud }}" 
+               class="btn btn-info">
+                {{ "solicitar_certificacion.nueva_solicitud" | trans }}
+            </a>
+        </div>
+    </h2>
+</div>    
+<input type="hidden" id="path_descarga" name="path_descarga" value=""/>
+
+{% endblock %}

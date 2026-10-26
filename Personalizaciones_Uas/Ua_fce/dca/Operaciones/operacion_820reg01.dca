@@ -1,0 +1,21 @@
+-- inserta la operacion - sui_operaciones limpia todo
+execute procedure dba.sui_operaciones ('820reg01', 'Prórroga', 'Pasa el alumno a regular por una prórroga',NULL);
+
+Begin;
+
+set constraints all deferred;
+
+insert into dba.acc_parametros (operacion, orden, ventana, parametros, cierra_anterior) VALUES
+               ('820reg01', 1, 'w_filtros_busqueda', 'uo_dw, dr820_alumnos_irreg_a_prorrogar, 15, uo_dw_filtros, dp_carreras_vigentes, No se encontraron alumnos para prorrogar la regularidad', 'N');
+
+delete dba.acc_ventanas  where ventana = 'w_abm_prorroga';
+insert into dba.acc_ventanas (ventana) values ('w_abm_prorroga');
+
+insert into dba.acc_parametros (operacion, orden, ventana, parametros, cierra_anterior) VALUES
+               ('820reg01', 2, 'w_abm_prorroga', 'uo_dw, d820_fce_prorroga', 'N');
+
+insert into dba.acc_acciones_oper (operacion, accion) VALUES 
+      ('820reg01', 'M');
+
+commit;
+

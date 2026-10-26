@@ -1,0 +1,7 @@
+#filtros input, #filtros select{
+    width: 100%;
+}
+
+#filtros #formulario_filtro-materia_descr-autocomplete-ul{
+    width: 400px !important;
+}

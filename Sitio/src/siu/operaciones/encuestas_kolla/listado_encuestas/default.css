@@ -1,0 +1,20 @@
+#listado_encuestas h3 {
+	border-bottom: 1px solid #EEE;
+	line-height: 31px;
+}
+
+#listado_encuestas li a.active {
+	background-color: #08C !important;
+	text-shadow: none;
+	color: white;
+}
+
+#listado_encuestas .well { padding: 8px 0; }
+
+#listado_encuestas p.referencia { 
+	padding-left: 15px;
+}
+
+#listado_encuestas .well .colapsar {
+	cursor: pointer;
+}

@@ -1,0 +1,12 @@
+#items #filtros form {
+	margin-bottom: 0;
+}
+
+#items #filtros.well {
+	padding: 5px;
+}
+
+.paginado {
+	text-align: center;
+	font-size: 14px;
+}

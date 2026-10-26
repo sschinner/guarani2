@@ -1,0 +1,194 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<div class="titulo_operacion">
+		<h2 class="clearfix"><span class="pull-left">{{"plan_de_estudio"|trans|capitalize}}</span>
+			{#<form id="pdf_form" name="pdf_form" action="{{this.data.url_pdf}}" method="post" class="pull-right">#}
+                        <div class="pull-right" >
+				<a tabindex="0" id="pdf_btn" class="btn" target="_blank" title="{{ 'descargar_pdf'|trans|capitalize }}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+                <a tabindex="0" id="xls_btn" target="_blank" class="btn" title="{{ 'descargar_xls'|trans|capitalize }}"><span class="acchide">{{'descargar_xls'|trans|capitalize}}</span><span class="g3w-icono-xls"></span></a>
+                        </div>
+			{#</form>#}
+		</h2>
+	</div>
+
+	<table class="table table-bordered table-condensed" summary="Plan de estudios" tabindex="0">
+		<caption>{{ "plan.plan" | trans | capitalize }}: {{this.data.plan.datos_carrera.plan}}</caption>
+		<thead>
+			<tr>
+				<th scope="col" id="mat" title="{{ "plan.materia" | trans | capitalize }}">{{ "plan.materia" | trans | capitalize }}</th>
+				<th scope="col" id="nom_mat" title="{{ "plan.nombre_materia" | trans | capitalize }}">{{ "plan.nombre_materia" | trans | capitalize }}</th>
+				<th scope="col" id="estado" title="{{ "plan.estado" | trans | capitalize }}">{{ "plan.estado" | trans | capitalize }} <br> Origen - Nota</th>
+				<th scope="col" id="tipo" title="{{ "plan.tipo_materia" | trans | capitalize }}">{{ "plan.tipo_materia" | trans | capitalize }}</th>
+				<th scope="col" id="ano" title="{{ "plan.ano_cursada" | trans | capitalize }}">{{ "plan.ano_cursada" | trans | capitalize }}</th>
+				<th scope="col" id="per_dic" title="{{ "plan.periodo_dictado" | trans | capitalize }}">{{ "plan.periodo_dictado" | trans | capitalize }}</th>
+				<th scope="col" id="cred" title="{{ "plan.credito" | trans | capitalize }}">{{ "plan.credito" | trans | capitalize }}</th>
+				<th scope="col" id="cor" title="{{ "plan.correlatividades" | trans | capitalize }}">{{ "plan.correlatividades" | trans | capitalize }}</th>
+			</tr>
+		</thead>
+	<tbody>
+	{% for key, materia in this.data.plan.detalle %}
+		{% if materia.TIPO != "O" %}
+		<tr>
+		<td headers="mat" scope="row">{{materia.MATERIA}}</td>
+		<td headers="nom_mat">{{materia.NOMBRE_MATERIA}}</td>
+		<td headers="estado">
+			{% if materia.INFO_ACT_ACAD_MATERIA.TIPO == 'Regularidad' and materia.INFO_ACT_ACAD_MATERIA.VIGENTE == 0 %}				
+				{% if materia.INFO_ACT_ACAD_MATERIA.ORIGEN == 'Equivalencia' %}
+						{{ "plan.equiv_reg_venc" | trans | capitalize }}
+				{%else%}
+						{{ "plan.cursada_venc" | trans | capitalize }}
+				{%endif%}		
+			{% else %}
+				
+				
+				{% if materia.INFO_ACT_ACAD_MATERIA.TIPO == 'Aprobacion' %}
+					{{materia.INFO_ACT_ACAD_MATERIA.ORIGEN}} - 
+				{% endif %}	
+				{% if materia.INFO_ACT_ACAD_MATERIA.TIPO == 'En Curso' %}
+					{{ "plan.en_curso" | trans | capitalize }}
+				{% endif %}	
+				{% if materia.INFO_ACT_ACAD_MATERIA.TIPO == 'Regularidad' %}
+					{% if materia.INFO_ACT_ACAD_MATERIA.ORIGEN == 'Equivalencia' %}
+						{{ "plan.equiv_reg" | trans | capitalize }} -
+					{%else%}
+						{{materia.INFO_ACT_ACAD_MATERIA.ORIGEN}} -
+					{%endif%}
+				{%endif%}
+				{% if materia.INFO_ACT_ACAD_MATERIA.NOTA %}
+				 {{ materia.INFO_ACT_ACAD_MATERIA.NOTA }} ({{ materia.INFO_ACT_ACAD_MATERIA.NOTA_DESCRIPCION}})
+				{% else %}
+						{% if materia.INFO_ACT_ACAD_MATERIA.RESULTADO %}
+							{{ "plan.sin_nota" | trans | capitalize }}							
+						{%endif%}	
+				{% endif %}
+			{% endif %}	
+		</td>
+		<td headers="tipo">
+			{% if materia.TIPO == "G" %}
+				<a aria-controls="optativa_{{loop.index}}" class="ver_materias " linea="optativa_{{loop.index}}" >{{materia.TIPO_DETALLE}}</a>
+			{% else %}
+				<span>{{materia.TIPO_DETALLE}}</span>
+			{% endif %}			
+		</td>
+		<td headers="ano" style="text-align: right;">{{materia.ANIO}}</td>
+		<td headers="per_dic" class="periodo">{{materia.PERIODO}}</td>
+		<td headers="cred" style="text-align: right;">{{materia.CREDITO}}</td>
+		<td headers="cor" style="text-align: center; vertical-align: middle;">
+			{% if materia.TIPO != "G" and materia.TIENE_CORRELATIVAS > 0 %}
+			<a class="btn btn-info btn-mini ver_correlatividades" linea="materia_{{loop.index}}" aria-controls="materia_{{loop.index}}" data-materia="{{ materia.MATERIA }}" >{{'ver'|trans|capitalize}}</a>
+			{% endif %}
+		</td>
+		</tr>
+                <tr class="correlatividades"  id="materia_{{loop.index}}" aria-live="assertive" linea="materia_{{loop.index}}">
+			<!-- aca escribe el ajax -->
+		</tr> {# nuevo #}
+		{% endif %}
+		{% if materia.TIPO == "G" %}
+			<tr class="optativa_{{loop.index}} genericas">
+				<td headers="tipo" colspan="8" class="td-table-optativas">
+				{% if materia.OPTATIVAS %}
+                    <table class="table tabla-puntaje" aria-live="assertive">
+                        <tr>
+                            <th scope="row"  title="{{ "plan.puntaje_requerido" | trans | capitalize }}">{{ "plan.puntaje_requerido" | trans }}{{ materia.PUNTAJE_REQUERIDO }}</th>
+                            <th scope="row"  title="{{ "plan.puntaje_aprobado" | trans | capitalize }}">{{ "plan.puntaje_aprobado" | trans }}{{ materia.PUNTAJES.ptaje_aprob }}</th>
+                            <th scope="row"  title="{{ "plan.puntaje_cursado" | trans | capitalize }}">{{ "plan.puntaje_cursado" | trans }}{{ materia.PUNTAJES.ptaje_cur }}</th>
+                        </tr>
+                    </table>
+
+                    <table class="table table-condensed table-bordered table-optativas" summary="Materias optativas - Tabla de materia generica: {{materia.NOMBRE_MATERIA}}" id="optativa_{{materia.MATERIA}}" aria-live="assertive">
+					<thead>
+					<tr>
+					<th scope="col" id="gmat{{key}}" title="{{ "plan.materia" | trans | capitalize }}">{{ "plan.materia" | trans | capitalize }}</th>
+					<th scope="col" id="gnom_mat{{key}}" title="{{ "plan.nombre_materia" | trans | capitalize }}">{{ "plan.nombre_materia" | trans | capitalize }}</th>
+					<th scope="col" id="gmat{{key}}" title="{{ "plan.materia" | trans | capitalize }}">Puntaje</th>
+					<th scope="col" id="gplan{{key}}" title="{{ "plan.tipo_materia" | trans | capitalize }}">{{ "plan.tipo_materia" | trans | capitalize }}</th>
+					<th scope="col" id="gestado{{key}}"title="{{ "plan.estado" | trans | capitalize }}">{{ "mis_inscripciones.estado" | trans | capitalize }} </th>
+					<th scope="col" id="gco{{key}}" title="{{ "plan.correlatividades" | trans | capitalize }}">{{ "plan.correlatividades" | trans | capitalize }}</th>
+					</tr>
+					</thead>
+					<tbody>
+					{% for key, mat in materia.OPTATIVAS %}
+						<tr>
+							<td scope="row" headers="gmat{{loop.parent.key}}">
+								{{mat.MATERIA_OPTATIVA}}
+							</td>
+							<td headers="gnom_mat{{loop.parent.key}}">
+								{{mat.NOMBRE}}
+							</td>
+                            <td headers="gnom_mat{{loop.parent.key}}">
+                                {{mat.VALOR_MATERIA}}
+                            </td>
+							<td headers="gplan{{loop.parent.key}}">
+								{{ "plan.optativa" | trans | capitalize }}
+							</td>
+							<td class="nota" headers="gestado{{loop.parent.key}}">
+								{% if mat.INFO_ACT_ACAD_MATERIA.TIPO == 'Regularidad' and mat.INFO_ACT_ACAD_MATERIA.VIGENTE == 0 %}				
+									{% if mat.INFO_ACT_ACAD_MATERIA.ORIGEN == 'Equivalencia' %}
+											{{ "plan.equiv_reg_venc" | trans | capitalize }}
+									{%else%}
+											{{ "plan.cursada_venc" | trans | capitalize }}
+									{%endif%}		
+								{% else %}
+
+
+									{% if mat.INFO_ACT_ACAD_MATERIA.TIPO == 'Aprobacion' %}
+										{{mat.INFO_ACT_ACAD_MATERIA.ORIGEN}} - 
+									{% endif %}	
+									{% if mat.INFO_ACT_ACAD_MATERIA.TIPO == 'En Curso' %}
+										{{ "plan.en_curso" | trans | capitalize }}
+									{% endif %}	
+									{% if mat.INFO_ACT_ACAD_MATERIA.TIPO == 'Regularidad' %}
+										{% if mat.INFO_ACT_ACAD_MATERIA.ORIGEN == 'Equivalencia' %}
+											{{ "plan.equiv_reg" | trans | capitalize }} -
+										{%else%}
+											{{mat.INFO_ACT_ACAD_MATERIA.ORIGEN}} -
+										{%endif%}
+									{%endif%}
+									{% if mat.INFO_ACT_ACAD_MATERIA.NOTA %}
+									 {{ mat.INFO_ACT_ACAD_MATERIA.NOTA }} ({{ mat.INFO_ACT_ACAD_MATERIA.NOTA_DESCRIPCION}})
+									{% else %}
+											{% if mat.INFO_ACT_ACAD_MATERIA.RESULTADO %}
+												{{ "plan.sin_nota" | trans | capitalize }}							
+											{%endif%}	
+									{% endif %}
+								{% endif %}	
+							</td>
+							<td headers="gco{{loop.parent.key}}">
+								{% if materia.TIENE_CORRELATIVAS > 0%}
+									<a class="btn btn-info btn-mini ver_correlatividades" linea="materia_optativa_{{loop.index}}" data-materia="{{mat.MATERIA_OPTATIVA}}" >{{'ver'|trans|capitalize}}</a>
+								{% endif %}
+							</td>
+						</tr>
+						<tr class="correlatividades" id="materia_optativa_{{loop.index}}">
+							<!-- aca escribe el ajax -->
+						</tr>
+					{% endfor %}
+					</tbody>
+					</table>	
+				{% else %}
+				{% endif %}
+			</td>
+		</tr>
+		{% endif %}
+		{#  <tr class="correlatividades"  id="{{materia.MATERIA}}" aria-live="assertive" linea="{{materia.MATERIA}}">
+			<!-- aca escribe el ajax -->
+		</tr> #}
+	{% endfor %}
+	</tbody>
+	</table>
+
+	{% for titulo in this.data.plan.promedios %}
+	<strong>{{ 'plan.titulo' | trans | capitalize }}: </strong> {{titulo.nombre}}
+	<ul>
+		<li><strong>{{ 'plan.promedio_general' | trans | capitalize }}: </strong> {{titulo.promedio_general |number_format(2, '.', ',')}}</li>
+		<li><strong>{{ 'plan.promedio_sin_aplazos' | trans | capitalize }}: </strong> {{titulo.promedio_sin_aplazos |number_format(2, '.', ',')}}</li>
+	</ul>
+	{%endfor%}
+	
+	<strong>{{ 'plan.creditos' | trans | capitalize }}: </strong> 
+	<ul>
+		<li><strong>{{ 'plan.creditos_materias_aprobadas' | trans | capitalize }}: </strong> {{this.data.plan.creditos.materias_aprobadas|number_format(2, '.', ',')}}</li>
+		<li><strong>{{ 'plan.creditos_materias_cur_vigentes' | trans | capitalize }}: </strong> {{this.data.plan.creditos.cursadas_aprob_vigentes|number_format(2, '.', ',')}}</li>
+	</ul>
+	
+{% endblock %}

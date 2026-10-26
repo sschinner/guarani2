@@ -1,0 +1,5 @@
+-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-- Ventana w_int_arau_nominal_alumnos
+-- Version 2.9.2
+-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+INSERT INTO acc_ventanas (ventana) values ('w_int_arau_nominal_alumnos');

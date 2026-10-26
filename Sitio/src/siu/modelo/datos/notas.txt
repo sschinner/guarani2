@@ -1,0 +1,17 @@
+
+
+Definicion de  nuevas entradas del catalogo:
+
+    /**
+	 * parametros: _ua, carrera, legajo, comision, folio, renglon, fecha, condicion, nota
+	 * param_null: fecha, nota
+	 * cache: no
+	 * filas: 1
+	 */
+
+Los parametros deben ser especificados en minuscula.
+Por defecto los parametros son obligatorios
+si se especifica uno en param_null, esa clave del array de parametros admite valores NULL de php
+en ningun caso se admite que un parametro no este seteado
+
+

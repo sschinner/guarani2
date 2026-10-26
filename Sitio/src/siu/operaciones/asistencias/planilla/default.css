@@ -1,0 +1,24 @@
+#planilla .table thead tr {
+	background-color: #EAEAEA;
+}
+
+#libres .encabezado tbody tr.sin_borde td, #planilla .encabezado tbody tr.sin_borde th{
+	border-top: 0;
+}
+
+#items #filtros form {
+	margin-bottom: 0;
+}
+
+#items #filtros.well {
+	padding: 5px;
+}
+
+#filtro_cant {
+	width: 50px;
+}
+
+#filtro_fecha {
+	margin-left: 10px;
+	width: 100px;
+}

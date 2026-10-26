@@ -1,0 +1,91 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+    <form id="form_operaciones" method="post" action="{{ this.data.form_action }}">
+
+
+        <div class="titulo_operacion row-fluid">
+            <div class="span12">
+
+                <div class="pull-left">
+                    <h2>{{"administrar_operaciones" | trans}}</h2>
+                </div>
+
+                <div class="pull-right">
+                    <button id="guardar" name="guardar" type="submit" class="btn btn-info">{{"guardar" | trans | capitalize }}</button>
+                </div>
+
+            </div>
+        </div>
+
+        {% if this.data.perfiles %}
+
+        <div class="accordion" id="accordion">
+
+            {% for perfil in this.data.perfiles %}
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" data-target="#{{ perfil.get_id }}">
+                        {{ ("perfil."~(perfil.get_id | lower)) | trans | capitalize }}
+                    </a>
+                </div>
+                <div id="{{ perfil.get_id }}" class="accordion-body collapse{% if loop.first %} in{% endif %}">
+                    <div class="accordion-inner">
+                    {% if perfil.get_listado_estado_operaciones %}
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th class="span8">{{"operacion" | trans | capitalize}}</th>
+                                <th class="span4">{{"estado" | trans | capitalize}}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                        {% for nombre_operacion, estado in perfil.get_listado_estado_operaciones %}
+                            {% if nombre_operacion != "admin_operaciones" and nombre_operacion != "acceso" %}
+                            <tr>
+                                <td>{{ ("header.menu."~nombre_operacion) | trans }}</td>
+                                <td>
+									{% if perfil.get_parametro('index') != nombre_operacion %}
+										<label class="radio inline">
+											<input type="radio" name="estado-operacion[{{ perfil.get_id }}][{{ nombre_operacion }}]" value="1"{% if estado %} checked{% endif %}>
+											{{"activa" | trans | capitalize}}
+										</label>
+										<label class="radio inline">
+											<input type="radio" name="estado-operacion[{{ perfil.get_id }}][{{ nombre_operacion }}]" value="0"{% if not estado %} checked{% endif %}>
+											{{"inactiva" | trans | capitalize}}
+										</label>
+									{% else %}
+										{% if estado %}
+											{{"activa" | trans | capitalize}}
+										{% else %}
+											{{"inactiva" | trans | capitalize}}
+										{% endif %}
+									{% endif %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+
+                        <div class="alert">
+                            {{"no_hay_operaciones_para_este_perfil_de_acceso" | trans }}
+                        </div>
+
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </div>
+        {% else %}
+            <div class="alert">
+                {{"no_hay_perfiles_de_acceso" | trans }}
+            </div>
+        {% endif %}
+
+    </form>
+{% endblock %}

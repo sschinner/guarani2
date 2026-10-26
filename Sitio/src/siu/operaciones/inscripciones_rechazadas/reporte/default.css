@@ -1,0 +1,7 @@
+#items .detalle {
+	display: none;
+}
+
+#items .link-js td {
+	cursor: pointer;
+}

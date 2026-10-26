@@ -1,0 +1,9 @@
+-- Alta del mensaje
+-- Mensaje: 82002001.dca
+
+--********************************************
+-- mensaje 82002001, asociado al control de Orden de inscripcion a Cursadas. Prioridades FCE.
+-- 
+--********************************************
+DELETE FROM mme_mensajes WHERE mensaje = 82002001;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82002001, "La inscripcion aún no puede realizarse. Esperá tu día y hora de inscripción.",  "La inscripcion aún no puede realizarse. Esperá tu día y hora de inscripción.", 2, 1);

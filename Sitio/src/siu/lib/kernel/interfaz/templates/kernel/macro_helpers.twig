@@ -1,0 +1,79 @@
+{% macro titulo_operacion(titulo, url_back, acciones) %}
+
+	<div class="titulo_operacion row-fluid">
+		<div class="span12">
+			<h2 class="clearfix">
+				{% if url_back %}
+					{{ _self.boton_url_back(url_back) }}
+				{% endif %}
+				<span class="pull-left">{{ titulo }}</span>
+				{% if acciones %}
+					<div class="pull-right">{{ acciones|raw }}</div>
+				{% endif %}
+			</h2>
+		</div>
+	</div>
+{% endmacro %}
+
+{% macro titulo_operacion_con_history_back(titulo, acciones) %}
+
+	<div class="titulo_operacion row-fluid">
+		<div class="span12">
+			<h2 class="clearfix">
+				<button class='btn btn-primary btn-small js-history-back pull-left'
+				">
+				<i class="icon-chevron-left icon-white"></i>
+				</button>
+				<span class="pull-left">{{ titulo }}</span>
+				{% if acciones %}
+					<div class="pull-right">{{ acciones|raw }}</div>
+				{% endif %}
+			</h2>
+		</div>
+	</div>
+{% endmacro %}
+
+{% macro alert_info(texto) %}
+	<div class="alert alert-info">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		{{ texto }}
+	</div>
+{% endmacro %}
+
+{% macro alert(texto) %}
+	<div class="alert">
+		{{ texto }}
+	</div>
+{% endmacro %}
+
+{% macro boton_url_back(url_back) %}
+	<button class='btn btn-primary btn-small js-btn-back pull-left' data-url-back="{{ url_back|raw }}">
+		<i class="icon-chevron-left icon-white"></i>
+	</button>
+{% endmacro %}
+
+{% macro render_notif(notificaciones, centrar) %}
+	<div class='notificaciones'>
+		{% for notif in notificaciones %}
+			{% if notif.mtipo == 'E' %}
+				{% set clase='alert-error' %}
+			{% elseif notif.mtipo == 'A' %}
+				{% set clase='alert-warning' %}
+			{% else %}
+				{% set clase='alert-info' %}
+			{% endif %}
+
+			{% if centrar %}
+				{% set clase_centrar = 'notificaciones-centrar' %}
+			{% else %}
+				{% set clase_centrar = '' %}
+			{% endif %}
+
+			{% if notif.raw %}
+				<div class='alert {{ clase }} {{ clase_centrar }}'>{{ notif.mcuerpo|raw }}</div>
+			{% else %}
+				<div class='alert {{ clase }} {{ clase_centrar }}'>{{ notif.mcuerpo }}</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+{% endmacro %}

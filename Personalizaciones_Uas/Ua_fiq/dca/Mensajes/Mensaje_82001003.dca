@@ -1,0 +1,9 @@
+-- Alta del mensaje
+-- Mensaje: 82001001
+
+--********************************************
+-- mensaje 82001001, Asociado a la correlativa especial u820_I0057_o_I0054
+-- 
+--********************************************
+DELETE FROM mme_mensajes WHERE mensaje = 82001003;
+INSERT INTO  mme_mensajes (	tipo, mensaje,	mascara_original,mascara,clasificacion,	boton) VALUES (3, 82001003,"Necesitas al menos 8 materias aprobadas", "Necesitas al menos 8 materias aprobadas",	2, 1);

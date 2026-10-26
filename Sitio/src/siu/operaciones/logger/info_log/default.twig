@@ -1,0 +1,15 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    <a href='{{this.data.url_limpiar}}' class="btn"><i class="icon-remove"></i> Limpiar logs</a>
+    <div class="alert">
+	Se borrarán todos los archivos en la carpeta {{this.data.carpeta_log}})
+    </div>
+    {% if this.estado == 'inicial' %}
+
+    {% elseif this.estado == 'log_seleccionado' %}
+        <div id='info'>
+			 <pre>{{this.data.info}}</pre>
+        </div>
+
+    {% endif %}
+{% endblock %}

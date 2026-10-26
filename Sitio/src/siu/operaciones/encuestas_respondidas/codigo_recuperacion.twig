@@ -1,0 +1,29 @@
+<div class="modal-body">
+
+    <form class="form-inline">
+
+        <input type="hidden" name="habilitacion" value="{{ habilitacion }}">
+        <input type="hidden" name="formulario" value="{{ formulario }}">
+        <input type="hidden" name="codigo_externo" value="{{ codigo_externo }}">
+        <input type="hidden" name="password" value="{{ password }}">
+        <input type="hidden" name="anonima" value="{{ anonima }}">
+
+        <div id="js-control-group-codigo-recuperacion" class="control-group">
+            <input type="text" name="codigo_recuperacion" style="width: 400px" placeholder="{{ 'encuestas_respondidas.codigo_recuperacion' | trans }}">
+            <span id="js-help-inline-codigo-recuperacion" class="help-inline" style="display: none;"></span>
+        </div>
+
+        <div id="js-control-group-hash-validacion" class="control-group">
+            <input type="text" name="hash_validacion" style="width: 400px" placeholder="{{ 'encuestas_respondidas.hash_validacion' | trans }}">
+            <span id="js-help-inline-hash-validacion" class="help-inline" style="display: none;"></span>
+        </div>
+
+        <button id="js-ver-anonima" type="button" class="btn btn-primary" style="width: 100px">{{ 'encuestas_respondidas.ver' | trans }}</button>
+
+    </form>
+    <p>{{ "encuestas_respondidas.ejemplo_codigo_recuperacion" | trans |raw }}</p>
+    <img src="img/comprobante_encuesta_ejemplo.png">
+</div>
+<div class="modal-footer">
+    <a id="cerrar_modal2" class="btn btn-inverse">{{ 'cerrar' | trans | capitalize }}</a>
+</div>

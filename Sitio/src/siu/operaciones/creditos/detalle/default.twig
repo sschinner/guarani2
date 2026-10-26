@@ -1,0 +1,49 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    <div class="titulo_operacion">
+        <h2 class="clearfix">
+			<button class='btn btn-primary btn-small js-btn-back pull-left' data-url-back="{{this.data.url_back}}" alt="Volver"><span class="icon-chevron-left icon-white"></span></button>
+			<span class="pull-left">{{"creditos detalle"|trans|capitalize}}</span>            
+        </h2>
+    </div>
+
+	{% if this.data.encabezado %}
+	<table class="table table-striped table-bordered table-condensed encabezado" summary="Tabla con a&ntilde;o y per&iacute;odo lectivo">
+		<tr>
+			<th id="anio">{{"anio" | trans | capitalize}}</th>
+			<td headers="anio">{{this.data.encabezado.0}}</td>
+		</tr>
+		<tr>
+			<th id="plectivo">{{"periodo_lectivo" | trans | capitalize}}</th>
+			<td headers="plectivo">{{this.data.encabezado.1}}</td>
+		</tr>
+	</table>
+	{% endif %}
+
+	{% if this.data.datos %}
+	<table class="table table-striped table-bordered table-condensed">
+		<tr>
+			<th scope="col">{{"carrera" | trans | capitalize}}</th>
+			<th scope="col">{{"creditos_en_mano" | trans | capitalize}}</th>
+			<th scope="col">{{"creditos.creditos_en_insc_curs" | trans | capitalize}}</th>
+		</tr>
+		{% for valor in this.data.datos %}
+		<tr>
+			<td scope="row">
+				{{valor.carrera}}
+			</td>
+			<td>
+				{{valor.cred_mano}}
+			</td>
+			<td>
+				{{valor.cred_cur}}
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+	{% else %}
+		<div class="alert" role="alert">
+			{{"reporte.no_hay_datos.creditos"|trans|capitalize}}
+		</div>
+	{% endif %}
+{% endblock %}

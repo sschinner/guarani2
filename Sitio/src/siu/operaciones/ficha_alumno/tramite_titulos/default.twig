@@ -1,0 +1,45 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_ficha_alumno.twig" as ficha_alumno %}
+{% block contenido %}
+    {{ ficha_alumno.render_menu(this.data.menu_reportes, this.data.categoria_actual, this.data.reporte_actual) }}
+	<div id="reporte_contenido">
+		<h3>{{ 'ficha_alumno.rep_tramite_titulos' | trans }}</h3>
+		{% if (this.data.datos) %}
+		{% for carrera in this.data.datos %}
+			<ul class="ficha_alumno_ul">
+				<li><strong>{{ 'ficha_alumno.rep_tramite_titulos.carrera' | trans | capitalize }}:</strong> {{'('~ficha_alumno.mostrar(carrera.carrera)~')'~ficha_alumno.mostrar(carrera.carrera_nombre)}}</li>
+				<li><strong>{{ 'ficha_alumno.rep_tramite_titulos.legajo' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.legajo)}}</li>
+				<li><strong>{{ 'ficha_alumno.rep_tramite_titulos.plan' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.plan)}}</li>
+				<li><strong>{{ 'ficha_alumno.rep_tramite_titulos.titulo' | trans | capitalize }}:</strong> {{'('~ficha_alumno.mostrar(carrera.titulo)~')'~ficha_alumno.mostrar(carrera.titulo_nombre)}}</li>
+				<li><strong>{{ 'ficha_alumno.rep_tramite_titulos.fecha_egreso' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.fecha_egreso)}}</li>
+				{% if (carrera.tiene_diplomado) %}<li><strong>{{ 'ficha_alumno.rep_tramite_titulos.fecha_jura' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.fecha_jura)}}</li>{% endif %}
+			</ul>
+			<table class='table table-condensed table-hover table-striped'>
+				<thead>
+					<tr>
+						<th>{{'ficha_alumno.rep_tramite_titulos.fecha'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_tramite_titulos.expediente'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_tramite_titulos.estado_tramite'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_tramite_titulos.promedio_con_aplazos'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_tramite_titulos.promedio_sin_aplazos'|trans| capitalize}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for tramite in carrera.tramites %}
+					<tr>
+						<td>{{ficha_alumno.mostrar(tramite.fecha)}}</td>
+						<td>{{ficha_alumno.mostrar(tramite.expediente)}}</td>
+						<td>{{ficha_alumno.mostrar(tramite.estado_tramite)}}</td>
+						<td>{{ficha_alumno.mostrar(tramite.promedio_con_aplazos)}}</td>
+						<td>{{ficha_alumno.mostrar(tramite.promedio_sin_aplazos)}}</td>
+					</tr>
+				{% endfor %}					
+					</tbody>
+				</table>
+		{% endfor %}
+		
+		{% else %}
+		<div class="alert alert-block">{{'ficha_alumno.no_hay_informacion'|trans| capitalize}}</div>
+		{% endif %}
+	</div>
+{% endblock %}

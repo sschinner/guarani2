@@ -1,0 +1,56 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}    
+    {% if this.data.providers.form %}
+        {% set form = this.data.providers.form %}
+        <div style="display: none;">
+            <form method="post" action="{{ form.accion }}" id="guarani_form_login">
+                <div class="control-group">
+                    <label class="control-label" for="usuario">{{ "acceso.form_login.usuario"|trans|capitalize }}</label>
+
+                    <div class="controls">
+                        <input id="usuario" name="{{ form.campos.usuario.name }}" type="{{ form.campos.usuario.type }}" value="{{ form.campos.usuario.value }}" maxlength="20"/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="password">{{ "acceso.form_login.clave"|trans|capitalize }}</label>
+
+                    <div class="controls">
+                        <input id="password" name="{{ form.campos.password.name }}" type="{{ form.campos.password.type }}" value="{{ form.campos.password.value }}" maxlength="20"/>
+                    </div>
+                </div>
+                {% if form.usar_captcha %}
+                    <div class="control-group">
+                        <iframe src="{{ form.url_recaptcha }}" id="frameRC" height="150" width="340"></iframe>
+                    </div>
+                {% endif %}
+                <div class="control-group">
+                    <div class="controls">
+                        <input id="recaptcha_challenge_field" name="recaptcha_challenge_field" type="hidden" value="" />
+                        <input id="recaptcha_response_field" name="recaptcha_response_field" type="hidden" value="" />
+                        <input id="login"  name="{{ form.campos.submit.name }}" type="{{ form.campos.submit.type }}" value="{{ form.campos.submit.value }}" class="btn btn-info"/>
+                    </div>
+                </div>			
+            </form>
+        </div>
+        <div style="width: 170%;">
+            <h3><p> Ingrese al sistema Guarani a trav&eacute;s del Campus Virtual</p></h3>
+            <br>
+            <p><a href="https://unlvirtual.edu.ar" class="btn no-ajax"> <b>Acceso al Campus Virtual</b>  </a></p>
+        </div>
+        <br>
+        <br>
+        {% if form.error %}
+            <div id="error_login" class='alert alert-error error-form' style="width: 160%;">
+                <p>No se pudo acceder al sistema Guarani, en caso de persistir el problema comuniquese con el CEMED.</p>
+            </div>
+        {% endif %}
+        {#{% if this.data.mensajes.error_msg %}#}
+        {#<div class='alert alert-error'>#}
+        {#{{ this.data.mensajes.error_msg }}#}
+        {#</div>#}
+        {#{% endif %}#}
+
+    {% endif %}
+
+
+{% endblock %}

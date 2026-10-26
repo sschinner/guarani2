@@ -1,0 +1,142 @@
+{% if tipo == 'detalle_examen'%}
+	<p>{{"info_materia.turno" | trans | capitalize}}: {{TURNO_EXAMEN}}</br>
+	{{"info_materia.mesa" | trans | capitalize}}: {{MESA_EXAMEN}}</br>
+	{{"info_materia.tipo_inscripcion" | trans | capitalize}}: {{TIPO}}
+	{{"anio_academico" | trans | capitalize}}: {{ANIO_ACADEMICO}}</br>
+	{{"info_materia.acta" | trans | capitalize}}: {{ACTA}}</p>
+{% endif %}
+
+{% if tipo == 'detalle_promocion'%}
+	{{"periodo_lectivo" | trans | capitalize}}: {{encabezado.per_lec}}
+	{% if encabezado.catedra %}
+		{{"catedra" | trans | capitalize}}: {{encabezado.catedra}}
+	{% endif %}</br>
+	{{"info_materia.acta" | trans | capitalize}}: {{encabezado.acta}}	
+
+	{% if evaluaciones %}
+		<h5>{{"resumen_de_parciales" | trans | capitalize}}:</h5>
+		<table class='table table-condensed table-bordered table-optativas'>
+			<tr>
+				<th>{{"fecha" | trans | capitalize}}</th>
+				<th>{{"descripcion" | trans | capitalize}}</th>
+				<th>{{"tipo" | trans | capitalize}}</th>
+				<th>{{"nota" | trans | capitalize}}</th>
+				<th>{{"resultado" | trans | capitalize}}</th>
+			</tr>
+			{% for evaluacion in evaluaciones %}
+			<tr>
+				<td>{{evaluacion.SFECHA}}</td>
+				<td>{{evaluacion.EVALUACION_DESC}}</td>
+				<td>{{evaluacion.TIPO_EVALUACION}}</td>
+				<td>
+					{% if evaluacion.NOTA_DESCRIPCION %}
+						{{evaluacion.NOTA}} ({{evaluacion.NOTA_DESCRIPCION}})
+					{% else %}
+						&nbsp;
+					{% endif %}
+				</td>
+				<td>
+					{% if evaluacion.RESULTADO_DESC %}
+						{{evaluacion.RESULTADO_DESC}}
+					{% else %}
+						&nbsp;
+					{% endif %}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	{% else %}
+		<p>{{ "no_hay_evaluaciones" | trans | capitalize }}</p>
+	{% endif %}
+{% endif %}
+
+{% if tipo == 'detalle_cursada'%}
+	{{"periodo_lectivo" | trans | capitalize}}: {{encabezado.per_lec}}
+	{% if encabezado.catedra %}
+		{{"catedra" | trans | capitalize}}: {{encabezado.catedra}}
+	{% endif %}</br>
+	{{"info_materia.acta" | trans | capitalize}}: {{encabezado.acta}}
+
+	{% if evaluaciones %}
+		<h5>{{"resumen_de_parciales" | trans | capitalize}}:</h5>
+		<table class='table table-condensed table-bordered table-optativas'>
+			<tr>
+				<th>{{"fecha" | trans | capitalize}}</th>
+				<th>{{"descripcion" | trans | capitalize}}</th>
+				<th>{{"tipo" | trans | capitalize}}</th>
+				<th>{{"nota" | trans | capitalize}}</th>
+				<th>{{"resultado" | trans | capitalize}}</th>
+			</tr>
+			{% for evaluacion in evaluaciones %}
+			<tr>
+				<td>{{evaluacion.SFECHA}}</td>
+				<td>{{evaluacion.EVALUACION_DESC}}</td>
+				<td>{{evaluacion.TIPO_EVALUACION}}</td>
+				<td>
+					{% if evaluacion.NOTA_DESCRIPCION %}
+						{{evaluacion.NOTA}} ({{evaluacion.NOTA_DESCRIPCION}})
+					{% else %}
+						&nbsp;
+					{% endif %}
+				</td>
+				<td>
+					{% if evaluacion.RESULTADO_DESC %}
+						{{evaluacion.RESULTADO_DESC}}
+					{% else %}
+						&nbsp;
+					{% endif %}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	{% else %}
+		<p>{{ "no_hay_evaluaciones" | trans | capitalize }}</p>
+	{% endif %}
+{% endif %}
+
+{% if tipo == 'detalle_equivalencia'%}
+	<p><!--{{"Vencimiento" | trans | capitalize}}: {% if FECHA_VENCIMIENTO %}{{FECHA_VENCIMIENTO}}{%else%}{{'sin_definir' | trans | capitalize}}{% endif %}</br>-->
+	{{"Nro. resolución" | trans | capitalize}}: {% if NRO_RESOLUCION %}{{NRO_RESOLUCION}}{%else%}{{'sin_definir' | trans | capitalize}}{% endif %}</br>	
+	{{"Temas a rendir" | trans | capitalize}}: {% if TEMAS_A_RENDIR %}{{TEMAS_A_RENDIR}}{%else%}{{'sin_definir' | trans | capitalize}}{% endif %}
+	</p>
+{% endif %}
+
+{% if tipo == 'detalle_encurso'%}
+	{% if evaluaciones %}
+	<h5>{{"resumen_de_parciales" | trans | capitalize}}:</h5>
+	<table class='table table-condensed table-bordered table-optativas'>
+		<tr>
+			<th>{{"fecha" | trans | capitalize}}</th>
+			<th>{{"descripcion" | trans | capitalize}}</th>
+			<th>{{"tipo" | trans | capitalize}}</th>
+			<th>{{"nota" | trans | capitalize}}</th>
+			<th>{{"resultado" | trans | capitalize}}</th>
+		</tr>
+		<tr>
+			{% for evaluacion in evaluaciones %}
+			<tr>
+				<td>{{evaluacion.SFECHA}}</td>
+				<td>{{evaluacion.EVALUACION_DESC}}</td>
+				<td>{{evaluacion.TIPO_EVALUACION}}</td>
+				<td>
+					{% if evaluacion.NOTA_DESCRIPCION %}
+						{{evaluacion.NOTA}} ({{evaluacion.NOTA_DESCRIPCION}})
+					{% else %}
+						&nbsp;
+					{% endif %}
+				</td>
+				<td>
+					{% if evaluacion.RESULTADO_DESC %}
+						{{evaluacion.RESULTADO_DESC}}
+					{% else %}
+						&nbsp;
+					{% endif %}
+				</td>
+			</tr>
+			{% endfor %}
+		</tr>
+	</table>
+	{% else %}
+		<p>{{ "no_hay_evaluaciones" | trans | capitalize }}</p>
+	{% endif %}	
+{% endif %}

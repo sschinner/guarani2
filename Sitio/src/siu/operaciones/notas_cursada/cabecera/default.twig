@@ -1,0 +1,49 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+<h3 class="titulo-navbar clearfix">
+	<div class="pull-left">
+		{{ this.data.MATERIA_NOMBRE }} ({{ this.data.MATERIA }})
+	</div>
+	<div class="pull-right">
+		<button class="btn btn-small" id="js-colapsar-info-mesa"><span class="icon-th-list"></span> <span>Detalles</span></button>
+		<button class="btn btn-small" id="js-colapsar-herramientas"><span class="icon-wrench"></span> <span>Autocompletar</span></button>
+	</div>
+</h3>
+
+<div class="js-detalle-materia" style="display: none;">
+	
+	<table class="table table-condensed" summary="Detalles de cursada" aria-live="polite">
+		<tr>
+			<th id="actar" scope="row"><strong>{{'acta_regularidad'|trans|capitalize}}:</strong></th>
+			<td headers="actar">{{ this.data.ACTA_REG }}</td>
+			<th id="comision" scope="row"><strong>{{'comision'|trans|capitalize}}:</strong></th>
+			<td headers="comision">({{ this.data.COMISION }}) {{ this.data.COMISION_NOMBRE }}</td>
+		</tr>
+		{% if this.data.ACTA_PRO and this.data.ESTADO != 'B' %}
+		<tr>
+			<th id="actap" scope="row"><strong>{{'acta_promocion'|trans|capitalize}}:</strong></th>
+			<td headers="actap">{{ this.data.ACTA_PRO }}</td>
+			<th id="estadop" scope="row"><strong>{{'estado_promocion'|trans|capitalize}}:</strong></th>
+                        <td headers="estadop">
+			{% if this.data.ESTADO == 'A' %}
+				{{ 'abierta'|trans|capitalize }}
+			{% else %}
+				{{ 'cerrada'|trans|capitalize }}
+			{% endif %}
+                        </td>
+		</tr>
+		{% endif %}
+		<tr>
+			<th id="anio" scope="row"><strong>{{'anio_academico'|trans|capitalize}}:</strong></th>
+			<td headers="anio">{{ this.data.ANIO_ACADEMICO }}</td>
+			<th id="per_lec" scope="row"><strong>{{'periodo_lectivo'|trans|capitalize}}:</strong></th>
+			<td headers="per_lec">{{ this.data.PERIODO_LECTIVO }}</td>
+		</tr>
+	</table>
+		
+	<a id='ver_escala' class="btn btn-small"href="#"><span class="icon-eye-open"></span> {{ 'ver_escala_notas'|trans|capitalize }}</a>
+	
+</div>
+
+{% endblock %}

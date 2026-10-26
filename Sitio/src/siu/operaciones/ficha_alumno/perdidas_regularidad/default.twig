@@ -1,0 +1,53 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_ficha_alumno.twig" as ficha_alumno %}
+{% block contenido %}
+    {{ ficha_alumno.render_menu(this.data.menu_reportes, this.data.categoria_actual, this.data.reporte_actual) }}
+	<div id="reporte_contenido">
+		<h3>{{ 'ficha_alumno.rep_perdidas_regularidad' | trans }}</h3>
+		{% if (this.data.datos) %}
+		{% for carrera in this.data.datos %}
+			<ul class="ficha_alumno_ul">
+				<li><strong>{{ 'ficha_alumno.rep_perdidas_regularidad.carrera' | trans | capitalize }}:</strong> {{'('~ficha_alumno.mostrar(carrera.carrera)~')'~ficha_alumno.mostrar(carrera.carrera_nombre)}}</li>
+				<li><strong>{{ 'ficha_alumno.rep_perdidas_regularidad.legajo' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.legajo)}}</li>
+			</ul>			
+			<table class='table table-condensed table-hover table-striped'>
+				<thead>
+					<tr>
+						<th colspan="3">{{'ficha_alumno.rep_perdidas_regularidad.perdida_de_regularidad'|trans| capitalize}}</th>
+						<th colspan="3">{{'ficha_alumno.rep_perdidas_regularidad.readmision'|trans| capitalize}}</th>
+						<th colspan="3">{{'ficha_alumno.rep_perdidas_regularidad.solucion'|trans| capitalize}}</th>
+					</tr>
+					<tr>
+						<th>{{'ficha_alumno.rep_perdidas_regularidad.anio_perdida_regularidad'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_perdidas_regularidad.fecha_perdida_regularidad'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_perdidas_regularidad.resolucion_perdida_regularidad'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_perdidas_regularidad.anio_readmision'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_perdidas_regularidad.fecha_readmision'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_perdidas_regularidad.resolucion_readmision'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_perdidas_regularidad.fecha_solucion'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_perdidas_regularidad.solucion'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_perdidas_regularidad.motivo_solucion'|trans| capitalize}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for perdida_regularidad in carrera.perdidas_regularidad %}
+					<tr>
+						<td>{{ficha_alumno.mostrar(perdida_regularidad.anio_perdida_regularidad)}}</td>
+						<td>{{ficha_alumno.mostrar(perdida_regularidad.fecha_perdida_regularidad)}}</td>
+						<td>{{ficha_alumno.mostrar(perdida_regularidad.resolucion_perdida_regularidad)}}</td>
+						<td>{{ficha_alumno.mostrar(perdida_regularidad.anio_readmision)}}</td>
+						<td>{{ficha_alumno.mostrar(perdida_regularidad.fecha_readmision)}}</td>
+						<td>{{ficha_alumno.mostrar(perdida_regularidad.resolucion_readmision)}}</td>
+						<td>{{ficha_alumno.mostrar(perdida_regularidad.fecha_solucion)}}</td>
+						<td>{{ficha_alumno.mostrar(perdida_regularidad.solucion)}}</td>
+						<td>{{ficha_alumno.mostrar(perdida_regularidad.motivo_solucion)}}</td>
+					</tr>
+				{% endfor %}					
+					</tbody>
+				</table>
+		{% endfor %}
+		{% else %}
+		<div class="alert alert-block">{{'ficha_alumno.no_hay_informacion'|trans| capitalize}}</div>
+		{% endif %}
+	</div>
+{% endblock %}

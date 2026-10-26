@@ -1,0 +1,134 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+    <h3 class="clearfix" class="titulo-certificado">
+	    <span class="pull-left">{{'certificado_evaluacion.certificado_evaluacion'|trans}}</span>
+    </h3>
+
+    <div class="accordion" id="evaluaciones">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#evaluaciones" data-target="#cursadas">
+                    <h4>
+                        {{ "certificado_evaluacion.cursadas" | trans | capitalize }} -
+                        <span class="nota_titulo">
+                        {% if this.data.alcance_cursadas == "T" %}
+                            {{"certificado_evaluacion.cursadas_historicas" | trans | capitalize }}
+                        {% else %}
+                            {{"certificado_evaluacion.cursadas_vigentes" | trans | capitalize }}
+                        {% endif %}
+                        </span>
+                    </h4>
+                </a>
+            </div>
+            <div id="cursadas" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                    {% if this.data.listado_evaluaciones_parciales %}
+                        <table class="table table-bordered table-condensed table-striped" summary="{{ "certificado_evaluacion.table_summary_cursadas" | trans }}">
+                            <thead>
+                                <tr>
+                                    <th>{{ "certificado_evaluacion.materia" | trans }}</th>
+                                    <th>{{ "certificado_evaluacion.anio" | trans }}</th>
+                                    <th>{{ "certificado_evaluacion.periodo_lectivo" | trans }}</th>
+                                    <th>{{ "certificado_evaluacion.sede" | trans }}</th>
+                                    <th>{{ "certificado_evaluacion.comision" | trans }}</th>
+                                    <th>{{ "certificado_evaluacion.turno" | trans }}</th>
+                                    <th>{{ "certificado_evaluacion.catedra" | trans }}</th>
+                                    <th>{{ "certificado_evaluacion.certificado" | trans }}</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                            {% for cursada in this.data.listado_evaluaciones_parciales %}
+                                <tr>
+                                    <td>{{ cursada.nombre_reducido_materia }}</td>
+                                    <td>{{ cursada.anio_academico }}</td>
+                                    <td>{{ cursada.periodo_lectivo }}</td>
+                                    <td>{{ cursada.nombre_sede }}</td>
+                                    <td>{{ cursada.comision_nombre }}</td>
+                                    <td class="centrado">{{("mis_inscripciones.turno_" ~ cursada.turno_comision) | trans | capitalize }}</td>
+                                    <td class="centrado">{{ cursada.catedra_nombre }}</td>
+                                    <td class="centrado">
+                                    {% if cursada.estado == "Activa" or cursada.estado == "Exceptuado" %}
+                                        <a tabindex="0" id="pdf_btn" target="_blank" href="{{this.data.url_pdf_parcial}}?materia={{cursada.nombre_reducido_materia|url_encode}}" class="btn" title="{{ 'descargar_pdf'|trans|capitalize }}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+                                    {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="alert alert-info">{{ "certificado_evaluacion.vacio_cursadas" |trans }}</div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#evaluaciones" data-target="#examenes">
+                    <h4>
+                        {{"certificado_evaluacion.examenes" | trans | capitalize }} -
+                        <span class="nota_titulo">
+                        {% if this.data.alcance_examenes == "T" %}
+                            {{"certificado_evaluacion.examenes_historicos" | trans | capitalize }}
+                        {% else %}
+                            {{"certificado_evaluacion.examenes_vigentes" | trans | capitalize }}
+                        {% endif %}
+                        </span>
+                    </h4>
+                </a>
+            </div>
+            <div id="examenes" class="accordion-body collapse">
+                <div class="accordion-inner">
+
+                    {% if this.data.listado_evaluaciones_examenes %}
+                        <table class="table table-bordered table-condensed table-striped" summary="{{ "certificado_evaluacion.table_summary_examenes" | trans }}">
+                            <thead>
+                            <tr>
+                                <th>{{ "certificado_evaluacion.materia" | trans }}</th>
+                                <th>{{ "certificado_evaluacion.anio" | trans }}</th>
+                                <th>{{ "certificado_evaluacion.turno" | trans }}</th>
+                                <th>{{ "certificado_evaluacion.mesa" | trans }}</th>
+                                <th>{{ "certificado_evaluacion.sede" | trans }}</th>
+                                <th>{{ "certificado_evaluacion.fecha_examen_dia" | trans }}</th>
+                                <th>{{ "certificado_evaluacion.fecha_examen_hora" | trans }}</th>
+                                <th>{{ "certificado_evaluacion.tipo" | trans }}</th>
+                                <th>{{ "certificado_evaluacion.certificado" | trans }}</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            {% for examen in this.data.listado_evaluaciones_examenes %}
+                                <tr>
+                                    <td>{{ examen.materia_nombre_reducido }}</td>
+                                    <td>{{ examen.anio_academico }}</td>
+                                    <td>{{ examen.turno_examen }}</td>
+                                    <td>{{ examen.mesa_examen }}</td>
+                                    <td>{{ examen.nombre_sede }}</td>
+                                    <td>{{ examen.dia_prestamo_aula }}</td>
+                                    <td>{{ examen.hora_prestamo_aula }}</td>
+                                    <td>{{ examen.tipo_insc_nombre }}</td>
+                                    <td class="centrado">
+                                    {% if examen.estado_nombre == "Activa" or examen.estado_nombre == "Exceptuado" %}
+                                        <a tabindex="0" id="pdf_btn" target="_blank" href="{{this.data.url_pdf_examen}}?materia={{examen.materia_nombre_reducido|url_encode}}&mesa={{examen.mesa_examen|url_encode}}" class="btn" title="{{ 'descargar_pdf'|trans|capitalize }}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+                                    {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="alert alert-info">{{ "certificado_evaluacion.vacio_examenes" |trans }}</div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

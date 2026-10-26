@@ -1,0 +1,217 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+<form id="principales" action="{{ this.data.url_guardar }}" method="post">
+		<fieldset>
+			<legend class="clearfix">
+				<span class="pull-left"><h3 class="resaltar">{{'censo.datos_personales'|trans|capitalize}}</h3></span>
+				<button style="margin-top: 2px;" type="button" name="guardar" class="guardar btn btn-info pull-right" disabled="disabled">{{'guardar' |trans|capitalize}}</button>
+			</legend>
+		{% import "kernel/macro_csrf.twig" as input_csrf %}
+		{{ input_csrf.mostrar(this.generar_csrf) }}
+
+		{{this.data.form.form_id.renderViewHelper|raw}}
+
+		{#{this.data.form.CENS_E_MAIL.renderLabel|raw}}
+		{{this.data.form.CENS_E_MAIL.renderViewHelper|raw}#}
+
+			{{this.data.form.CENS_CALLE_PER_LECT.renderLabel|raw}}
+			{{this.data.form.CENS_CALLE_PER_LECT.renderViewHelper|raw}}
+			
+			<div class="clearfix">
+				<div class="pull-left">
+					{{this.data.form.CENS_NUMERO_PER_LECT.renderLabel|raw}}
+					{{this.data.form.CENS_NUMERO_PER_LECT.renderViewHelper|raw}}
+				</div>
+				<div class="pull-left">
+					{{this.data.form.CENS_PISO_PER_LECT.renderLabel|raw}}
+					{{this.data.form.CENS_PISO_PER_LECT.renderViewHelper|raw}}
+				</div>
+				<div class="pull-left">
+					{{this.data.form.CENS_DPTO_PER_LECT.renderLabel|raw}}
+					{{this.data.form.CENS_DPTO_PER_LECT.renderViewHelper|raw}}
+				</div>
+				<div class="pull-left">
+					{{this.data.form.CENS_UNIDAD_PER_LECT.renderLabel|raw}}
+					{{this.data.form.CENS_UNIDAD_PER_LECT.renderViewHelper|raw}}
+				</div>
+			</div>
+		
+
+
+		<div class="clearfix">
+			<div class="pull-left">
+				{{this.data.form.CENS_LOC_PER_LECT_TEXTO.renderLabel|raw}}
+				{{this.data.form.CENS_LOC_PER_LECT_TEXTO.renderViewHelper|raw}}
+				{{this.data.form.CENS_LOC_PER_LECT.renderViewHelper|raw}}
+			</div>
+			<div class="pull-left fix-boton">
+				<input id="btnLocPersonal" name="btnLocPersonal" value="Buscar Localidad" type="button" class="btn btn-inverse" />
+			</div>
+			<div class="pull-left">
+				{{this.data.form.CENS_CP_PER_LECT.renderLabel|raw}}
+				{{this.data.form.CENS_CP_PER_LECT.renderViewHelper|raw}}
+			</div>
+			<div class="pull-left fix-boton">
+				<input id="btnLocPersonalBorrar" name="btnLocPersonalBorrar" value="Borrar" type="button" class="btn btn-borrar icon-trash" />
+			</div>
+		</div>
+
+		<img id="imagen_perfil" class="pull-right img-rounded" src='{{ this.data.url_imagen }}' alt="Imagen ficha"/>
+
+		{{this.data.form.CENS_TE_PER_LECT.renderLabel|raw}}
+		{{this.data.form.CENS_TE_PER_LECT.renderViewHelper|raw}}
+
+		<div class="clearfix">
+			<div class="pull-left">
+				{{this.data.form.AUX1_CELULAR_NUMERO.renderLabel|raw}}
+				{{this.data.form.AUX1_CELULAR_NUMERO.renderViewHelper|raw}}
+			</div>
+			<div class="pull-left">
+				{{this.data.form.AUX1_CELULAR_COMPANIA.renderLabel|raw}}
+				{{this.data.form.AUX1_CELULAR_COMPANIA.renderViewHelper|raw}}
+			</div>
+		</div>
+
+		<h4 class="resaltar divisor">Datos familiares y de cobertura social</h4>
+
+		{{this.data.form.AUX2_ALU_OBRA_SOCIAL.renderLabel|raw}}
+		{{this.data.form.AUX2_ALU_OBRA_SOCIAL.renderViewHelper|raw}}
+
+		<div class="clearfix">
+			<div class="pull-left">
+				{{this.data.form.CENS_ESTADO_CIVIL.renderLabel|raw}}
+				{{this.data.form.CENS_ESTADO_CIVIL.renderViewHelper|raw}}
+			</div>
+
+			<div class="pull-left">
+				{{this.data.form.AUX1_CANT_HIJOS_ALUM.renderLabel|raw}}
+				{{this.data.form.AUX1_CANT_HIJOS_ALUM.renderViewHelper|raw}}
+			</div>
+
+			<div class="pull-left">
+				{{this.data.form.AUX1_CANT_FAMI_CARGO.renderLabel|raw}}
+				{{this.data.form.AUX1_CANT_FAMI_CARGO.renderViewHelper|raw}}
+			</div>
+
+			<div class="pull-left">
+				{{this.data.form.AUX2_ALU_EST_CIVIL_UH.renderLabel|raw}}
+				{{this.data.form.AUX2_ALU_EST_CIVIL_UH.renderViewHelper|raw}}
+			</div>
+		</div>
+
+		{{this.data.form.CENS_TIPO_RESIDENCIA.renderLabel|raw}}
+		{{this.data.form.CENS_TIPO_RESIDENCIA.renderViewHelper|raw}}
+
+		{{this.data.form.AUX1_VIVE_ACTUAL_CON.renderLabel|raw}}
+		{{this.data.form.AUX1_VIVE_ACTUAL_CON.renderViewHelper|raw}}
+
+		<h4 class="resaltar divisor">Datos secundarios</h4>
+
+		<div id="acordeon">
+			<a class="descolapsar" id="acordeonPrimero" href="#">{{"censo.principales.TIT_DATOS_PROC" | trans | capitalize }}</a>
+			
+			<div class="cuadro">
+
+				{{this.data.form.CENS_CALLE_PROC.renderLabel|raw}}
+				{{this.data.form.CENS_CALLE_PROC.renderViewHelper|raw}}
+
+				<div class="clearfix">
+					<div class="pull-left">
+						{{this.data.form.CENS_NUMERO_PROC.renderLabel|raw}}
+						{{this.data.form.CENS_NUMERO_PROC.renderViewHelper|raw}}
+					</div>
+					<div class="pull-left">
+						{{this.data.form.CENS_PISO_PROC.renderLabel|raw}}
+						{{this.data.form.CENS_PISO_PROC.renderViewHelper|raw}}
+					</div>
+					<div class="pull-left">
+						{{this.data.form.CENS_DPTO_PROC.renderLabel|raw}}
+						{{this.data.form.CENS_DPTO_PROC.renderViewHelper|raw}}
+					</div>
+					<div class="pull-left">
+						{{this.data.form.CENS_UNIDAD_PROC.renderLabel|raw}}
+						{{this.data.form.CENS_UNIDAD_PROC.renderViewHelper|raw}}
+					</div>
+				</div>
+
+				<div class="clearfix">
+					<div class="pull-left">
+						{{this.data.form.CENS_LOC_PROC_TEXTO.renderLabel|raw}}
+						{{this.data.form.CENS_LOC_PROC_TEXTO.renderViewHelper|raw}}
+						{{this.data.form.CENS_LOC_PROC.renderViewHelper|raw}}
+					</div>
+					<div class="pull-left fix-boton">
+						<input id="btnLocProcedencia" name="btnLocProcedencia" value="Buscar Localidad" type="button" class="btn btn-inverse" />
+					</div>
+					<div class="pull-left">
+						{{this.data.form.CENS_CP_PROC.renderLabel|raw}}
+						{{this.data.form.CENS_CP_PROC.renderViewHelper|raw}}
+					</div>
+					<div class="pull-left fix-boton">
+						<input id="btnLocProcedenciaBorrar" name="btnLocProcedenciaBorrar" value="Borrar" type="button" class="btn btn-borrar icon-trash" />
+					</div>
+				</div>
+
+				{{this.data.form.CENS_TE_PROC.renderLabel|raw}}
+				{{this.data.form.CENS_TE_PROC.renderViewHelper|raw}}
+
+			</div>
+
+			<a class="descolapsar" href="#">{{"censo.principales.TIT_DATOS_PERS_ALLEG" | trans | capitalize }}</a>
+
+			<div class="cuadro">
+				{{this.data.form.CENS_NOMBRE_PERS_ALLEG.renderLabel|raw}}
+				{{this.data.form.CENS_NOMBRE_PERS_ALLEG.renderViewHelper|raw}}
+
+					
+				{{this.data.form.CENS_CALLE_PERS_ALLEG.renderLabel|raw}}
+				{{this.data.form.CENS_CALLE_PERS_ALLEG.renderViewHelper|raw}}
+					
+				<div class="clearfix">
+					
+					<div class="pull-left">
+						{{this.data.form.CENS_NRO_PERS_ALLEG.renderLabel|raw}}
+						{{this.data.form.CENS_NRO_PERS_ALLEG.renderViewHelper|raw}}
+					</div>
+					<div class="pull-left">
+						{{this.data.form.CENS_PISO_PERS_ALLEG.renderLabel|raw}}
+						{{this.data.form.CENS_PISO_PERS_ALLEG.renderViewHelper|raw}}
+					</div>
+					<div class="pull-left">
+						{{this.data.form.CENS_DPTO_PERS_ALLEG.renderLabel|raw}}
+						{{this.data.form.CENS_DPTO_PERS_ALLEG.renderViewHelper|raw}}
+					</div>
+					<div class="pull-left">
+						{{this.data.form.CENS_UNIDAD_PERS_ALLEG.renderLabel|raw}}
+						{{this.data.form.CENS_UNIDAD_PERS_ALLEG.renderViewHelper|raw}}
+					</div>
+				</div>
+
+				<div class="clearfix">
+					<div class="pull-left">
+						{{this.data.form.CENS_LOC_PERS_ALLEG_TEXTO.renderLabel|raw}}
+						{{this.data.form.CENS_LOC_PERS_ALLEG_TEXTO.renderViewHelper|raw}}
+						{{this.data.form.CENS_LOC_PERS_ALLEG.renderViewHelper|raw}}
+					</div>
+					<div class="pull-left fix-boton">
+						<input id="btnLocAllegada" name="btnLocAllegada" value="Buscar Localidad" type="button" class="btn btn-inverse" />
+					</div>
+					<div class="pull-left">
+						{{this.data.form.CENS_CP_PERS_ALLEG.renderLabel|raw}}
+						{{this.data.form.CENS_CP_PERS_ALLEG.renderViewHelper|raw}}
+					</div>
+					<div class="pull-left fix-boton">
+						<input id="btnLocAllegadaBorrar" name="btnLocAllegadaBorrar" value="Borrar" type="button" class="btn btn-borrar icon-trash" />
+					</div>
+				</div>
+
+				{{this.data.form.CENS_TE_PERS_ALLEG.renderLabel|raw}}
+				{{this.data.form.CENS_TE_PERS_ALLEG.renderViewHelper|raw}}
+			</div>
+		</div>
+	
+		</fieldset>
+	</form>
+	<button type="button" name="guardar" class="guardar btn btn-info pull-right" disabled="disabled">{{'guardar' |trans|capitalize}}</button>
+{% endblock %}

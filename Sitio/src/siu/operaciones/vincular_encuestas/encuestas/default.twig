@@ -1,0 +1,90 @@
+{% extends "kernel/pagelet_polite.twig" %}
+{% block contenido %}
+
+    <div id="mensaje-vincular" class='alert' style="display: none;"></div>
+
+    <div class="row-fluid">
+        <div class="span12">
+
+            {% if this.data.encuestas_a_vincular %}
+                
+                {% if this.data.error_kolla.hubo_error %}
+                    
+                    <div id="alert-no-hay-preguntas" class="alert alert-error">{{ this.data.error_kolla.mensaje }}</div>
+                    
+                {%endif%}
+                
+                <table class="table table-striped">
+
+                    <thead>
+                        <tr>
+                            <th>{{ 'vincular_encuestas.encuesta' | trans }}</th>
+                            <th>{{ 'vincular_encuestas.titulo_encuesta' | trans }}</th>
+                            <th>{{ 'vincular_encuestas.descripcion' | trans }}</th>
+                            <th class="centrado">{{ 'vincular_encuestas.cant_alcances' | trans }}</th>
+                            <th>{{ 'vincular_encuestas.encuesta_kolla' | trans }}</th>
+                                <th></th>
+                                <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for encuesta in this.data.encuestas_a_vincular %}
+
+                            <tr>
+                                <td>{{ encuesta.ENCUESTA }}</td>
+                                <td>{{ encuesta.TITULO }}</td>
+                                <td>{{ encuesta.DESCRIPCION }}</td>
+                                <td class="centrado"><span class="badge badge-info">{{ encuesta.CANT_ALCANCES }}</span></td>
+
+                                {% if this.data.error_kolla.hubo_error %}
+                                    <td class="centrado">{{ encuesta.ENCUESTA }}</td>
+                                {%else %}          
+                                    <td>
+                                        <div class="control-group">
+                                            <div class="controls">
+                                                <select id="select-encuesta-{{ encuesta.ENCUESTA }}" data-encuesta="{{ encuesta.ENCUESTA }}" data-encuesta-kolla="{{ encuesta.KOLLA_ID_ENCUESTA }}" class="select-encuestas input-medium">
+
+                                                    {% set btn_ver_disabled = false %}
+                                                    {% if encuesta.KOLLA_ID_ENCUESTA not in this.data.encuestas_kolla %}
+                                                        <option value="">{{ 'vincular_encuestas.seleccionar' | trans }}</option>
+                                                        {% set btn_ver_disabled = true %}
+                                                    {% endif %}
+
+                                                    {% for encuesta_kolla in this.data.encuestas_kolla %}
+                                                        <option value="{{ encuesta_kolla }}"{% if encuesta_kolla == encuesta.KOLLA_ID_ENCUESTA %} selected{% endif %}>{{ encuesta_kolla }}</option>
+                                                    {% endfor %}
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button id="boton-ver-encuesta-{{ encuesta.ENCUESTA }}" class="btn btn-small ver" type="button" data-encuesta="{{ encuesta.ENCUESTA }}"{% if btn_ver_disabled %} disabled{% endif %}>{{ 'vincular_encuestas.ver' | trans }}</button>
+                                    </td>
+                                    <td>
+                                        <button id="boton-vincular-encuesta-{{ encuesta.ENCUESTA }}" class="btn btn-small btn-primary vincular" type="button" data-encuesta="{{ encuesta.ENCUESTA }}" disabled>{{ 'vincular_encuestas.vincular' | trans }}</button>
+                                    </td>
+
+                                {%endif%}
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+                <div id="estructura_encuesta_kolla" class="modal hide fade"></div>
+
+            {% else %}
+
+                <div class='alert alert-notice'>{{ 'vincular_encuestas.no_hay_encuestas_a_vincular' | trans }}</div>
+
+            {% endif %}
+
+        </div>
+    </div>
+
+{% endblock %}

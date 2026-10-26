@@ -1,0 +1,99 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+<form id="financiamiento" action="{{this.data.form.getAction}}" method="post">
+		{% import "kernel/macro_csrf.twig" as input_csrf %}
+		{{ input_csrf.mostrar(this.generar_csrf) }}
+		
+		<fieldset>
+		<legend class="clearfix">
+			<span class="pull-left"><h3 class="resaltar">{{'censo.fuente_financiamiento_estudios' |trans|capitalize}}</h3></span>
+			<button style="margin-top: 2px;" type="button" name="guardar" class="guardar btn btn-info pull-right" disabled="disabled">{{'guardar' |trans|capitalize}}</button>
+		</legend>
+
+		{{this.data.form.form_id.renderViewHelper|raw}}
+
+		<fieldset>
+		<legend>{{'censo.como_costea_estudios'|trans|capitalize}}</legend>
+
+		<div class="clearfix bloque">
+			{{this.data.form.AUX2_ALU_COS_EST_AP_FAM.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_COS_EST_AP_FAM.renderLabel|raw}}
+
+			{{this.data.form.AUX2_ALU_COS_EST_PLSOC.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_COS_EST_PLSOC.renderLabel|raw}}
+
+			{{this.data.form.AUX2_ALU_COS_EST_TRAB.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_COS_EST_TRAB.renderLabel|raw}}
+
+			{{this.data.form.AUX2_ALU_COS_EST_BECA.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_COS_EST_BECA.renderLabel|raw}}
+			{{'censo.nota'|trans|capitalize}}
+		</div>
+		</fieldset>
+
+		<fieldset>
+		<legend>{{'censo.fuente_beca'|trans|capitalize}}</legend>
+
+		<div id="fuente_beca" class="clearfix bloque">
+			{{this.data.form.AUX1_TIENE_BECA_UNIV.renderViewHelper|raw}}
+			{{this.data.form.AUX1_TIENE_BECA_UNIV.renderLabel|raw}}
+
+			{{this.data.form.AUX1_TIENE_BECA_INTER.renderViewHelper|raw}}
+			{{this.data.form.AUX1_TIENE_BECA_INTER.renderLabel|raw}}
+
+			{{this.data.form.AUX1_TIENE_BECA_NACIO.renderViewHelper|raw}}
+			{{this.data.form.AUX1_TIENE_BECA_NACIO.renderLabel|raw}}
+
+			{{this.data.form.AUX2_ALU_BECA_PROV.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_BECA_PROV.renderLabel|raw}}
+
+			{{this.data.form.AUX2_ALU_BECA_MUNI.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_BECA_MUNI.renderLabel|raw}}
+
+			{{this.data.form.AUX2_ALU_BECA_OTRA.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_BECA_OTRA.renderLabel|raw}}
+		</div>
+		</fieldset>
+
+		<fieldset>
+		<legend>{{'censo.tipo_beca'|trans|capitalize}}</legend>
+
+		<div id="tipo_beca" class="clearfix bloque">
+			{{this.data.form.AUX2_ALU_BECA_TIPO_SER.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_BECA_TIPO_SER.renderLabel|raw}}
+
+			{{this.data.form.AUX2_ALU_BECA_TIPO_INV.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_BECA_TIPO_INV.renderLabel|raw}}
+
+			{{this.data.form.AUX2_ALU_BECA_TIPO_ECO.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_BECA_TIPO_ECO.renderLabel|raw}}
+			{{'censo.nota'|trans|capitalize}}
+		</div>
+		</fieldset>
+		
+		<fieldset>
+		<legend>{{'censo.tipo_ayuda'|trans|capitalize}}</legend>
+
+		<div id="tipo_ayuda"  class="clearfix">
+			{{this.data.form.AUX2_ALU_BECA_ECO_TRAN.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_BECA_ECO_TRAN.renderLabel|raw}}		
+
+			{{this.data.form.AUX2_ALU_BECA_ECO_EFEC.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_BECA_ECO_EFEC.renderLabel|raw}}		
+
+			{{this.data.form.AUX2_ALU_BECA_ECO_FOTO.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_BECA_ECO_FOTO.renderLabel|raw}}		
+
+			{{this.data.form.AUX2_ALU_BECA_ECO_HABI.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_BECA_ECO_HABI.renderLabel|raw}}
+
+			{{this.data.form.AUX2_ALU_BECA_ECO_COME.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_BECA_ECO_COME.renderLabel|raw}}
+		</div>
+		</fieldset>
+		{{this.data.form.AUX2_ALU_COS_EST_ESPEC.renderLabel|raw}}
+		{{this.data.form.AUX2_ALU_COS_EST_ESPEC.renderViewHelper|raw}}
+	</fieldset>
+	</form>
+	<button type="button" name="guardar" class="guardar btn btn-info pull-right" disabled="disabled">{{'guardar' |trans|capitalize}}</button>
+{% endblock %}

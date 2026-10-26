@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ComplementoTitulo_tesis" language="groovy" pageWidth="455" pageHeight="752" whenNoDataType="AllSectionsNoDetail" columnWidth="455" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="650e829e-09f9-4aa9-ac14-b1faa8a46eac">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA["guarani_estilo.jrtx"]]></template>
+	<queryString language="xPath">
+		<![CDATA[/HistoriaAcademica/tabla/tesis/item]]>
+	</queryString>
+	<field name="titulo" class="java.lang.String">
+		<fieldDescription><![CDATA[titulo]]></fieldDescription>
+	</field>
+	<field name="fecha_aprobacion" class="java.lang.String">
+		<fieldDescription><![CDATA[fecha_aprobacion]]></fieldDescription>
+	</field>
+	<field name="resolucion_tesis" class="java.lang.String">
+		<fieldDescription><![CDATA[resolucion_tesis]]></fieldDescription>
+	</field>
+	<variable name="fecha_aprob_narrada" class="java.lang.String">
+		<variableExpression><![CDATA[new java.text.SimpleDateFormat("dd 'de' MMMM 'de' yyyy", new java.util.Locale("es")).format(new java.text.SimpleDateFormat("yyyy-MM-dd").parse($F{fecha_aprobacion}))]]></variableExpression>
+	</variable>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement style="reporte_texto_negrita" x="0" y="0" width="252" height="20" uuid="5a867182-4e8c-4617-804d-0b32238dfe9d">
+					<printWhenExpression><![CDATA[!($F{titulo}.isEmpty())]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[Tesis]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
+				<reportElement x="0" y="0" width="455" height="20" uuid="8ab41313-5f83-4072-b019-c85135c6a491"/>
+				<textFieldExpression><![CDATA[$F{titulo}
++
+"\nAprobada el "+$V{fecha_aprob_narrada}+", por Resolución: "+$F{resolucion_tesis}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

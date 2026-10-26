@@ -1,0 +1,75 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<form id="deporte" action="{{this.data.form.getAction}}" method="post">
+		{% import "kernel/macro_csrf.twig" as input_csrf %}
+		{{ input_csrf.mostrar(this.generar_csrf) }}
+		
+		<fieldset>
+			<legend class="clearfix">
+				<span class="pull-left"><h3 id="form-title" class="resaltar">Deportes</h3></span>
+				<button style="margin-top: 2px;" type="button" name="guardar" class="guardar btn btn-info pull-right" disabled="disabled">{{'guardar' |trans|capitalize}}</button>
+			</legend>
+		{{this.data.form.form_id.renderViewHelper|raw}}
+
+		<div class="clearfix bloque">
+			{{this.data.form.AUX1_PRACTICA_DEPORTES.renderViewHelper|raw}}
+			{{this.data.form.AUX1_PRACTICA_DEPORTES.renderLabel|raw}}
+		</div>
+		
+		
+		<div id="deporte_datos">
+			<fieldset>
+				<legend>
+					{{"censo.deporte.donde.practica"|trans}}
+				</legend>
+				<div class="clearfix bloque">
+				{{this.data.form.AUX1_HACE_DEP_GIM_PRIV.renderViewHelper|raw}}
+				{{this.data.form.AUX1_HACE_DEP_GIM_PRIV.renderLabel|raw}}
+
+				{{this.data.form.AUX1_HACE_DEP_UNIV.renderViewHelper|raw}}
+				{{this.data.form.AUX1_HACE_DEP_UNIV.renderLabel|raw}}
+
+				{{this.data.form.AUX1_HACE_DEP_PARTIC.renderViewHelper|raw}}
+				{{this.data.form.AUX1_HACE_DEP_PARTIC.renderLabel|raw}}
+
+				{{this.data.form.AUX1_HACE_DEP_OTROS.renderViewHelper|raw}}
+				{{this.data.form.AUX1_HACE_DEP_OTROS.renderLabel|raw}}
+				</div>
+			</fieldset>
+			
+			<fieldset>
+				<legend>
+					&iquest;Qu&eacute; practica?
+				</legend>
+
+				<div class="clearfix bloque">
+				{{this.data.form.AUX1_PRAC_DEP_BASQUET.renderViewHelper|raw}}
+				{{this.data.form.AUX1_PRAC_DEP_BASQUET.renderLabel|raw}}
+
+				{{this.data.form.AUX1_PRAC_DEP_NATACION.renderViewHelper|raw}}
+				{{this.data.form.AUX1_PRAC_DEP_NATACION.renderLabel|raw}}
+
+				{{this.data.form.AUX1_PRAC_DEP_FUTBOL.renderViewHelper|raw}}
+				{{this.data.form.AUX1_PRAC_DEP_FUTBOL.renderLabel|raw}}
+
+				{{this.data.form.AUX1_PRAC_DEP_GIMNASIA.renderViewHelper|raw}}
+				{{this.data.form.AUX1_PRAC_DEP_GIMNASIA.renderLabel|raw}}
+
+				{{this.data.form.AUX1_PRAC_DEP_TENIS.renderViewHelper|raw}}
+				{{this.data.form.AUX1_PRAC_DEP_TENIS.renderLabel|raw}}
+
+				{{this.data.form.AUX1_PRAC_DEP_HANDBALL.renderViewHelper|raw}}
+				{{this.data.form.AUX1_PRAC_DEP_HANDBALL.renderLabel|raw}}
+
+				{{this.data.form.AUX1_PRAC_DEP_VOLEY.renderViewHelper|raw}}
+				{{this.data.form.AUX1_PRAC_DEP_VOLEY.renderLabel|raw}}
+
+				{{this.data.form.AUX1_PRAC_DEP_OTROS.renderViewHelper|raw}}
+				{{this.data.form.AUX1_PRAC_DEP_OTROS.renderLabel|raw}}
+				</div>
+			</fieldset>
+		</div>
+		</fieldset>
+	</form>
+	<button type="button" name="guardar" class="guardar btn btn-info pull-right" disabled="disabled">{{'guardar' |trans|capitalize}}</button>
+{% endblock %}

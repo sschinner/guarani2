@@ -1,0 +1,21 @@
+-- inserta la operacion - sui_operaciones limpia todo
+execute procedure dba.sui_operaciones ('820exa65', 'Nuevo Plan de estudios por alumno ', 'Nuevo Plan de estudios por alumno ',NULL);
+
+
+Begin;
+
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = "820exa65";
+
+-- inserta operacion_mod
+insert into dba.acc_operacion_mod (modulo, operacion, submodulo, orden) VALUES
+   ('82000001', '820exa65', '820exame', 55); 
+insert into dba.acc_parametros (operacion, orden, ventana, parametros, cierra_anterior) VALUES
+               ('820exa65', 1, 'w_reporte', 'uo_dw, dp_alumno_carrera, uo_dw, dl820_fce_plan_completo_alumno, dl820_fce_plan_completo_alumno', 'N');
+
+insert into dba.acc_acciones_oper (operacion, accion) VALUES
+      ('820exa65', 'C');
+
+commit;
+
+

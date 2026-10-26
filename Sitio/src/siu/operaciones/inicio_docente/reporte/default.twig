@@ -1,0 +1,137 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    {% if not this.data.pdf %}
+    <div class="titulo_operacion">
+        <h2 class="clearfix"><span class="pull-left">{{"agenda_de_examenes"|trans|capitalize}}</span>
+            <div class="pull-right">
+                <a class="btn no-ajax" target="_blank" href="{{this.data.url.generar_pdf}}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+                <a class="btn no-ajax" target="_blank" href="{{this.data.url.generar_excel}}"><span class="acchide">{{'descargar_xls'|trans|capitalize}}</span><span class="g3w-icono-xls"></span></a>
+            </div>
+        </h2>
+    </div>
+	{% if this.data.interfaz_corte %}
+	    {% if this.data.corte.campo %} <a class="btn" href="{{this.data.url.cancelar_corte}}">Cancelar corte (X)</a>{% endif %}
+	{% endif %}
+
+	<div>
+	    {% if not this.data.corte %}
+		{% for pagina in this.data.paginas %}
+		    {% if pagina.actual %}
+		    {{pagina.pagina}}
+		    {% else %}
+		    <a href="{{pagina.url}}"{% if pagina.actual %} style="color: red;"{% endif %}>{{pagina.pagina}}</a>
+		    {% endif %}
+		{% endfor %}
+		<br>Registros por pagina 
+		{% for cantidad in this.data.cant_por_pagina %}
+		    {% if cantidad.actual %}
+			    {{cantidad.numero}}
+		    {% else %}
+			    <a href="{{cantidad.url}}">{{cantidad.numero}}</a>
+		    {% endif %}
+		{% endfor %}
+	    {% endif %}
+	</div>
+    {% endif %}
+
+    <table class="table table-striped table-bordered table-condensed">
+	{% if this.data.corte %}
+	    {% for dato in this.data.datos_corte %}
+		{% if dato.titulo_corte %}
+		    <tr>
+			<td class="cc-titulo-nivel-0" colspan="{{this.data.cantidad_columnas}}">{{dato.titulo_corte}}</td>
+		    </tr>
+		{% endif %}
+		    
+		{% if dato.datos %}
+			<tr>
+			{% for clave, titulo in this.data.titulos %}
+			    {% if clave != this.data.corte.campo %}
+				    <th>{{titulo}}</th>
+			    {% endif %}
+			{% endfor %}
+		    </tr>
+		    
+		    {% for clave, item in dato.datos %}
+			<tr>
+			    {% for keyline, linea in item %}
+				<td>
+					{% if linea %}
+						{{linea}}
+					{% else %}
+						{{ "Sin informar" | trans |capitalize }}
+					{% endif %}
+				</td>
+			    {% endfor %}
+			</tr>
+		    {% endfor %}
+
+		    {% if dato.funciones_pie_corte %}
+			{% for funcion in dato.funciones_pie_corte %}
+			    <tr>
+				{% for col_fn, titulo in dato.datos[0] %}
+				    {% if col_fn != this.data.corte.campo %}
+				    <td><strong>{{funcion[col_fn]}}</strong></td>
+				    {% endif %}
+				{% endfor %}
+			    </tr>
+			{% endfor %}
+		    {% endif %}
+
+		    {% if dato.mensaje_pie_corte %}								
+			{% for funcion in dato.mensaje_pie_corte %}
+			    <tr><td colspan="{{this.data.cantidad_columnas}}"><strong>{{funcion}}</strong></td></tr>
+			{% endfor %}
+		    {% endif %}
+		{% endif %}
+	    {% endfor %}
+	{% else %}
+	    <!-- Titulos -->
+	    <thead>
+		<tr>
+		    {% for titulo in this.data.encabezado %}
+			<th>{{titulo.nombre}}
+			    {% if this.data.interfaz_corte %}
+				{% if not this.data.pdf %}
+				    <a href="{{titulo.url}}" class="btn">Corte</a>
+				{% endif %}
+			    {% endif %}
+			</th>
+		    {% endfor %}
+		</tr>
+	    </thead>
+
+	    <!-- Datos -->
+	    {% for columnas in this.data.datos %}
+		<tr>
+		    {% for columna in columnas %}
+		        <td>{{columna}}</td>
+		    {% endfor %}
+		</tr>
+	    {% endfor %}
+	{% endif %}
+
+	{% if this.data.datos_corte.funciones_pie_reporte %}
+	    <!-- Pie de reporte -->
+	    <tr>
+	        <td colspan="{{this.data.cantidad_columnas}}"></td>
+	    </tr>
+	    
+	    {% for funcion in this.data.datos_corte.funciones_pie_reporte %}			
+		<tr>
+		    {% for col_fn, nombre in this.data.datos_corte[0].datos[0] %}
+		    {% if col_fn != this.data.corte.campo %}
+		    <td><strong>{{funcion[col_fn]}}</strong></td>
+		    {% endif %}
+		    {% endfor %}
+		</tr>
+	    {% endfor %}
+	{% endif %}
+
+	{% if this.data.datos_corte.mensaje_pie_reporte %}								
+	    {% for funcion in this.data.datos_corte.mensaje_pie_reporte %}
+		<tr><td colspan="{{this.data.cantidad_columnas}}"><strong>{{funcion}}</strong></td></tr>
+	    {% endfor %}
+	{% endif %}
+    </table>
+{% endblock %}

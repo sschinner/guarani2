@@ -1,0 +1,16 @@
+M       Sitio/src/siu/conf/definicion_datos_censales.php
+M      	Sitio/src/siu/lib/kernel/acceso/login_manager.php
+M       Sitio/src/siu/lib/kernel/nucleo/localizador.php
+M       Sitio/src/siu/mensajes/mensajes.es.php
+M       Sitio/src/siu/modelo/datos/catalogo.php
+M       Sitio/src/siu/modelo/datos/db/alumno.php
+M       Sitio/src/siu/modelo/datos/db/sistema.php
+M       Sitio/src/siu/modelo/entidades/persona.php
+M       Sitio/src/siu/operaciones/cursada/controlador.php
+M       Sitio/src/siu/operaciones/examen/controlador.php
+M       Sitio/src/siu/operaciones/solicitud_certificado/certificados/pagelet_certificados.js
+M       Sitio/src/siu/operaciones/solicitud_certificado/controlador.php
+M       Sitio/src/siu/operaciones/solicitud_certificado/pagelet_certificados.php
+M 	Sitio/src/siu/util/consola/comandos/enviar_mails.php
+M 	Sitio/src/siu/util/consola/comandos/template_mail/mail_de_gestion.php
+

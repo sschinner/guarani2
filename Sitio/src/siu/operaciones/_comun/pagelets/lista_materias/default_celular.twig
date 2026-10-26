@@ -1,0 +1,30 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target="#menu-materias">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+					
+				<span class="brand">{{ 'materias'|trans|capitalize }}</span>
+				
+				<div id="menu-materias" class="nav-collapse">
+					<ul class='nav'>
+					{% for materia in this.data %}
+						{% set seleccionada = (materia.SELECCIONADA) ? 'seleccionada' : '' %}
+						{% if materia.E_INSCRIPCION %}
+							<li class='{{ seleccionada }}'><a href='{{ materia.URL_MATERIA }}' class="item-materia" data-nombre-materia="{{ materia.MATERIA_NOMBRE }}"><i class="icon-thumbs-up"></i>({{ materia.MATERIA}}) {{ materia.MATERIA_NOMBRE }}</a></li>
+						{% else %}
+							<li class='{{ seleccionada }}'><a href='{{ materia.URL_MATERIA }}' class="item-materia" data-nombre-materia="{{ materia.MATERIA_NOMBRE }}">({{ materia.MATERIA}}) {{ materia.MATERIA_NOMBRE }}</a></li>
+						{% endif %}
+					{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

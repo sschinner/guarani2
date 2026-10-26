@@ -1,0 +1,88 @@
+{
+El resto son consultas directas a la base que habría que pasar a sp pero hay que coordinar con el Colo para que haga las modificaciones en SIGUV, cosa que por el momento veo difícil ya que están a full con el campus nuevo.
+Serían los siguientes:
+
+ * Cambio de clave docente (update). : se propone sp: sp820_cambiarclaveag.sql
+ * Consultas de inscripciones a cursadas, inscripciones a examen e
+   historia académica (selects)
+ * Confirmación de cursadas (inserts)
+
+
+
+Actualizado por Pablo Garello hace 8 días
+Comment Edit
+
+Especificación de las consultas desde SIGUV a GUARANI
+1 BuscarClaveUsuario
+
+    "SELECT clave "
+    "FROM " + guaraniBD + ":aca_usuarios_ag " +
+    "WHERE identificacion = '" + usuarioGuarani + "'
+    "AND tipo_usuar_inicial = 'DOC'";
+
+2 BuscarExamenesAlumnos
+
+    "SELECT resultado, nota, fecha, forma_aprobacion" +
+    "FROM " + guaraniBD + ":sga_personas AS p " +
+    "JOIN " + guaraniBD + ":sga_alumnos AS a ON (p.nro_inscripcion = a.nro_inscripcion)" +
+    "JOIN " + guaraniBD + ":vw_hist_academica AS h ON (a.legajo = h.legajo and a.carrera = h.carrera)" +
+    "WHERE p.tipo_documento = ? AND p.nro_documento = ? AND a.carrera = ? AND h.materia = ?"
+
+3 BuscarRegularidadAlumno
+
+    "SELECT cond_regularidad,fecha_regularidad,fin_vigencia_regul " +
+    "FROM " + guaraniBD + ":sga_personas p " +
+    "JOIN " + guaraniBD + ":sga_alumnos AS a ON (p.nro_inscripcion = a.nro_inscripcion) " +
+    "JOIN " + guaraniBD + ":sga_cursadas c ON (a.carrera = c.carrera and a.legajo = c.legajo) " +
+    "JOIN " + guaraniBD + ":sga_comisiones co ON (c.comision = co.comision)" +
+    "WHERE p.tipo_documento = '" + id_documento_tipo + "' and p.nro_documento = '" +
+    "documento_numero + "' and c.plan = '" + id_propuesta_plan + "' and c.materia = '" + materia +
+    "' and co.periodo_lectivo = '" + periodo_lectivo + "' and co.anio_academico ='" + periodo_lectivo_año + "'";
+
+.... continuara ....
+#2 Actualizado por Pablo Garello hace 7 días
+Comment Edit
+
+3 BuscarRegularidadAlumno -- continua la anterior
+
+    "SELECT cond_regularidad " +
+    "FROM " + guaraniBD + ":sga_personas p " +
+    "JOIN " + guaraniBD + ":sga_alumnos AS a ON (p.nro_inscripcion = a.nro_inscripcion) " +
+    "JOIN " + guaraniBD + ":sga_curs_pendiente as cp ON (a.carrera = cp.carrera and a.legajo = cp.legajo) " +
+    "JOIN " + guaraniBD + ":sga_comisiones co ON (cp.comision = co.comision) " +
+    "WHERE p.tipo_documento = '" + id_documento_tipo + "' and p.nro_documento = '" + documento_numero +
+    "' and cp.plan = '" + id_propuesta_plan + "' and co.materia = '" + materia +
+    "' and co.periodo_lectivo = '" + periodo_lectivo + "' and co.anio_academico ='" + periodo_lectivo_año + "'";
+
+4 BuscarTurnosExamen
+
+    "SELECT *" +
+    "FROM " + guaraniBD + ":sga_turnos_examen " +
+    "WHERE fecha_fin >= ?
+
+5 BuscarCantidadInscriptos
+
+    "SELECT ie.materia, amp.nombre_materia, ie.llamado, p.fecha, count(*) as cantidad" +
+    " FROM " + guaraniBD + ":sga_insc_examen ie " +
+    " JOIN " + guaraniBD + ":sga_atrib_mat_plan amp on (ie.carrera = amp.carrera " +
+    " and ie.plan = amp.plan and ie.version = amp.version and ie.materia = amp.materia ) " +
+    " JOIN " + guaraniBD + ":sga_carreras c on ie.carrera = c.carrera " +
+    " JOIN " + guaraniBD + ":sga_llamados_mesa llm on (ie.anio_academico = llm.anio_academico " +
+    " and ie.turno_examen = llm.turno_examen and ie.materia = llm.materia and ie.llamado = llm.llamado " +
+    " and ie.mesa_examen = lm.mesa_examen ) " +
+    " JOIN " + guaraniBD + ":sga_prestamos p on llm.prestamo = p.prestamo " +
+    " WHERE ie.turno_examen = ? and ie.anio_academico = ? and ie.carrera = ? " +
+    " GROUP BY 1,2,3,4 " +
+    " ORDER BY 4,2";
+
+6 completarNominaInscriptos
+
+    "SELECT p.apellido, p.nombres, p.nro_documento" +
+    " FROM " + guaraniBD + ":sga_insc_examen ie " +
+    " JOIN " + guaraniBD + ":sga_alumnos a on ie.legajo = a.legajo and ie.carrera = a.carrera" +
+    " JOIN " + guaraniBD + ":sga_personas p on a.nro_inscripcion = p.nro_inscripcion" +
+    " WHERE ie.turno_examen = ? and ie.anio_academico = ? and ie.carrera = ? and ie.materia = ? and ie.llamado = ? " +
+    " ORDER BY 1,2";
+
+.... continuara ....
+}

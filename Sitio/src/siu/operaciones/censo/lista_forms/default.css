@@ -1,0 +1,52 @@
+#lista_forms .well { padding: 8px 0; }
+
+#dcensales_menu li a.visitado {
+	background: url("../../../img/item_dcensal_ok.png") no-repeat scroll 95% transparent;
+	color: #0088CC;
+	text-shadow: none;
+}
+
+#dcensales_menu li a.active {
+	background-color: #0088CC !important;
+	text-shadow: none;
+	color:#fff;
+}
+
+.hidden{
+	display: none;
+}
+
+/*.alert {
+	font-weight: bold;
+	text-align: center;
+	padding-left: 44px;
+}*/
+
+.alerta {
+	/*font-weight: bold;*/
+	text-align: center;
+	padding-left: 44px;
+}
+
+.warning-icon {
+	background-image: url("../../../img/icono-advertencia.png");
+	background-position: 10px center;
+	background-repeat: no-repeat;
+}
+
+.info-icon {
+background-image: url("../../../img/icono-info.png");
+background-position: 10px center;
+background-repeat: no-repeat;
+}
+
+#lista_forms .con-faltantes {
+    background-color: #f2dede;
+    text-shadow: none;
+}
+
+#lista_forms .con-faltantes.active {
+    background-color: #ff2222 !important;
+    color: white;
+    text-shadow: none;
+}

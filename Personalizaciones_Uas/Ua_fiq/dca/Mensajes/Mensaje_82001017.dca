@@ -1,0 +1,9 @@
+-- Alta del mensaje
+-- Mensaje: 82001017.dca
+
+--********************************************
+-- mensaje 82001017, asociado al control: ctr820_CursParal/ctr820_RindeParal.
+-- 
+--********************************************
+DELETE FROM mme_mensajes WHERE mensaje = 82001017;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82001017, "Cursas Paralelo %s y %s2",  "Cursas Paralelo %s y %s2", 2, 1);

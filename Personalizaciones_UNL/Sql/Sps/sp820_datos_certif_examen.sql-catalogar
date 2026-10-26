@@ -1,0 +1,88 @@
+CREATE PROCEDURE "dba".verifica_objeto()
+BEGIN
+	IF EXISTS (SELECT procid
+			FROM sysprocedures
+			WHERE procname = 'sp820_datos_certif_examen') THEN
+		DROP PROCEDURE sp820_datos_certif_examen;
+	END IF;		
+END
+END PROCEDURE;
+EXECUTE PROCEDURE "dba".verifica_objeto();
+DROP PROCEDURE "dba".verifica_objeto();
+
+-- ****************************************************************************************************************************************
+-- SIU - SGA - Sistema de Gestion de Alumnos
+-- Version 2.5.2
+-- Procedure sp820_datos_certif_examen
+-- Autor: Sebastián Schinner
+-- Certificado de Examen de  Alumno.
+-- Procedimiento que devuelve los datos necesarios para la elección del certificado de examen por interfaz web
+-- ****************************************************************************************************************************************
+CREATE PROCEDURE "dba".sp820_datos_certif_examen(Pcarrera LIKE sga_carreras.carrera,
+						Plegajo LIKE sga_alumnos.legajo)
+
+	RETURNING varchar(5), varchar(15), varchar(255), integer, varchar(20), date, varchar(10);
+             	-- RETURNING carrera, legajo, nombre materia, año academico, turno examen, fecha examen, acta
+
+	DEFINE v_carrera LIKE sga_detalle_acta.carrera;
+	DEFINE v_legajo LIKE sga_detalle_acta.legajo;
+	DEFINE v_nombre_materia LIKE sga_materias.nombre;
+	DEFINE v_anio_academico LIKE sga_actas_examen.anio_academico;
+	DEFINE v_turno_examen LIKE sga_actas_examen.turno_examen;
+	DEFINE v_fecha LIKE sga_detalle_acta.fecha_de_examen;
+	DEFINE v_acta LIKE sga_detalle_acta.acta;
+
+BEGIN
+	-- Inicializaciones.
+	LET v_carrera = NULL;
+	LET v_legajo = NULL;
+	LET v_nombre_materia = NULL;
+	LET v_anio_academico = NULL;
+	LET v_turno_examen = NULL;
+	LET v_fecha = NULL;
+	LET v_acta = NULL;
+	
+	
+	FOREACH
+		SELECT dba.sga_detalle_acta.carrera,
+			dba.sga_detalle_acta.legajo,
+			dba.sga_materias.nombre,
+			dba.sga_actas_examen.anio_academico,
+			dba.sga_actas_examen.turno_examen,
+			dba.sga_detalle_acta.fecha_de_examen,
+			dba.sga_detalle_acta.acta
+			INTO v_carrera, 
+			          v_legajo, 
+			          v_nombre_materia, 
+		  	          v_anio_academico, 
+			          v_turno_examen, 
+			          v_fecha, 
+			          v_acta
+			FROM dba.sga_detalle_acta, dba.sga_actas_examen, dba.sga_materias
+			WHERE dba.sga_detalle_acta.carrera = Pcarrera
+			AND dba.sga_detalle_acta.legajo = Plegajo
+			AND dba.sga_detalle_acta.acta =  dba.sga_actas_examen.acta
+			AND dba.sga_detalle_acta.resultado in ('A', 'R')
+			AND dba.sga_actas_examen.materia = dba.sga_materias.materia
+			ORDER BY dba.sga_detalle_acta.fecha_de_examen
+
+		RETURN  v_carrera, 
+	     	                 v_legajo, 
+			 v_nombre_materia, 
+		  	 v_anio_academico, 
+			 v_turno_examen, 
+			 v_fecha, 
+			 v_acta WITH RESUME;
+
+   	END FOREACH ;
+	
+END;
+END PROCEDURE;
+-- ********************************** FIN PROCESO "dba".sp820_datos_certif_examen**********************************
+
+-- *****************************************************************************
+-- Permisos del procedimiento "dba".sp820_datos_certif_examen
+-- *****************************************************************************
+revoke execute on "dba".sp820_datos_certif_examen from public;
+grant execute on "dba".sp820_datos_certif_examen to guarani;  -- Rol de usuarios de Gestion
+grant execute on "dba".sp820_datos_certif_examen to internet; -- Rol de usuario de Internet

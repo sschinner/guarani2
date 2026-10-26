@@ -1,0 +1,19 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.0.0
+-- Reporte para ver en que estado se encuentra el titulo del egresado
+-- *******************************************************************************
+
+Execute procedure dba.sui_operaciones('neteg101','Estado del tramite de titulo','Reporte de Estado de tramite de titulo',NULL);
+
+Begin;
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = 'neteg101';
+DELETE FROM acc_operaciones WHERE operacion = "neteg101";
+DELETE FROM par_puntos_x_pag WHERE operacion = "neteg101";
+DELETE FROM par_eventos_x_oper WHERE operacion = "neteg101";
+DELETE FROM par_puntos_x_oper WHERE operacion = "neteg101";
+DELETE FROM par_cont_x_oper WHERE operacion = "neteg101";
+DELETE FROM sga_conf_controles WHERE operacion = "neteg101";
+Commit;
+

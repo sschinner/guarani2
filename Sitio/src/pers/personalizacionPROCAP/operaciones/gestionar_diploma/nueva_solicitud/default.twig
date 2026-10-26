@@ -1,0 +1,818 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    <style>
+        input[type=checkbox] {
+            transform: scale(1.5);
+        }
+
+    </style>
+    <script >
+
+        $(document).ready(function () {
+            $("#labelAutoriza").hide();
+            $("#inputAutorizaNombre").hide();
+            $("#divAutorizaNombre").hide();
+            $("#inputAutorizaApellido").hide();
+            $("#divAutorizaApellido").hide();
+            $("#inputAutorizaDNI").hide();
+            $("#divAutorizaDNI").hide();
+            $("#precioCon").hide();
+            $("#precioSin").hide();
+            $("#precioConEspecial").hide();
+            $("#precioSinEspecial").hide();
+
+            $("#open").click(function () {
+                url = $(this).attr("href");
+                window.open(url, '_blank');
+                return false;
+            });
+            $("#openExpediente").click(function () {
+                url = $(this).attr("href");
+                window.open(url, '_blank');
+                return false;
+            });
+
+
+        });
+        function habilita() {
+            if ($('#checkAutoriza').is(':checked')) {
+                $("#inputAutorizaNombre").show();
+                $("#divAutorizaNombre").show();
+                $("#inputAutorizaApellido").show();
+                $("#divAutorizaApellido").show();
+                $("#inputAutorizaDNI").show();
+                $("#divAutorizaDNI").show();
+                $("#autorizaApellido").attr('required', 'true');
+                $("#autorizaNombre").attr('required', 'true');
+                $("#autorizaDNI").attr('required', 'true');
+            } else {
+                $("#inputAutorizaNombre").hide();
+                $("#divAutorizaNombre").hide();
+                $("#inputAutorizaApellido").hide();
+                $("#divAutorizaApellido").hide();
+                $("#inputAutorizaDNI").hide();
+                $("#divAutorizaDNI").hide();
+                $("#autorizaApellido").removeAttr('required');
+                $("#autorizaNombre").removeAttr('required');
+                $("#autorizaDNI").removeAttr('required');
+            }
+        }
+
+        function habilitaSolicitar() {
+            if ($('#checkSolicita').is(':checked')) {
+                $("#js-btn-confirmar").removeAttr('disabled');
+            } else {
+                $("#js-btn-confirmar").attr('disabled', 'true');
+            }
+        }
+
+        $('select#diploma').on('change', function () {
+
+            var valor = $(this).val().split(',')[0];
+			var estado = $('select#titulo').val().split(',')[1];
+
+            if (valor === "S") {
+
+				if (estado != "X") { // Tramite Especial
+                $("#precioCon").show(1000);
+                $("#precioSin").hide();
+					$("#precioSinEspecial").hide();					
+					$("#precioConEspecial").hide();
+				}else {
+					$("#precioConEspecial").show(1000);
+					$("#precioSinEspecial").hide();
+					$("#precioSin").hide();
+					$("#precioCon").hide();
+				}
+                $("#labelAutoriza").show();
+
+            }
+			else if (valor === "N") {
+
+				if (estado != "X") { // Tramite Especial
+                $("#precioSin").show(1000);
+                $("#precioCon").hide();
+					$("#precioConEspecial").hide();
+					$("#precioSinEspecial").hide();
+				}else {
+					$("#precioSinEspecial").show(1000);
+					$("#precioConEspecial").hide();
+					$("#precioCon").hide();
+					$("#precioSin").hide();
+				}
+
+                $("#labelAutoriza").hide();
+                $("#inputAutorizaNombre").hide();
+                $("#divAutorizaNombre").hide();
+                $("#inputAutorizaApellido").hide();
+                $("#divAutorizaApellido").hide();
+                $("#inputAutorizaDNI").hide();
+                $("#divAutorizaDNI").hide();
+                $('#checkAutoriza').removeAttr('checked');
+                $("#autorizaApellido").removeAttr('required');
+                $("#autorizaNombre").removeAttr('required');
+                $("#autorizaDNI").removeAttr('required');
+            }
+			else { 
+                $("#precioCon").hide();
+                $("#precioSin").hide();
+                $("#precioConEspecial").hide();
+                $("#precioSinEspecial").hide();
+                $("#labelAutoriza").hide();
+                $("#inputAutorizaNombre").hide();
+                $("#divAutorizaNombre").hide();
+                $("#inputAutorizaApellido").hide();
+                $("#divAutorizaApellido").hide();
+                $("#inputAutorizaDNI").hide();
+                $("#divAutorizaDNI").hide();
+                $('#checkAutoriza').removeAttr('checked');
+                $("#autorizaApellido").removeAttr('required');
+                $("#autorizaNombre").removeAttr('required');
+                $("#autorizaDNI").removeAttr('required');
+            }
+
+        });
+		
+		$('select#titulo').on('change', function () {
+
+			var estado = $(this).val().split(',')[1];
+			var valor = $('select#diploma').val().split(',')[0];
+
+            if (valor === "S") {
+				
+				if (estado != "X") { // Tramite Especial
+					$("#precioCon").show(1000);
+					$("#precioSin").hide();
+					$("#precioSinEspecial").hide();					
+					$("#precioConEspecial").hide();						
+				}else {
+					$("#precioConEspecial").show(1000);
+					$("#precioSinEspecial").hide();
+					$("#precioSin").hide();
+					$("#precioCon").hide();
+				}
+
+            }
+			else if (valor === "N") {
+
+				if (estado != "X") { // Tramite Especial
+					$("#precioSin").show(1000);
+					$("#precioCon").hide();
+					$("#precioConEspecial").hide();
+					$("#precioSinEspecial").hide();
+				}else {
+					$("#precioSinEspecial").show(1000);
+					$("#precioConEspecial").hide();
+					$("#precioCon").hide();
+					$("#precioSin").hide();
+				}
+            }
+			else{ 
+                $("#precioCon").hide();
+                $("#precioSin").hide();
+                $("#precioConEspecial").hide();
+                $("#precioSinEspecial").hide();
+            }
+		});
+    </script>
+
+    <div class="titulo_operacion">
+
+
+
+    </div>
+
+    <div class="container">
+        {%if (this.data.encuestaCompleta != '1')%}
+            <div class="row">
+                <div id="mensaje" role="alert" class="alert alert-warning" style="margin-left:10%;">
+                    <p style="font-size:11pt;">Tenes encuestas pendientes</p>
+                    <p style="font-size:11pt;">Por favor completa las encuestas pendientes, luego intenta nuevamente</p>
+                </div>
+            </div>
+        {%elseif (this.data.error_solicitud)%}
+            <div class="row">
+                <div id="mensaje" role="alert" class="alert alert-warning" style="margin-left:10%;">
+                    <p style="font-size:11pt;">Momentaneamente el servicio se encuentra interrumpido, por favor intente mas tarde</p>
+                    <p style="font-size:11pt;">Disculpe las molestias</p>
+                </div>
+            </div>
+        {%elseif (this.data.titulos is empty) and (this.data.inicioSolicitud == false)%}
+            <div class=" col-xs-12 col-md-12">
+                <div id="mensaje" role="alert" class="alert alert-info" style="margin-left:10%;">
+                    <p style="font-size:11pt;">No estas en condiciones para realizar una nueva solicitud de diploma</p>
+                    <p style="font-size:11pt;">Por favor consulta con alumnado de tu facultad</p>
+                </div>
+
+            </div> 
+        {%else%}
+            <div class="row" style="margin-left: 0px">
+                <div class="col-xs-12 col-md-12">
+
+                    <div class="col-xs-12 col-md-12" style="background-color:#d7d7d7;">
+                        <button type="button" class="btn btn-link" style="font-size: 14pt;" data-toggle="collapse" data-target="#datosPrincipales" >Datos para Solicitud </button>
+                    </div>
+                    <br>
+
+                    <div id="datosPrincipales" class="collapse col-xs-12 col-md-12 in">
+                        <form method="post" action="{{this.data.url_solicitar}}" id="form-diploma">
+                            <table  style="width: 100%">
+                                <tr>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3">
+                                            <label style="padding-right:5%">Apellido: </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-3  col-md-3 " style="display: inline;">
+                                            <input type="text" readonly id="apellido" name="apellido" value="{{this.data.datos_personales.apellido |title}}"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3" style="padding-left:5%">
+                                            <label style="padding-right:5%">Nombre: </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-3  col-md-3 " style="display: inline;">
+                                            <input type="text" readonly id="nombres" name="nombres" value="{{this.data.datos_personales.nombres |title}}"/>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3">
+                                            <label style="padding-right:5%">Tipo y Nro. Documento: </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-3  col-md-3 " style="display: inline;">
+                                            <input type="text" readonly id="nroDocumento" name="nroDocumento" value="{{this.data.datos_personales.documento_tipo}}  {{this.data.datos_personales.documento_numero}}"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3" style="padding-left:5%">
+                                            <label style="padding-right:5%">Sexo: </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-3  col-md-3 " style="display: inline;">
+                                            <input type="text" readonly id="sexo" name="sexo" value="{%if (this.data.sexo == '1')%}Masculino{%else%}Femenino{%endif%}"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3">
+                                            <label style="padding-right:5%">Fecha Nacimiento: </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-3  col-md-3 " style="display: inline;">
+                                            <input type="text" readonly id="fechaNacimiento" name="fechaNacimiento" value="{{this.data.datos_personales.fecha_nac}}"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3" style="padding-left:5%">
+                                            <label style="padding-right:5%">Localidad Nacimiento: </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {%if (this.data.datos_personales.localidad_nac is empty)%}
+                                                <span id="localidadNac" style="color:#FF0000;font-size: 9pt;"><b>Notificar a alumnado la falta del dato </b></span>
+                                        {%else%}
+                                            <div class="col-xs-3  col-md-3 " style="display: inline;">
+                                                <input type="text" readonly id="localidadNac" name="localidadNac" value="{{this.data.datos_personales.localidad_nac |title}}"/>
+                                            </div>
+                                        {%endif%}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3">
+                                            <label style="padding-right:5%">Provincia: </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {%if (this.data.datos_personales.provincia_nac is empty)%}
+                                            <span id="provinciaNac" style="color:#FF0000;font-size: 9pt;"><b>Notificar a alumnado la falta del dato </b></span>
+                                        {%else%}
+                                            <div class="col-xs-3  col-md-3 " style="display: inline;">
+                                                <input type="text" readonly id="provinciaNac" name="provinciaNac" value="{{this.data.datos_personales.provincia_nac |title}}"/>
+                                            </div>
+                                        {%endif%}
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3" style="padding-left:5%">
+                                            <label style="padding-right:5%">Pa&iacute;s Nacimiento: </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {%if (this.data.datos_personales.pais_nac is empty)%}
+                                            <span id="paisNac" style="color:#FF0000;font-size: 9pt;"><b>Notificar a alumnado la falta del dato </b></span>
+                                        {%else%}
+                                            <div class="col-xs-3  col-md-3 " style="display: inline;">
+                                                <input type="text" readonly id="paisNac" name="paisNac" value="{{this.data.datos_personales.pais_nac |title}}"/>
+                                            </div>
+                                        {%endif%}
+                                    </td>
+                                </tr>
+                                <tr>                                   
+                                    <td>
+                                        <div class="col-xs-3 col-md-3">
+                                            <label style="padding-right:5%">Nacionalidad: </label>
+                                        </div>
+                                    </td>
+                                    <td >
+                                        {%if (this.data.datos_personales.nacionalidad is empty)%}
+                                            <span id="nacionalidad" style="color:#FF0000;font-size: 9pt;"><b>Notificar a alumnado la falta del dato </b></span>
+                                        {%else%}
+                                        <div class="col-xs-9  col-md-9 " style="display: inline;">
+                                            <input type="text" readonly id="nacionalidad" name="nacionalidad" value="{{this.data.datos_personales.nacionalidad |title}}"/>
+                                        </div>
+                                        {%endif%}
+                                    </td>
+                                    
+                                </tr>
+                                <tr>
+                                 <td>
+                                        <div class="col-xs-3 col-md-3" >
+                                            <label style="padding-right:5%">T&iacute;tulos Previos: </label>
+                                        </div>
+                                    </td>
+                                    <td colspan="3">
+                                        <div class="col-xs-9  col-md-9 " style="display: inline;">
+                                            {%if (this.data.estudios_previos is empty)%}
+                                                <span id="estudiosPrevios" style="color:#FF0000;font-size: 9pt;"><b>Notificar a alumnado la falta del dato </b></span>
+                                            {%else%}
+                                                <input type="text"  style="width:90%" readonly id="estudiosPrevios" name="estudiosPrevios" value=" {{this.data.estudios_previos |title}}"/>
+                                            {%endif%}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3" >
+                                            <label style="padding-right:5%">Instituci&oacute;n: </label>
+                                        </div>
+                                    </td>
+                                    <td colspan="3">
+                                        <div class="col-xs-9  col-md-9 " style="display: inline;">
+                                            {%if (this.data.institucion is empty)%}
+                                                <span id="institucion" style="color:#FF0000;font-size: 9pt;"><b>Notificar a alumnado la falta del dato </b></span>
+                                            {%else%}
+                                                <input type="text" style="width:90%" readonly id="institucion" name="institucion" value=" {{this.data.institucion |title}}"/>
+                                            {%endif%}
+                                        </div>
+                                    </td>                                  
+                                    
+                                </tr>
+
+                                <tr>
+                                    <td colspan="4" style="padding-top:10px;padding-bottom:10px;">
+                                        <div class="col-xs-12 col-md-12" style="background-color:#d7d7d7;padding:0.5%">
+                                            <b>Datos censales - Última residencia y contacto personal</b>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3">
+                                            <label style="padding-right:5%">Calle: </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-9  col-md-9 " style="display: inline;">
+                                            {%if (this.data.censales.CENS_CALLE_PER_LECT is empty)%}
+                                                <span id="institucion" style="color:#FF0000;font-size: 9pt;"><b>Notificar a alumnado la falta del dato </b></span>
+                                            {%else%}
+                                            <input type="text" readonly  id="calle" name="calle" value="{{this.data.censales.CENS_CALLE_PER_LECT |title}}"/>
+                                            {%endif%}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3" style="padding-left:5%">
+                                            <label style="padding-right:5%">N&uacute;mero: </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-9  col-md-9 " style="display: inline;">
+                                            {%if (this.data.censales.CENS_NUMERO_PER_LECT is empty)%}
+                                                <span id="institucion" style="color:#FF0000;font-size: 9pt;"><b>Notificar a alumnado la falta del dato </b></span>
+                                            {%else%}
+                                            <input type="text"  readonly id="nroCalle" name="nroCalle" value="{{this.data.censales.CENS_NUMERO_PER_LECT |title}}"/>
+                                            {%endif%}
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3">
+                                            <label style="padding-right:5%">Piso: </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-9  col-md-9 " style="display: inline;">
+                                            {%if (this.data.censales.CENS_PISO_PER_LECT is empty)%}
+                                                <span id="institucion" style="color:#FF0000;font-size: 9pt;"><b>Notificar a alumnado la falta del dato </b></span>
+                                            {%else%}
+                                            <input type="text" readonly id="piso" name="piso" value="{{this.data.censales.CENS_PISO_PER_LECT |title}}"/>
+                                            {%endif%}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3" style="padding-left:5%">
+                                            <label style="padding-right:5%">Depto: </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-9  col-md-9 " style="display: inline;">
+                                            {%if (this.data.censales.CENS_DPTO_PER_LECT is empty)%}
+                                                <span id="institucion" style="color:#FF0000;font-size: 9pt;"><b>Notificar a alumnado la falta del dato </b></span>
+                                            {%else%}
+                                            <input type="text"  readonly id="depto" name="depto" value="{{this.data.censales.CENS_DPTO_PER_LECT|title}}"/>
+                                            {%endif%}
+                                        </div>
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3">
+                                            <label style="padding-right:5%">Localidad: </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-3  col-md-3 " style="display: inline;">
+                                            {%if (this.data.datos_personales.localidad is empty)%}
+                                                <span id="institucion" style="color:#FF0000;font-size: 9pt;"><b>Notificar a alumnado la falta del dato </b></span>
+                                            {%else%}
+                                            <input type="text" readonly id="localidadLectivo" name="localidadLectivo" value="{{this.data.datos_personales.localidad |title}}"/>
+                                            {%endif%}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3" style="padding-left:5%">
+                                            <label style="padding-right:5%">Provincia: </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-3  col-md-3 " style="display: inline;">
+                                            {%if (this.data.datos_personales.pcia is empty)%}
+                                                <span id="institucion" style="color:#FF0000;font-size: 9pt;"><b>Notificar a alumnado la falta del dato </b></span>
+                                            {%else%}
+                                            <input type="text" readonly id="provinciaLectivo" name="provinciaLectivo" value="{{this.data.datos_personales.pcia |title}}"/>
+                                            {%endif%}
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3">
+                                            <label style="padding-right:5%">E-Mail: </label>
+                                        </div>
+                                    </td>
+                                    <td >
+                                        <div class="col-xs-3  col-md-3 " style="display: inline;">
+                                            <input type="text"  id="email" name="email" required  title="Complete el E-Mail"   placeholder="Ingrese su E-Mail"  value="{{this.data.datos_personales.email}}" {%if (this.data.inicioSolicitud)%}readonly{%endif%}/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3" style="padding-left:5%">
+                                            <label style="padding-right:5%">Nro. Celular : </label>
+                                        </div>
+                                    </td>
+                                    <td >
+                                        <div class="col-xs-3  col-md-3 " style="display: inline;">
+                                            <input type="text" required title="Complete el Nro. de Celular"   placeholder="Ingrese su Nro. de Celular"   id="telefono" name="telefono" {%if (this.data.inicioSolicitud)%}readonly{%endif%} value="{{this.data.censales.AUX1_CELULAR_NUMERO}}"/>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="4" style="padding-top:10px;padding-bottom:10px;">
+                                        <div class="col-xs-12 col-md-12" style="background-color:#d7d7d7;padding:0.5%">
+                                            <b>Datos Diploma </b>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3">
+                                            <label style="padding-right:5%">T&iacute;tulo: </label>
+                                        </div>
+                                    </td>
+                                    <td>                                
+                                        <div class="col-xs-12  col-md-12" style="width: 100%">
+                                            {%if (this.data.inicioSolicitud)%}
+                                                <div class="col-xs-3  col-md-3 " style="display: inline;">
+                                                    {#<input type="text"  id="titulo" name="titulo" value="{{this.data.u820_diploma.NOMBRE}}" readonly/>#}
+                                                    <textarea rows="2" cols="20" name="titulo" style="resize:none" id="titulo" readonly>{{this.data.u820_diploma.NOMBRE}}</textarea>
+                                                </div>
+
+                                            {%else%}
+                                                <select name="titulo" id="titulo">
+                                                    {%for fila in this.data.titulos %}
+                                                        <option  value="{{fila.TITULO}},{{ fila.ESTADO }}">{{fila.NOMBRE|title}}</option>
+                                                    {%endfor%}
+                                                </select> 
+                                            {%endif%}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-3 col-md-3">
+                                            <label style="padding-right:5%">Tipo Diploma: </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-xs-9  col-md-9 " style="display: inline;" >
+                                            {%if (this.data.inicioSolicitud)%}
+                                                <div class="col-xs-3  col-md-3 " style="display: inline;">
+                                                   {# <input type="text"  id="diploma" name="diploma" value="{%if(this.data.u820_diploma.IMPRENTA == 'N')%}Diploma digital SIN impresi&oacute;n de cart&oacute;n{%else%}Diploma digital CON impresi&oacute;n de cart&oacute;n{%endif%}" readonly/>#}
+                                                    <textarea rows="2" cols="20" name="diploma" style="resize:none" id="diploma" readonly>{%if(this.data.u820_diploma.IMPRENTA == 'N')%}Diploma digital SIN impresi&oacute;n de cart&oacute;n{%else%}Diploma digital CON impresi&oacute;n de cart&oacute;n{%endif%}</textarea>
+                                                </div>
+                                            {%else%}
+                                                <select name="diploma" id="diploma" required>
+                                                    <option  value="" >Seleccione </option>
+                                                    <option  value="N" {%if(this.data.u820_diploma.IMPRENTA == 'N')%}selected{%endif%} >Diploma digital SIN impresi&oacute;n de cart&oacute;n</option>
+                                                    <option  value="S" {%if(this.data.u820_diploma.IMPRENTA == 'S')%}selected{%endif%}>Diploma digital CON impresi&oacute;n de cart&oacute;n</option>
+                                                </select>
+                                                <span id="precioCon" style="font-size:8pt;color: green">(Valor Tasa: ${{this.data.montoCon}})</span>    
+                                                <span id="precioSin" style="font-size:8pt;color: blue">(Valor Tasa: ${{this.data.montoSin}})</span>
+                                                <span id="precioConEspecial" style="font-size:8pt;color: green">(Valor Tasa: ${{this.data.montoConEspecial}})</span>    
+                                                <span id="precioSinEspecial" style="font-size:8pt;color: blue">(Valor Tasa: ${{this.data.montoSinEspecial}})</span>
+                                            {%endif%}
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        {%if (this.data.u820_diploma is not defined)%}
+                                            <div class="col-xs-3 col-md-3" id="labelAutoriza" style="display:flex;">
+                                                <input type="checkbox" onchange="habilita();" id="checkAutoriza" name="checkAutoriza" style="margin-left:1%"/><label style="padding-left:2%;font-size: 9pt;padding-top:1%">AUTORIZO A LA SIGUIENTE PERSONA PARA RETIRAR EL DIPLOMA IMPRESO: </label>
+                                            </div>
+                                        {%elseif (this.data.u820_diploma.AUTORIZADO_NOMBRE != '')%}
+                                            <div class="col-xs-3 col-md-3"  style="display:flex;">
+                                                <label style="font-weight: bold;font-size: 9pt;padding-top:1%">AUTORIZO A LA SIGUIENTE PERSONA PARA RETIRAR EL DIPLOMA IMPRESO: </label>
+                                            </div>
+                                        {%endif%}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    {%if (this.data.u820_diploma is not defined)%}
+                                        <td>
+                                            <div class="col-xs-3 col-md-3" id="divAutorizaNombre">
+                                                <label style="padding-right:5%">Nombre Autorizado: </label>
+                                            </div>                                            
+                                        </td>
+                                        <td >
+                                            <div id="inputAutorizaNombre">
+                                                <input type="text" id="autorizaNombre" title="Complete el nombre" name="autorizaNombre" value="" placeholder="Ingrese nombre de la persona autorizada"/>
+                                            </div>
+                                        </td> 
+
+                                        <td>
+                                            <div class="col-xs-3 col-md-3" id="divAutorizaApellido">
+                                                <label style="padding-right:5%">Apellido Autorizado: </label>
+                                            </div>
+                                        </td>
+                                        <td >
+                                            <div id="inputAutorizaApellido">
+                                                <input type="text" id="autorizaApellido" name="autorizaApellido" value="" title="Complete el apellido" placeholder="Ingrese apellido de la persona autorizada"/>
+                                            </div>
+                                        </td>
+                                    {%elseif (this.data.u820_diploma.AUTORIZADO_NOMBRE != '')%}
+                                        <td>
+                                            <div class="col-xs-3 col-md-3" >
+                                                <label style="padding-right:5%">Nombre Autorizado: </label>
+                                            </div>                                            
+                                        </td>
+                                        <td >
+                                            <div >
+                                                <input type="text"   value="{{this.data.u820_diploma.AUTORIZADO_NOMBRE}}"  readonly />
+                                            </div>
+                                        </td> 
+                                        <td>
+                                            <div class="col-xs-3 col-md-3" >
+                                                <label style="padding-right:5%">Apellido Autorizado: </label>
+                                            </div>
+                                        </td>
+                                        <td >
+                                            <div >
+                                                <input type="text"  value="{{this.data.u820_diploma.AUTORIZADO_APELLIDO}}" readonly />
+                                            </div>
+                                        </td>
+                                    {%endif%}    
+                                </tr>
+                                <tr>
+                                    {%if (this.data.u820_diploma is not defined)%}
+                                        <td>
+                                            <div class="col-xs-3 col-md-3" id="divAutorizaDNI">
+                                                <label style="padding-right:5%">DNI Autorizado: </label>
+                                            </div>
+                                        </td>
+                                        <td >
+                                            <div id="inputAutorizaDNI">
+                                                <input type="text" id="autorizaDNI" title="Complete el DNI" name="autorizaDNI" value="" placeholder="Ingrese DNI de la persona autorizada"/>
+                                            </div>
+                                        </td>
+                                    {%elseif (this.data.u820_diploma.AUTORIZADO_NOMBRE != '')%}
+                                        <td>
+                                            <div class="col-xs-3 col-md-3" >
+                                                <label style="padding-right:5%">DNI Autorizado: </label>
+                                            </div>
+                                        </td>
+                                        <td >
+                                            <div >
+                                                <input type="text"  value="{{this.data.u820_diploma.AUTORIZADO_DOCUMENTO}}" readonly />
+                                            </div>
+                                        </td>  
+                                    {%endif%}    
+
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <div class="col-xs-12 col-md-12">
+                                            <hr>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                {%if (this.data.inicioSolicitud == false)%}
+                                    <tr>
+                                        <td colspan="4">
+
+                                            <div class=" col-xs-12 col-md-12" style="display:flex;">
+                                                <input type="checkbox" onchange="habilitaSolicitar();" id="checkSolicita" name="checkSolicita" style="margin-left:1%"/>{#<p style="margin-left:1%;padding-top:1%"> <b>Acepto la publicaci&oacute;n de mis datos en el Registro P&uacute;blico de Graduados Universitarios</b></p>#}
+                                                <p style="margin-left:1%; padding-top:2%"> <b>Declaro estar en conocimiento de la normativa de expedici&oacute;n de diplomas y que los datos consignados son correctos. Acepto la publicaci&oacute;n de mis datos en el Registro P&uacute;blico de Graduados Universitarios</b></p>
+                                            </div> 
+                                            {#<div class=" col-xs-12 col-md-12" style="display:flex;">
+                                                
+                                            </div>              #}                     
+                                        </td>
+
+                                    </tr>
+                                {%endif%}
+                            </table>
+                            <div class="collapse col-xs-12 col-md-12">
+
+                            </div><br>
+                            <div class="pull-right" >
+                                {%if (this.data.titulos is not empty) %}
+                                    <button id="js-btn-confirmar" class="btn btn-info" type="submit" disabled="true"><i class="icon-ok icon-white"></i> {{ "solicitar_certificacion.solicitar" | trans }}</button>
+                                {%endif%}
+                                <br><br>
+                            </div>
+                            {%if (this.data.inicioSolicitud == true) and (this.data.u820_certif.ESTADO_PAGO != 'P') %}    
+                                <div class="row">
+                                    <div id="mensaje" role="alert" class="alert alert-info" style="margin-left:3%;">
+                                        <p style="font-size:11pt;"> El tr&aacute;mite se inicio correctamente, por favor contin&uacute;e con el sigiuente paso, <b> Abonar Tasa </b></p>
+                                    </div>
+                                </div>
+                            {%endif%}
+                            
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row" style="margin-left: 0px">
+                <div class="col-xs-12 col-md-12">
+                    <div class="col-xs-12 col-md-12" style="background-color:#d7d7d7;">
+                        <button type="button" class="btn btn-link" style="font-size: 14pt;" data-toggle="collapse" data-target="#abonarDiploma" >Abonar Tasa </button>
+                    </div>
+                    <br>
+
+                    <div id="abonarDiploma" class="collapse col-xs-12 col-md-12">
+                        <div class="col-xs-12 col-md-12">
+                            <p>Una vez que realice la solicitud podr&aacute; acceder a pagar la tasa del Diploma   </p>
+                            {%if (this.data.u820_certif is not defined) or
+                                             (this.data.u820_certif.ESTADO_PAGO == 'P')%}
+                            <input type="button" class="btn btn-info" disabled value="PAGAR" style="cursor:pointer;"/>
+                        {%else%}
+                            <a  href="{{this.data.urlPagarDiploma}}" id="open" name="open" >
+                                <input type="button" class="btn btn-info" value="Pagar" style="cursor:pointer;"/></a><i class="icon-ok icon-white"></i> 
+                            {%endif%}
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-left: 0px">
+            <div class="col-xs-12 col-md-12">
+                <div class="col-xs-12 col-md-12" style="background-color:#d7d7d7;">
+                    <button type="button" class="btn btn-link" style="font-size: 14pt;" data-toggle="collapse" data-target="#digitalizar" >Digitalizar Requisitos </button>
+                </div>
+                <br>
+
+                <div id="digitalizar" class="collapse col-xs-12 col-md-12">
+                    <div class="col-xs-12 col-md-12">
+                        <div id="mensaje" role="alert" class="alert alert-info">
+                            <p>Finalizada la digitalizaci&oacute;n de la documentaci&oacute;n debe dirigirse al departamento alumnado para validar la misma f&iacute;sicamente. El tr&aacute;mite es personal.</p>
+                        </div>
+                        {%if (this.data.u820_diploma is defined)%}   
+                            <table class="table table-responsive table-condensed " >
+                                <th>Requisitos necesarios a digitalizar</th>
+                                <th>Estado</th>
+                                <tbody>
+                                    {%for fila in this.data.requisitosCertif%}
+                                        <tr {%if (fila.URL == '') %}class="warning"{%else%}class="success"{%endif%}>
+                                            <td > 
+                                                {{fila.NOMBRE_REQUISITO}} 
+                                            </td>
+                                            <td>
+                                                {%if (this.data.u820_diploma is defined) 
+                                                            and (this.data.u820_diploma.REQUISITOS_VALIDADOS == 'S')%}
+                                                    <span style="color:blue"> <b>    VALIDADO</b></span>    
+                                                {%else%}
+                                                    {%if (fila.URL != '') %}
+                                                            <span style="color:blue"> <b>    Cargado!</b></span>
+                                                    {%else%}
+                                                        <span>Falta Cargar</span>
+                                                    {%endif%}
+                                                {%endif%}
+                                            </td>    
+                                        </tr>
+                                    {%endfor%}
+                                </tbody>
+                            </table>
+                        {%else%}   
+                            <p>Una vez que realice la solicitud podr&aacute; acceder a conocer y digitalizar los requisitos</p>
+                            <p>El proceso de carga y digitalizaci&oacute;n de los requisitos puede realizarlo tantas veces como desee y sin restricci&oacute;n de tiempo</p>
+                        {%endif%}
+                        
+                        <div class="col-xs-12 col-md-12">
+                            <hr>
+                        </div>
+                        {%if (this.data.u820_diploma is not defined) or
+                                             (this.data.u820_diploma.REQUISITOS_VALIDADOS == 'S')%}
+
+                        {%else%}
+                            {%for  fila in this.data.iframes %}
+                                <div class="col-xs-12 col-md-12">
+                                    <label>Requisito a digitalizar: <b>{{fila.nombreRequisito}}</b></label>
+
+
+                                    <iframe id="frame+{{fila.identificador}}" name="frame+{{fila.identificador}}" src="{{fila.url}}" FRAMEBORDER="No"  style="width: 100%;height: 250px;">
+
+                                    </iframe>
+                                    <br><br>
+                                </div>
+                            {%endfor%}
+                        {%endif%}
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <div class="row" style="margin-left: 0px">
+                    <div class="col-xs-12 col-md-12">
+                        <div class="col-xs-12 col-md-12" style="background-color:#d7d7d7;">
+                            <button type="button" class="btn btn-link" style="font-size: 14pt;" data-toggle="collapse" data-target="#seguimientoTramite" >Seguimiento de la Solicitud </button>
+                        </div>
+                        <br>
+
+                        <div id="seguimientoTramite" class="collapse col-xs-12 col-md-12">
+                            <div class="col-xs-12 col-md-12">
+                                <p>Una vez abonada la solicitud y verificado por el Departamento Alumnado los requisitos de egreso cargados, podr&aacute; acceder al sistema de Mesa de Entradas para seguir el tr&aacute;mite (puede demorar hasta 48 hs.)</p>
+                                {%if (this.data.u820_certif is not defined) or
+                                             (this.data.u820_certif.EXPEDIENTE == '')%}
+                                <input type="button" class="btn btn-info" disabled value="Mesa de Entrada" style="cursor:pointer;"/>
+                                {%else%}
+                                    <a  href="{{this.data.urlMesaEntrada}}" id="openExpediente" name="openExpediente" >
+                                        <input type="button" class="btn btn-info" value="Mesa de Entrada" style="cursor:pointer;"/>
+                                    </a><i class="icon-ok icon-white"></i> 
+                                {%endif%}
+                                <br><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
+        {%endif%}
+    </div>
+	<script>
+		var formulario = document.getElementById('form-diploma');
+		if(formulario) {
+
+			// Elimino el value de estado del tramite que agregue en el SELECT de titulos
+			document.getElementById('form-diploma').addEventListener('submit', function(event) {
+				event.preventDefault();
+
+				// obtengo el SELECT de titulos
+				const selectElement = document.getElementById('titulo');
+
+				// modifico el valor de elemento seleccionado
+				const selectedOption = selectElement.options[selectElement.selectedIndex];
+				selectedOption.value = selectedOption.value.split(',')[0];
+
+				//console.log('Valor titulo:', selectedOption.value);
+				this.submit();
+			});
+		}
+	</script>
+{%endblock%}

@@ -1,0 +1,57 @@
+execute procedure dba.sui_operaciones('820Hab01',
+	'ABM de Habilitados',
+	'ABM de Habilitados',
+	NULL);
+
+Begin;
+
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = "820Hab01";
+
+
+INSERT INTO acc_operacion_mod VALUES (
+	'00000020',
+	'820Hab01',
+	'Abm',
+	100);
+
+-- Execute procedure dba.sui_ventanas('w_abm_detalle_habilitados') ;
+
+INSERT INTO acc_parametros VALUES (
+	'820Hab01',
+	1,
+	'w_filtros_busqueda',
+	'uo_dw, dk_alumnos_buscados, 10, uo_dw_filtros, d_alumnos_parametros, No se encontraron personas con el patrón de búsqueda especificado.',
+	NULL,
+	NULL,
+	'N');
+
+INSERT INTO acc_parametros VALUES (
+	'820Hab01',
+	2,
+	'w_abm_lista',
+    'uo_dw, dk820_fce_habilitados, 10',
+	NULL,
+	NULL,
+	'N');
+
+INSERT INTO acc_parametros VALUES (
+	'820Hab01',
+	3,
+	'w_abm_detalle',
+    'uo_dw, d820_fce_habilitados, 1',
+	NULL,
+	NULL,
+	'N');
+
+
+INSERT INTO acc_acciones_oper VALUES (
+	'820Hab01',
+	'A');
+
+INSERT INTO acc_acciones_oper VALUES (
+	'820Hab01',
+	'M');
+
+commit;
+

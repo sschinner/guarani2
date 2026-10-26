@@ -1,0 +1,94 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+    {% set datos=this.get_data_reporte() %}
+    {% set nombre='Encuesta Graduados: actualización de datos'%}
+    <script>
+
+        function seleccion(materia) {
+            // if (confirm("Desea incribirse en la pasantia '" + nombre + "' ?")) {
+            $("#cod_materia").val(materia);
+            document.guardaDatos.submit();
+            //}
+
+        }
+
+    </script>
+
+    <div id="propio2" style="width:450px;">
+        <form name="guardaDatos" id="guardaDatos" action="{{this.data.url.guardar}}" method="POST" >
+
+            <legend class="clearfix">
+                <span class="pull-left"><h3 class="resaltar">{{datos.nombreTitulo|trans}}</h3></span>
+
+            </legend>
+              
+            {%if(this.data.calidad == 1 and this.data.control == 1)%}    
+                {%if (datos.datosMaterias is defined)%}
+                    {%if (datos.cantMaterias!=0)%}
+                        <br>
+                        <table class="table table-striped table-condensed">
+
+                            {% for fila in datos.datosMaterias %}
+                                <tr style="padding-bottom: 2px;padding-top: 2px;padding-right: 4px;">   
+                                    <td style="padding-bottom: 2px;padding-top: 2px;padding-right: 4px;" > 
+                                        <div class="pull-left" >
+                                            <p style="font-size:10pt;"><b>{{fila.materia}} - {{fila.nombre}} </b></p>
+                                        </div>
+
+                                    </td>
+                                    <td width="20px;">
+
+                                    </td>
+                                    <td>
+                                        {%if fila.tipo_insc!='I'%}
+                                            <a role="button" tabindex="0" class="guardar btn btn-info btn-mini pull-right" onclick="seleccion('{{fila.materia}}');" >{{ "Seleccionar"|trans|capitalize }}</a>
+                                        {%else%}
+                                            Ya estas Inscripto
+                                        {%endif%}
+                                    </td>
+                                </tr>
+                            {%endfor%}
+                        </table>
+
+                        <input type="text" id="cod_materia" name="cod_materia" value="" style="display:none;"/>
+                    </form>        
+
+                {%else  %}
+                    <br>
+                    <br>
+                    <br>
+                    <span class="pull-left">  <p style="font-size:12pt;"><b>No existe oferta de materias para movilidad acad&eacute;mica</b></p>   </span>
+                {%endif%}
+            {%endif%}
+
+            {%if this.data.mensajes%}
+                <br>
+                <br>
+                <br>
+                <div class='alert alert-info' style="width:400px;">
+                    {% import "kernel/macro_notificaciones.twig" as notificaciones %}
+                    {{ notificaciones.render_notif(this.data.mensajes) }}
+                </div>
+            {%elseif this.data.mensajes2%}
+                <br>
+                <br>
+                <br>
+                <div  style="width:400px;">
+                    {% import "kernel/macro_notificaciones.twig" as notificaciones %}
+                    {{ notificaciones.render_notif(this.data.mensajes2) }}
+                </div>
+            {% endif %}
+        {%else%}
+            <div align="left">
+                <span style="font-size: 10pt;"><b> Usted no es Alumno Activo.
+                        <br> 
+                        {%if (this.data.control!=1)%}
+                            Debe reinscribirse en la carrera para tener acceso a las materias. </b></span>
+                        {%endif%}
+            </div>
+        {%endif%}
+
+    </div>
+
+{% endblock contenido %}

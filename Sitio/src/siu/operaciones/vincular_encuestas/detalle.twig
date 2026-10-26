@@ -1,0 +1,54 @@
+<div class="modal-body">
+
+    <div class="alert alert-info alert-block">
+        {{ encuesta.texto_preliminar | raw }}
+    </div>
+
+    <h1 class="centrado">({{ encuesta.encuesta }}) {{ encuesta.nombre }}</h1>
+
+
+    {% if encuesta.preguntas %}
+
+        {% set bloque = "" %}
+        {% for pregunta in encuesta.preguntas %}
+
+            {% if bloque != pregunta.bloque_nombre %}
+
+                {% set bloque = pregunta.bloque_nombre %}
+
+                {% if not loop.first %}
+                    </tbody>
+                    </table>
+                {% endif %}
+
+                <table class="table table-striped modal-table">
+                <thead>
+                <tr><th colspan="2" class="centrado th-bloque">{{ pregunta.bloque_nombre }}</th></tr>
+                <tr class="tr-encabezado">
+                    <th class="td-pregunta">{{ 'vincular_encuestas.pregunta' | trans }}</th>
+                    <th class="td-componente">{{ 'vincular_encuestas.tipo_de_componente' | trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+            {% endif %}
+
+            <tr>
+                <td>{{ pregunta.pregunta_nombre }}{% if pregunta.obligatoria == "S" %} *{% endif %}</td>
+                <td>{{ pregunta.componente }}</td>
+            </tr>
+            {% if loop.last %}
+                </tbody>
+                </table>
+            {% endif %}
+        {% endfor %}
+
+    {% else %}
+
+        <div id="alert-no-hay-preguntas" class="alert">{{ 'vincular_encuestas.no_hay_preguntas' | trans }}</div>
+
+    {% endif %}
+
+</div>
+<div class="modal-footer">
+    <a id="cerrar_modal" class="btn">{{ 'cerrar' | trans | capitalize }}</a>
+</div>

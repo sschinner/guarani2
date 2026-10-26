@@ -1,0 +1,35 @@
+{% extends "kernel/pagelet_polite.twig" %}
+{% block contenido %}
+
+    <div class='titulo_operacion row-fluid'>
+        <div class="span12">
+            <h2>{{ 'reinscripcion'|trans|capitalize }}</h2>
+        </div>
+    </div>
+	{% if this.data.hay_msj_error %}
+		{% import "kernel/macro_notificaciones.twig" as notificaciones %}
+		{{ notificaciones.render_notif(this.data.msj_error) }}
+	{% else %}
+		{% if this.data.es_necesaria_reinscripcion %}
+			{% if this.data.mensajes %}
+				{% import "kernel/macro_notificaciones.twig" as notificaciones %}
+				{{ notificaciones.render_notif(this.data.mensajes) }}
+			{% endif %}
+
+			{% if not this.data.hubo_error %}
+				<div class='alert alert-warning clearfix'>
+					{{ 'mensaje_reinscripcion'|trans|capitalize }}
+				</div>
+				<form method='post' id='form-reinscripcion' action='{{this.data.url_reinscripcion}}'>
+					<button type="submit" class="btn btn-small btn-warning pull-right">{{ 'reinscribirse'|trans|capitalize }}</button>
+				</form>
+			{% endif %}
+		{% else %}
+			<div class='alert alert-warning clearfix'>
+				{{ 'mensaje_reinscripcion_no_necesaria'|trans|capitalize }}
+			</div>
+		{% endif %}
+	{% endif %}
+
+
+{% endblock %}

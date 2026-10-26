@@ -1,0 +1,42 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.6.3
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones( '820egr50', '09-Confeccionar Duplicado de Diploma', '09-Confeccionar Duplicado de Diploma', null );
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( '820egr50', 1, 'w_abm_lista_maq_estados', 'uo_dw,dk_titulos_otorg,10,1,8205', 'N' );
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( '820egr50', 2, 'w820_abm_detalle_maq_estados_2', 'uo_dw,d820_m_titulos_otorg_diploma,1,estado,uo_dw,d_eventos_posibles,1,uo_dw,d_forms_posibles,4,uo_ds,d_tit_otor_form,1,8205', 'N' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '820egr50', 'C' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '820egr50', 'M' );
+
+begin;
+
+set constraints all deferred;
+
+-- Actividad: 8205 - Renovar Diploma
+delete from mce_actividades where entidad = 1 and actividad = 8205;
+insert into mce_actividades values (1, 8205, 'Confeccionar Duplicado de Diploma', 'Confeccionar Duplicado de Diploma');
+
+-- Eventos: 
+--	82051 - Renovar Diploma
+delete from mce_eventos where entidad = 1 and evento = 82051;
+insert into mce_eventos values(1, 82051, 'Confeccionar Duplicado', 'Confeccionar Duplicado');
+
+-- Eventos - Actividad
+delete from mce_eventos_activ where entidad = 1 and actividad = 8205;
+insert into mce_eventos_activ values (1, 8205, 82051);
+
+commit;
+
+begin;
+set constraints all deferred;
+
+-- Caminos:
+--1 - 82051 - D - R
+delete from mce_caminos where entidad = 1 and estado = 'D' and evento = 82051;
+insert into mce_caminos values (1, 82051, 'D', 'R');
+
+-- Formularios que se emiten en este paso
+delete from mce_form_camino where entidad = 1 and evento = 82051 and estado = 'D';
+insert into mce_form_camino values (1, 'D', 82051, 20);
+
+commit;

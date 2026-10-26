@@ -1,0 +1,14 @@
+{% extends "kernel/template_base.twig" %}
+{% block layout %}
+<div id='layout_una_columna' class="row-fluid">
+    <div id='encabezado' class="span12">
+	{% block encabezado %}{% endblock %}
+    </div>
+</div>
+
+<div id='layout_una_columna' class="row-fluid">
+    <div id='columna_1' class="span12">
+	{% block columna_1 %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

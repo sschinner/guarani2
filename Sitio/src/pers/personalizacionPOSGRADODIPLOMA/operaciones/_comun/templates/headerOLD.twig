@@ -1,0 +1,112 @@
+<a class="acchide" href="#kernel_contenido" id="saltar_cppal">Saltar al contenido principal</a>
+<div  {%if color=='test'%}class="brand-nav-test"{%elseif color=='local'%}class="brand-nav-local"{%else%}class="brand-nav"{%endif%}>
+	<div class="container">
+		<div class="row-fluid">
+			<div class="span3">
+				<a class="brand" href="{{url_inicio}}"><h1><img alt='SIU Guaran&iacute; - Sistema de Gesti&oacute;n Academica' src="{{ url_img_logo }}" /></h1></a>
+			</div>
+                    <span style="margin-left: 200px;font-size: 12pt;">{{ambito}}</span>
+			<div class="span9">
+			{% if persona.logueada %}
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="navbar user-navbar clearfix">
+							<ul class="nav pull-right">
+								<li class="notificaciones">
+								<a href="{{ url_mensajes }}"><span class="icon-envelope"></span><span class="acchide">Mensajes</span> <span id='js-cant-mensajes' class="badge {{ cantidad_mensajes > 0 ? 'badge-warning' : '' }}">{{ cantidad_mensajes }}</span></a>
+								</li>
+								<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-user"></span> {{ persona.nombre }} <span class="caret"></span><span class="acchide">Desplegar men&uacute; perfil</span></a>
+								<ul class="dropdown-menu">
+									<li><a href='{{ persona.url_configuracion }}'><span class="icon-cog"></span> {{ 'configuracion'|trans | capitalize }}</a></li>
+									<li><a href='{{ persona.url_logout }}'><span class="icon-off"></span> {{ 'header.cerrar_sesion'|trans }}</a></li>
+								</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				{% if persona.carreras %}
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="form-horizontal carreras">
+							<div class="pull-right control-group">
+							{% if persona.carreras.cantidad > 1 %}
+								<label for="js-select-carreras" class="control-label">{% trans %} header.carrera {% endtrans %}:</label>
+								<div class="controls">
+								<div class="input-append">
+									<select id="js-select-carreras">
+									<optgroup>
+									{% for carrera in persona.carreras.lista %}
+										{% set selected = (persona.carrera_activa.id == carrera.id) ? 'SELECTED' : '' %}
+										<option value="{{ carrera.id }}" {{ selected }}>{{ carrera.nombre|trans|capitalize }}</option>
+									{% endfor %}
+									</optgroup>
+									</select>
+									{# http://en.wikipedia.org/wiki/Guillemet#Typing_.22.C2.AB.22_and_.22.C2.BB.22_on_computers #}
+									<!--<a href='{{ persona.carreras.url_operacion }}' class="btn">ver todas las carreras</a>-->
+								</div>
+								</div>
+							{% else %}
+								<span>{% trans %} header.carrera {% endtrans %}:</span>
+								<span class="control-label-carrera">{{ persona.carrera_activa.nombre }}</span>
+							{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+				{% endif %}
+			{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+
+{% if menu %}
+	<div class="navbar main-nav">
+		<div class="navbar-inner">
+			<div class="container tb-fix-ancho-fijo">
+				<div role="navigation">
+					<ul id='js-nav' class='nav'>
+					{% for item in menu %}
+						{% if item.tiene_submenu %}
+							<li class='dropdown js-menuitem-root {{ item.seleccionado ? 'menu-item-seleccionado' : '' }}'>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ item.nombre|trans }} <span class="caret"></span></a>
+								<ul class='dropdown-menu'>
+								{% for subitem in item.submenu %}
+									<li id='{{ subitem.id }}'><a href='{{ subitem.url }}'>{{ subitem.nombre|trans }}</a></li>
+								{% endfor %}
+								</ul>
+							</li>
+						{% else %}
+							<li id='{{ item.id }}' class='js-menuitem-root {{ item.seleccionado ? 'menu-item-seleccionado' : '' }}'>
+								<a href='{{ item.url }}'>{{ item.nombre|trans }}</a>
+							</li>
+						{% endif %}
+					{% endfor %}
+					</ul>
+
+					{% if perfiles %}
+						<ul id="js-selector-perfiles" class="nav pull-right perfiles">
+							<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class='js-texto-perfil'></span> <span class="caret"></span></a>
+							<ul class="dropdown-menu" id="js-select-perfil">
+								{% for perfil in perfiles %}
+								{% if perfil_activo == perfil %}
+									<li data-perfil="{{ perfil }}" data-perfilnombre="{{ perfil|trans|capitalize }}" class='js-seleccion-perfil js-perfil-item'>
+									<a href="#"><span class="icon-ok"></span><span class="acchide">Elegido</span> {{ perfil|trans|capitalize }}</a>
+									</li>
+								{% else %}
+									<li data-perfil="{{ perfil }}" class="js-perfil-item"><a href="#">{{ perfil|trans|capitalize }}</a></li>
+								{% endif %}
+								{% endfor %}
+							</ul>
+							</li>
+						</ul>
+					{% endif %}
+				</div><!--/.nav-collapse -->
+			</div><!-- container-fluid -->
+		</div><!-- navbar-inner -->
+	</div><!-- navbar -->
+{% endif %}

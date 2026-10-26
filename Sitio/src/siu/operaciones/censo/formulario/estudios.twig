@@ -1,0 +1,38 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<form id="estudios" action="{{this.data.form.getAction}}" method="post">
+		{% import "kernel/macro_csrf.twig" as input_csrf %}
+		{{ input_csrf.mostrar(this.generar_csrf) }}
+
+		<fieldset>
+			<legend class="clearfix">
+				<span class="pull-left"><h3 id="form-title" class="resaltar">{{'censo.otros_estudios_superiores' |trans|capitalize}}</h3></span>
+				<button style="margin-top: 2px;" type="button" name="guardar" class="guardar btn btn-info pull-right" disabled="disabled">{{'guardar' |trans|capitalize}}</button>
+			</legend>
+
+		{{this.data.form.form_id.renderViewHelper|raw}}
+
+		{{this.data.form.AUX2_ALU_OTESTSUP_UNI.renderLabel|raw}}
+		{{this.data.form.AUX2_ALU_OTESTSUP_UNI.renderViewHelper|raw}}
+
+		{{this.data.form.AUX2_ALU_OTESTSUP_TIPO.renderLabel|raw}}
+		{{this.data.form.AUX2_ALU_OTESTSUP_TIPO.renderViewHelper|raw}}
+
+		{{this.data.form.AUX2_ALU_OTESTSUP_CARR.renderLabel|raw}}
+		{{this.data.form.AUX2_ALU_OTESTSUP_CARR.renderViewHelper|raw}}
+
+		{{this.data.form.AUX2_ALU_OTESTSUP_AREA.renderLabel|raw}}
+		{{this.data.form.AUX2_ALU_OTESTSUP_AREA.renderViewHelper|raw}}
+
+		{{this.data.form.AUX2_ALU_OTESTSUP_NIV.renderLabel|raw}}
+		{{this.data.form.AUX2_ALU_OTESTSUP_NIV.renderViewHelper|raw}}
+
+		{{this.data.form.AUX2_ALU_OTESTSUP_ESTA.renderLabel|raw}}
+		{{this.data.form.AUX2_ALU_OTESTSUP_ESTA.renderViewHelper|raw}}
+
+		{{this.data.form.AUX2_ALU_OTESTSUP_EGRE.renderLabel|raw}}
+		{{this.data.form.AUX2_ALU_OTESTSUP_EGRE.renderViewHelper|raw}}
+		</fieldset>
+	</form>
+	<button type="button" name="guardar" class="guardar btn btn-info pull-right" disabled="disabled">{{'guardar' |trans|capitalize}}</button>
+{% endblock %}

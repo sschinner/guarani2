@@ -1,0 +1,97 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<div class="titulo_operacion">
+		<h2 class="clearfix">
+			<button class='btn btn-primary btn-small pull-left js-history-back' alt="Volver"><span class="icon-chevron-left icon-white"></span></button>
+			<span class="pull-left">{{"actas de promoción"|trans|capitalize}}</span>
+		</h2>
+	</div>
+	
+	{% set ENCABEZADO = this.data.datos.ENCABEZADO %}	
+	{% if ENCABEZADO %}
+		<table class="table table-condensed" summary="Informacion de acta">
+			<tr>
+				<th scope="row" id="info_materia"><strong>{{"info_materia.materia" | trans | capitalize}}:</strong></th>
+				<td headers="info_materia">{{ENCABEZADO.MATERIA}}</td>
+				<th scope="row" id="info_acta" ><strong>{{"info_materia.acta" | trans | capitalize}}:</strong></th>
+				<td headers="info_acta">{{ENCABEZADO.ACTA}}</td>
+			</tr>
+			<tr>
+				<th scope="row" id="info_anio"><strong>{{"anio_academico" | trans | capitalize}}:</strong> </th>
+				<td headers="info_anio">{{ENCABEZADO.ANIO_ACAD}}</td>
+				<th scope="row" id="info_folios"><strong>{{"folios" | trans | capitalize}}:</strong></th>
+				<td headers="info_folios">{{ENCABEZADO.FOLIOS}}</td>
+			</tr>
+			<tr>
+				<th scope="row" id="info_per"><strong>{{"periodo_lectivo" | trans | capitalize}}:</strong></th>
+				<td headers="info_per">{{ENCABEZADO.PER_LEC}}</td>
+				<th scope="row" id="info_comision"><strong>{{"comision" | trans | capitalize}}:</strong></th>
+				<td headers="info_comision">{{ENCABEZADO.COMISION_NOMBRE}}</td>
+			</tr>
+			<tr>
+				<th scope="row" id="info_libro"><strong>{{"libro" | trans | capitalize}}:</strong></th>
+				<td headers="info_libro">{{ENCABEZADO.LIBRO}}</td>
+				<th scope="row" id="info_plan"><strong>{{"plan.estado" | trans | capitalize}}:</strong></th>
+				<td headers="info_plan">{{ENCABEZADO.ESTADO_ACTA}}</td>
+			</tr>
+			<tr>
+				<th scope="row" id="info_docente"><strong>{{"docente_comision" | trans | capitalize}}:</strong></th>
+				<td colspan="3" headers="info_docente">{{ENCABEZADO.DOCENTES}}</td>
+			</tr>
+			<tr>
+				<th scope="row" id="info_observaciones"><strong>{{"observaciones" | trans | capitalize}}:</strong></th>
+				<td colspan="3" headers="info_observaciones">{{ENCABEZADO.OBS}}</td>
+			</tr>
+		</table>
+	{% else %}
+		<div class="alert">
+			{{"reporte.no_hay_datos.acta_detalle_alumnos"|trans|capitalize}}
+		</div>
+	{% endif %}
+	
+	{% if this.data.datos.CUERPO %}
+		<div id="filtros_acta">
+			<label for="js-filtro_folio">{{'actas.filtro_ver_folio' |trans|capitalize}}:
+			<select id="js-filtro_folio">
+				<option value="">{{'todos'|trans|capitalize}}</option>
+				{% for folio, alumnos in this.data.datos.CUERPO %}
+				<option value="{{folio}}">{{folio}}</option>
+				{% endfor %}
+			</select>
+			</label>
+		</div>
+		{% for clave, folio in this.data.datos.CUERPO %}
+			<table class="table table-striped table-bordered table-condensed js-folio" summary="Datos de alumnos" data-folio="{{clave}}">
+			<caption><strong>{{"folio" | trans | capitalize}}:</strong> {{clave}}</caption>
+			<thead>
+			<tr>	<th scope="col" id="renglon{{clave}}">{{"renglon" | trans | capitalize}}</th>
+				<th scope="col" id="legajo{{clave}}">{{"legajo" | trans | capitalize}}</th>
+				<th scope="col" id="apellido_y_nombre{{clave}}">{{"apellido_y_nombre" | trans | capitalize}}</th>
+				<th scope="col" id="fecha{{clave}}">{{"fecha" | trans | capitalize}}</th>
+				<th scope="colgroup" colspan="2" id="nota{{clave}}">{{"nota" | trans | capitalize}}</th>
+				<th scope="col" id="resultado{{clave}}" colspan="2">{{"resultado" | trans | capitalize}}</th>
+			</tr>
+			</thead>
+				{% for alumno in folio %}
+				<tr>
+					<td headers="renglon{{clave}}">{{alumno.RENGLON|raw}}</td>
+					<td headers="legajo{{clave}}">{{alumno.LEGAJO|raw}}</td>
+					<td scope="row" headers="apellido_y_nombre{{clave}}">{{alumno.APE_NOM|raw}}</td>
+					<td headers="fecha{{clave}}">{{alumno.FECHA|raw}}</td>
+					<td headers="nota{{clave}}">{{alumno.NOTA_NUM|raw}}</td>
+					<td headers="nota{{clave}}">{{alumno.NOTA_LETRAS|raw}}</td>
+					<td headers="resultado{{clave}}">{{alumno.RESULTADO|raw}}</td>
+					<td headers="detalle_evaluaciones{{clave}}"><a class="js-detalle_evaluaciones link-in-data" data-destino="evaluaciones{{clave}}-{{alumno.RENGLON}}" data-link="{{alumno.LINK}}">{{'detalle' | trans | capitalize }}</a></td>
+				</tr>
+				<tr id="evaluaciones{{clave}}-{{alumno.RENGLON}}" class="js-cuadro_evaluaciones">
+					<!--Acá escribe el ajax-->
+				</tr>
+				{% endfor %}
+			</table>
+		{% endfor %}
+	{% else %}
+		<div role="alert" class="alert">
+			{{"reporte.no_hay_datos.acta_detalle_alumnos"|trans|capitalize}}
+		</div>
+	{% endif %}
+{% endblock %}

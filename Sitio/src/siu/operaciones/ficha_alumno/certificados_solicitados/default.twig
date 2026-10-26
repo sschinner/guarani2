@@ -1,0 +1,34 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_ficha_alumno.twig" as ficha_alumno %}
+{% block contenido %}
+    {{ ficha_alumno.render_menu(this.data.menu_reportes, this.data.categoria_actual, this.data.reporte_actual) }}
+	<div id="reporte_contenido">
+		<h3>{{ 'ficha_alumno.rep_certificados_solicitados' | trans }}</h3>
+		
+			{% if this.data.certificados %}
+				<table class='table table-condensed table-hover table-striped'>
+						<thead>
+							<tr>
+								<th>{{'ficha_alumno.certificado'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.cantidad_de_solicitudes'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.total_pedidos'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.total_impresos'|trans|capitalize}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for certificado in this.data.certificados %}
+								<tr>
+									<td>{{ficha_alumno.mostrar(certificado.vc_NombreCertif)}}</td>
+									<td>{{ficha_alumno.mostrar(certificado.vi_CantPedida)}}</td>
+									<td>{{ficha_alumno.mostrar(certificado.vi_CopiasPedidas)}}</td>
+									<td>{{ficha_alumno.mostrar(certificado.vi_CopiasImpresas)}}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+			{% else %}
+				<div class="alert text-warning">{{'ficha_alumno.no_hay_informacion'|trans}}</div>
+			{% endif %}
+		
+	</div>
+{% endblock %}

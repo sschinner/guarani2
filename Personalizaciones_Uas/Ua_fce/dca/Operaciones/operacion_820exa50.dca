@@ -1,0 +1,11 @@
+-- inserta la operacion - sui_operaciones limpia todo
+execute procedure dba.sui_operaciones ('820exa50', 'Aplazados por turno', 'Aplazados por turno',NULL);
+
+insert into dba.acc_parametros (operacion, orden, ventana, parametros, cierra_anterior) VALUES
+               ('820exa50', 1, 'w_reporte', 'uo_dw, dp820_carreras_plan_materias_turno, uo_dw, dl820_aplazos_en_una_materia_turno, dl820_aplazos_en_una_materia_turno', 'N');
+
+insert into dba.acc_acciones_oper (operacion, accion) VALUES
+      ('820exa50', 'C');
+
+
+

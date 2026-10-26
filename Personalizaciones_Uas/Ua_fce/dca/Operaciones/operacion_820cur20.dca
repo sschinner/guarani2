@@ -1,0 +1,20 @@
+-- inserta la operacion - sui_operaciones limpia todo
+execute procedure dba.sui_operaciones ('820cur20', 'Ranking de alumnos para control', 'Ranking de alumnos para control',NULL);
+
+Begin;
+
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = "820cur20";
+
+
+-- inserta operacion_mod
+insert into dba.acc_operacion_mod (modulo, operacion, submodulo, orden) VALUES
+   ('82000001', '820cur20', '820cursa', 10); 
+insert into dba.acc_parametros (operacion, orden, ventana, parametros, cierra_anterior) VALUES
+               ('820cur20', 1, 'w_reporte', 'uo_dw_una_comision, dp820_comision, uo_dw, dl820_unl_ranking, dl820_unl_ranking', 'N');
+
+insert into dba.acc_acciones_oper (operacion, accion) VALUES
+      ('820cur20', 'C');
+
+Commit;
+

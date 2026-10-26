@@ -1,0 +1,61 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_ficha_alumno.twig" as ficha_alumno %}
+{% block contenido %}
+    {{ ficha_alumno.render_menu(this.data.menu_reportes, this.data.categoria_actual, this.data.reporte_actual) }}
+	<div id="reporte_contenido">
+		<h3>{{ 'ficha_alumno.rep_excepciones' | trans | capitalize }}</h3>
+		
+		{% for carrera in this.data.carreras %}
+		
+			<ul class="ficha_alumno_ul">
+					<li><strong>{{ 'ficha_alumno.carrera' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.carrera)}}</li>
+					<li><strong>{{ 'ficha_alumno.legajo' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.legajo)}}</li>
+			</ul>
+		
+			{% for materia_anio_academico_operacion in carrera.materia_anio_academico_operaciones %}
+
+								<ul class="ficha_alumno_ul">
+										<li><strong>{{ 'ficha_alumno.materia' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(materia_anio_academico_operacion.materia)}}</li>
+										<li><strong>{{ 'ficha_alumno.anio_academico' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(materia_anio_academico_operacion.anio_academico)}}</li>
+										<li><strong>{{ 'ficha_alumno.operacion' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(materia_anio_academico_operacion.operacion)}}</li>
+								</ul>
+								{% for turno_periodo_mesa_nom_com_llamado_com in materia_anio_academico_operacion.turno_periodo_mesa_nom_com_llamado_coms %}
+												
+														<ul class="ficha_alumno_ul">
+																<li><strong>{{ 'ficha_alumno.turno_o_periodo' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(turno_periodo_mesa_nom_com_llamado_com.turno_periodo)}}</li>
+																<li><strong>{{ 'ficha_alumno.mesa_o_comision' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(turno_periodo_mesa_nom_com_llamado_com.mesa_nom_com)}}</li>
+																<li><strong>{{ 'ficha_alumno.llamado' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(turno_periodo_mesa_nom_com_llamado_com.llamado_com)}}</li>
+														</ul>
+														{% if turno_periodo_mesa_nom_com_llamado_com.excepciones %}
+															<table class='table table-condensed table-hover table-striped'>
+																<thead>
+																	<tr>
+																		<th>{{'ficha_alumno.detalle'|trans|capitalize}}</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	{% for excepcion in turno_periodo_mesa_nom_com_llamado_com.excepciones %}
+																		<tr>
+																			<td>
+																				<ul class="ficha_alumno_ul">
+																						<li><strong>{{ 'ficha_alumno.control' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(excepcion.control)}}</li>
+																						<li><strong>{{ 'ficha_alumno.problema' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(excepcion.problema)}}</li>
+																						<li><strong>{{ 'ficha_alumno.excepcion_otorgada' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(excepcion.excepcion_otorgada)}}</li>
+																				</ul>
+																			</td>
+																		</tr>
+																	{% endfor %}
+																</tbody>
+															</table>
+														{% else %}
+															<div class="alert text-warning">{{'ficha_alumno.no_hay_excepciones'|trans}}</div>
+														{% endif %}	
+															
+								{% endfor %}
+			{% endfor %}	
+		
+		{% else %}
+			<div class="alert text-warning">{{'ficha_alumno.no_hay_informacion'|trans}}</div>
+		{% endfor %}
+	</div>
+{% endblock %}

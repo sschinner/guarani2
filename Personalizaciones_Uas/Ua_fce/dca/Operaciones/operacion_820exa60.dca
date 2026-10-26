@@ -1,0 +1,20 @@
+-- inserta la operacion - sui_operaciones limpia todo
+execute procedure dba.sui_operaciones ('820exa60', 'Examinados por materia', 'Examinados por materia',NULL);
+-- inserta operacion_mod
+
+Begin;
+
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = "820exa60";
+
+
+insert into dba.acc_operacion_mod (modulo, operacion, submodulo, orden) VALUES
+   ('82000001', '820exa60', '820exame', 800); 
+insert into dba.acc_parametros (operacion, orden, ventana, parametros, cierra_anterior) VALUES
+               ('820exa60', 1, 'w_reporte', 'uo_dw, dp820_materia_entre_fechas, uo_dw, dr820_materia_rendida_entrefechas, dl820_materia_rendida_entrefechas', 'N');
+
+insert into dba.acc_acciones_oper (operacion, accion) VALUES
+      ('820exa60', 'C');
+
+
+commit;

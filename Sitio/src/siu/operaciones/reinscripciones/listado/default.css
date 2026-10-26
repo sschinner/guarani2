@@ -1,0 +1,9 @@
+#tabla_reinscripciones .js-print-comprobante {
+    float: left;
+    margin-bottom: 10px;
+}
+
+#tabla_reinscripciones tr td img {
+    float: left;
+    clear: both;
+}

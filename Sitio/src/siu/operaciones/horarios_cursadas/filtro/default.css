@@ -1,0 +1,25 @@
+#filtro input#formulario_filtro-filtros_comunes-materia {
+	width: 100%;
+}
+
+#filtro .ui-autocomplete#formulario_filtro-materia-autocomplete-ul {
+    width: 587px !important;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html #filtro .ui-autocomplete#formulario_filtro-materia-autocomplete-ul {
+    width: 587px !important;
+}
+
+#formulario_filtro-periodo {
+	width: 100%;
+}
+
+#formulario_filtro-carrera {
+	width: 100%;
+}
+
+#formulario_filtro-materia_descr {
+	width: 100%;
+}

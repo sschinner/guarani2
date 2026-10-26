@@ -1,0 +1,19 @@
+-- inserta la operacion - sui_operaciones limpia todo
+execute procedure dba.sui_operaciones ('820exa75', 'Datos personales alumnos', 'Datos personales alumnos',NULL);
+-- inserta operacion_mod
+Begin;
+
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = "820exa75";
+
+
+insert into dba.acc_operacion_mod (modulo, operacion, submodulo, orden) VALUES
+   ('82000001', '820exa75', '820exame', 920); 
+insert into dba.acc_parametros (operacion, orden, ventana, parametros, cierra_anterior) VALUES
+               ('820exa75', 1, 'w_reporte', 'uo_dw, dp820_carr_apr_repr_cali, uo_dw, dl820_fce_datos_alumno, dl820_fce_datos_alumno', 'N');
+
+insert into dba.acc_acciones_oper (operacion, accion) VALUES
+      ('820exa75', 'C');
+
+
+commit;

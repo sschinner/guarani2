@@ -1,0 +1,53 @@
+{% extends "kernel/pagelet_polite.twig" %}
+
+{% block contenido %}
+    {% if this.estado == 'inicial' %}
+		{% include 'info_materia_examen/estado_inicial.twig' with {
+			'inscripciones': this.data.inscripciones, 
+			'mensajes': this.data.mensajes,
+			'csrf':		this.data.csrf,
+			'param_insc_exa_bajas': this.data.param_insc_exa_baja
+		} only %}
+    {% elseif this.estado == 'error_mat_sel' %}
+        <h3 id="materia-nombre"tabindex="-1">{{this.data.materia_nombre}}</h3>
+        {% import "kernel/macro_notificaciones.twig" as notificaciones %}
+        {{ notificaciones.render_notif(this.data.mensajes) }}
+    {% else %}
+		{% if this.data.mensajes %}
+            {% import "kernel/macro_notificaciones.twig" as notificaciones %}
+            {{ notificaciones.render_notif(this.data.mensajes) }}
+        {% endif %}
+             {#<fieldset>#}
+		<h3 id="materia-nombre" tabindex="-1">{{this.data.materia_nombre}}</h3>
+		<ul role="article" id='llamados_mesas' class="unstyled">
+			{% if not this.data.llamados %}
+				<div class='alert alert-warning'>{{ 'mensaje_no_hay_mesas'|trans|capitalize }}</div>
+			{% else %}
+				{% for key, mesa in this.data.llamados %}
+				{% if mesa.INSCRIPTO %}
+				<li class='llamado_mesa inscripto' sede="{{ mesa.SEDE }}">
+					{% include 'info_materia_examen/default_inscripto.twig' with {
+						'mesa':		mesa,
+						'materia':	this.data.materia,
+						'url_baja': this.data.url_baja,
+						'csrf':		this.data.csrf,			
+						'param_insc_exa_bajas': this.data.param_insc_exa_baja
+					} only %}
+				</li>
+				{% else %}
+				<li class='llamado_mesa no-inscripto' sede="{{ mesa.SEDE }}">
+					{% include 'info_materia_examen/default_no_inscripto.twig' with {
+						'mesa':		mesa,
+						'materia':	this.data.materia,
+						'url_alta': this.data.url_alta,
+						'param_insc_examen_seleccion_auto_tipo_insc': this.data.param_insc_examen_seleccion_auto_tipo_insc,
+						'csrf':		this.data.csrf
+					} only %}
+				</li>
+				{% endif %}
+				{% endfor %}
+			{% endif %}
+		</ul>
+            {#</fieldset>#}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+<h3>{{'actas_abiertas_examen'|trans|capitalize}}</h3>
+{% if this.data.actas %}
+
+    <table class="table table-striped table-bordered table-condensed">
+	<thead>
+	    <th>{{ 'acta'|trans|capitalize }}</th>
+	    <th>{{ 'materia'|trans|capitalize }}</th>
+	    <th>{{ 'fecha'|trans|capitalize }}</th>
+	</thead>
+	
+	<tbody>
+	{% for acta in this.data.actas %}
+	    <tr data-link='{{ acta.LINK }}' class='link-in-data'>
+		<td><a href='{{ acta.LINK }}'>{{ acta.ACTA }}</a></td>
+		<td>{{ acta.MATERIA_NOMBRE }}</td>
+		<td>{{ acta.DIA ~ ' - ' ~ acta.HORA }}</td>
+	    </tr>
+	{% endfor %}
+	</tbody>
+    </table>
+
+{% else %}
+	<div class="alert">{{ 'no_hay_actas'|trans|capitalize }}</div>
+{% endif %}
+{% endblock %}

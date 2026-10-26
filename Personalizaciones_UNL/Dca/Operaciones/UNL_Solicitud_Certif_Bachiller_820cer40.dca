@@ -1,0 +1,9 @@
+-- ********************************************************************************
+-- Solicitud
+-- ********************************************************************************
+execute procedure dba.sui_operaciones('820cer40', 'Solicitud Certificado Bachiller', 'Solicitud Certificado Bachiller', NULL);
+DELETE FROM acc_operacion_mod WHERE operacion = '820cer40';
+INSERT INTO acc_operacion_mod VALUES ('00000035', '820cer40', 'Certif', 150);
+INSERT INTO acc_parametros VALUES ('820cer40', 1, 'w_reporte', 'uo_dw_filtros, dp820_bachiller_solicitud, uo_dw, dl820_bachiller_solicitud, dl820_bachiller_solicitud', NULL, NULL,'N');
+INSERT INTO acc_acciones_oper VALUES ('820cer40', 'C');
+

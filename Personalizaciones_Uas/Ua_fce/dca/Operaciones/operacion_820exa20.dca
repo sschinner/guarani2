@@ -1,0 +1,29 @@
+Execute procedure dba.sui_operaciones('820exa20',
+	'Examen Habilitante de inscriptos a Examen',
+	'Examen Habilitante de inscriptos a Examen',
+	NULL);
+
+Begin;
+
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = "820exa20";
+
+INSERT INTO acc_operacion_mod VALUES (
+	'00000020',
+	'820exa20',
+	'Reportes',
+	102);
+
+INSERT INTO acc_parametros VALUES (
+	'820exa20',
+	1,
+	'w_reporte',
+    'uo_dw_filtros, dp_inscriptos_a_llamado, uo_dw, dl820_fce_inscriptos_en_una_mesa_examen, dl820_fce_inscriptos_en_una_mesa_examen', Null, Null, 'N');
+
+INSERT INTO acc_acciones_oper VALUES (
+	'820exa20',
+	'C');
+
+commit;
+
+

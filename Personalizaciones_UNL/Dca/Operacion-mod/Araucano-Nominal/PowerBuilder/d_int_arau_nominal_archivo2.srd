@@ -1,0 +1,84 @@
+$PBExportHeader$d_int_arau_nominal_archivo2.srd
+$PBExportComments$ARAUCANO NOMINAL - Archivo 2 de Rendimiento Académico
+release 7;
+datawindow(units=0 timer_interval=0 color=16777215 processing=0 HTMLDW=no print.documentname="" print.orientation = 0 print.margin.left = 110 print.margin.right = 110 print.margin.top = 96 print.margin.bottom = 96 print.paper.source = 0 print.paper.size = 0 print.prompt=no print.buttons=no print.preview.buttons=no )
+header(height=72 color="536870912" )
+summary(height=0 color="536870912" )
+footer(height=0 color="536870912" )
+detail(height=84 color="536870912" )
+table(column=(type=long update=yes updatewhereclause=yes key=yes identity=yes name=id_rendimiento dbname="int_araunom_rend.id_rendimiento" )
+ column=(type=long update=yes updatewhereclause=yes name=anio_academico dbname="int_araunom_rend.anio_academico" )
+ column=(type=long update=yes updatewhereclause=yes name=tipo_documento dbname="int_araunom_rend.tipo_documento" )
+ column=(type=char(15) update=yes updatewhereclause=yes name=nro_documento dbname="int_araunom_rend.nro_documento" )
+ column=(type=char(15) update=yes updatewhereclause=yes name=cuil_cuit dbname="int_araunom_rend.cuil_cuit" )
+ column=(type=long update=yes updatewhereclause=yes name=instituc_araucano dbname="int_araunom_rend.instituc_araucano" )
+ column=(type=long update=yes updatewhereclause=yes name=titulo_araucano dbname="int_araunom_rend.titulo_araucano" )
+ column=(type=char(8) update=yes updatewhereclause=yes name=fecha dbname="int_araunom_rend.fecha" )
+ column=(type=long update=yes updatewhereclause=yes name=resultado dbname="int_araunom_rend.resultado" )
+ column=(type=char(5) update=yes updatewhereclause=yes name=materia dbname="int_araunom_rend.materia" )
+ column=(type=char(255) update=yes updatewhereclause=yes name=materia_nombre dbname="int_araunom_rend.materia_nombre" )
+ column=(type=long update=yes updatewhereclause=yes name=carga_horaria dbname="int_araunom_rend.carga_horaria" )
+ column=(type=char(1) update=yes updatewhereclause=yes name=obligatoriedad dbname="int_araunom_rend.obligatoriedad" )
+ column=(type=long update=yes updatewhereclause=yes name=forma_aprobacion dbname="int_araunom_rend.forma_aprobacion" )
+ column=(type=char(30) update=yes updatewhereclause=yes name=nro_libro dbname="int_araunom_rend.nro_libro" )
+ column=(type=char(30) update=yes updatewhereclause=yes name=nro_acta dbname="int_araunom_rend.nro_acta" )
+ column=(type=long update=yes updatewhereclause=yes name=folio_fisico dbname="int_araunom_rend.folio_fisico" )
+ column=(type=char(30) update=yes updatewhereclause=yes name=expediente dbname="int_araunom_rend.expediente" )
+ retrieve="  SELECT int_araunom_rend.id_rendimiento,   
+         int_araunom_rend.anio_academico,   
+         int_araunom_rend.tipo_documento,   
+         int_araunom_rend.nro_documento,   
+         int_araunom_rend.cuil_cuit,   
+         int_araunom_rend.instituc_araucano,   
+         int_araunom_rend.titulo_araucano,   
+         int_araunom_rend.fecha,   
+         int_araunom_rend.resultado,   
+         int_araunom_rend.materia,   
+         int_araunom_rend.materia_nombre,   
+         int_araunom_rend.carga_horaria,   
+         int_araunom_rend.obligatoriedad,   
+         int_araunom_rend.forma_aprobacion,   
+         int_araunom_rend.nro_libro,   
+         int_araunom_rend.nro_acta,   
+         int_araunom_rend.folio_fisico,   
+         int_araunom_rend.expediente  
+    FROM int_araunom_rend   
+   WHERE int_araunom_rend.anio_academico = :anio_academico   " update="int_araunom_rend" updatewhere=1 updatekeyinplace=no arguments=(("anio_academico", string)) )
+text(band=header alignment="2" text="Id Rendimiento" border="0" color="0" x="5" y="4" height="64" width="393"  name=id_rendimiento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Anio Academico" border="0" color="0" x="402" y="4" height="64" width="434"  name=anio_academico_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Tipo Documento" border="0" color="0" x="841" y="4" height="64" width="430"  name=tipo_documento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nro Documento" border="0" color="0" x="1275" y="4" height="64" width="439"  name=nro_documento_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Cuil Cuit" border="0" color="0" x="1719" y="4" height="64" width="443"  name=cuil_cuit_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Instituc Araucano" border="0" color="0" x="2167" y="4" height="64" width="462"  name=instituc_araucano_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Titulo Araucano" border="0" color="0" x="2633" y="4" height="64" width="411"  name=titulo_araucano_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Fecha" border="0" color="0" x="3049" y="4" height="64" width="247"  name=fecha_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Resultado" border="0" color="0" x="3301" y="4" height="64" width="329"  name=resultado_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Materia" border="0" color="0" x="3634" y="4" height="64" width="197"  name=materia_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Materia Nombre" border="0" color="0" x="3835" y="4" height="64" width="4663"  name=materia_nombre_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Carga Horaria" border="0" color="0" x="8503" y="4" height="64" width="361"  name=carga_horaria_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Obligatoriedad" border="0" color="0" x="8869" y="4" height="64" width="379"  name=obligatoriedad_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Forma Aprobacion" border="0" color="0" x="9253" y="4" height="64" width="485"  name=forma_aprobacion_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nro Libro" border="0" color="0" x="9742" y="4" height="64" width="850"  name=nro_libro_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Nro Acta" border="0" color="0" x="10597" y="4" height="64" width="850"  name=nro_acta_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Folio Fisico" border="0" color="0" x="11451" y="4" height="64" width="329"  name=folio_fisico_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+text(band=header alignment="2" text="Expediente" border="0" color="0" x="11785" y="4" height="64" width="850"  name=expediente_t  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=1 alignment="1" tabsequence=32766 border="0" color="0" x="5" y="4" height="76" width="329" format="[general]"  name=id_rendimiento edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=2 alignment="1" tabsequence=10 border="0" color="0" x="402" y="4" height="76" width="329" format="[general]"  name=anio_academico edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=3 alignment="1" tabsequence=20 border="0" color="0" x="841" y="4" height="76" width="329" format="[general]"  name=tipo_documento edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=4 alignment="0" tabsequence=30 border="0" color="0" x="1275" y="4" height="76" width="439" format="[general]"  name=nro_documento edit.limit=15 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=5 alignment="0" tabsequence=40 border="0" color="0" x="1719" y="4" height="76" width="443" format="[general]"  name=cuil_cuit edit.limit=15 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=6 alignment="1" tabsequence=50 border="0" color="0" x="2167" y="4" height="76" width="329" format="[general]"  name=instituc_araucano edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=7 alignment="1" tabsequence=60 border="0" color="0" x="2633" y="4" height="76" width="329" format="[general]"  name=titulo_araucano edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=8 alignment="0" tabsequence=70 border="0" color="0" x="3049" y="4" height="76" width="247" format="[general]"  name=fecha edit.limit=8 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=9 alignment="1" tabsequence=80 border="0" color="0" x="3301" y="4" height="76" width="329" format="[general]"  name=resultado edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=10 alignment="0" tabsequence=90 border="0" color="0" x="3634" y="4" height="76" width="165" format="[general]"  name=materia edit.limit=5 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=11 alignment="0" tabsequence=100 border="0" color="0" x="3835" y="4" height="76" width="4663" format="[general]"  name=materia_nombre edit.limit=255 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=12 alignment="1" tabsequence=110 border="0" color="0" x="8503" y="4" height="76" width="329" format="[general]"  name=carga_horaria edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=13 alignment="0" tabsequence=120 border="0" color="0" x="8869" y="4" height="76" width="55" format="[general]"  name=obligatoriedad edit.limit=1 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=14 alignment="1" tabsequence=130 border="0" color="0" x="9253" y="4" height="76" width="329" format="[general]"  name=forma_aprobacion edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=15 alignment="0" tabsequence=140 border="0" color="0" x="9742" y="4" height="76" width="850" format="[general]"  name=nro_libro edit.limit=30 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=16 alignment="0" tabsequence=150 border="0" color="0" x="10597" y="4" height="76" width="850" format="[general]"  name=nro_acta edit.limit=30 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=17 alignment="1" tabsequence=160 border="0" color="0" x="11451" y="4" height="76" width="329" format="[general]"  name=folio_fisico edit.limit=0 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+column(band=detail id=18 alignment="0" tabsequence=170 border="0" color="0" x="11785" y="4" height="76" width="850" format="[general]"  name=expediente edit.limit=30 edit.case=any edit.autoselect=yes edit.autohscroll=yes  font.face="Arial" font.height="-10" font.weight="400"  font.family="2" font.pitch="2" font.charset="0" background.mode="1" background.color="536870912" )
+htmltable(border="1" )
+htmlgen(clientevents="1" clientvalidation="1" clientcomputedfields="1" clientformatting="0" clientscriptable="0" generatejavascript="1" )

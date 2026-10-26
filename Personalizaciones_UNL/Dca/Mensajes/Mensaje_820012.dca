@@ -1,0 +1,11 @@
+-- Alta del mensaje
+-- Mensaje: 820012.dca
+
+--********************************************
+-- mensaje 820012, asociado al control: Controla si la persona tiene las condiciones para solicitar certificado pagos.
+-- 
+--********************************************
+
+DELETE FROM mme_mensajes WHERE mensaje = 820012;
+insert into mme_mensajes (tipo,	mensaje, mascara_original,mascara,clasificacion,boton)
+values (5, 820012, "Esta Propuesta Académica/Curso no está habilitada para generar esta solicitud.","Esta Propuesta Académica/Curso no está habilitada para generar esta solicitud.", 1, 1);

@@ -1,0 +1,1 @@
+ALTER TABLE "dba".u820_pedidos_certif_diploma ADD (tramite_abreviado varchar(1));

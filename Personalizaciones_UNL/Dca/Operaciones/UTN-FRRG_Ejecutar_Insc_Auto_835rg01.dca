@@ -1,0 +1,31 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 1.5.0
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones( '835rg001', 'Ejecutar insc. auto ingresantes.', 'Ejecutar insc. auto ingresantes', null );
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( '835rg001', 1, 'w_abm_lista', 'uo_dw, dk835rg_periodos_lectivos, 10', 'N' );
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( '835rg001', 2, 'w835rg_insc_auto_ingresantes', 'uo_dw, dk835rg_insc_auto_ingresantes', 'N' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '835rg001', 'C' );
+
+
+Begin;
+Set constraints all deferred;
+-- Insertar el nuevo Submódulo.
+DELETE FROM acc_submodulos WHERE submodulo = 'Insc_aut';
+INSERT INTO acc_submodulos (submodulo,nombre) VALUES('Insc_aut','Inscripción automática ingresantes.');
+
+-- Insert en modulos por operación
+DELETE FROM acc_operacion_mod WHERE operacion = '835rg001';
+INSERT INTO dba.acc_operacion_mod ( modulo , operacion , submodulo , orden ) VALUES ( '00000015' , '835rg001' , 'Insc_auto' , 50 ) ;
+
+Commit;
+
+-- Orden de ejecución de scripts:
+
+
+-- ../dca/operaciones/UTN-FRRG_Planif_Comis_835rg02.sql
+-- ../dca/operaciones/UTN-FRRG_Reporte_Planif_Comis_835rg03.sql
+-- ../sql/sps/sp835rg_insc_autom.sql
+-- ../dca/ventanas/w835rg_abm_comisiones_x_carrera.sql
+-- ../dca/ventanas/w835rg_insc_auto_ingresantes.sql
+-- ../sql/tablas/u835rg_comision_in.sql

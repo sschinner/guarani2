@@ -1,0 +1,9 @@
+-- Alta del mensaje
+-- Mensaje: 82002038.dca
+
+--********************************************
+-- mensaje 82002038, asociado al control de horas requeridas para Práctica Hospitalaria.
+-- 
+--********************************************
+DELETE FROM mme_mensajes WHERE mensaje = 82002038;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82002038, "No tenés la cantidad de horas optativas aprobadas y/o cursadas para inscribirte a la práctica",  "No tenés la cantidad de horas optativas aprobadas y/o cursadas para inscribirte a la práctica", 2, 1);

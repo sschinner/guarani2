@@ -1,0 +1,39 @@
+{% import _self as this %}
+<td colspan="6">
+    <table class='table table-condensed table-hover table-striped'>
+        <thead>
+        <tr>
+            <th class="span1">{{'fecha_examen.hora_inicio'|trans}}</th>
+            <th class="span1">{{'fecha_examen.hora_finalizacion'|trans}}</th>
+            <th class="span1">{{'fecha_examen.aula'|trans}}</th>
+            <th class="span2">{{'fecha_examen.fecha_tope_para_bajas'|trans}}</th>
+            <th class="span2">{{'fecha_examen.docentes'|trans}}</th>
+            <th class="span2">{{'fecha_examen.carrera'|trans}}</th>
+            <th class="span1">{{'fecha_examen.plan'|trans}}</th>
+            <th class="span1">{{'fecha_examen.grupo_carrera'|trans}}</th>
+			<th class="span1">{{'fecha_examen.observaciones'|trans}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ this.mostrar(HORA_INICIO)}}</td>
+            <td>{{ this.mostrar(HORA_FINALIZACION) }}</td>
+            <td>{{ this.mostrar(EDIFICIO_AULA) }}</td>
+            <td>{{ this.mostrar(FECHA_TOPE_BAJAS) }}</td>
+            <td>{{ this.mostrar(DOCENTES) }}</td>
+            <td>{{ this.mostrar(CARRERA_NOMBRE) }}</td>
+            <td>{{ this.mostrar(PLAN) }}</td>
+            <td>{{ this.mostrar(GRUPO_CARRERA_NOMBRE) }}</td>
+			<td>{{ this.mostrar(OBSERVACIONES) }}</td>
+        </tr>
+        </tbody>
+    </table>
+</td>
+
+{% macro mostrar(dato) %}
+	{% if (dato) %}
+		{{dato|raw}}
+	{% else %}
+		{{'fecha_examen.sin_informacion'|trans |capitalize}}
+	{% endif %}
+{% endmacro %}

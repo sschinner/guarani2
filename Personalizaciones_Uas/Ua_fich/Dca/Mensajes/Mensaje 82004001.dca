@@ -1,0 +1,9 @@
+-- Alta del mensaje
+-- Mensaje: 82004001.dca
+
+--********************************************
+-- mensaje 82004001, asociado al control: ctr820_ColoquioFinal.
+-- 
+--********************************************
+DELETE FROM mme_mensajes WHERE mensaje = 82004001;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82004001, "Tenés un Coloquio final Pendiente de la materia.",  "Tenés un Coloquio final Pendiente de la materia.", 2, 1);

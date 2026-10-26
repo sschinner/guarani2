@@ -1,0 +1,15 @@
+
+Execute procedure dba.sui_operaciones('820exa15', 'Log de Inscripción de Examen', 'Log de Inscripción de Examen', NULL);
+Begin;
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = '820exa15';
+DELETE FROM acc_operaciones WHERE operacion = "820exa15";
+DELETE FROM par_puntos_x_pag WHERE operacion = "820exa15";
+DELETE FROM par_eventos_x_oper WHERE operacion = "820exa15";
+DELETE FROM par_puntos_x_oper WHERE operacion = "820exa15";
+DELETE FROM par_cont_x_oper WHERE operacion = "820exa15";
+DELETE FROM sga_conf_controles WHERE operacion = "820exa15";
+Commit;
+
+
+

@@ -1,0 +1,5 @@
+Execute procedure dba.sui_operaciones('820cur10','Regularidades por Carrera-Materia','Regularidades por Carrera-Materia',NULL);
+DELETE FROM acc_operacion_mod WHERE operacion = '820cur10';
+INSERT INTO acc_operacion_mod VALUES ('00000015','820cur10','Reportes',102);
+INSERT INTO acc_parametros VALUES ('820cur10',1,'w_reporte', 'uo_dw_filtros, dp_estado_alumnos_x_acta_cursado, uo_dw, dr820_estado_alumnos_x_acta_cursado, dl820_estado_alumnos_x_acta_cursado', Null, Null, 'N');
+INSERT INTO acc_acciones_oper VALUES ('820cur10','C');

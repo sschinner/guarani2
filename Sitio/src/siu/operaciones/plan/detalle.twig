@@ -1,0 +1,129 @@
+<td colspan="8" class="td-table-correlativas">
+	{% if correlativas %}
+		{% if correlativas.cursar %}
+
+			<div>
+				<div style="float: left;"><h3>{{'para_cursar'|trans}}</h3></div>
+				<div style="float: right;">
+					<button type="button" data-materia="{{ materia }}" data-completo="false" data-padre="false"
+					class="btn btn-mini btn-inverse verificar correlativas_cursar" >{{'plan_de_estudio.verificar'|trans}}</button>
+				</div>
+				<div style="clear: both;"></div>
+			</div>
+
+				<div id="alert_correlativas_C_materia{{ materia }}_js" class="alert alert-block alert_verificar_correlativas">
+					<h4 class="alert-heading"></h4>
+					<p>
+						<a class="btn btn-mini ocultar" href="#">{{'plan_estudio.ocultar'|trans}}</a>
+					</p>
+				</div>
+
+				{% for dato in correlativas.cursar %}
+					{% if dato.TIPO != 'CC' %}
+						<table class="table table-bordered table-condensed table-correlativas" summary="{{'correlatividades_especiales'|trans}}">
+						<tr>
+							<th scope="col">{{'correlatividades_especiales'|trans}}</th>
+						</tr>
+						<tr>	
+							<td scope="row" colspan="3">{{dato.DESCRIPCION}}</td>
+						</tr>
+						</table>
+					{% endif %}
+				{% endfor %}
+				<table class="table table-bordered table-condensed table-correlativas" summary="Opci&oacute;n para cursar">
+					{% set count = 1 %}
+					<h4>{{'opcion'|trans}} {{count}}</h4>
+					<tr>
+						<th scope="col" class="td-mat-cond">{{"info_materia.materia" | trans | capitalize}}</th>
+						<th scope="col">{{"plan.nombre_materia" | trans | capitalize}}</th>
+						<th scope="col"class="td-mat-cond">{{"condicion" | trans | capitalize}}</th>
+					</tr>
+					{% for dato in correlativas.cursar %}
+						{% if dato.TIPO == 'CC' %}
+							<tr scope="row">
+								<td>{{dato.MATERIA}}</td>
+								<td>{{dato.NOMBRE_MATERIA}}</td>
+								<td>{{dato.ESTADO}}</td>
+							</tr>
+							{% if dato.CONECTOR_LOGICO == 'O' %}
+								</table>
+								<table class="table table-bordered table-condensed table-correlativas" summary="Correlatividades">
+								{% set count = count + 1 %}
+								<h4>{{'opcion'|trans}} {{count}}</h4>
+								<tr>
+									<th scope="col" class="td-mat-cond">{{"info_materia.materia" | trans | capitalize}}</th>
+									<th scope="col">{{"plan.nombre_materia" | trans | capitalize}}</th>
+									<th scope="col" class="td-mat-cond">{{"condicion" | trans | capitalize}}</th>
+								</tr>	
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				</table>
+		{% endif %}
+		{% if correlativas.aprobar %}
+
+				<div>
+						<div style="float: left;"><h3>{{'para_aprobar'|trans}}</h3></div>
+						<div style="float: right;">
+							<button type="button" data-materia="{{ materia }}" data-completo="false" data-padre="false"
+									class="btn btn-mini btn-inverse verificar correlativas_aprobar" >{{'plan_de_estudio.verificar'|trans}}
+							</button>
+						</div>
+						<div style="clear: both;"></div>
+				</div>
+
+				<div id="alert_correlativas_A_materia{{ materia  }}_js" class="alert alert-block alert_verificar_correlativas">
+					<h4 class="alert-heading"></h4>
+					<p>
+								<a class="btn btn-mini ocultar" href="#">{{'plan_estudio.ocultar'|trans}}</a>
+					</p>
+				</div>
+
+				{% for dato in correlativas.aprobar %}
+					{% if dato.TIPO != 'CC' %}
+						<table class="table table-bordered table-condensed table-correlativas" summary="{{'correlatividades_especiales'|trans}}">
+							<tr>
+								<th>{{'correlatividades_especiales'|trans}}</th>
+							</tr>
+							<tr>
+								<td colspan="3">{{dato.DESCRIPCION}}</td>
+							</tr>
+						</table>
+					{% endif %}
+				{% endfor %}
+				<table class="table table-bordered table-condensed table-correlativas" summary="Opci&oacute;n para aprobar">
+					{% set count = 1 %}
+					<h4>{{'opcion'|trans}} {{count}}</h4>
+					<tr>
+						<th class="td-mat-cond">{{"info_materia.materia" | trans | capitalize}}</th>
+						<th>{{"plan.nombre_materia" | trans | capitalize}}</th>
+						<th class="td-mat-cond">{{"condicion" | trans | capitalize}}</th>
+					</tr>
+					{% for dato in correlativas.aprobar %}
+						{% if dato.TIPO == 'CC' %}
+							<tr>
+								<td>{{dato.MATERIA}}</td>
+								<td>{{dato.NOMBRE_MATERIA}}</td>
+								<td>{{dato.ESTADO}}</td>
+							</tr>
+							{% if dato.CONECTOR_LOGICO == 'O' %}
+							</table>
+							<table class="table table-bordered table-condensed table-correlativas" summary="Correlatividades" >
+							{% set count = count + 1 %}
+							<h4>{{'opcion'|trans}} {{count}}</h4>
+							<tr>
+								<th class="td-mat-cond">{{"info_materia.materia" | trans | capitalize}}</th>
+								<th>{{"plan.nombre_materia" | trans | capitalize}}</th>
+								<th class="td-mat-cond">{{"condicion" | trans | capitalize}}</th>
+							</tr>
+							{% endif %}
+						{% endif %}
+					{% endfor %}
+				</table>
+		{% endif %}
+	{% else %}
+			<div class="alert">
+				{{'plan.sin_correlativas_definidas' |trans|capitalize}}
+			</div>
+	{% endif %}
+</td>

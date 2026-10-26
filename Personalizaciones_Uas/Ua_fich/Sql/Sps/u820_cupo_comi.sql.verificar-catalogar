@@ -1,0 +1,76 @@
+CREATE PROCEDURE verifica_objeto()
+BEGIN
+	IF EXISTS (SELECT procid
+			FROM sysprocedures
+			WHERE procname = 'u820_cupo_comi') THEN
+		DROP PROCEDURE u820_cupo_comi;
+	END IF;		
+END
+END PROCEDURE;
+
+EXECUTE PROCEDURE verifica_objeto();
+DROP PROCEDURE verifica_objeto();
+
+-- *****************************************************************************
+-- SIU - SGA - Sistema de Gestion de Alumnos
+-- Version 1.7.0
+-- Procedure u820_cupo_comi;
+-- 
+-- Procedimiento de Actualizacion de cupos en forma automatica. Deberia haber un parametro nuevo que diga en cuanto actualizar, para que sea mas -- flexible.
+-- *****************************************************************************
+
+-- drop procedure "dba".u820_cupo_comi;
+create procedure "dba".u820_cupo_comi(	p_unidad_academica	like sga_insc_cursadas.unidad_academica,
+		p_carrera		like sga_comisiones.carrera,
+		p_plan			like sga_comisiones.plan,
+		p_comision		like sga_comisiones.comision)
+begin
+	-- Defino las variables que voy a utilizar
+	define v_anio_academico	like sga_comisiones.anio_academico;
+	define v_periodo_lectivo	like sga_comisiones.periodo_lectivo;
+	define v_materia		like sga_comisiones.materia;
+
+	-- Cargo las variables con los datos de la comision
+	select anio_academico, periodo_lectivo, materia into v_anio_academico, v_periodo_lectivo, v_materia
+	from sga_comisiones
+	where comision = p_comision;
+
+if v_materia not in ('IA006', 'IRH06', 'IF001', 'IF004', 'IF003', 'IF002', 'AG004', 'PT005', 'IA008', 'IRH08', 'AG008', 'IF009') then -- Hago la actualización de cupos
+
+
+	-- Veo todas las comisiones de esa materia para la carrera y plan seleccionado
+	select c.comision,count(*) as cantidad, max(c.capacidad) as capacidad
+	from sga_comisiones c
+		left join sga_insc_cursadas i
+		  on c.comision = i.comision
+	where c.insc_habilitada = "S"
+		and c.materia = v_materia
+		and c.anio_academico = v_anio_academico
+		and c.periodo_lectivo = v_periodo_lectivo
+		and (c.carrera = p_carrera or c.carrera is null)
+		and (c.plan = p_plan or c.plan is null)
+	group by c.comision
+	into temp temp;
+
+	-- Veo si no hay comisiones sin problemas de cupo
+	if not exists (	select *
+	
+		from temp
+		where capacidad is null
+			or (capacidad is not null and cantidad < capacidad)) then
+
+
+		-- Actualizo las comisiones
+		update sga_comisiones
+		set capacidad = capacidad + 5
+		where comision in (	select comision
+				from temp);
+	end if;
+
+	-- Borro las tablas temporales
+	drop table temp;
+
+end if;
+end;
+end procedure
+; 

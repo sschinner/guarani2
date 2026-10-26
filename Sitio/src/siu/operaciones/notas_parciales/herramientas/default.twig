@@ -1,0 +1,24 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+<div class="js-barra-herramientas" style="display: none;">
+	<form id='preset_form' class="form-inline">
+                <fieldset>
+                <legend>Autocompletar</legend>
+                <label class="acchide" for="preset_campo">Seleccione campo a completar</label>
+		<select id='preset_campo' title='Campo para autocompletar'>
+			<option value='nota'>{{ "nota"|trans|capitalize }}</option>
+			<option value='corregido_por'>{{ "corregido_por"|trans|capitalize }}</option>
+		</select>
+		<label class="acchide" for="auto">Complete el campo elegido</label><input id="auto" class='preset_valor otros input-small' type='text' value='' />
+		<label for='preset_solo_vacio' class="checkbox">
+			<input id='preset_solo_vacio' type="checkbox" checked="checked"/>{{ "solo_valores_vacios"|trans|capitalize }}
+		</label>
+
+		<button type="submit" class="btn btn-small"><span class="icon-edit"></span> {{ "completar"|trans|capitalize }}</button>
+		<input type="reset" class="btn btn-small" value="{{ "deshacer"|trans|capitalize }}" disabled="disabled" id="preset_undo" />
+		<button id="btn_limpiar" class="btn btn-small"><span class="icon-minus"></span> {{ "limpiar"|trans|capitalize }}</button>
+                </fieldset>
+        </form>
+</div>
+{% endblock %}

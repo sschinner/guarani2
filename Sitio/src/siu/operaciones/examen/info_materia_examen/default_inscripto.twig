@@ -1,0 +1,43 @@
+{#
+	Entrada:  mesa, materia, url_baja, csrf
+#}
+
+<div class="info-inscripcion" tabindex="0">
+
+	<p class="fecha">{{ mesa.FECHA_PRESTAMO_AULA }} {{ mesa.HORA_PRESTAMO_AULA }}</p>
+
+	<ul class="llamado_mesa_info unstyled" tabindex="0" role="article">
+		<li><span>{{ 'turno'|trans|capitalize }}:</span> {{ mesa.TURNO_EXAMEN}} {{ mesa.HORARIO }}</li>
+		<li><span>{{ 'tipo_inscripcion'|trans|capitalize }}:</span> {{ mesa.TIPO_INSCRIPCION_DESC }}</li>
+		<li><span>{{ 'orden_inscripcion'|trans|capitalize }}:</span> {{ mesa.ORDEN_INSC }}</li>        
+		<li><span>{{ 'sede'|trans|capitalize }}:</span> {{ mesa.SEDE_NOMBRE }}</li>
+		<li><span>{{ 'mesa'|trans|capitalize }}:</span> {{ mesa.MESA_EXAMEN }}</li>
+		<li><span>{{ 'llamado'|capitalize }}:</span> {{ mesa.LLAMADO }}</li>
+		<li class="catedra"><span>{{ 'catedra'|trans|capitalize }}:</span> {{ mesa.CATEDRA ? mesa.CATEDRA | raw : '-' }}</li>
+		<li class="docente"><span>{{ 'docentes'|trans|capitalize	}}:</span> {{ mesa.DOCENTES ? mesa.DOCENTES | raw : '-' }}</li>
+	</ul>
+
+	<div class='comprobante-examen' data-img='{{mesa.URL_COMP}}' data-msg-toggle='<div class="comprobante"></div> {{"esconder_comprobante"|trans|capitalize}}'>
+		<a href='#'><span class="comprobante"></span> {{"mostrar_comprobante"|trans|capitalize}}</a>
+		<div class='img-placeholder hide'>
+			<div class="comprobante-actions">
+				<a class='btn btn-small js-print-comprobante' data-img='{{ mesa.URL_COMP }}'><div class="icon-print"></div> {{'imprimir'|trans|capitalize}}</a>
+				<a class='btn btn-small js-mail-comprobante' href='{{ mesa.URL_MAIL_COMP }}'><div class="icon-envelope"></div> {{'enviar_por_mail'|trans|capitalize}}</a>
+				<span class="acchide"> N&uacute;mero transacci&oacute;n: {{ mesa.NRO_TRANSACCION }}, Record&aacute; que el n&uacute;mero de transacci&oacute;n te ser&aacute; &uacute;til ante cualquier consulta en la Oficina de Alumnos <span>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div class='acciones'>
+	<form class="form_baja" id_item="{{ mesa.MESA_EXAMEN }}" name="{{ mesa.MESA_EXAMEN }}" action='{{ url_baja }}' method='POST'>
+		<input type="hidden" name="mesa" value="{{ mesa.__ID__ }}" />
+		<input type="hidden" name="materia" value="{{ materia }}" />
+		{% import "kernel/macro_csrf.twig" as input_csrf %}
+		{{ input_csrf.mostrar(csrf) }}
+		{% if param_insc_exa_bajas%}
+			<button type='submit' id="btnsubmit_{{ mesa.key }}" class="btn btn-small"><div class="icon-remove"></div> {{ 'dar_baja'|trans|capitalize }}</button>
+		{%endif%}
+	</form>
+</div>

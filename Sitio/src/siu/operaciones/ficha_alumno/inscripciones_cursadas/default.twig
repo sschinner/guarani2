@@ -1,0 +1,46 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_ficha_alumno.twig" as ficha_alumno %}
+{% block contenido %}
+    {{ ficha_alumno.render_menu(this.data.menu_reportes, this.data.categoria_actual, this.data.reporte_actual) }}
+	<div id="reporte_contenido">
+		<h3>{{ 'ficha_alumno.rep_inscripciones_cursadas' | trans }}</h3>
+		{% if (this.data.datos) %}
+		
+		{% for carrera in this.data.datos %}
+			<ul class="ficha_alumno_ul">
+				<li><strong>{{ 'ficha_alumno.rep_inscripciones_cursadas.carrera' | trans | capitalize }}:</strong> {{'('~ficha_alumno.mostrar(carrera.carrera)~')'~ficha_alumno.mostrar(carrera.carrera_nombre)}}</li>
+				<li><strong>{{ 'ficha_alumno.rep_inscripciones_cursadas.plan' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.plan)}}</li>
+				<li><strong>{{ 'ficha_alumno.rep_inscripciones_cursadas.legajo' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.legajo)}}</li>
+			</ul>			
+			<table class='table table-condensed table-hover table-striped'>
+				<thead>
+					<tr>
+						<th>{{'ficha_alumno.rep_inscripciones_cursadas.materia'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_inscripciones_cursadas.comision'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_inscripciones_cursadas.fecha_inscripcion'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_inscripciones_cursadas.calidad'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_inscripciones_cursadas.estado'|trans| capitalize}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for key,linea in carrera.materias %}
+					<tr data-id="{{key}}" class="detalle_comision">
+						<td class="col_izq">{{'('~ficha_alumno.mostrar(linea.materia)~')'~ficha_alumno.mostrar(linea.materia_nombre)}}</td>
+						<td>{{ficha_alumno.mostrar(linea.comision)}}</td>
+						<td>{{ficha_alumno.mostrar(linea.fecha_inscripcion)}}</td>
+						<td>{{ficha_alumno.mostrar(linea.calidad)}}</td>
+						<td>{{ficha_alumno.mostrar(linea.estado)}}</td>
+					</tr>
+					<tr data-comision="{{key}}" style="display:none;">
+						<td colspan="5">Datos de la comisión</td>
+					</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+		{% endfor %}
+		
+		{% else %}
+		<div class="alert alert-block">{{'ficha_alumno.no_hay_informacion'|trans| capitalize}}</div>
+		{% endif %}
+	</div>
+{% endblock %}

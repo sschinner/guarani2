@@ -1,0 +1,25 @@
+<img src='http://localhost/humanidades/img/logo-transparente.png' />
+<h3>{{ this.data.facultad_nombre }}</h3>
+
+<h5>Comprobante de inscripción a examen</h5>
+<p><strong>Legajo:</strong> {{ this.data.transaccion.datos_mesa.LEGAJO }}</p>
+<p><strong>Nombre:</strong> {{ this.data.transaccion.datos_mesa.NOMBRE }}</p>
+<p><strong>Carrera:</strong> ({{ this.data.transaccion.datos_mesa.CARRERA }}) {{ this.data.transaccion.datos_mesa.NOMBRE_CARRERA }}</p>
+<p><strong>Efectuada el:</strong> {{ this.data.transaccion.resultado.fecha_hora }}</p>
+<p><strong>Materia:</strong> ({{ this.data.transaccion.datos_mesa.MATERIA }}) {{ this.data.nombre_materia_activa }}</p>
+<p><strong>Fecha y hora del examen:</strong> {{ this.data.transaccion.datos_mesa.FECHA_PRESTAMO_AULA }}</p>
+<p><strong>Turno de examen:</strong> {{ this.data.transaccion.datos_mesa.TURNO_EXAMEN }}</p>
+<p><strong>Mesa de examen:</strong>	{{ this.data.transaccion.datos_mesa.MESA_EXAMEN }}</p>
+<p><strong>Llamado:</strong> {{ this.data.transaccion.datos_mesa.LLAMADO }}</p>
+<p><strong>Tipo de mesa:</strong>
+{% if this.data.transaccion.datos_mesa.TIPO_MESA == "A" %}
+    Libres y Regulares
+{% elseif this.data.transaccion.datos_mesa.TIPO_MESA == "L" %}
+    Libres
+{% elseif this.data.transaccion.datos_mesa.TIPO_MESA == "R" %}
+    Regulares
+{% endif %}
+</p>
+<p><strong>Estado:</strong>	Aceptada</p>
+<p><strong>Número de transacción:</strong> <span class='nro_transaccion'>{{ this.data.transaccion.resultado.transaccion }}</span></p>
+Importante: Recordá que el número de transacción te será útil ante cualquier consulta en la Oficina de Alumnos.

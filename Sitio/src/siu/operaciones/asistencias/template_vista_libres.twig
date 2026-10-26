@@ -1,0 +1,11 @@
+{% extends "kernel/una_columna.twig" %}
+{% block titulo_operacion %}
+
+<h2 class="clearfix">
+	<button class='btn btn-primary btn-small js-btn-back pull-left' data-url-back="{{url_back}}" alt="Volver"><span class="icon-chevron-left icon-white"></span></button>
+	<span class="pull-left">{{"tit_asistencia_alumnos_libres"|trans|capitalize}}</span>
+</h2>
+{% endblock %}
+{% block columna_1 %}
+    {{ libres.render }}
+{% endblock %}

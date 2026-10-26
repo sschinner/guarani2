@@ -1,0 +1,23 @@
+#listado_encuesta .bloque {
+    background: #0088cc;
+    color: white;
+}
+#listado_encuesta .bloque:hover {
+    color: white;
+    text-decoration: underline;
+}
+#listado_encuesta .grafico {
+    height:400px;
+    width:650px;
+    margin: 0 auto;
+}
+#listado_encuesta .not-active {
+   pointer-events: none;
+   cursor: default;
+}
+#listado_encuesta .accordion-group {
+    margin-top: 10px;
+}
+#listado_encuesta .btn {
+    margin: 0px;
+}

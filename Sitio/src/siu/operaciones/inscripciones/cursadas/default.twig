@@ -1,0 +1,72 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    <h2 style="border-bottom: 1px solid #EEE;">{{"mis_inscripciones.cursadas" | trans | capitalize}}
+        - 
+        <span class="nota_titulo">
+            {% if this.get_alcance == "T" %}
+                {{"mis_inscripciones.cursadas_historicas" | trans | capitalize }}
+            {% else %}
+                {{"mis_inscripciones.cursadas_vigentes" | trans | capitalize }}
+            {% endif %}
+        </span>
+        <div class="pull-right" >
+            <a tabindex="0" id="pdf_btn_list" href="{{ this.data.pdf_lista }}" target="_blank" class="btn no-ajax" title="{{ 'descargar_pdf'|trans|capitalize }}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+            <a tabindex="0" id="xls_btn_list" href="{{ this.data.xls_lista }}" target="_blank" class="btn no-ajax" title="{{ 'descargar_xls'|trans|capitalize }}"><span class="acchide">{{'descargar_xls'|trans|capitalize}}</span><span class="g3w-icono-xls"></span></a>
+        </div> 
+    </h2>
+
+    <label for="cursadas_historicas">
+            <input type="checkbox" name="cursadas_historicas" id="cursadas_historicas" value="T"{% if this.get_alcance == "T" %} checked="checked"{% endif %} />
+            {{"mis_inscripciones.cursadas_historicas" | trans | capitalize}}
+    </label>
+
+    <div style="background-color: #eee; padding: 5px; color:#333;">
+        {% if this.data.cursadas %}
+            <table class="table table-bordered table-condensed" summary="Inscripciones a cursadas">
+                <tr>
+                    <th id="mat">{{"mis_inscripciones.materia" | trans | capitalize }}</th>
+                    <th id="anio">{{"mis_inscripciones.anio" | trans | capitalize }}</th>
+                    <th id="per_lec">{{"mis_inscripciones.per_lec" | trans | capitalize }}</th>
+                    <th id="sede">{{"mis_inscripciones.sede" | trans | capitalize }}</th>
+                    <th id="fecha_insc">{{"mis_inscripciones.fecha_inscripcion" | trans | capitalize }}</th>
+                    <th id="comision">{{"mis_inscripciones.comision" | trans | capitalize }}</th>
+                    <th id="turno">{{"mis_inscripciones.turno" | trans | capitalize }}</th>
+                    <th id="catedra">{{"mis_inscripciones.catedra" | trans | capitalize }}</th>
+                    <th id="estado">{{"mis_inscripciones.estado" | trans | capitalize }}</th>
+                    <th id="certificado">{{"mis_inscripciones.certificado.eval.parcial" | trans }}</th>
+                    <th id="comprobante">{{"mis_inscripciones.comprobante.inscripcion" | trans  }}</th>
+                </tr>
+                {% for key, cursada in this.data.cursadas %}
+                    <tr>			
+                        <td scope="row" headers="mat">{{cursada.materia}}</td>
+                        <td headers="anio">{{cursada.anio_acad}}</td>
+                        <td headers="per_lec">{{cursada.per_lec}}</td>
+                        <td headers="sede">{{cursada.sede}}</td>
+                        <td headers="fecha_insc">{{cursada.fecha}}</td>
+                        <td headers="comision">{{cursada.comision}}</td>
+                        <td headers="turno" class="centrado">{{("mis_inscripciones.turno_" ~ cursada.turno) | trans | capitalize }}</td>
+                        <td headers="catedra" class="centrado">{{cursada.catedra}}</td>
+                        <td headers="estado">{% if cursada.motivo %}<a link="cu_{{key}}">{% endif %}{{cursada.estado}}{% if cursada.motivo %}</a>{% endif %}</td>
+                        <td headers="certificado" class="centrado">
+                            {% if cursada.estado != "Rechazada"  %}
+                                <a tabindex="0" id="pdf_btn" target="_blank" href="{{this.data.url_pdf_parcial}}?materia={{cursada.materia|url_encode}}" class="btn" title="{{ 'descargar_pdf'|trans|capitalize }}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+                            {% endif %}
+                        </td>    
+                        <td headers="comprobante" class="centrado">    
+                            {% if cursada.url_comp %}
+                                <a class='btn no-ajax' href='{{cursada.url_comp}}' target="_blank" ><div class="icon icon-print"></div></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% if cursada.motivo %}
+                        <tr id="cu_{{key}}" class="motivo">
+                            <td colspan="9"><strong>{{"mis_inscripciones.motivo" | trans | capitalize }}:</strong> {{cursada.motivo}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        {% else %}
+            {{"mis_inscripciones.vacio_cursadas" |trans }}
+        {% endif %}
+    </div>
+{% endblock %}

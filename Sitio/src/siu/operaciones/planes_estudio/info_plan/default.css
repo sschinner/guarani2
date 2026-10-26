@@ -1,0 +1,52 @@
+#info_plan .correlatividades, #info_plan .genericas{
+	display: none ;
+}
+
+#info_plan .genericas{
+	background-color: #EEE;
+}
+
+#info_plan .detalle_correlativas{
+	padding: 0;
+}
+
+#info_plan td.periodo {
+	white-space: nowrap;
+}
+
+#info_plan td.nota {
+	text-align: right;
+	white-space: nowrap;
+}
+
+#info_plan a.ver_materias {
+	cursor: pointer;
+}
+
+#info_plan .table-correlativas{
+	background-color: #FFF;
+}
+
+#info_plan .table-optativas{
+	background-color: #FFF;
+}
+
+#info_plan .td-table-correlativas{
+	background-color: #E5E5E5;
+}
+
+#info_plan .td-table-optativas{
+	background-color: #E5E5E5;
+}
+
+#info_plan .td-mat-cond{
+	width: 80px;
+}
+
+#info_plan #carrera-plan-version{
+	font-size: 18px;
+}
+
+#info_plan #carrera-plan-version b{
+	color: #08C;
+}

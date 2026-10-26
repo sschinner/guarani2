@@ -1,0 +1,102 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	{% if this.data.datos  %}
+
+
+	<div class="titulo_operacion">
+		<h2 class="clearfix">
+			<span class="pull-right">
+			<div class="pull-right">
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url.generar_pdf}}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url.generar_excel}}"><span class="acchide">{{'descargar_xls'|trans|capitalize}}</span><span class="g3w-icono-xls"></span></a>
+			</div>
+			</span>
+		</h2>
+	</div>
+		{% for sede in this.data.datos %}
+		{% set sede_index =   loop.index %}
+		<div class="accordion" id="accordion1">
+		<div class="accordion-group">
+			<div class="accordion-heading">
+			<a class="accordion-toggle sede" data-toggle="collapse" data-parent="#accordion1" data-target="#sede_{{sede_index }}">
+				Sede: {{ sede.SEDE_NOMBRE }}
+			</a>
+			</div>
+			<div id="sede_{{ sede_index }}" class="accordion-body collapse in">
+			<div class="accordion-inner">
+
+				{% for periodo in sede.PERIODOS_LECTIVOS %}
+				{% set periodo_index =   loop.index %}
+					<div class="accordion" id="accordion2">
+					<div class="accordion-group">
+						<div class="accordion-heading">
+						<a class="accordion-toggle periodo" data-toggle="collapse" data-parent="#accordion2" data-target="#sede_{{ sede_index }}_periodo_{{ periodo_index }}">
+							Período Lectivo: {{ periodo.PERIODO_LECTIVO }}
+						</a>
+						</div>
+						<div id="sede_{{ sede_index }}_periodo_{{ periodo_index }}" class="accordion-body collapse in">
+						<div class="accordion-inner">
+
+							{% for materia in periodo.MATERIAS %}
+								<div class="accordion" id="accordion3">
+								<div class="accordion-group">
+									<div class="accordion-heading">
+									<a class="accordion-toggle materia" data-toggle="collapse" data-parent="#accordion3" data-target="#sede_{{ sede_index }}_periodo_{{ periodo_index }}_materia_{{ loop.index }}">
+										Materia: {{ materia.MATERIA_NOMBRE  }}
+									</a>
+									</div>
+									<div id="sede_{{ sede_index }}_periodo_{{ periodo_index }}_materia_{{ loop.index }}" class="accordion-body collapse in">
+									<div class="accordion-inner">
+										<table class='table table-condensed table-hover table-striped'>
+											<thead>
+												<tr>
+												<th>{{'Comisión'|trans| capitalize}}</th>
+												<th>{{'Turno'|trans| capitalize}}</th>
+												<th>{{'Día de semana'|trans| capitalize}}</th>
+												<th>{{'Hora inicio-fin'|trans| capitalize}}</th>
+												<th>{{'Tipo clase'|trans| capitalize}}</th>
+												<th>{{'Aula'|trans| capitalize}}</th>
+												<th>{{'Edificio'|trans| capitalize}}</th>
+												<th>{{'Cupo'|trans| capitalize}}</th>
+												</tr>
+											</thead>
+											<tbody>
+												{% for horario in materia.HORARIOS %}
+												<tr>
+													<td>{{horario.COMISION_NOMBRE}}</td>
+													<td>{{horario.TURNO_DESC}}</td>
+													<td>{{horario.DIA_SEMANA_DESC}}</td>
+													<td>{{horario.INICIO_FIN_CLASE}}</td>
+													<td>{{horario.TIPO_CLASE_DESC}}</td>
+													<td>{{horario.AULA_NOMBRE}}</td>
+													<td>{{horario.EDIFICIO}}</td>
+													<td>{{horario.CUPO}}</td>
+												</tr>			
+												{% endfor %}
+												</tbody>
+										</table>
+									</div>
+									</div>
+								</div>
+								</div>
+							{% endfor %}					
+
+						</div>
+						</div>
+					</div>
+					</div>
+				{% endfor %}				
+				
+			</div>
+			</div>
+		</div>
+		</div>
+			
+		{% endfor %}
+
+	{% else %}
+		<div class="alert">
+			{{"reporte.no_hay_datos.horarios_cursadas"|trans|capitalize}}
+		</div>
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    <div id='filtro_materias' class="input-append">
+        <input type="text" placeholder="{{'filtrar_materias'|trans}}" name="filtro" value="" id="filtroin"/>
+    </div>
+
+    <div class="js-filtro">
+        <div class="filtro-materia">
+            <span>{{ 'ver'|trans|capitalize }}</span>
+            <div class="btn-group" data-toggle="buttons-radio">
+                <button type="button" role="button" aria-pressed="true" class="btn btn-mini active js-mostrar-todas-materias">{{ 'todas_materias'|trans|capitalize }}</button>
+                <button type="button" role="button" aria-pressed="false" class="btn btn-mini js-mostrar-materias-solo-inscriptas">{{ 'solo_inscriptas'|trans|capitalize }}</button>
+            </div>
+        </div>
+        {% if this.get_filtrar_planes() %}
+        <div class="filtro-plan">
+            <span>{{ 'plan'|trans|capitalize }}</span>
+            <div class="btn-group" data-toggle="buttons-radio">
+                <button type="button" class="btn btn-mini js-filtro-plan-actual active" aria-pressed="true">Actual</button>
+                <button type="button" class="btn btn-mini js-filtro-plan-anterior" aria-pressed="false">Anterior</button>
+            </div>
+        </div>
+        {% endif %}
+    </div>    
+    {% spaceless %}
+        <div id='js-listado-materias'>
+            <ul class="nav nav-list">
+                {% for materia in this.data %}
+                    {% set inscripto = (materia.E_INSCRIPCION) ? 'insc' : '' %}
+                    {% set seleccionada = (materia.SELECCIONADA) ? 'active' : '' %}
+                    {% set plan = (materia.PLAN_ACTUAL) ? 'plan_actual' : 'plan_anterior' %}
+                    <li class='{{ inscripto }} {{ seleccionada }} {{ plan }}'>
+                        {% if (inscripto != '') %}<span class="acchide"></span>{% endif %}
+                        <a href='{{ materia.URL_MATERIA }}' role="button" title='Seleccionar ({{ materia.MATERIA}}) {{ materia.MATERIA_NOMBRE }}' ><span class='js-filter-content'>({{ materia.MATERIA}}) {{ materia.MATERIA_NOMBRE|raw }}</span></a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endspaceless %}
+{% endblock %}
+

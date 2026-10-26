@@ -1,0 +1,143 @@
+CREATE PROCEDURE "dba".verifica_objeto()
+BEGIN
+	IF EXISTS (SELECT procid
+			FROM sysprocedures
+			WHERE procname = 'sp_gen_nro_acta') THEN
+		DROP PROCEDURE sp_gen_nro_acta;
+	END IF;		
+END
+END PROCEDURE;
+
+EXECUTE PROCEDURE "dba".verifica_objeto();
+DROP PROCEDURE "dba".verifica_objeto();
+
+create procedure "dba".sp_gen_nro_acta(p_unidad_academica  LIKE sga_actas_examen.unidad_academica,
+    p_materia LIKE sga_actas_examen.materia ,
+    p_anio_academico LIKE sga_actas_examen.anio_academico ,
+    p_turno_examen LIKE sga_actas_examen.turno_examen ,
+    p_mesa_examen  LIKE sga_actas_examen.mesa_examen ,
+    p_llamado  LIKE sga_actas_examen.llamado ,
+    p_tipo_acta    LIKE  sga_actas_examen.tipo_acta,
+    p_libro    LIKE  sga_actas_examen.libro) 
+returning varchar(10);
+begin
+   DEFINE acta LIKE sga_actas_examen.acta;
+   DEFINE danio_acta LIKE sga_turnos_examen.anio_academico;
+   --------------------------------------------------------------
+   -- Selecciono el maximo nro de Acta
+
+select Year(fecha_inicio) Into danio_acta From sga_turnos_examen where anio_academico = p_anio_academico and turno_examen = p_turno_examen;
+
+if not exists (select * from u820_ult_nro_acta where anio_academico = danio_acta  and unidad_academica = p_unidad_academica) then
+	insert into u820_ult_nro_acta (unidad_academica, anio_academico, proximo_nro_CLE, proximo_nro_001, proximo_nro_0391, proximo_nro_rec, proximo_nro_05, proximo_nro_eu)
+	values (p_unidad_academica, danio_acta, 1, 1, 1, 1, 1, 1);
+end if;
+
+if p_tipo_acta = "R" then
+	select max(proximo_nro_rec) into acta
+	from u820_ult_nro_acta
+	where anio_academico = danio_acta
+		and unidad_academica = p_unidad_academica;
+
+	let acta = "REC" || lpad(acta, 4, '0') || "/" || substr(danio_acta, 3);
+
+	update u820_ult_nro_acta
+	set proximo_nro_rec = proximo_nro_rec + 1
+	where anio_academico = danio_acta 
+		and unidad_academica = p_unidad_academica;
+else
+	if substr(p_materia,1, 1) = "9" then
+		begin
+		select max(proximo_nro_0391) into acta
+		from u820_ult_nro_acta
+		where anio_academico = danio_acta
+			and unidad_academica = p_unidad_academica;
+
+		let acta = "P" || lpad(acta, 4, '0') || "/" || substr(danio_acta,3);
+
+		update u820_ult_nro_acta
+		set proximo_nro_0391 = proximo_nro_0391 + 1
+		where anio_academico = danio_acta
+			and unidad_academica = p_unidad_academica;
+		end
+	else
+		if substr(p_materia,1, 3) = "LEF" or substr(p_materia,1, 3) = "EUT" then
+			begin
+			select max(proximo_nro_001) into acta
+			from u820_ult_nro_acta
+			where anio_academico = danio_acta
+				and unidad_academica = p_unidad_academica;
+
+			let acta = "LEF" || lpad(acta, 4,'0') || "/" || substr(danio_acta,3);
+
+			update u820_ult_nro_acta
+			set proximo_nro_001 = proximo_nro_001 + 1
+			where anio_academico = danio_acta
+				and unidad_academica = p_unidad_academica;
+			end
+		
+		else
+			if substr(p_materia,1, 2) = "LE" or substr(p_materia,1, 3)  = "CLE" then
+				begin
+				select max(proximo_nro_CLE) into acta
+				from u820_ult_nro_acta
+				where anio_academico = danio_acta
+					and unidad_academica = p_unidad_academica;
+
+				let acta = "CLE" || lpad(acta, 4, '0') || "/" || substr(danio_acta,3);
+
+				update u820_ult_nro_acta
+				set proximo_nro_CLE = proximo_nro_CLE + 1
+				where anio_academico = danio_acta
+					and unidad_academica = p_unidad_academica;
+				end
+			else 	
+
+				if substr(p_materia,1, 2) = "EU" then 
+					begin
+					select max(proximo_nro_EU) into acta
+					from u820_ult_nro_acta
+					where anio_academico = danio_acta
+						and unidad_academica = p_unidad_academica;
+	
+					let acta = "EU" || lpad(acta, 4, '0') || "/" || substr(danio_acta,3);
+	
+					update u820_ult_nro_acta
+					set proximo_nro_EU = proximo_nro_EU + 1
+					where anio_academico = danio_acta
+						and unidad_academica = p_unidad_academica;
+					end
+
+					
+				else	-- actas de otras carreras (por materias no identificadas)
+					begin
+					select max(proximo_nro_05) into acta
+					from u820_ult_nro_acta
+					where anio_academico = danio_acta
+						and unidad_academica = p_unidad_academica;
+		
+					let acta = lpad(acta, 4, '0') || "/" || substr(danio_acta,3);
+	
+					update u820_ult_nro_acta
+						set proximo_nro_05 = proximo_nro_05 + 1
+						where anio_academico = danio_acta
+							and unidad_academica = p_unidad_academica;
+					end
+				end if;
+			end if;
+		end if;
+	end if;
+end if;
+
+
+return acta;
+end;
+end procedure;
+-- *************** Fin del procedimiento "dba".sp_gen_nro_acta ********************
+
+-- *****************************************************************************
+-- Permisos del procedimiento "dba".sp_gen_nro_acta 
+-- *****************************************************************************
+revoke execute on "dba".sp_gen_nro_acta from public;
+grant execute on "dba".sp_gen_nro_acta to guarani; -- Rol de usuarios de Gestion
+grant execute on "dba".sp_gen_nro_acta to internet; -- Rol de usuario de Internet

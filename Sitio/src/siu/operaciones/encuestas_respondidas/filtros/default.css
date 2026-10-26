@@ -1,0 +1,36 @@
+#filtros #formulario_filtro-tipo_encuestas{
+    width: 100% !important;
+}
+
+#filtros #formulario_filtro-materia_descr, #filtros #formulario_filtro-docente_descr{
+    width: 100% !important;
+}
+
+#filtros .ui-autocomplete#formulario_filtro-materia_descr-autocomplete-ul {
+    width: 894px !important;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html #filtros .ui-autocomplete#formulario_filtro-materia_descr-autocomplete-ul {
+    width: 894px !important;
+}
+
+#filtros .ui-autocomplete#formulario_filtro-docente_descr-autocomplete-ul {
+    width: 894px !important;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html #filtros .ui-autocomplete#formulario_filtro-docente_descr-autocomplete-ul {
+    width: 894px !important;
+}
+
+/*Es el control-group de Fecha Hasta - Perfil Alumno*/
+#filtros .controls-row:nth-child(3) .control-group:nth-child(2){
+    margin-left: 300px;
+}
+/*Es el control-group de Fecha Hasta - Perfil Docente*/
+#filtros .controls-row:nth-child(2) .control-group:nth-child(2) {
+    margin-left: 300px;
+}

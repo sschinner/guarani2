@@ -1,0 +1,46 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_ficha_alumno.twig" as ficha_alumno %}
+{% block contenido %}
+    {{ ficha_alumno.render_menu(this.data.menu_reportes, this.data.categoria_actual, this.data.reporte_actual) }}
+	<div id="reporte_contenido">
+		<h3>{{ 'ficha_alumno.rep_cambios_calidad' | trans }}</h3>
+		{% for carrera in this.data.carreras %}
+		
+			<ul class="ficha_alumno_ul">
+				
+					<li><strong>{{ 'ficha_alumno.carrera' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.carrera)}}</li>
+					<li><strong>{{ 'ficha_alumno.legajo' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.legajo)}}</li>
+					
+			</ul>
+			{% if carrera.cambios %}
+				<table class='table table-condensed table-hover table-striped'>
+						<thead>
+							<tr>
+								<th>{{'ficha_alumno.calidad'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.fecha'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.motivo'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.resolucion'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.observaciones'|trans|capitalize}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for cambio in carrera.cambios %}
+								<tr>
+									<td>{{ficha_alumno.mostrar(cambio.calidad)}}</td>
+									<td>{{ficha_alumno.mostrar(cambio.fecha)}}</td>
+									<td>{{ficha_alumno.mostrar(cambio.motivo)}}</td>
+									<td>{{ficha_alumno.mostrar(cambio.resolucion)}}</td>
+									<td>{{ficha_alumno.mostrar(cambio.observaciones)}}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+			{% else %}
+				<div class="alert text-warning">{{'ficha_alumno.no_hay_cambios_calidad'|trans}}</div>
+			{% endif %}
+		
+		{% else %}
+			<div class="alert text-warning">{{'ficha_alumno.no_hay_informacion'|trans}}</div>
+		{% endfor %}
+	</div>
+{% endblock %}

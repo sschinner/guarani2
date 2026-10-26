@@ -1,0 +1,13 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.5.2
+-- Autor: Universidad Nacional de La Pampa
+-- Indice de Actas por Turno.
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones( '80800105', 'Imprimir Resumen de un Turno de Examen', 'Imprimir Resumen de un Turno de Examen', null );
+DELETE FROM acc_operacion_mod WHERE operacion = '80800105';
+INSERT INTO acc_operacion_mod VALUES ('00000020','80800105','Reportes',502);
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( '80800105', 1, 'w_reporte', 'uo_dw_anio_turno_examen, dp_anio_academico_turno_examen, uo_dw, dl_mesas_ex_en_actas_cerradas_fce, dr_mesas_ex_en_actas_cerradas_fce', 'N' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '80800105', 'C' );
+
+

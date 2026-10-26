@@ -1,0 +1,11 @@
+-- Alta del mensaje
+-- Mensaje: 820005.dca
+
+--********************************************
+-- mensaje 820005, asociado al control: Finalización OK de baja de inscripción a pasantía
+-- 
+--********************************************
+
+DELETE FROM mme_mensajes WHERE mensaje = 820005;
+insert into mme_mensajes (tipo,	mensaje, mascara_original,mascara,clasificacion,boton)
+values (5, 820005, "Tu Anulación de Inscripción a Pasantía se ha registrado correctamente, con el Nro. de Transacción: %s","Tu Anulación de Inscripción a Pasantía se ha registrado correctamente, con el Nro. de Transacción: %s",	1,1);

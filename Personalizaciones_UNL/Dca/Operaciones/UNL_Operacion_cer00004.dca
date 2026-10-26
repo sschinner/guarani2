@@ -1,0 +1,18 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 1.3.0
+-- Version modificación: 2.6.0 
+--
+-- El parametro nro 11 que recibe la ventana "w_impresion_automatica_certificado" indica el "grupo de certificados". 
+-- Es decir que si se ingresa un grupo de certificados, entonces en la operacion SOLO se mostraran los certificados 
+-- pertenecientes a ese grupo.
+-- Si no se ingresa un grupo de certificados, entonces en la ventana se mostraran todos los certificados cargados en la base de datos.
+--
+-- Por default va sin "grupo de certificado" en el parametro nro 11.
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones( 'cer00004', 'Impresión y Validación Automática de Certificados Pendientes', 'Impresión y Validación Automática de Certificados Pendientes.', null );
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) 
+VALUES ( 'cer00004', 1, 'w820_impresion_automatica_certificados', 'uo_dw, d820_certif_pendientes_a_imprimir, 10, uo_dw, dp_persona_certificado, No Existen Certificados pendientes de Impresión., uo_ds, d_argumentos_certificados_pedidos, uo_ds, dl_informe_certif_impresos,,d820_certif_pendientes_a_imp_gr, dp_persona_certif_gr', 'N' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( 'cer00004', 'C' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( 'cer00004', 'I' );
+

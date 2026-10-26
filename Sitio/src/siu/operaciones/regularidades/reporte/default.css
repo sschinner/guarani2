@@ -1,0 +1,32 @@
+#items .detalle {
+	display: none;
+}
+
+#items .link-js td {
+	cursor: pointer;
+}
+
+#items span.texto {
+	float: left;
+	line-height: 26px;
+}
+
+#items div.btns-orden {
+	width: auto;
+	float: left;
+	margin-left: 20px;
+	border: 1px solid #DDD;
+	padding: 3px 2px 1px 1px;
+}
+
+#items i.g3w-icono-desc {
+	background-image: url("/humanidades/img/glyphicons-halflings.png");	
+	background-position: -287px -96px;
+	background-repeat: no-repeat;
+}
+
+#items i.g3w-icono-asc {
+	background-image: url("/humanidades/img/glyphicons-halflings.png");
+	background-position: -310px -96px;
+	background-repeat: no-repeat;
+}

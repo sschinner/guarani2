@@ -1,0 +1,11 @@
+-- Alta del mensaje
+-- Mensaje: 82002032.dca
+
+--********************************************
+-- mensaje 82002032, asociado al control de Turno Castigo.
+-- 
+--********************************************
+DELETE FROM mme_mensajes WHERE mensaje = 82002032;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82002032, 'No tenés %s materias aprobadas para poder cursar/rendir %s2', NULL, NULL, NULL);
+
+

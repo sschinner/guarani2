@@ -1,0 +1,33 @@
+-- FORMATO ACTUAL:
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.6.2
+-- Autor: Jorge Azcoaga
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones('820cer15','Certificado de Materias Regularizadas','Certificado de Materias Regularizadas',NULL);
+DELETE FROM acc_operacion_mod WHERE operacion = '820cer15';
+INSERT INTO acc_operacion_mod VALUES ('00000035','820cer15','Certif',	110);
+INSERT INTO acc_parametros VALUES ('820cer15',1,'w_reporte_vacio', 'uo_dw_filtros, dp820_alumno_carrera_obs_cur, uo_dw, dr820_certif_curs_aprob, dl820_certif_curs_aprob, dr820_sin_historia_academica, dl820_sin_historia_academica',NULL,NULL,'N');
+
+INSERT INTO acc_acciones_oper VALUES ('820cer15','C');
+
+-- Agregar el certificado
+Begin;
+Set constraints all deferred;
+DELETE FROM sga_certif_argum WHERE certificado = 14;
+DELETE FROM sga_certificados WHERE certificado = 14;
+INSERT INTO sga_certificados VALUES (14, 'Certificado de Materias Regularizadas', 2, null, 'A', 'Manual', 'N', 90);
+INSERT INTO sga_certif_argum VALUES (14, 1, 'unidad_academica', 'char(', '', 'N', 'unidad_academica' );
+INSERT INTO sga_certif_argum VALUES (14, 2, 'carrera', 'char(', '', 'N', 'carrera');
+INSERT INTO sga_certif_argum VALUES (14, 3, 'legajo', 'char(', '', 'N', 'legajo');
+INSERT INTO sga_certif_argum VALUES (14, 4, 'observaciones', 'char(', 'Sin Observación', 'N', 'Observaciones');
+INSERT INTO sga_certif_argum VALUES (14, 5, 'interesado', 'char(', 'A quien corresponda', 'S', 'Para presentar a');
+INSERT INTO sga_certif_argum VALUES (14, 6, 'interior', 'char(', 'Vigentes', 'N', 'Regularidades');
+
+INSERT INTO sga_certif_param VALUES (14, 1, 'dp820_alumno_carrera_obs_cur', ' dr820_certif_curs_aprob', 'dl820_certif_curs_aprob');
+Commit;
+
+
+
+
+

@@ -1,0 +1,70 @@
+Instalaci�n del ws:
+
+Luego de descargar el paquete del ws debemos configurar 
+algunos archivos.
+
+Todos los archivos que se encuentran dentro de la carpeta config y que incluyen
+en su nombre "*.template.*", deben ser copiados y re-nombrados.
+
+Lista de archivos templates y como deben ser renombrados:
+nombre_archivo.template.extension => nombre_archivo.extension
+
+El archivo de base de datos contiene los parametros de conexi�n por unidad 
+acad�mica. Posee una serie de atributos de conexi�n que dependiendo si es 
+para G2 o G3 debe tenerlos.
+basesDeDatos.inc.template.php => basesDeDatos.inc.php
+
+Para poder utilizar los servicios que se ofrecen en este archivo se asigna 
+cuales son los usuarios que pueden acceder a un determinado ws.
+Tambi�n se resuelve que usuario puede utilizar una determinada unidad academica
+permisos.inc.template.php => permisos.inc.php
+
+En este archivo se definen los usuarios con sus respectivas password para 
+luego asignarles permisos en el archivo anteriormente nombrado (permisos.inc.php)
+usuarios.inc.template.php => usuarios.inc.php
+ATENCI�N: El WS contiene varias operaciones (boleto y consulta de operaciones).
+Deshabilitar (comentando o eliminando) los usuarios/permisos que no se vayan
+a utilizar.
+
+Este archivo contiene el alias que luego debe ser agregado al apache para que
+el mismo pueda reconocer el web service. 
+ws_template.conf  => ws.conf
+
+Para poder probar el ws se recomienda utilizar alguna extensi�n de firefox 
+o de chrome. Buscar alguna con el nombre rest.
+
+Cuando se quiere ver funcionando el servicio hay que ingresar a la url que se
+asign� en ws.conf. En el ejemplo del ws_template.conf
+
+Tambi�n debe ingresarse la autenticaci�n, o en el caso de requerirla cuando
+ingresemos a la url, debemos ingresar el usuario y pass seteados en 
+usuarios.inc.php
+
+Implementar el stored procedure en BD/sp819_sidcer_ws_analitico.sql con
+los datos del anal�tico.
+
+Ingresado lo anterior procedemos a enviar la petici�n REST donde podremos ver
+los resultados. 
+En caso de error informar� de que tipo es el mismo
+  {
+  "codigo": -1,
+  "mensaje": "ACA VA EL MENSAJE",
+  "datos": {
+      "tipo_error": "TIPO"
+      }
+  }
+
+Si fue correcto devolver� 
+  {
+  "codigo": 1,
+  "mensaje": null,
+  "datos": {
+      ...RESPUESTA...
+  }
+
+url :
+
+
+https://servicios.unl.edu.ar/integracion/guarani/ws/sidcer/personas?pais=54&tipo_documento=0&numero_documento=36011890
+https://servicios.unl.edu.ar/integracion/guarani/ws/sidcer/personas/0-36011890/datosanalitico
+https://servicios.unl.edu.ar/integracion/guarani/ws/sidcer/personas/0-29686498/datospersonales

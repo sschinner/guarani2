@@ -1,0 +1,5 @@
+{% extends "kernel/una_columna.twig" %}
+{% block titulo_operacion %}<h2>{{"carga_notas_cursada_titulo"|trans|capitalize}}</h2>{% endblock %}
+{% block columna_1 %}
+	{{ actas.render }}
+{% endblock %}

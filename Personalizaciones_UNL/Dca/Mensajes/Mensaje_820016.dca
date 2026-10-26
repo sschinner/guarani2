@@ -1,0 +1,11 @@
+-- Alta del mensaje
+-- Mensaje: 820016.dca
+
+--********************************************
+-- mensaje 820016, asociado al control: Alumno Egresado
+-- 
+--********************************************
+
+DELETE FROM mme_mensajes WHERE mensaje = 820016;
+insert into mme_mensajes (tipo,	mensaje, mascara_original,mascara,clasificacion,boton)
+values (5, 820016, "El egresado %s no ha completado la encuesta al recien graduado.","El egresado %s no ha completado la encuesta al recien graduado.", 1, 1);

@@ -1,0 +1,9 @@
+-- Alta del mensaje
+-- Mensaje: 820001.dca
+
+--********************************************
+-- mensaje 820001, asociado al control de maxima cantidad de certificados pedidos.
+-- 
+--********************************************
+DELETE FROM mme_mensajes WHERE mensaje = 820001;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 820001, "Ha alcanzado la máxima cantidad de certificados posibles de Solicitar.",  "Ha alcanzado la máxima cantidad de certificados posibles de Solicitar.", 2, 1);

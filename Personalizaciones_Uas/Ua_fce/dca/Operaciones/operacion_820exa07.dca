@@ -1,0 +1,21 @@
+-- inserta la operacion - sui_operaciones limpia todo
+execute procedure dba.sui_operaciones ('820exa07', 'Alumnos a no evaluar en complemento ', 'Alumnos a no evaluar en complemento',NULL);
+-- inserta operacion_mod
+
+
+Begin;
+
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = "820exa07";
+
+
+insert into dba.acc_operacion_mod (modulo, operacion, submodulo, orden) VALUES
+   ('82000001', '820exa07', '820exame', 70); 
+insert into dba.acc_parametros (operacion, orden, ventana, parametros, cierra_anterior) VALUES
+               ('820exa07', 1, 'w_reporte','uo_dw, dp_anio_turno_examen_acta_mat_comple, uo_dw, dl_alumnos_no_evaluar_complemento, dl_alumnos_no_evaluar_complemento', 'N');
+
+insert into dba.acc_acciones_oper (operacion, accion) VALUES
+      ('820exa07', 'C');
+commit;
+
+

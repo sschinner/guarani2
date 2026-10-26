@@ -1,0 +1,16 @@
+#menu_filtros .well {
+    padding: 8px 0;
+}
+
+#filtros label {
+    margin: 0 0 0 18px;
+}
+
+#filtros label.segundo_orden {
+    font-style: italic;
+	color: #666;
+}
+
+#filtros span.divisor {
+    color: #666;
+}

@@ -1,0 +1,10 @@
+-- Alta del mensaje
+-- Mensaje: 82007037.dca
+
+--********************************************
+-- mensaje 82007037, Control para grupo de materias 
+-- 
+--********************************************
+
+DELETE FROM mme_mensajes WHERE mensaje = 82007037;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82007037, "Debes aprobar al menos 1 materia",  "Debes aprobar al menos 1 materia", 2, 1);

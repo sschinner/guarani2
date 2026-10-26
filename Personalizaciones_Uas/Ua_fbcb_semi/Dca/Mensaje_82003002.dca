@@ -1,0 +1,23 @@
+-- Alta del mensaje
+-- Mensaje: 82003002
+
+--********************************************
+-- mensaje 82003002, Asociado al control de actualización de datos censales según sede
+-- 
+--********************************************
+delete from mme_mensajes where mensaje = '82003002';
+
+INSERT INTO  mme_mensajes (	tipo,
+				mensaje,
+				mascara_original,
+				mascara,
+				clasificacion,
+				boton)
+	VALUES 		(	3,
+				82003002,
+				"Tenés que hacer la Actualización de datos, por UNL Virtual",
+				"Tenés que hacer la Actualización de datos, por UNL Virtual",
+				2,
+				1);
+
+

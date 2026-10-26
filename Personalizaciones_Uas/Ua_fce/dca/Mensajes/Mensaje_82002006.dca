@@ -1,0 +1,9 @@
+-- Alta del mensaje
+-- Mensaje: 82002006.dca
+
+--********************************************
+-- mensaje 82002006, asociado al control de Orden de inscripcion a Cursadas. Prioridades FCE.
+-- 
+--********************************************
+DELETE FROM mme_mensajes WHERE mensaje = 82002006;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82002006, "No corresponde el día o no tiene preinscripción %s",  "No corresponde el día o no tiene preinscripción %s", 2, 1);

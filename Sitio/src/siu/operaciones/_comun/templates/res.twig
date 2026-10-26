@@ -1,0 +1,153 @@
+{% set js_jquery = url_recursos ~ 'js/lib/jquery-1.9.min.js' %}
+
+{% set js_history = url_recursos ~ 'js/lib/history/uncompressed/' %}
+{% set js_history_json2   = js_history ~ 'json2.js' %}
+{% set js_history_adapter = js_history ~ 'history.adapter.jquery.js' %}
+{% set js_history_history = js_history ~ 'history.js' %}
+{% set js_history_html4   = js_history ~ 'history.html4.js' %}
+
+{% set js_lazyload  = url_recursos ~ 'js/lib/lazyload.js' %}
+{% set js_facebox   = url_recursos ~ 'js/facebox.js' %}
+
+{# carga del kernel js #}
+{% set js_kernel_loader		= url_recursos ~ 'js/lib/kernel.loader.js' %}
+{% set js_kernel_renderer	= url_recursos ~ 'js/lib/kernel.renderer.js' %}
+{% set js_kernel_evts		= url_recursos ~ 'js/lib/kernel.evts.js' %}
+{% set js_kernel_ajax		= url_recursos ~ 'js/lib/kernel.ajax.js' %}
+{% set js_kernel_historia	= url_recursos ~ 'js/lib/kernel.historia.js' %}
+{% set js_kernel_util		= url_recursos ~ 'js/lib/kernel.util.js' %}
+{% set js_kernel_ui			= url_recursos ~ 'js/lib/kernel.ui.js' %}
+{% set js_kernel_log		= url_recursos ~ 'js/lib/kernel.log.js' %}
+
+{% set js_dev_bar   = url_recursos ~ 'js/lib/dev_bar.js' %}
+{% set js_guarani   = url_recursos ~ 'js/guarani.js' %}
+{% set js_html5	    = url_recursos ~ 'js/html5.js' %}
+{% set js_jqueryui  = url_recursos ~ 'js/jqueryui.js' %}
+{% set js_jquery_ui_touch_punch  = url_recursos ~ 'js/jquery.ui.touch-punch.min.js' %}
+{% set js_jquery_mobile  = url_recursos ~ 'js/jquery.mobile.custom.min.js' %}
+{% set js_bootstrap = url_recursos ~ 'js/bootstrap.js' %}
+
+{% set css_bootstrap			 = url_recursos ~ 'css/bootstrap.css' %}
+{% set css_bootstrap_responsive  = url_recursos ~ 'css/bootstrap-responsive.css' %}
+{% set css_guarani_responsive    = url_recursos ~ 'css/guarani-responsive.css' %}
+{% set css_facebox				 = url_recursos ~ 'css/facebox.css' %}
+{% set css_jqueryui				 = url_recursos ~ 'css/jqueryui.css' %}
+{% set css_dev_bar				 = url_recursos ~ 'css/dev_bar.css' %}
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+<title>{{ titulo }}</title>
+
+{% if produccion %}
+	<script type='text/javascript' src='{{ url_recursos ~ 'siu/js/guarani_mash.js' }}' charset="{{encoding}}"></script>
+	{% if es_browser %}
+		<link type='text/css' href='{{ url_recursos ~ 'siu/css/guarani_mash.css' }}' rel='stylesheet' />
+		{% if mash_personalizado %}
+			<link type='text/css' href='{{ url_recursos ~ personalizacion ~ '/css/guarani_mash.css' }}' rel='stylesheet' />
+		{% endif %}
+	{% else %}
+		<link type='text/css' href='{{ url_recursos ~ 'siu/css/guarani_mash_not_browser.css' }}' rel='stylesheet' />
+		{% if mash_personalizado %}
+			<link type='text/css' href='{{ url_recursos ~ personalizacion ~ '/css/guarani_mash_not_browser.css' }}' rel='stylesheet' />
+		{% endif %}
+	{% endif %}
+{% else %}
+	<script type='text/javascript' src='{{ js_jquery }}' charset="{{encoding}}"></script>
+
+	<script>if ( typeof window.JSON === 'undefined' ) { document.write('<script src="{{ js_history_json2 }}"><\/script>'); }</script> 
+	<script type='text/javascript' src="{{ js_history_adapter }}" charset="{{encoding}}"></script> 
+	<script type='text/javascript' src="{{ js_history_history }}" charset="{{encoding}}"></script> 
+	<script type='text/javascript' src="{{ js_history_html4   }}" charset="{{encoding}}"></script>
+
+	<script type='text/javascript' src='{{ js_lazyload }}' charset="{{encoding}}"></script>
+
+	<script type='text/javascript' src='{{ js_kernel_loader }}' charset="{{encoding}}"></script>
+	<script type='text/javascript' src='{{ js_kernel_renderer }}' charset="{{encoding}}"></script>
+	<script type='text/javascript' src='{{ js_kernel_evts }}' charset="{{encoding}}"></script>
+	<script type='text/javascript' src='{{ js_kernel_ajax }}' charset="{{encoding}}"></script>
+	<script type='text/javascript' src='{{ js_kernel_historia }}' charset="{{encoding}}"></script>
+	<script type='text/javascript' src='{{ js_kernel_util }}' charset="{{encoding}}"></script>
+	<script type='text/javascript' src='{{ js_kernel_ui }}' charset="{{encoding}}"></script>
+	<script type='text/javascript' src='{{ js_kernel_log }}' charset="{{encoding}}"></script>
+
+	<script type='text/javascript' src='{{ js_facebox }}' charset="{{encoding}}"></script>
+	<script type='text/javascript' src='{{ js_guarani }}' charset="{{encoding}}"></script>
+	<script type='text/javascript' src='{{ js_jqueryui }}' charset="{{encoding}}"></script>
+	<script type='text/javascript' src='{{ js_jquery_ui_touch_punch }}' charset="{{encoding}}"></script>
+	<script type='text/javascript' src='{{ js_jquery_mobile }}' charset="{{encoding}}"></script>
+	<script type='text/javascript' src='{{ js_bootstrap }}' charset="{{encoding}}"></script>
+
+	<link type='text/css' href='{{ css_bootstrap }}' rel='stylesheet' />
+	{% if not es_browser %}
+		<link type='text/css' href='{{ css_bootstrap_responsive }}' rel='stylesheet' />
+	{% endif %}
+
+	{% for url in urls_guarani_css %}
+		<link type='text/css' href='{{ url }}' rel='stylesheet' />	
+	{% endfor %}
+
+	{% if not es_browser %}
+		<link type='text/css' href='{{ css_guarani_responsive }}' rel='stylesheet' />
+	{% endif %}
+	<link type='text/css' href='{{ css_facebox }}' rel='stylesheet' />
+	<link type='text/css' href='{{ css_jqueryui }}' rel='stylesheet' />
+{% endif %}
+
+
+<!--[if lt IE 9]>
+	<script type='text/javascript' src='{{ js_html5 }}'></script>
+<![endif]-->
+
+{% if vista.get_tipo == 'vista_pagelets' %}
+	{% set pagelets_count = vista.get_pagelets_count %} 
+	{% set stall_js = 'true' %}
+{% else %}
+	{% set pagelets_count = 0 %} 
+	{% set stall_js = 'false' %}
+{% endif %}
+
+<script type='text/javascript'>
+var kernel_config = {
+	widget_count: {{ pagelets_count }},
+	// Stalls js load until all widgets have loaded css and rendered its content
+	stall_js: false,
+	log: true,
+	alias: '{{ alias }}',
+	pretty_urls: {{ pretty_urls }},
+	op_default: '{{ op_default }}',
+	op_actual: '{{ op_actual }}',
+	historia_activa: false,
+	{% if barra_dev %}
+	log_id: '{{ log_id }}',
+	url_log: '{{ url_log }}',
+	url_log_info: '{{ url_log_info }}',
+	encoding: '{{ encoding }}',
+	{% endif %}
+	es_produccion: {{ es_produccion ? 'true' : 'false' }}
+};
+var url_cambio_perfil = "{{ url_cambio_perfil }}";
+var url_cambio_carrera = "{{ url_cambio_carrera }}";
+
+</script>
+
+{% if ga_params.activo %}
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', '{{ ga_params.account }}' ]);
+	  {% if not produccion %}
+		  {# se deshabilita el domain name así anda desde localhost #}
+		_gaq.push(['_setDomainName', 'none']);	  
+	  {% endif %}
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+</script>
+{% endif %}
+
+{% if barra_dev and not es_celular and not es_produccion %}
+<script type='text/javascript' src='{{ js_dev_bar }}'></script>
+<link type='text/css' href='{{ css_dev_bar }}' rel='stylesheet' />
+{% endif %}

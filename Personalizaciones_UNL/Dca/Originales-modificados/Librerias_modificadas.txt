@@ -1,0 +1,47 @@
+{ Salvar por si se intenta ejecutar 
+
+-- Se modifican las librerias originales:
+
+/* ************************************************************************************ */
+abm.pbl	-->  se agrega nuevo objeto: w820_abm_detalle  --OK MIGRADO
+
+/* ************************************************************************************ */
+accesos.pbl	-->  se agrega nuevo objeto: d820_usuarios  --OK MIGRADO
+
+/* ************************************************************************************ */
+siu_guarani.pbl	--> w_conexion_guarani	--> evento open: se agrega imagen y titulo de ventana.
+siu_guarani.pbl	--> uo_siu_guarani 	--> función uof_control_base_api: se verifica si estan instaladas las personalizacione UNL
+
+/* ************************************************************************************ */
+basicos.pbl	--> w_conexion	--> evento ue_leer: se agrega personalizacion de manejo de usuarios de cemed. 
+basicos.pbl	--> w_conexion	--> evento ue_conectar_db: se agrega personalizacion de manejo de usuarios de cemed.
+basicos.pbl	--> uo_app	--> evento ue_cargar_datos_iniciales: se modifica titulo de ventana.
+basicos.pbl--> uo_app	--> Declare --> Instance Variables. Seccion Public:
+basicos.pbl--> uo_app	--> Declare --> Instance Variables. Seccion Protected:
+
+/* ************************************************************************************ */
+siu_gexa.pbl	--> w_actas_de_examen	--> evento ue_completa_impresion: se modifica nombre de materia.
+siu_gexa.pbl	--> dw_turnos_examen_anio	--> Objeto nombre: se reemplaza por un campo computado.
+siu_gexa.pbl	--> w_actas_de_examen	--> evento ue_inserta_cabecera: se modifica nombre de materia.
+siu_gexa.pbl	--> d_tesis_principal --> campo estado --> Initial Value = 'CI'
+
+/* ************************************************************************************ */
+siu_gcur_revalidas.pbd	--> w_cambia_fecha_regularidad	--> evento ue_dw_itemchanged
+siu_gcur_revalidas.pbd	--> w_cambia_fecha_regularidad	--> evento ue_cargar_fecha
+
+
+/* ************************************************************************************ */
+siu_gmat.pbl	--> d_datos_censales_economicos --> Objeto exportado: d_datos_censales_economicos
+siu_gmat.pbl	--> uo_tp_carreras_aspira --> evento ue_alta_carrera: se controlan carreras de ingreso centralizado
+siu_gmat.pbl	--> uo_tp_carreras_aspira --> evento ue_baja_inscripcion: se controlan carreras de ingreso centralizado
+siu_gmat.pbl	--> uo_tp_req_ua_carrera --> evento ue_dw_itemchanged: se controlan carreras de ingreso centralizado
+siu_gmat.pbl	--> d_datos_persona_no_cambian --> no se permite modificar los campos: pais_documento; tipo_documento; nro_documento
+/****************************************************************************************/
+
+/* ************************************************************************************ */
+siu_gegre.pbl	--> w_abm_detalle_maq_estados --> ue_confirmar
+/****************************************************************************************/
+
+
+--Salvar por si se intenta ejecutar 
+}

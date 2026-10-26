@@ -1,0 +1,18 @@
+#items .g3w-icono-comision {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	line-height: 20px;
+	vertical-align: text-top;
+	background-image: url("../../../img/iconos/g3w2-icon-group.png");
+	background-repeat: no-repeat;
+	*margin-right: .3em;
+}
+
+#items .g3w-icono-comision.activo {
+	background-position: 0 1px;
+}
+
+#items .g3w-icono-comision.inactivo {
+	background-position: 0 -14px;
+}

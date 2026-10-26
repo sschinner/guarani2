@@ -1,0 +1,9 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.0.5
+-- ******************************************************************************
+
+-- FCJS
+Execute procedure "dba".sp_cambiaparametro( 'asi00002', 1 , 4 , "dr820_planilla_asistencia" );
+Execute procedure "dba".sp_cambiaparametro( 'asi00002', 1 , 5 , "dl820_planilla_asistencia" );
+

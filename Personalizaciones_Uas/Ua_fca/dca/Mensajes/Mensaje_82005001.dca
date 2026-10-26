@@ -1,0 +1,10 @@
+-- Alta del mensaje
+-- Mensaje: 82005001.dca
+
+--********************************************
+-- mensaje 82005001, asociado al control de correlativas especiales u820_ciclo_sup04.
+-- 
+--********************************************
+
+DELETE FROM mme_mensajes WHERE mensaje = 82005001;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82005001, "No has aprobado las 15 materias del ciclo básico necesarias para cursar el ciclo superior.",  "No has aprobado las 15 materias del ciclo básico necesarias para cursar el ciclo superior.", 2, 1);

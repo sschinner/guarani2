@@ -1,0 +1,21 @@
+-- inserta la operacion - sui_operaciones limpia todo
+execute procedure dba.sui_operaciones ('820reg02', 'Control de vencimiento de Prórroga de Posgrado', 'Detecta los alumnos que vencieron su prórroga',NULL);
+
+Begin;
+
+set constraints all deferred;
+
+delete  dba.acc_ventanas  where ventana = 'w820_fce_vencimiento_prorrogas';
+insert into dba.acc_ventanas (ventana) values ('w820_fce_vencimiento_prorrogas');
+
+
+insert into dba.acc_parametros (operacion, orden, ventana, parametros, cierra_anterior) VALUES
+               ('820reg02', 1, 'w820_fce_vencimiento_prorrogas', 'uo_dw_filtros, dp_carreras_vigentes, uo_dw, dr820_fce_consulta_vencimientos_pro, dl820_fce_consulta_vencimientos_pro', 'N');
+
+
+insert into dba.acc_acciones_oper (operacion, accion) VALUES ('820reg02', 'M');
+
+INSERT INTO acc_operacion_mod VALUES ('00000010','820reg02','AluReg',17);
+
+commit;
+

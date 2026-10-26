@@ -1,0 +1,55 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+<div class="container-fluid" style="padding: 0;">
+	<div class="row-fluid">
+		<div class="span4">
+			<img src='{{this.data.url_imagen}}' />
+		</div>
+		<div class="span8">
+			<h3>{{this.data.ficha.alumno.NOMBRE_ALUMNO}}</h3>
+		</div>
+	</div>
+
+	<div class="js-detalle-materia">
+	{% if this.data.ficha.ficha %}
+		<table class="table table-condensed" summary='ficha de alumno'>
+			<tr>
+				<th><strong>{{'origen'|trans|capitalize}}:</strong></th>
+				<td>{{ this.data.ficha.ficha.ORIGEN }}</td>
+				<th><strong>{{'anio_academico'|trans|capitalize}}:</strong></th>
+				<td>{{ this.data.ficha.ficha.ANIO_ACADEMICO }}</td>
+			</tr>
+
+			<tr>
+				<th><strong>{{'periodo_lectivo'|trans|capitalize}}:</strong></th>
+				<td>{{ this.data.ficha.ficha.PERIODO_LECTIVO }}</td>
+				<th><strong>{{'fecha'|trans|capitalize}}:</strong></th>
+				<td>{{ this.data.ficha.ficha.SFECHA_REGULARIDAD }}</td>
+			</tr>
+
+			<tr>
+				<th><strong>{{'fecha_vencimiento'|trans|capitalize}}:</strong></th>
+				<td>{{ this.data.ficha.ficha.SFECHA_FIN_VIGENCIA }}</td>
+				<th><strong>{{'catedra'|trans|capitalize}}:</strong></th>
+				<td>{{ this.data.ficha.ficha.CATEDRA }}</td>
+			</tr>
+
+			<tr>
+				<th><strong>{{'nota'|trans|capitalize}}:</strong></th>
+				<td>{{ this.data.ficha.ficha.NOTA }} ({{ this.data.ficha.ficha.NOTA_DESCRIPCION }})</td>
+				<th><strong>{{'resultado'|trans|capitalize}}:</strong></th>
+				<td>{{ this.data.ficha.ficha.RESULTADO_DESC }}</td>
+			</tr>
+
+			<tr>
+				<th><strong>{{'plan'|trans|capitalize}}:</strong></th>
+				<td>{{ this.data.ficha.ficha.PLAN }}</td>
+			</tr>
+		</table>
+	{% else %}
+		<p>El alumno no presenta cursada.</p>
+	{% endif %}
+	</div>
+
+</div>
+{% endblock %}

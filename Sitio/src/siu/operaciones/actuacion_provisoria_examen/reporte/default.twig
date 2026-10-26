@@ -1,0 +1,185 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<div class="titulo_operacion">
+		<h2 class="clearfix"><span class="pull-left">{{"header.menu.actuacion_provisoria_examen"|trans|capitalize}}</span>
+			<div class="pull-right">
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url.generar_pdf}}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url.generar_excel}}"><span class="acchide">{{'descargar_xls'|trans|capitalize}}</span><span class="g3w-icono-xls"></span></a>
+			</div>
+		</h2>
+	</div>
+{#	{% if this.data.datos or this.data.datos_corte %}
+		{% import "kernel/macro_pager.twig" as pager %}
+		<div class="pagination pagination-centered">
+			{{ pager.render_paginator(this.get_paginas, this.get_pagina) }}
+		</div>
+	{% endif %}
+	{% if this.data.datos or this.data.datos_corte %}
+		{% import "kernel/macro_columnas_tabla.twig" as macro_titulos %}
+		<table tabindex="0" class="table table-striped table-bordered table-condensed" summary="Tabla con materias y resultados, haga clic para desplegar informaci&oacute;n">
+			{% if this.data.datos_corte %}
+				{% for dato in this.data.datos_corte %}
+					{% if dato.titulo_corte %}
+					<tr>
+						<td class="cc-titulo-nivel-0" colspan="{{this.data.cantidad_columnas}}">
+							{{dato.titulo_corte}}
+						</td>
+					</tr>
+					{% endif %}
+					
+					<!-- Títulos -->
+					{{ macro_titulos.render_titulador(this.data.titulos, this.data.atributos_titulos, this.data.corte.campo) }}
+					
+					{% if dato.datos %}
+						{% for clave, item in dato.datos %}
+						<tr{% if (item.URL_LINEA) %} class="link-in-data" data-link="{{item.URL_LINEA}}"{% endif %}>
+						{% for keyline, linea in item %}
+							{% if (keyline != "URL_LINEA") %}
+							<td>
+								{{linea}}
+							</td>
+							{% endif %}
+						{% endfor %}
+						</tr>
+						{% endfor %}
+
+						{% if dato.funciones_pie_corte %}
+						{% for funcion in dato.funciones_pie_corte %}
+						<tr>
+							{% for col_fn, titulo in dato.datos[0] %}
+								{% if col_fn != this.data.corte.campo %}
+								<td><strong>{{funcion[col_fn]}}</strong></td>
+								{% endif %}
+							{% endfor %}
+						</tr>
+						{% endfor %}
+						{% endif %}
+
+						{% if dato.mensaje_pie_corte %}								
+						{% for funcion in dato.mensaje_pie_corte %}
+						<tr>
+							<td colspan="{{this.data.cantidad_columnas}}"><strong>{{funcion}}</strong></td>
+						</tr>
+						{% endfor %}
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+				<!-- Pie de reporte -->
+				<tr>
+					<td colspan="{{this.data.cantidad_columnas}}"><br><br></td>
+				</tr>
+				{% if this.data.datos_corte.funciones_pie_reporte %}			
+					{% for funcion in this.data.datos_corte.funciones_pie_reporte %}			
+					<tr>
+						{% for col_fn, nombre in this.data.datos_corte[0].datos[0] %}
+						{% if col_fn != this.data.corte.campo %}
+						<td><strong>{{funcion[col_fn]}}</strong></td>
+						{% endif %}
+						{% endfor %}
+					</tr>
+					{% endfor %}
+				{% endif %}
+
+				{% if this.data.datos_corte.mensaje_pie_reporte %}								
+					{% for funcion in this.data.datos_corte.mensaje_pie_reporte %}
+					<tr>
+						<td colspan="{{this.data.cantidad_columnas}}"><strong>{{funcion}}</strong></td>
+					</tr>
+					{% endfor %}
+				{% endif %}		
+			{% endif %}
+
+			{% if this.data.datos %}
+				<thead>
+					<!-- Títulos -->
+					{{ macro_titulos.render_titulador(this.data.titulos, this.data.atributos_titulos, this.data.corte.campo) }}
+				</thead>
+
+				<!-- Datos -->
+				{% for clave, columnas in this.data.datos %}
+				<tr class="link-js" data-link="detalle_{{clave}}" aria-controls="detalle_{{clave}}">
+					{% for keyline, columna in columnas %}
+						{% if (keyline != "URL_LINEA" and  keyline != "detalle") %}
+							<td headers="{{keyline}}" {% if keyline == "materia" %} scope="row"{% endif %}>
+								{% if keyline == "materia" %}
+								<span class="toggle icon-chevron-up"></span>
+								
+								{% endif %}
+								{{columna}}
+							</td>
+							{% endif %}					
+					{% endfor %}
+				</tr>
+				
+				<tr id="detalle_{{clave}}" aria-live="assertive" class="detalle">
+					<td colspan="{{this.data.cantidad_columnas}}" headers="materia">
+						<ul tabindex="0">
+							<li>Año academico: {{columnas.detalle.anio_academico}}</li>
+							<li>Turno: {{columnas.detalle.turno_examen}}</li>
+							<li>Llamado: {{columnas.detalle.llamado}}</li>
+							<li>Mesa: {{columnas.detalle.mesa_examen}}</li>
+						</ul>
+					</td>
+				</tr>
+				
+				{% endfor %}
+			{% endif %}
+		</table> #}
+	{% if this.data.datos  %}
+
+		{% for carrera in this.data.datos %}
+			<table class="table table-condensed table-bordered">
+				<tr>
+					<th>{{"carrera"|trans|capitalize}}</th>
+					<td>{{ '('~ carrera.carrera ~') '~ carrera.carrera_reducido }}</td>
+				</tr>
+				<tr>
+					<th>{{"legajo"|trans|capitalize}}</th>
+					<td>{{ carrera.legajo }}</td>
+				</tr>
+				<tr>
+					<th>{{"plan"|trans|capitalize}}</th>
+					<td>{{ carrera.plan }}</td>
+				</tr>
+			</table>	
+
+			<table class='table table-condensed table-hover table-striped'>
+				<thead>
+					<tr>
+						<th>{{'materia'|trans| capitalize}}</th>
+						<th>{{'nota'|trans| capitalize}}</th>
+						<th>{{'resultado'|trans| capitalize}}</th>
+						<th>{{'fecha del examen'|trans| capitalize}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for clave, examen in carrera.examenes %}
+					<tr class="link-js" data-link="detalle_{{clave}}" aria-controls="detalle_{{clave}}">
+						<td>{{examen.materia}}</td>
+						<td>{{examen.nota}}</td>
+						<td>{{examen.resultado}}</td>
+						<td>{{examen.fecha_examen}}</td> 
+					</tr>
+					
+					<tr id="detalle_{{clave}}" aria-live="assertive" class="detalle">
+					<td colspan="{{this.data.cantidad_columnas}}" headers="materia">
+						<ul tabindex="0">
+							<li>Año academico: {{examen.detalle.anio_academico}}</li>
+							<li>Turno: {{examen.detalle.turno_examen}}</li>
+							<li>Llamado: {{examen.detalle.llamado}}</li>
+							<li>Mesa: {{examen.detalle.mesa_examen}}</li>
+						</ul>
+					</td>
+					</tr>
+					
+				{% endfor %}
+					</tbody>
+				</table>
+		{% endfor %}
+
+	{% else %}
+		<div class="alert">
+			{{"reporte.no_hay_datos.actuacion_examenes"|trans|capitalize}}
+		</div>
+	{% endif %}
+{% endblock %}

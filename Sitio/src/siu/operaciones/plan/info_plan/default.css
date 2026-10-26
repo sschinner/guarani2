@@ -1,0 +1,71 @@
+#info_plan .correlatividades, #info_plan .genericas{
+	display: none ;
+}
+
+#info_plan .genericas{
+	background-color: #EEE;
+}
+
+#info_plan .detalle_correlativas{
+	padding: 0;
+}
+
+#info_plan td.periodo {
+	white-space: nowrap;
+}
+
+#info_plan td.nota {
+	text-align: right;
+	white-space: nowrap;
+}
+
+#info_plan a.ver_materias {
+	cursor: pointer;
+}
+
+#info_plan .table-correlativas{
+	background-color: #FFF;
+}
+
+#info_plan .table-optativas, .tabla-puntaje{
+	background-color: #FFF;
+}
+
+#info_plan .td-table-correlativas{
+	background-color: #E5E5E5;
+}
+
+#info_plan .td-table-optativas{
+	background-color: #E5E5E5;
+}
+
+#info_plan .td-mat-cond{
+	width: 80px;
+}
+
+#info_plan .alert_verificar_correlativas{
+	display: none;
+	margin-top: 10px;
+	text-align: center;
+}
+
+#info_plan .btn.verificar{
+	margin: 10px 25px 0 0;
+}
+
+#info_plan .btn.ocultar{
+	margin-top: 5px;
+}
+
+#info_plan .alert-error h4{
+	color: #b94a48;
+	background-color: #f2dede;
+	border-color: #eed3d7;
+}
+#info_plan .alert-error{
+	background-color: #f2dede;
+}
+#info_plan .tabla-puntaje{
+    margin-bottom: 0px;
+    margin-top: 5px;
+}

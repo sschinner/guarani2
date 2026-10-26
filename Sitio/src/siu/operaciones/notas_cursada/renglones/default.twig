@@ -1,0 +1,169 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+{%	if this.data.cierre_parcial %}
+{#	<div class="alert alert-info text-center info-icon {% if this.data.cierre_parcial != 1 %}hidden{%endif%}"  role="alert">#}
+	<div class="alert alert-info text-center info-icon"  role="alert">
+		<div class="dc-mensaje">
+			{{ 'carga_notas_cursada.msj_validacion_cierre_parcial'|trans|raw }}
+		</div>
+	</div>
+{%	endif %}
+{% if this.hay_renglones %}
+    <form class='form-renglones' action='{{ this.data.url_guardar }}' method='post'>
+        <fieldset>
+        <legend><h4>Completar</h4></legend>
+	{{ _self.barra_acciones(this, 'arriba') }}
+	<table class="tabla-renglones table table-bordered table-condensed" summary="Alumnos para carga de notas">
+	    <thead>
+			<tr class="header-tabla">
+				<th id="nombre" scope="col">{{ 'nombre_alumno'|trans|capitalize }}</th>
+				<th id="fecha" scope="col">{{ 'fecha'|trans|capitalize }}</th>
+				<th id="asist" scope="col">{{ 'asistencia'|trans|capitalize }} (%)</th>
+				<th id="condicion" scope="col">{{ 'condicion'|trans|capitalize }}</th>
+				<th id="nota" scope="col">{{ 'nota'|trans|capitalize }}</th>
+				<th id="resultado" scope="col">{{ 'resultado'|trans|capitalize }}</th>
+			</tr>	
+	    </thead>
+
+	    <tbody>
+		{% for alumno in this.data.renglones %}
+			{# {% set renglon_habilitado =  not ((not this.data.encabezado.PROM_ABIERTA and alumno.RESULTADO == 'P') or (alumno.TIENE_NOTA=='S' and this.data.cierre_parcial))%}#}
+			{% set renglon_habilitado =  not ((not this.data.encabezado.PROM_ABIERTA and alumno.RESULTADO == 'P'))%}
+			{% if alumno.TIENE_NOTA=='S' and this.data.cierre_parcial and not this.data.cierre_parcial_modifica_notas %}
+				{% set renglon_habilitado = false %}
+			{% endif %}	
+			{% if this.data.cierre_parcial and this.data.cierre_parcial_modifica_notas %}
+				{% set renglon_habilitado = true %}
+			{% endif %}
+
+				<tr id='renglon_{{ alumno.RENGLON }}' data-renglon="{{ alumno.RENGLON }}" 
+				title='{{(alumno.ERROR) ? alumno.ERROR : ''}}'
+			    class='{{ (alumno.ERROR) ? 'error-renglon' : '' }} {{(renglon_habilitado) ? '' : 'renglon-deshabilitado'}} {{alumno.RESULTADO}}{% if alumno.PROMOCIONAL == "S" %} promocional{% endif %}' 
+		    >
+
+                    <td headers="nombre">
+                        {% set nombre = alumno.APELLIDO ~ ', ' ~ alumno.NOMBRE %}
+                        <div class="ficha-alumno clearfix pull-left"
+                             data-url-ficha="{{ alumno.URL_FICHA }}">
+                            <img src='{{alumno.URL_IMAGEN}}' width='35' height="35" alt="imagen ficha" title='{{nombre}}' class="pull-left" />
+                            <div class="pull-left">
+                                <span class="nombre">{{nombre}}
+                                    {% if alumno.PROMOCIONAL == "S" %}
+                                        <span class="acchide">{{"promocionable" |trans|capitalize}}</span><span class="icon-certificate js-tooltip" title="{{"promocionable" |trans|capitalize}}"></span>
+                                        {% if not this.data.encabezado.PROM_ABIERTA %}
+                                            <span class="icon-exclamation-sign js-tooltip" title="{{"acta_promocion_cerrada" |trans|capitalize}}"></span>
+                                        {% endif %}
+                                    {% endif %}
+
+                                </span>
+                                <span class="legajo">{{'legajo'|trans|capitalize}}: {{ alumno.LEGAJO }}</span>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td headers="fecha" class="centrar alinear col-fecha">
+                        <label class="acchide" for="renglones[{{ alumno.RENGLON }}][fecha]">Fecha: DD/MM/YYYY</label>
+                                    <input type='text' data-tipo='fecha' {{ (this.es_mobile) ? 'readonly' : ''}}
+                            id='renglones[{{ alumno.RENGLON }}][fecha]'
+                                                name='renglones[{{ alumno.RENGLON }}][fecha]'
+                            value='{{ alumno.FECHA }}'
+                            prev-value='{{ alumno.FECHA }}'
+                            {{ (renglon_habilitado) ? '' : 'disabled' }}
+                            class='fecha nav {{(error_fecha) ? 'js-error-campo' : ''}}' />
+                    </td>
+
+                    <td headers="asist" class="centrar alinear col-asistencia">
+                        <label class="acchide" for="renglones[{{ alumno.RENGLON }}][asistencia]">Porcentaje de asistencia</label>
+                                    <input type='text' data-tipo='asistencia'
+                            name='renglones[{{ alumno.RENGLON }}][asistencia]'
+                                                id='renglones[{{ alumno.RENGLON }}][asistencia]'
+                            value='{{ alumno.ASISTENCIA }}'
+                            prev-value='{{ alumno.ASISTENCIA }}'
+                            {{ (renglon_habilitado) ? '' : 'disabled' }}
+                            class='asistencia nav' />
+                    </td>
+
+                    <td headers="condicion" class="centrar alinear col-condicion">
+                        <label class="acchide" for="renglones[{{ alumno.RENGLON }}][condicion]"></label>
+                        <select class='condicion js-condicion'
+                                id='renglones[{{ alumno.RENGLON }}][condicion]'
+                                data-tipo='condicion'
+                                prev-value='{{ alumno.CONDICION }}'
+                                name='renglones[{{ alumno.RENGLON }}][condicion]'
+                                {{ (renglon_habilitado) ? '' : 'disabled' }}>
+
+                            <option value='' data-resultado='vacio'>{{ '-' }}</option>
+                            {% for condicion in this.data.condiciones %}
+                                {% set selected = (alumno.CONDICION == condicion.COND_REGULARIDAD) ? 'SELECTED' : '' %}
+                                {% set es_cond_promocion = (condicion.COND_REGULARIDAD == 5 or condicion.COND_REGULARIDAD == 6) %}
+                                {% set mostrar_opcion = not es_cond_promocion
+                                or alumno.RESULTADO == 'P'
+                                or (this.data.encabezado.PROM_ABIERTA and alumno.PROMOCIONAL == 'S')
+                                %}
+                                {# nunca se muestra 6. Es la opción 'No promocionó' #}
+                                {% set mostrar_opcion = mostrar_opcion and condicion.COND_REGULARIDAD != 6 %}
+
+                                {% if mostrar_opcion %}
+                                    <option	class='js-opcion-condicion'
+											data-resultado='{{ condicion.RESULTADO }}'
+                                            value='{{ condicion.COND_REGULARIDAD }}' {{ selected }}>
+                                        {{ condicion.DESCRIPCION }}
+                                    </option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+
+                    <td headers="nota" class="centrar alinear col-nota">
+                    <label class="acchide" for="renglones[{{ alumno.RENGLON }}][nota]">Nota: de 0 a 10</label>
+                                    <select class='nota'
+                            data-tipo='nota'
+                            id='renglones[{{ alumno.RENGLON }}][nota]'
+                            prev-value='{{ alumno.NOTA }}'
+                            name='renglones[{{ alumno.RENGLON }}][nota]'
+                            {{ (renglon_habilitado) ? '' : 'disabled' }}
+                        >
+                            <option value='' data-resultado='vacio'>{{ '-' }}</option>
+                            {% for nota in this.data.escala_notas %}
+                                {% set selected = (alumno.NOTA == nota.DESCRIPCION) ? 'SELECTED' : '' %}
+                                <option {{ selected }} value='{{nota.DESCRIPCION}}'>{{nota.DESCRIPCION}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+
+                    <td headers="resultado" class="centrar alinear col-resultado">
+                        {% set resultado_texto = "resultado.examen." ~ alumno.RESULTADO %}
+                        <div class='resultado'>{{ resultado_texto | trans | capitalize }}</div>
+                    </td>
+
+		    </tr>
+		{% endfor %}
+	    </tbody>
+	</table>
+		{{ _self.barra_acciones(this) }}
+        </fieldset>
+    </form>
+{% else %}
+    <div role="alert" class="alert">{{"no_hay_renglones"|trans|capitalize}}</div>
+{% endif %}
+
+{% endblock %}
+	
+
+{% macro barra_acciones(pagelet, posicion) %}
+    {% import "kernel/macro_pager.twig" as pager %}
+	<div class="form-actions clearfix">
+		<div class="pagination pagination-small pull-left">
+			{{ pager.render_paginator(pagelet.get_paginas, pagelet.get_pagina_actual, 'folio') }}
+		</div>
+			
+		{% if posicion == 'arriba' %}
+			<div class="form-inline pull-left form-busqueda">
+				<label class="control-label notas_cursada_query" for='notas_cursada_query'>{{"label_busqueda_alumnos"|trans|capitalize}}
+				<input type='text' id='notas_cursada_query' name='query' value='' class="input-small" />
+			</div>
+		{% endif %}
+		
+	    <input type='submit' value='{{"guardar"|trans|capitalize}}' class="btn btn-info btn-small pull-right" />
+    </div>
+{% endmacro %}

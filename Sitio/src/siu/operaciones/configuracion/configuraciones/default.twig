@@ -1,0 +1,106 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+	<div class="row-fluid">
+		
+		<div class="span12">
+			
+			<div class="formulario">
+				
+				<form method="post" action="{{this.data.url_guardar}}" id="js-form" class="form-horizontal">
+					<fieldset>
+						{% import "kernel/macro_csrf.twig" as input_csrf %}
+						{{ input_csrf.mostrar(this.data.csrf) }}
+						<legend>
+					<h3 class="clearfix"><span class="pull-left">{{ "configuracion.titulo.notificaciones_mail"|trans|capitalize }}</span>
+						
+						<button type="button" role="button" tabindex="0" class="guardar btn btn-info btn-small pull-right" action="{{this.data.url_guardar}}" disabled>{{ "guardado"|trans|capitalize }}</button>
+					</h3>
+					</legend>
+
+					<div class="control-group">
+						<label class="control-label" for="mail">{{ "configuracion.label.mail"|trans|capitalize }}</label>
+						<div class="controls">
+							<input id="mail" name="mail" type="email" value="{{this.data.checks.E_MAIL}}" maxlength="50" class="edKeyup editable js-obligatorio" />
+						</div>
+<!--					<div id="mail_token" {% if not this.data.mail_token %} style="display: none" {% endif %}>
+							<div id="mensaje-mail-cambio" class="mensaje-mail alert alert-success" style="display: block">
+								{{ "configuracion.mensaje.mail_token.cambio"|trans({'%mail%':this.data.mail_token})|raw }} <a class="set_mail_token_cancel" rel="1" href="#">{{ "cancelar"|trans|capitalize }}</a>
+							</div>
+							<div id="mensaje-mail-revert" class="mensaje-mail alert alert-success" style="display: none">
+								{{ "configuracion.mensaje.mail_token.revert"|trans({'%mail%':this.data.mail_token})|raw }} <a class="set_mail_token_cancel" rel="0" href="#">{{ "revertir"|trans|capitalize }}</a>
+							</div>
+						</div>-->
+						<input type="hidden" id="mail_token_cancel" name="mail_token_cancel" class="edChange editable" value="0"/>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<input id="mail-notificacion" name="mail-notificacion" type="checkbox" class="edChange editable js-obligatorio"{% if this.data.checks.RECIBE_MAIL == "S" %} checked="checked"{% endif %} />
+                            <label class="checkbox" for="mail-notificacion" style="display: inline-block;">{{ "configuracion.label.notificaciones_anuncios"|trans|capitalize }}</label>
+						</div>
+					</div>
+						
+					<div id="mensaje-checks" class="mensaje-ok"></div>
+					</fieldset>
+					<fieldset>
+						<legend>
+							<h3 class="clearfix"><span class="pull-left">{{ "configuracion.titulo.cambiar_password"|trans|capitalize }}</span></h3>
+						</legend>
+					<div id="mensaje-pass" class="alert alert-succes">
+						<p></p>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="password_actual">{{ "configuracion.label.password_actual"|trans|capitalize }}</label>
+						<div class="controls">
+							<input id="password_actual" name="password_actual" type="password" class="edKeyup editable js-obligatorio" maxlength="20" />
+							<p id="password_actualerror" class="alert-error"><span class="g3w-icono-fail"></span> {{ "configuracion.label.password_actual_error"|trans|capitalize }}</p>
+							<div style="clear: both;"></div>
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="password">{{ "configuracion.label.password_nuevo"|trans|capitalize }}</label>
+						<div class="controls">
+							<input id="password" name="password" type="password" class="edKeyup editable js-obligatorio" maxlength="20" />
+							<p id="passworderror" class="alert-error"><span class="g3w-icono-fail"></span> {{ "configuracion.label.password_nuevo_error"|trans|capitalize }}</p>
+							<div style="clear: both;"></div>
+						</div>
+					</div>
+
+					<div class="alert alert-info">
+					{{ this.data.info_clave_fuerte }}
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="password1">{{ "configuracion.label.password_repetir"|trans|capitalize }}</label>
+						<div class="controls">
+							<input id="password1" name="password1" type="password" class="edKeyup editable js-obligatorio" maxlength="20" />
+							<p id="password1error" class="alert-error"><span class="g3w-icono-fail"></span> {{ "configuracion.label.password_repetir_error"|trans|capitalize }}</p>
+							<div style="clear: both;"></div>
+						</div>
+					</div>
+					</fieldset>
+				</form>
+			</div> <!-- formulario -->
+		</div> <!-- span8 -->
+
+		{# if this.data.perfil == 'ALU'  or this.data.perfil == 'DOC' %}
+			<div class="span4">
+				<div class="alert">
+					<h3>{{this.data.persona.nombre}}</h3>
+					<p>
+						{{this.data.persona.calle}} {{this.data.persona.numero}} {{this.data.persona.piso}} {{this.data.persona.dpto}} {{this.data.persona.unidad}}
+					</p>
+					<p>
+						{{this.data.persona.localidad}} 
+						{% if this.data.persona.cp %}						
+						({{this.data.persona.cp}})
+						{% endif %}
+					</p>
+					<a href="{{this.data.url_datos_censales}}">{{ "configuracion.link.datos_personales"|trans|capitalize }}</a>
+				</div>
+			</div> <!-- span4 -->
+		{% endif #}
+	</div> <!-- row -->
+{% endblock %}

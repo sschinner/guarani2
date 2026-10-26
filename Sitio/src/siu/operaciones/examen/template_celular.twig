@@ -1,0 +1,18 @@
+{% extends "kernel/dos_columnas.twig" %}
+
+{% block titulo_operacion %}
+	<h2>{{"inscripcion_a_examenes"|trans|capitalize}}</h2>
+	{% if hay_mensajes %}
+		{% import "kernel/macro_notificaciones.twig" as notificaciones %}
+		{{ notificaciones.render_notif(mensajes) }}
+	{% endif %}
+{% endblock %}
+
+{% block columna_1 %}
+	<p>{% trans %}texto_inscripcion_examen{% endtrans %}</p>
+    {{ this.render_pagelet('lista_materias') }}
+{% endblock %}
+
+{% block columna_2 %}
+	{{ this.render_pagelet('info_materia_examen') }}
+{% endblock %}

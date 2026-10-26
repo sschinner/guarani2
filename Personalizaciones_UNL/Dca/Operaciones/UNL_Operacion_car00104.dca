@@ -1,0 +1,7 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 1.3.0
+-- *******************************************************************************
+Execute procedure dba.sp_cambiaparametro( 'car00104', 1, 2, "dp820_version_de_plan" );
+Execute procedure dba.sp_cambiaparametro( 'car00104', 1, 4, "dr820_plan" );
+Execute procedure dba.sp_cambiaparametro( 'car00104', 1, 5, "dl820_plan" );

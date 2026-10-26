@@ -1,0 +1,5 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<div id="mensaje"></div>
+{% include 'formulario/'~ this.data.form_template ~ '.twig' %}
+{% endblock %}

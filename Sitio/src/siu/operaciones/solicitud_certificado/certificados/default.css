@@ -1,0 +1,35 @@
+#certificados h3 {
+	border-bottom: 1px solid #EEE;
+	line-height: 31px;
+}
+
+#certificados li a.active {
+	background-color: #08C !important;
+	text-shadow: none;
+	color: white;
+}
+
+#certificados .well { padding: 8px 0; }
+
+#certificados p.referencia { 
+	padding-left: 15px;
+}
+
+#certificados li a.pedido {
+	border-bottom: 1px solid red;
+}
+
+#certificados {
+    position: relative;
+}
+
+#certificados #js-btn_esconder {
+    background-color: #08c;
+    border-radius: 4px 0 0 4px;
+    cursor: pointer;
+    height: 14px;
+    position: absolute;
+    top: 25px;
+    left: -14px;
+    padding: 20px 0;
+}

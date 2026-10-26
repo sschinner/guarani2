@@ -1,0 +1,7 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.6.3-9
+-- *******************************************************************************
+Execute procedure dba.sp_cambiaparametro( 'ifz00028', 1 , 4, "dr820_materias_cursantes_recursantes_con" );
+Execute procedure dba.sp_cambiaparametro( 'ifz00028', 1 , 5, "dl820_materias_cursantes_recursantes_con" );
+

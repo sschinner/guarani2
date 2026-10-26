@@ -1,0 +1,79 @@
+#configuraciones .control-group {
+    margin-bottom: 5px;
+}
+
+#configuraciones .control-group h3 {
+    color: #555555;
+}
+
+#configuraciones input[type="checkbox"] {
+    float: left;
+    margin-right: 5px;
+}
+
+#configuraciones .error_val {
+    background-color: #EED3D7;
+    color: #B94A48;
+}
+
+#configuraciones h3.titulo {
+	border-bottom: 1px solid #EEEEEE;
+	line-height: 32px;
+}
+
+#configuraciones p.alert-error {
+	background: none;
+    border: 0;
+    color: #B94A48;
+    font-size: 11px;
+    line-height: 15px;
+    margin: 2px 0;
+}
+
+#configuraciones #password_actualerror, #configuraciones #passworderror, #configuraciones #password1error {
+	display: none;
+	padding: 6px;
+}
+
+#configuraciones #password_actual, #configuraciones #password, #configuraciones #password1, #configuraciones #password_actualerror, #configuraciones #passworderror, #configuraciones #password1error {
+	float: left;
+}
+
+#configuraciones #js-form-pass .controls {
+	min-height: 45px;
+}
+
+#configuraciones .g3w-icono-fail {
+	position: relative;
+	cursor: auto;
+	margin-right: 5px;
+}
+
+
+#configuraciones a.btn-info {
+	font-weight: normal;
+}
+
+
+#js-form-pass .controls{
+    margin-left: 180px;
+}
+
+#js-form-pass .control-label{
+    width: 160px;
+}
+
+#js-form-checks .control-label{
+    width: 70px;
+}
+#js-form-checks .controls{
+    margin-left: 90px;
+}
+
+
+.set_mail_token_cancel {
+	margin-right: 5px;
+}
+.cerrar-msg {
+	cursor: pointer;
+}

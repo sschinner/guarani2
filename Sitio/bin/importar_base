@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Script para importar base de datos al Motor de la Máquina Virtual
+# - Copiar este archivo en /usr/bin
+# - Darle permiso de ejecución: sudo chmod +w /usr/bin/importar_base
+#  
+# USO: sudo importar_base [ruta del archivo que contiene la base comprimida en rar]
+#      sudo importar_base /home/usuario/descargas/unlpam_g3w2.rar
+
+
+# Se crean Directorios de Trabajo
+
+if [ ! -d "$HOME/bases" ]; then
+    mkdir $HOME/bases
+fi
+
+
+DIRECTORIO=`unrar l $1 |awk '{ if( $7 == ".D....." || $7 == "drwxr-xr-x" ){print $1} }'` 
+BASE=${DIRECTORIO/.exp/}
+
+if [ -d "$HOME/bases/$DIRECTORIO" ]; then
+    rm $HOME/bases/$DIRECTORIO -R
+fi
+
+
+# Descomprimimos
+
+unrar x $1  $HOME/bases
+
+# DOS To UNIX
+dos2unix $HOME/bases/$DIRECTORIO/*.*
+
+# Lo ponemos como owner a informix en los directorios de trabajo
+chown informix:informix $HOME/bases -R
+
+
+
+# borro la base de datos
+su - informix -c "echo 'drop DATABASE $BASE' > /home/informix/drop_database.sql"
+su - informix -c "dbaccess sysmaster /home/informix/drop_database"
+su - informix -c "rm /home/informix/drop_database.sql"
+
+
+
+# importo la base
+su - informix -c "export DBDATE=MDY4/ && dbimport $BASE -d datosdbs -i $HOME/bases && ontape -s -U $BASE -L  0"
+

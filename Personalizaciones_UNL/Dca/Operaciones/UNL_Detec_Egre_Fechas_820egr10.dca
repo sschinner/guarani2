@@ -1,0 +1,16 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.6.3
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones( '820egr10', 'Detección Alumnos con Plan Completo entre fechas', 'Detección Alumnos con Plan Completo entre fechas', null );
+Begin;
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = '820egr10';
+INSERT INTO acc_operacion_mod VALUES ('00000060','820egr10','Abm',	80);
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '820egr10', 'C' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '820egr10', 'M' );
+
+DELETE FROM acc_parametros WHERE operacion in ("820egr10");
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( '820egr10', 1, 'w_a_sp_posibles_egresados', 'uo_dw,dk820_sel_carrera_fecha,uo_dw,dr820_posibles_egresados,dl820_posibles_egresados,,uo_ds,d_forms_posibles,uo_ds,d_tit_otor_form,1,5010', 'N' );
+
+Commit;

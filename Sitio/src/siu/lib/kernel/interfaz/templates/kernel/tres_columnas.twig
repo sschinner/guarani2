@@ -1,0 +1,17 @@
+{% if js_vars %}
+	<script type='text/javascript'>
+	{% for name, value in js_vars %}
+		var {{name}} = '{{value}}';
+	{% endfor %}
+	</script>
+{% endif %}
+	
+	{# sin usar - definir dimensiones que ocupa cada columna #}
+{% block layout %}
+<div id='layout_tres_columnas'>
+    <div class='titulo_operacion'>{% block titulo_operacion %}{% endblock %}</div>
+    <div id='columna_1'>{% block columna_1 %}{% endblock %}</div>
+    <div id='columna_2'>{% block columna_2 %}{% endblock %}</div>
+    <div id='columna_3'>{% block columna_3 %}{% endblock %}</div>
+</div>
+{% endblock %}	

@@ -1,0 +1,76 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    <h2 style="border-bottom: 1px solid #EEE;">{{"mis_inscripciones.examenes" | trans | capitalize }}
+        - 
+        <span class="nota_titulo">
+            {% if this.get_alcance == "T" %}
+                {{"mis_inscripciones.examenes_historicos" | trans | capitalize }}
+            {% else %}
+                {{"mis_inscripciones.examenes_vigentes" | trans | capitalize }}
+            {% endif %}
+        </span>
+
+        <div class="pull-right" >
+            <a tabindex="0" id="pdf_btn_list" href="{{ this.data.pdf_lista }}" target="_blank" class="btn no-ajax" title="{{ 'descargar_pdf'|trans|capitalize }}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+            <a tabindex="0" id="xls_btn_list" href="{{ this.data.xls_lista }}" target="_blank" class="btn no-ajax" title="{{ 'descargar_xls'|trans|capitalize }}"><span class="acchide">{{'descargar_xls'|trans|capitalize}}</span><span class="g3w-icono-xls"></span></a>
+        </div> 
+    </h2>
+
+    <label for="examenes_historicos">
+            <input type="checkbox" name="examenes_historicos" id="examenes_historicos" value="T"{% if this.get_alcance == "T" %} checked="checked"{% endif %}/>
+            {{"mis_inscripciones.examenes_historicos" | trans | capitalize }}
+    </label>
+    <div style="background-color: #eee; padding: 5px; color:#333; display: inline-block; ">		
+        {% if this.data.examenes %}
+            <table class="table table-bordered table-condensed" summary="Inscripciones a ex&aacute;menes">
+                <tr>				
+                    <th id="mat">{{"mis_inscripciones.materia" | trans | capitalize }}</th>
+                    <th id="anio">{{"mis_inscripciones.anio" | trans | capitalize }}</th>
+                    <th id="turno">{{"mis_inscripciones.turno" | trans | capitalize }}</th>
+                    <th id="mesa">{{"mis_inscripciones.mesa" | trans | capitalize }}</th>
+                    <th id="sede">{{"mis_inscripciones.sede" | trans | capitalize }}</th>
+                    <th id="dia">{{"mis_inscripciones.fecha_examen_dia" | trans | capitalize }}</th>
+                    <th id="hora">{{"mis_inscripciones.fecha_examen_hora" | trans | capitalize }}</th>
+                    <th id="insc">{{"mis_inscripciones.fecha_inscripcion" | trans | capitalize }}</th>
+                    <th id="tipo">{{"mis_inscripciones.tipo" | trans | capitalize }}</th>
+                    <th id="estado">{{"mis_inscripciones.estado" | trans | capitalize }}</th>
+                    <th id="orden">{{"mis_inscripciones.orden" | trans | capitalize }}</th>
+                    <th id="certificado">{{"mis_inscripciones.certificado.examen" | trans | capitalize }}</th>
+                    <th id="comprobante">{{"mis_inscripciones.comprobante.inscripcion" | trans  }}</th>
+                </tr>
+                {% for key, examen in this.data.examenes %}
+                    <tr>
+                        <td scope="row" headers="mat">{{examen.materia}}</td>
+                        <td headers="anio">{{examen.anio}}</td>
+                        <td headers="turno">{{examen.turno}}</td>
+                        <td headers="mesa">{{examen.mesa}}</td>
+                        <td headers="sede">{{examen.sede}}</td>
+                        <td headers="dia">{{examen.fecha_dia}}</td>
+                        <td headers="hora">{{examen.fecha_hora}}</td>
+                        <td headers="insc">{{examen.fecha_inscr}}</td>
+                        <td headers="tipo">{{examen.tipo}}</td>
+                        <td headers="estado">{% if examen.motivo %}<a link="ex_{{key}}">{% endif %}{{examen.estado}}{% if examen.motivo %}</a>{% endif %}</td>
+                        <td headers="orden">{{examen.ORDEN_INSC}}</td>
+                        <td headers="certificado" class="centrado">
+                            {% if examen.estado != "Rechazado" %}
+                                <a tabindex="0" id="pdf_btn" target="_blank" href="{{this.data.url_pdf_examen}}?materia={{examen.materia|url_encode}}&mesa={{examen.mesa|url_encode}}" class="btn" title="{{ 'descargar_pdf'|trans|capitalize }}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+                                    {% endif %}
+                        </td>
+                        <td headers="comprobante" class="centrado">    
+                            {% if examen.url_comp %}
+                                <a class='btn no-ajax' href='{{examen.url_comp}}' target="_blank"><div class="icon icon-print"></div></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% if examen.motivo %}
+                        <tr id="ex_{{key}}" class="motivo">
+                            <td colspan="10"><strong>{{"mis_inscripciones.motivo" | trans | capitalize }}:</strong> {{examen.motivo}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </table>
+        {% else %}
+            {{"mis_inscripciones.vacio_examenes" |trans }}
+        {% endif %}
+    </div>
+{% endblock %}

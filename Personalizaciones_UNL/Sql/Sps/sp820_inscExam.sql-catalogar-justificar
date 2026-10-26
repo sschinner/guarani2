@@ -1,0 +1,268 @@
+CREATE PROCEDURE "dba".verifica_objeto()
+BEGIN
+	IF EXISTS (SELECT procid
+			FROM sysprocedures
+			WHERE procname = 'sp820_inscexam') THEN
+		DROP PROCEDURE sp820_inscexam;
+	END IF;		
+END
+END PROCEDURE;
+EXECUTE PROCEDURE "dba".verifica_objeto();
+DROP PROCEDURE "dba".verifica_objeto();
+
+-- **********************************************************************
+-- SP: sp820_inscExamen
+-- Descripcion: Recupera las Materias en las que una Persona esta inscripto 
+-- a rendir en los turnos de Examen actuales o activos
+-- Fecha: 04/02/2000
+--
+-- Recibe:      - Unidad_academica
+--              - nro de Inscripcion
+--	
+-- Retorna:     - Unidad Academica
+--              - Carrera
+--              - legajo 
+--              - materia
+--              - Nombre Carrera
+--              - Nombre Materia
+-- **********************************************************************
+-- Modificaciones:
+-- 19/05/2000 : se agrego un estado en la tabla sga_insc_examen
+
+-- Recupera las Inscripciones a Examenes de un alumno en un anio academico, turno de examen y para un estado
+-- NOTA: los estados posibles en la tabla son Activa/ Baja/ Pendiente/ Todas
+--       En la consulta usat T - Todas
+--       Para la consulta usar D que significa A - Activa o P - Pendiente
+--
+--  22/08/2003 - Version 1.11.0
+--  Se modificó el join del select para que tome la versión y el plan con el que se realizó la inscripción al examen y no la 
+--  del plan actual del alumno. Esto es para permitir dar de baja inscripciones que en esta versión se pueden hacer sobre
+--  Regularidad de planes anteriores de un alumno.
+-- **********************************************************************
+CREATE PROCEDURE "dba".sp820_inscexam(
+                 pUnidadAcademica LIKE sga_insc_examen.unidad_academica,
+                 pNroInscripcion  LIKE sga_personas.nro_inscripcion)
+ 
+RETURNING  varchar(5),                -- unidad academica
+
+           varchar(5),                -- carrera
+           varchar(15),               -- legajo
+           varchar(5),                -- materia
+           char(19),                  -- fecha y hora de Insc (datetime year to second)
+           integer,                   -- anio academico
+           varchar(20),               -- turno examen
+           integer,                   -- llamado
+           varchar(15),               -- mesa examen
+           char(1),                   -- tipo insc
+           char(1),                   -- estado
+           char(1),                   -- equiv Parcial
+           varchar(5),                -- materia generica
+           varchar(15),               -- catedra
+           char(1),                   -- admite libres
+  
+           varchar(5),                -- grupo carrera
+           -- date,                      -- dia del prestamo del aula
+           char(10),                  -- dia del prestamo del aula
+           --datetime hour to minute,   -- hora del prestamo del aula
+           char(8),                   -- hora del prestamo del aula
+           varchar(255),              -- docentes de una mesa
+           varchar(20),               -- materia nombre reducido
+           varchar(8),                -- tipoInsc nombre
+           varchar(10),               -- estado nombre
+           varchar(20),                -- nro de transaccion
+           varchar(20);               -- Nombre Carrera Reducido
+
+
+   -- variables utilizadas.
+   DEFINE	vcCarNomReducido           varchar(20);
+   DEFINE	vcUnidadAcademica                   LIKE  sga_insc_examen.unidad_academica;
+   DEFINE	vcCarrera                           LIKE  sga_insc_examen.carrera;
+   DEFINE      	vcLegajo                            LIKE  sga_insc_examen.legajo;
+   DEFINE	vcMateria                           LIKE  sga_insc_examen.materia;
+--   DEFINE	dFecHoraInsc                        LIKE  sga_insc_examen.fecha_inscripcion;
+   DEFINE	dFecHoraInsc                        char(19);
+   DEFINE	vcMateria_aux                       LIKE  sga_insc_examen.materia;
+   DEFINE   	iAnioAcademico_aux, iAnioAcademico  LIKE  sga_insc_examen.anio_academico;
+   DEFINE	vcTurnoExamen_aux, vcTurnoExamen    LIKE  sga_insc_examen.turno_examen;
+   DEFINE	vcMesaExamen_aux, vcMesaExamen      LIKE  sga_insc_examen.mesa_examen;
+   DEFINE	iLlamado_aux                        LIKE  sga_insc_examen.llamado;
+   DEFINE	iLlamado                            LIKE  sga_insc_examen.llamado;
+   DEFINE	cTipoInsc                           LIKE  sga_insc_examen.tipo_inscripcion;
+   DEFINE	cEstado                             LIKE  sga_insc_examen.estado;
+   DEFINE	cEquivParcial                       LIKE  sga_insc_examen.equiv_parcial;
+   DEFINE	vcMatGenerica                       LIKE  sga_insc_examen.materia_generica;
+   DEFINE	vcCatedra                           LIKE  sga_mesas_examen.catedra;
+   DEFINE	cAdmiteLibres                       LIKE  sga_mesas_examen.admite_libres;
+   DEFINE   	vcGrupoCarrera                      LIKE sga_mesas_examen.grupo_carrera;
+   DEFINE	iLlamadoMesa                        LIKE  sga_llamados_mesa.llamado;
+   DEFINE	dFecInicioInscMesa                  LIKE  sga_fec_insc_llam.fecha_inicio;
+   DEFINE	dFecFinInscMesa                     LIKE  sga_fec_insc_llam.fecha_fin;
+   DEFINE	hHoraInicioPrest                    char(8);
+--   DEFINE	hHoraInicioPrest                    datetime hour to minute;
+--   DEFINE	dFecPrest                           LIKE  sga_prestamos.fecha;
+   DEFINE	dFecPrest                           char(10);
+   DEFINE	vcDocentesMesa                      varchar(255);
+   DEFINE	vcMateriaNombre                     LIKE  sga_atrib_mat_plan.nombre_reducido;
+   DEFINE	vcTipoInscNombre                    varchar(8);
+   DEFINE	vcEstadoNombre                      varchar(10);
+
+-- U820 ***************************************************************
+   DEFINE	vd_ultima_fecha                	like sga_insc_examen.fecha_inscripcion;
+   DEFINE	vc_nro_transaccion                	like sga_insc_examen.nro_transaccion;
+-- U820 ***************************************************************
+
+BEGIN
+
+   LET vcMateria_aux = '';
+   LET iAnioAcademico_aux = '';
+   LET vcTurnoExamen_aux = '';
+   LET vcMesaExamen_aux = '';
+   LET iLlamado_aux = 0;
+   LET vd_ultima_fecha = '';
+   LET vc_nro_transaccion = '';
+
+
+-- U820 ***************************************************************
+-- recupera la ultima inscripción a examenes
+-- U820 ***************************************************************
+select max(fecha_inscripcion) into vd_ultima_fecha
+from sga_insc_examen i
+	join sga_alumnos a
+	  on i.legajo = a.legajo
+where  pUnidadAcademica = i.unidad_academica
+                 and pNroInscripcion = a.nro_inscripcion;
+
+   FOREACH
+
+        SELECT  ie.unidad_academica,
+                ie.carrera,
+                ie.legajo,
+                ie.materia,
+                sp_datetime_string(ie.fecha_inscripcion) fecha_insc,
+                ie.anio_academico,
+                ie.turno_examen,
+                ie.llamado,
+                ie.mesa_examen,
+                ie.tipo_inscripcion,
+                ie.estado,
+                ie.equiv_parcial,
+                ie.materia_generica,
+                me.catedra,
+                me.admite_libres,
+                me.grupo_carrera,
+                sp_time_string(p.hora_inicio) hora_exa,
+                sp_date_string(p.fecha) fecha_exa,
+                amp.nombre_reducido,
+                DECODE(ie.tipo_inscripcion, 'R', 'Regular', 'L', 'Libre', 'Regular'),
+                DECODE(ie.estado, 'P', 'Pendiente', 'B', 'Baja', 'A', 'Activa', 'E', 'Exceptuado'),
+                ca.nombre_reducido,
+	            ie.nro_transaccion
+--                to_char(p.hora_inicio,"%H:%M"),   
+
+   INTO vcUnidadAcademica, vcCarrera, vcLegajo, vcMateria, dFecHoraInsc,
+	iAnioAcademico, vcTurnoExamen, iLlamado, vcMesaExamen, cTipoInsc, cEstado,	
+	cEquivParcial, vcMatGenerica,  vcCatedra, 
+	cAdmiteLibres, vcGrupoCarrera, 			
+	hHoraInicioPrest, dFecPrest, 
+	
+    vcMateriaNombre, vcTipoInscNombre,vcEstadoNombre,
+	vcCarNomReducido, vc_nro_transaccion
+
+   FROM sga_alumnos  al,
+	sga_insc_examen  ie,
+	sga_mesas_examen  me,
+	sga_llamados_mesa  llm,
+--	sga_fec_insc_llam   llfeinsc,
+	sga_prestamos p,
+	sga_planes pl,
+	sga_atrib_mat_plan amp,
+	sga_carreras ca
+
+  WHERE al.unidad_academica	= pUnidadAcademica
+    AND al.nro_inscripcion		= pNroInscripcion
+
+    AND (ie.estado = 'A' OR ie.estado = 'P' OR ie.estado = 'E')
+
+    AND ie.unidad_academica 		= al.Unidad_Academica
+    AND ie.carrera 			= al.Carrera
+    AND ie.legajo 			= al.Legajo
+
+    AND ca.unidad_academica 	= ie.Unidad_Academica
+    AND ca.carrera 			= ie.Carrera
+	
+    AND me.unidad_academica 	= ie.unidad_academica
+    AND me.materia          	= ie.materia
+    AND me.anio_academico   		= ie.anio_academico
+    AND me.turno_examen     		= ie.turno_examen
+    AND me.mesa_examen      		= ie.mesa_examen
+
+    AND llm.unidad_academica 	= me.unidad_academica
+    AND llm.materia          		= me.materia
+    AND llm.anio_academico   		= me.anio_academico
+    AND llm.turno_examen     		= me.turno_examen
+    AND llm.mesa_examen      		= me.mesa_examen
+    AND llm.llamado          		= ie.llamado
+
+--    AND llfeinsc.anio_academico   	= llm.anio_academico
+--    AND llfeinsc.turno_examen     	= llm.turno_examen
+--    AND llfeinsc.llamado          	= llm.llamado
+--    AND TODAY BETWEEN llfeinsc.fecha_inicio AND llfeinsc.fecha_fin
+    AND TODAY <= p.fecha
+
+    AND p.prestamo 		= llm.prestamo
+--   AND TODAY <= p.fecha prestamo
+
+    AND pl.unidad_academica  	= ie.unidad_academica      	
+    AND pl.carrera  			= ie.carrera 		
+    AND pl.plan     			= ie.plan			
+
+    AND amp.unidad_academica 	= pl.unidad_academica
+    AND amp.carrera 		= pl.carrera
+    AND amp.plan    			= pl.plan
+    AND amp.version 		= pl.version_actual
+    AND amp.materia 		= ie.materia
+
+-- U820 ***************************************************************
+   AND ie.fecha_inscripcion = vd_ultima_fecha
+-- U820 ***************************************************************
+
+    ORDER BY fecha_exa, ie.anio_academico, ie.turno_examen, ie.mesa_examen, ie.llamado, ie.materia, fecha_insc
+
+        -- Recupero los Docentes de una Mesa
+       IF ( vcMateria      <> vcMateria_aux      OR
+            iAnioAcademico <> iAnioAcademico_aux OR
+            vcTurnoExamen  <> vcTurnoExamen_aux  OR
+            vcMesaExamen   <> vcMesaExamen_aux   OR
+            iLlamado       <> iLlamado_aux )     THEN
+
+                -- Saco los docentes de la Mesa
+                LET vcMateria_aux      = vcMateria;
+                LET iAnioAcademico_aux = iAnioAcademico;
+                LET vcTurnoExamen_aux  = vcTurnoExamen;
+                LET vcMesaExamen_aux   = vcMesaExamen;
+
+           LET iLlamado_aux       = iLlamado;
+                LET vcDocentesMesa     = sp_doc_una_mesa(pUnidadAcademica, vcMateria, iAnioAcademico, vcTurnoExamen, vcMesaExamen, iLlamado);
+	END IF;
+ 
+       -- si no encontro nada, devuelve nulos
+
+RETURN  vcUnidadAcademica, vcCarrera, vcLegajo, vcMateria, 
+	dFecHoraInsc, iAnioAcademico, vcTurnoExamen, iLlamado, vcMesaExamen, 
+	cTipoInsc, cEstado,cEquivParcial, vcMatGenerica, vcCatedra,
+	cAdmiteLibres, vcGrupoCarrera, dFecPrest,  hHoraInicioPrest, vcDocentesMesa, 
+	vcMateriaNombre, vcTipoInscNombre, vcEstadoNombre, vc_nro_transaccion, vcCarNomReducido WITH RESUME;
+
+--	, dFecInicioInsc, dFecFinInsc,
+
+   END FOREACH ;
+END;
+END PROCEDURE;
+-- ***************************** Fin del PROCESO "dba".sp820_inscexam *****************************************
+
+-- *****************************************************************************
+-- Permisos del procedimiento "dba".sp820_inscexam 
+-- *****************************************************************************
+revoke execute on "dba".sp820_inscexam from public;
+grant execute on "dba".sp820_inscexam to guarani;  -- Rol de usuarios de Gestion
+grant execute on "dba".sp820_inscexam to internet; -- Rol de usuario de Internet

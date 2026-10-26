@@ -1,0 +1,12 @@
+{% if js_vars %}
+	<script type='text/javascript'>
+	{% for name, value in js_vars %}
+		var {{name}} = '{{value}}';
+	{% endfor %}
+	</script>
+{% endif %}
+
+<div id='layout_dos_columnas' class="row-fluid">
+    <div id='columna_1' class="span3">{% block columna_1 %}{% endblock %}</div>
+    <div id='columna_2' class="span9">{% block columna_2 %}{% endblock %}</div>
+</div>

@@ -1,0 +1,48 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    <script>
+
+        /*  function imprimir(path) {
+         
+         $("#path_descarga").val(path);
+         document.imprimirPdf.submit();
+         
+         
+         }*/
+
+    </script>
+    <table class='table table-condensed table-hover table-striped'>
+        <thead>
+            <tr>
+                <th>Fecha Solicitud</th>
+                <th>Certificado</th>
+                <th>Descargar</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {%if this.data.urls is not empty%}
+                {% for url in this.data.urls %}
+                    <tr>
+                        <td>{{ url.FECHA_DE_EMISION }}</td>
+                        <td>{{ url.NOMBRE }}</td>
+                        <td><a href="{{this.data.accion}}?url={{url.URL_DESCARGA}}" target="_blank" tabindex="0"  class="btn no-ajax" {#onclick="imprimir('{{url.URL_DESCARGA}}')"#}><span class="g3w-icono-pdf" ></span></a></td>
+                    </tr>
+                {% endfor %}
+            {%else%}
+                <tr>
+                    <td colspan="3">
+                        <div align="center">
+                            <br>
+                            <br>
+                            <p> <b>NO EXISTEN CERTIFICADOS PARA DESCARGAR</b></p>
+                        </div>
+                    </td>
+                </tr>
+
+            {%endif%}
+        </tbody>
+    </table>
+    <input type="hidden" id="path_descarga" name="path_descarga" value=""/>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% macro render_notif(notificaciones, centrar) %}
+<div class='notificaciones'>
+    {% for notif in notificaciones %}
+        {% if notif.mtipo == 'E' %}
+            {% set clase='alert-error' %}
+        {% elseif notif.mtipo == 'A' %}
+            {% set clase='alert-warning' %}
+        {% else %}
+            {% set clase='alert-info' %}
+        {% endif %}
+		
+		{% if centrar %}
+			{% set clase_centrar = 'notificaciones-centrar' %}
+		{% else %}
+			{% set clase_centrar = '' %}
+		{% endif %}
+		
+		{% if notif.raw %}
+		<div class='alert {{ clase }} {{ clase_centrar }}'>{{ notif.mcuerpo|raw }}</div>
+		{% else %}
+		<div class='alert {{ clase }} {{ clase_centrar }}'>{{ notif.mcuerpo }}</div>
+		{% endif %}
+    {% endfor %}
+</div>
+{% endmacro %}

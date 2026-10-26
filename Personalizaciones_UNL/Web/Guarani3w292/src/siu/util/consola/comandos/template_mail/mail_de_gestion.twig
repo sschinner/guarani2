@@ -1,0 +1,93 @@
+<html>
+    <head>
+        <style>
+            .header {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+            }
+            .header .header-content {
+                overflow: hidden;
+                height: 70px;
+                width: 100%;
+                background: url("https://servicios.unl.edu.ar/images/universidad-nacional-del-litoral.png") no-repeat; 
+                position: relative;
+                z-index: 1000;
+                margin: 3px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .footer {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+            }
+            .footer .footer-content {
+                overflow: hidden;
+                height: 40px;
+                text-align: left;
+                background: url("https://servicios.unl.edu.ar/recursosweb/institucionales/footer/unl.png") no-repeat;
+                position: relative;
+                z-index: 1000;
+                margin: 3px;
+                width: 915px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .footer .footer-content .footer-presentation .footer-presentation-content{
+                height: 17px;
+                padding-left: 200px;
+                overflow: hidden;
+                margin: 4px 0 20px 0;
+                padding: 3px 10px 10px 9px;
+            }
+            .footer .footer-content .footer-presentation .footer-presentation-content .terms {
+                color: #a5a5a5;
+                float: right;
+                padding-top: 6px;
+                margin-right: 4px;
+                font-size: 12px;
+            }
+        </style>
+    </head>
+    <body class="body">
+        <table >
+            <tr >
+                <td style="width:100%;"> 
+                    <div style="width:20%;float:left;margin-left:4%">
+                        <img  src="https://servicios.unl.edu.ar/recursosweb/institucionales/universidad-nacional-del-litoral.png">
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br><br><br><br>
+        <table class="detalle">
+            <tr class="detalle_contenido">
+                <td style="width:5%;"></td>  
+                <td style="font-family: Open Sans;font-size: 14px;">' .
+                    {{ mensaje }}
+                    '</td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <table >
+            <tr >
+                <td style="width:100%;"> 
+                    <div id="footer" class="footer">
+                        <div id="footer-content" class="footer-content">
+                            <div id="footer-presentation" class="footer-presentation">
+                                <div id="footer-presentation-content" class="footer-presentation-content">
+                                    <div id="terms" class="terms">Bv. Pellegrini 2750 - (3000) Santa Fe - Tel:
+                                        +54 (0342) 4587800</div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--div id="login-footer" class="beforeSlide afterSlide">Nombre del Sistema</div-->
+                    </div>  
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
+    

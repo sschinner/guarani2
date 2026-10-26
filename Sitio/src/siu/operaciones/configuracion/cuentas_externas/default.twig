@@ -1,0 +1,64 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+    {% if this.data.cuentas_externas %}
+        <div class="row-fluid">
+            <div class="span12">
+
+                {% if this.data.cuentas_vinculadas %}
+                    <h3 class="titulo clearfix">
+                        <span class="pull-left">{{ "configuracion.cuentas_externas.vinculadas"|trans|capitalize }}</span>
+                    </h3>
+
+                    <div class="clearfix">
+                        {% for cuenta in this.data.cuentas_vinculadas %}
+
+                            <div class="cuenta cuenta-vinculada span4">
+                                <a class="close pull-right js-desvincular"
+                                   href="{{ this.data.url_desvincular }}/{{ cuenta.id }}">&times;</a>
+                                <img class="login-icon pull-left" src="{{ cuenta.icono }}"/>
+
+                                <div class="cuenta-cuadro pull-left">
+                                    <h3 class="titulo-cuenta">{{ cuenta.id|trans}}</h3>
+                                    <span class="muted">{{ cuenta.descripcion }}
+                                        <a class='js-vincular' href="{{ this.data.url_vincular }}/{{ cuenta.id }}">
+                                            <i class="icon-refresh"></i>
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                            {#<a class='js-vincular' href="{{ this.data.url_vincular }}/{{ cuenta.id }}"></a>#}
+                        {% endfor %}
+                    </div>
+                {% else %}
+
+                {% endif %}
+
+                {% if this.data.cuentas_disponibles %}
+                    <h3 class="titulo clearfix">
+                        <span class="pull-left">{{ "configuracion.cuentas_externas.disponibles"|trans|capitalize }}</span>
+                    </h3>
+                    <div class="clearfix">
+                        {% for cuenta in this.data.cuentas_disponibles %}
+
+                                <div class="cuenta cuenta-disponible span3">
+                                    <a class='js-vincular' href="{{ this.data.url_vincular }}/{{ cuenta.id }}">
+                                        <img class="login-icon pull-left" src="{{ cuenta.icono }}"/>
+
+                                        <div class="pull-left">
+                                            <h3 class="titulo-cuenta">{{ cuenta.id|trans }}</h3>
+                                            <span class="muted">{{ cuenta.descripcion|capitalize }}</span>
+                                        </div>
+                                    </a>
+                                </div>
+
+                        {% endfor %}
+                    </div>
+                {% else %}
+
+                {% endif %}
+
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

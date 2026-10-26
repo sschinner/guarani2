@@ -1,0 +1,5 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 1.3.0
+-- *******************************************************************************
+Execute procedure dba.sp_cambiaparametro( 'cur00018', 2 , 7 , "dr820fiq_rectif_prom_pend" );

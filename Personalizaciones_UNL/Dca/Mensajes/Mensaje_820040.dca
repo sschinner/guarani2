@@ -1,0 +1,10 @@
+-- Alta del mensaje
+-- Mensaje: 820040.dca
+
+--********************************************
+-- mensaje 820040, asociado al control: Certificado Digital
+-- 
+--********************************************
+
+DELETE FROM mme_mensajes WHERE mensaje = 820040;
+insert into mme_mensajes values (5, 820040,'Sos egresado. No se permite solicitar este tipo de certificado.','Sos egresado. No se permite solicitar este tipo de certificado.',1,1);

@@ -1,0 +1,40 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.0.3
+-- *******************************************************************************
+
+Execute procedure dba.sui_operaciones('netele01','Cronograma','Horarios de Cursado',NULL);
+Begin;
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = 'netele01';
+DELETE FROM acc_operaciones WHERE operacion = "netele01";
+DELETE FROM par_puntos_x_pag WHERE operacion = "netele01";
+DELETE FROM par_eventos_x_oper WHERE operacion = "netele01";
+DELETE FROM par_puntos_x_oper WHERE operacion = "netele01";
+DELETE FROM par_cont_x_oper WHERE operacion = "netele01";
+DELETE FROM sga_conf_controles WHERE operacion = "netele01";
+Commit;
+
+Execute procedure dba.sui_operaciones('netele02','Consulta','Consultar Inscripción a Electivas',	NULL);
+Begin;
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = 'netele02';
+DELETE FROM acc_operaciones WHERE operacion = "netele02";
+DELETE FROM par_puntos_x_pag WHERE operacion = "netele02";
+DELETE FROM par_eventos_x_oper WHERE operacion = "netele02";
+DELETE FROM par_puntos_x_oper WHERE operacion = "netele02";
+DELETE FROM par_cont_x_oper WHERE operacion = "netele02";
+DELETE FROM sga_conf_controles WHERE operacion = "netele02";
+Commit;
+
+Execute procedure dba.sui_operaciones('netele03','Inscripción','Iscripción a Electivas',NULL);
+Begin;
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = 'netele03';
+DELETE FROM acc_operaciones WHERE operacion = "netele03";
+DELETE FROM par_puntos_x_pag WHERE operacion = "netele03";
+DELETE FROM par_eventos_x_oper WHERE operacion = "netele03";
+DELETE FROM par_puntos_x_oper WHERE operacion = "netele03";
+DELETE FROM par_cont_x_oper WHERE operacion = "netele03";
+DELETE FROM sga_conf_controles WHERE operacion = "netele03";
+Commit;

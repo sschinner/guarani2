@@ -1,0 +1,9 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 1.4.0
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones( 'exa00026', 'Rectificación de Actas de Examen', 'Rectificación de Actas de Examen', null );
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, titulo, cierra_anterior ) VALUES ( 'exa00026', 1, 'w_lista_busqueda', 'uo_dw, dk_actas_cerradas, 25, No existen Actas de Examen Cerradas con ese patrón de búsqueda', 'Seleccione el Acta a Rectificar', 'N' );
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( 'exa00026', 2, 'w820_rectificativas_examen_sin_fecha_ini', 'd_rectificativas_abiertas_x_acta, uo_paginas, d_acta_examen, d_det_actual_acta, 20, folio, renglon, dl_acta, N, uo_folios, d_acta_rectificativa, d_detalle_rect_con_notas, 20, folio, renglon, dl_acta_rectificativa, N, d_det_una_escala', 'N' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( 'exa00026', 'C' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( 'exa00026', 'M' );

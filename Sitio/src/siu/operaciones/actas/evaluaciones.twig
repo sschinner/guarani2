@@ -1,0 +1,51 @@
+{# 
+	Recibe:
+	evaluaciones = 
+	array(
+		n => array(
+			SFECHA
+			EVALUACION_DESC
+			TIPO_EVALUACION
+			NOTA_DESCRIPCION
+			NOTA
+			RESULTADO_DESC
+		)
+	)
+#}
+<td colspan="8">
+	{% if evaluaciones %}
+		<h5>{{"evaluaciones" | trans | capitalize}}:</h5>
+		<table class='table table-condensed table-bordered table-optativas'>
+			<tr>
+				<th>{{"fecha" | trans | capitalize}}</th>
+				<th>{{"descripcion" | trans | capitalize}}</th>
+				<th>{{"tipo" | trans | capitalize}}</th>
+				<th>{{"nota" | trans | capitalize}}</th>
+				<th>{{"resultado" | trans | capitalize}}</th>
+			</tr>
+			{% for evaluacion in evaluaciones %}
+			<tr>
+				<td>{{evaluacion.SFECHA}}</td>
+				<td>{{evaluacion.EVALUACION_DESC}}</td>
+				<td>{{evaluacion.TIPO_EVALUACION}}</td>
+				<td>
+					{% if evaluacion.NOTA_DESCRIPCION %}
+						{{evaluacion.NOTA}} ({{evaluacion.NOTA_DESCRIPCION}})
+					{% else %}
+						&nbsp;
+					{% endif %}
+				</td>
+				<td>
+					{% if evaluacion.RESULTADO_DESC %}
+						{{evaluacion.RESULTADO_DESC}}
+					{% else %}
+						&nbsp;
+					{% endif %}
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	{% else %}
+		<p>{{ "no_hay_evaluaciones" | trans | capitalize }}</p>
+	{% endif %}
+</td>

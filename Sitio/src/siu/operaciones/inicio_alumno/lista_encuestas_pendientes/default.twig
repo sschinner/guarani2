@@ -1,0 +1,35 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+<ul class='unstyled'>
+	<h3>
+		{% if not this.data.tiene_noticias %}
+			<span id="js-btn_esconder">
+				<i class="icon-chevron-left icon-white" style="margin-top: 2px;"></i>
+			</span>
+		{% endif %}
+		{{ 'encuestas_pendientes'|trans|capitalize }}
+	</h3>
+	{% if this.data.encuestas_pendientes %}
+		<ul>
+		{% for id, encuesta in this.data.encuestas_pendientes %}
+			<li>
+				{% if encuesta.desplegar_encuestas %}
+					<div>
+						<h5 class="colapsar">{{ encuesta.titulo_grupo }}</h5>
+						<ul class="hide">
+						{% for encuesta_item in encuesta.encuestas %}
+							<li><a href='{{ encuesta_item.link_encuesta }}' >{{  encuesta_item.alcance_titulo }}</a></li>
+						{% endfor %}
+						</ul>
+					</div>
+				{% else %}
+					<a href='{{ encuesta.link_encuesta }}' >{{  encuesta.item_titulo }}</a>
+				{% endif %}
+			</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
+</ul>
+
+{% endblock %}

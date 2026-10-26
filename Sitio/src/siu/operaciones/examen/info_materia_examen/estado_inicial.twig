@@ -1,0 +1,46 @@
+{#
+	Entrada:  inscripciones, mensajes, csrf
+#}
+
+<div>
+	<h3>{{ 'comenzar_inscripcion'|trans|capitalize }}</h3>
+	<p><span class="icon-arrow-left"></span> {{ 'texto_inscripcion_examen'|trans|capitalize }}</p>
+	{% if mensajes %}
+		{% import "kernel/macro_notificaciones.twig" as notificaciones %}
+		{{ notificaciones.render_notif(mensajes) }}
+	{% endif %}
+	{% if inscripciones %}
+		<h4>{{ 'inscripciones_activas'|trans|capitalize }}</h4>
+		<span class='js-csrf hide' data-csrf='{{csrf}}'/>
+		<table class="table table-striped table-condensed" summary="Tabla con examenes a los que estas inscripto,  con nombre de materia y acci&oacute;n de dar de baja.">
+			{% for linea, inscripcion in inscripciones %}
+			<tr class='js-mis-inscripciones'>
+                <td>
+                    {{inscripcion.materia}}<br />
+                    {{ 'fecha'|trans|capitalize }}:</span> {{ inscripcion.fecha_dia}} - <a class="js-detalle-insc" data-linea="{{linea}}">{{'mostrar_detalle' | trans }}</a>
+                </td>
+				<td>
+					{% if param_insc_exa_bajas%}
+						<button
+						class="js-baja-inicial btn btn-mini btn-warning pull-right" type="button"
+						data-materia="{{inscripcion.url_materia}}"
+						data-mesa="{{inscripcion.url_mesa}}"
+						>
+						{{'dar_baja'|trans|capitalize}}
+						</button>
+					{% endif %}	
+				</td>
+			</tr>
+            <tr class="detalle-insc" linea='{{linea}}' style="display:none;">
+                <td colspan="2">
+                    <ul class="llamado_mesa_info unstyled" tabindex="0" role="article">
+                        <li><span>{{ 'mesa'|trans|capitalize }}:</span> {{ inscripcion.MESA_EXAMEN }}</li>
+                        <li><span>{{ 'tipo_inscripcion'|trans|capitalize }}:</span> {{ inscripcion.tipo }}</li>
+                        <li><span>{{ 'orden_inscripcion'|trans|capitalize }}:</span> {{ inscripcion.ORDEN_INSC }}</li>
+                    </ul>
+                </td>
+            </tr>
+			{% endfor %}
+		</table>
+	{% endif %}
+</div>

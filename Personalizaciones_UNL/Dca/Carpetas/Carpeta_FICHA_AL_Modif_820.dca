@@ -1,0 +1,26 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 1.7.0
+-- Ultima modificacion: Version 2.03.0, 2.04.0, 2.05.0, 2.7.0
+-- *******************************************************************************
+Execute procedure dba.sui_carpetas( 'FICHA_AL', 'FICHA DEL ALUMNO' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL', 1, 'Datos Personales', 'uo_tp_dw_ficha_alu_datos_personales', 'd_datos_personales_ficha_alumno, dlc_datos_personales_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL', 2, 'Carreras', 'uo_tp_dw_reporte', 'd_carreras_ficha_alumno, dlc_carreras_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL', 3, 'Requisitos', 'uo_tp_dw_reporte', 'd_req_excep_ficha_alumno, dlc_req_excep_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL', 4, 'Regularidades', 'uo_tp_dw_ficha_alu_regularidades', 'd820_regularidades_ficha_alumno, dlc820_regularidades_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL', 5, 'Hist. Académica', 'uo_tp_dw_reporte', 'd820_hist_acad_ficha_alumno, dlc820_hist_acad_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL', 6, 'Promedios', 'uo_tp_dw_reporte', 'd820_promedios_ficha_alumno, dlc820_promedios_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL', 7, 'Títulos', 'uo_tp_dw_reporte', 'd_titulos_ficha_alumno, dlc_titulos_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL', 8, 'Certificados Pedidos', 'uo_tp_dw_reporte', 'd_certif_pedidos_ficha_alumno, dlc_certif_pedidos_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL', 9, 'Actividades Extracurriculares', 'uo_tp_dw_reporte', 'd_activ_extracur_ficha_alumno, dlc_activ_extracur_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL',10, 'Pérdidas Regularidad', 'uo_tp_dw_reporte', 'd_perdidas_regularidad_ficha_alumno, dlc_perdidas_regularidad_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL',11, 'Hist. Académica No válida', 'uo_tp_dw_reporte', 'd_hist_acad_inv_ficha_alumno, dlc_hist_acad_inv_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL',12, 'Homologaciones', 'uo_tp_dw_reporte', 'd_materias_homologadas_ficha_alumno, dlc_materias_homologadas_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL',13, 'Inscripciones a Cursadas', 'uo_tp_dw_reporte', 'd_insc_cursadas_ficha_alumno, dlc_insc_cursadas_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL',14, 'Inscripciones a Exámenes', 'uo_tp_dw_reporte', 'd_insc_examenes_ficha_alumno, dlc_insc_examenes_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL',15, 'Excepciones otorgadas', 'uo_tp_dw_reporte', 'd_excep_otorgadas_ficha_alumno, dlc_excep_otorgadas_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL',16, 'Sanciones', 'uo_tp_dw_reporte', 'd_sanciones_ficha_alumno, dlc_sanciones_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL',17, 'Prórrogas', 'uo_tp_dw_reporte', 'd_prorrogas_reg_ficha_alumno, dlc_prorrogas_reg_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL',18, 'Cambios Calidad', 'uo_tp_dw_reporte', 'd_cambios_calidad_alumno_ficha_alumno, dlc_cambios_calidad_alumno_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL',19, '% Aprobación', 'uo_tp_dw_reporte', 'd_porcentaje_aprobacion_ficha_alumno, dlc_porcentaje_aprobacion_ficha_alumno, 10' );
+INSERT INTO dba.acc_paginas ( carpeta, pagina, titulo, objeto, parametros ) VALUES ( 'FICHA_AL',20, 'Trámite de títulos', 'uo_tp_dw_reporte', 'd_tramite_titulos_ficha_alumno, dlc_tramite_titulos_ficha_alumno, 10' );

@@ -1,0 +1,79 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.6.3
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones( '820egr20', '02-Tramitar Expediente', '02-Tramitar Expediente', null );
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( '820egr20', 1, 'w_abm_lista_maq_estados', 'uo_dw,dk_titulos_otorg,10,1,8202', 'N' );
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( '820egr20', 2, 'w_abm_detalle_maq_estados', 'uo_dw,d820_m_titulos_otorg_me,1,estado,uo_dw,d_eventos_posibles,1,uo_dw,d_forms_posibles,4,uo_ds,d_tit_otor_form,1,8202', 'N' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '820egr20', 'C' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '820egr20', 'M' );
+
+begin;
+
+set constraints all deferred;
+
+-- Este estado lo agrego aqui, para que no falle la FK
+-- Estado:  1 - C - Control de Actas - Control de Actas
+delete from mce_estados where entidad = 1 and estado = 'C';
+insert into mce_estados values(1, 'C', 'Control de Actas', 'Control de Actas');
+
+-- Estado:  1 - M - Mesa de Entradas - Mesa de Entradas
+delete from mce_estados where entidad = 1 and estado = 'M';
+insert into mce_estados values(1, 'M', 'Mesa de Entradas', ' Mesa de Entradas');
+
+-- Actividad: 8202 - Tramitar Expediente
+delete from mce_actividades where entidad = 1 and actividad = 8202;
+insert into mce_actividades values (1, 8202, 'Tramitar Expediente de Diploma', 'Tramitar Expediente de Diploma');
+
+-- Eventos: 
+--	82021 - Iniciar Tramite de Expediente
+--	82022 - Revisar Inicio de Solicitud
+delete from mce_eventos where entidad = 1 and evento in (82021, 82022);
+insert into mce_eventos values(1, 82021, 'Iniciar Expediente de Diploma', 'Iniciar Expediente de Diploma');
+insert into mce_eventos values(1, 82022, 'Revisar Inicio de Solicitud', 'Revisar Inicio de Solicitud');
+
+-- Eventos - Actividad
+delete from mce_eventos_activ where entidad = 1 and actividad = 8202;
+insert into mce_eventos_activ values (1, 8202, 82021);
+insert into mce_eventos_activ values (1, 8202, 82022);
+
+commit;
+
+begin;
+set constraints all deferred;
+
+-- Caminos:
+--1 - 82021 - M - C
+--1 - 82022 - M - A
+delete from mce_caminos where entidad = 1 and estado = 'M' and evento in (82021, 82022);
+insert into mce_caminos values (1, 82021, 'M', 'C');
+insert into mce_caminos values (1, 82022, 'M', 'A');
+
+-- Formularios: no se emiten formularios en este paso
+
+-- Modificación del camino desde egr05030
+-- Caminos:
+--1 - 5031 - '-' - M
+--1 - 5032 - '-' - O
+update mce_caminos set nuevo_estado = 'M' where entidad = 1 and evento = 5031 and estado = '-';
+update mce_caminos set nuevo_estado = 'O' where entidad = 1 and evento = 5032 and estado = '-';
+
+--1 - 5031 - 'A' - M
+--1 - 5032 - 'A' - O
+update mce_caminos set nuevo_estado = 'M' where entidad = 1 and evento = 5031 and estado = 'A';
+update mce_caminos set nuevo_estado = 'O' where entidad = 1 and evento = 5032 and estado = 'A';
+
+-- Nuevo formulario de Tasa de Egreso:
+delete from mce_formularios where entidad = 1 and formulario = 820001;
+insert into mce_formularios values (1, 820001, "Tasa de Expedición de Diploma", "Tasa de Expedición de Diploma", "dl820_certificado_timbrado_titulo", "S");
+
+-- Agreagar el nuevo formulario, como formulario imprimible en el Inicio de Solicitud
+delete from mce_form_camino where entidad = 1 and evento = 5031 and estado = '-' and formulario = 820001;
+delete from mce_form_camino where entidad = 1 and evento = 5031 and estado = 'A' and formulario = 820001;
+insert into mce_form_camino values (1, '-', 5031, 820001);
+insert into mce_form_camino values (1, 'A', 5031, 820001);
+
+update mce_formularios set nombre = "Registro de Graduados (SUR-D22)", reimprime = 'S' where formulario = 30;
+update mce_formularios set nombre = "Solicitud de Diploma (SUR-D1)", reimprime = 'S' where formulario = 20;
+
+commit;

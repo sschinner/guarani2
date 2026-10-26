@@ -1,0 +1,99 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    <div class="titulo_operacion">
+		<h2 class="clearfix">
+			<button class='btn btn-primary btn-small js-btn-back pull-left' data-url-back="{{this.data.url_back}}" alt="Volver"><span class="icon-chevron-left icon-white"></span></button>
+			<span class="pull-left">{{"inscripcion_a_cursadas"|trans|capitalize}}</span>
+			<div class="pull-right">
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url.generar_pdf}}"><span class="acchide">Exportar a PDF</span><span class="g3w-icono-pdf"></span></a>
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url.generar_excel}}"><span class="acchide">Exportar a XLS</span><span class="g3w-icono-xls"></span></a>
+			</div>
+		</h2>
+    </div>
+    {% if this.data.alumnos_comision %}
+        {% set titulos = this.data.alumnos_comision.0 %}
+
+        <table width="100%" class="table table-striped table-bordered table-condensed" summary="Datos cursada">
+		<tr>
+			
+                    <th width="20%"> Materia:</th><td> {{titulos.MATERIA}} ({{titulos.MATERIA_COD}})  </td>
+        </tr>
+     {#   <tr>
+            <th>
+                Sede:</th><td> ({{titulos.SEDE_COD}}) {{titulos.SEDE}}
+            </td>
+        </tr> #}
+        <tr>
+            <th>
+                Comisi&oacute;n: </th><td>{{titulos.COMISION}}
+            </td>
+        </tr>
+		{% if titulos.SUBCOMISION_NOMBRE %}
+        <tr>
+            <th>
+                Subcomisión: </th><td>{{titulos.SUBCOMISION_NOMBRE}}
+            </td>
+        </tr>
+		{% endif %}
+        <tr>
+            <th>
+                C&aacute;tedra:  </th><td>{{titulos.CATEDRA}}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                A&ntilde;o:</th><td> {{titulos.ANIO}}
+            </td>
+        </tr>
+        <tr>
+            <th>
+                Per&iacute;odo lectivo:</th><td> {{titulos.PER_LEC}}
+            </td>            
+        </tr>
+        </table>
+
+
+        <table class="table table-striped table-bordered table-condensed" summary="Inscripciones">
+        <thead>
+		<tr>
+			<th id="legajo" scope="col">
+                Legajo
+            </th>
+            <th id="alumno" scope="col">
+                Alumno
+            </th>
+            <th id="calidad" scope="col">
+                Calidad
+            </th>
+            <th id="estado" scope="col">
+                Estado
+            </th>
+            <th id="carrera" scope="col">
+                Carrera
+            </th>		    
+		</tr>
+	    </thead>
+        {% for alumno in this.data.alumnos_comision %}
+        <tr>
+            <td headers="legajo">
+                {{alumno.LEGAJO}}
+            </td>
+            <td headers="alumno" scope="row">
+                {{alumno.ALUMNO}}
+            </td>
+            <td headers="calidad">
+                {{alumno.CALIDAD}}
+            </td>
+            <td headers="estado">
+                {{alumno.ESTADO}}
+            </td>
+            <td headers="carrera">
+                {{alumno.CARRERA}}
+            </td>
+        </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <div role="alert" class="alert">No hay alumnos en la comisi&oacute;n.</div>
+    {% endif %}
+{% endblock %}

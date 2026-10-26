@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang='es-419'>
+    <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link rel="icon" href="favicon.ico" />
+	{%if url_recursos %}
+	    {%set url_recursos = url_recursos ~ '/' %}
+	{% else %}
+		{%set url_recursos = alias ~ '/' %}
+	{%endif%}
+
+	{% include 'res.twig' %}
+    </head>
+    
+    <body>
+		<div id='_msg_placeholder' style='display:none;' class='alert' role="alert"></div>
+        {% include template_header %}
+
+        <div id='loading'></div>
+		<div id='loading_top' style='display:none;'>{{'cargando'|trans}}...</div>
+		<div id='kernel_contenido' role="main" class="{{ es_browser ? 'container' : 'container-fluid' }}">
+			{% if vista.get_tipo == 'vista_pagelets' %}
+			{{ vista.render_skeleton }}
+			{{ vista.render_pipe }}
+			{% else %} {# si no es vista pagelets se renderiza directamente #}
+			{{ vista.render }}
+			{% endif %}
+		</div>
+        
+        {% include template_footer %}
+    </body>
+</html>

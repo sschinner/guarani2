@@ -1,0 +1,17 @@
+{# https://developers.google.com/recaptcha/docs/display #}
+
+{% macro script(onload, render, hl) %}
+    {% if usa_captcha %}
+        
+        {% set onload = (onload is null)? '' : '&onload='~onload %}
+        
+        <script src="https://www.google.com/recaptcha/api.js?hl={{ hl|default('es-419') }}&render={{ render|default('onload') }}{{ onload }}" async defer></script>
+    {% endif %}
+{% endmacro %}
+
+{% macro widget(id, class, callback, expired_callback, error_callback, theme, size, tabindex) %}
+    {% if usa_captcha %}
+        <div id="{{ id|default('') }}" class="g-recaptcha {{ class|default('') }}" data-sitekey="{{ captcha_site_key }}" data-callback="{{ callback|default('') }}" data-expired-callback="{{ expired_callback|default('') }}" data-error-callback="{{ error_callback|default('') }}" data-theme="{{ theme|default('light') }}" data-size="{{ size|default('normal') }}" data-tabindex="{{ tabindex|default('0') }}"></div>
+    {% endif %}
+{% endmacro %}
+

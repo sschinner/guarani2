@@ -1,0 +1,137 @@
+    <div class="navbar navbar-fixed-top main-nav">
+		
+		<div class="navbar-inner">
+			
+			<div class="container">
+
+            {% if menu %}
+				<button class="btn btn-navbar btn-navbar-inverse" data-toggle="collapse" data-target=".nav-collapse" type="button">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+            {% endif %}
+				
+				<a class="brand logo-celular" href="{{url_inicio}}"><img src="{{ url_img_logo_celular }}" /></a>
+
+            {% if persona.logueada %}
+				
+				{% if perfil_activo == 'ALU' and perfil.get_operacion_activa('requisitos_ingreso') %}
+					<li class="notificaciones" title="Requisitos Pendientes">
+						<a href="{{ url_requisitos }}"><span class="icon-check"></span><span class="acchide">{{ 'requisitos_ingreso'|trans | capitalize }}</span> <span id='js-cant-requisitos' class="badge {{ cant_requisitos > 0 ? 'badge-warning' : '' }}">{{ cant_requisitos }}</span></a>
+					</li>
+				{% endif %} 
+
+                {% if perfil.get_operacion_activa('mensajes') %}
+                    <div class="btn-group pull-right">
+                        <a href="{{ url_mensajes }}" class="btn {{ cantidad_mensajes > 0 ? 'btn-warning' : '' }}"><i class="icon-envelope"></i> {{ cantidad_mensajes }}</a>
+                    </div>
+                {% endif %}
+				
+				<div class="btn-group pull-right">
+					<a href="#" class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> <span class="caret"></span></a>
+					<ul class="dropdown-menu">
+
+						<li>
+                            {% if perfil.get_operacion_activa('configuracion') %}
+                                <a href='{{ persona.url_configuracion }}'><i class="icon-wrench"></i> {{ persona.nombre }}</a>
+                            {% else %}
+                                <a href="#">{{ persona.nombre }}</a>
+                            {% endif %}
+                        </li>
+
+						<li class="divider"></li>
+
+						{% if persona.carreras.cantidad > 0 %}
+							<li class="nav-header">{{'materias'|trans|capitalize}}</li>
+							{% if persona.carreras.cantidad > 0 %}
+								{% for carrera in persona.carreras.lista %}
+									{% if persona.carrera_activa.id == carrera.carrera %}
+										<li data-carrera-id="{{ carrera.id }}" data-carrera-nombre="{{ carrera.nombre|trans|capitalize }}" class='js-seleccion-carrera js-carrera-nombre'><a href="#"><i class="icon-ok"></i> {{ carrera.nombre|trans|capitalize }}</a></li>
+									{% else %}
+										<li data-carrera-id="{{ carrera.id }}" class="js-carrera-nombre"><a href="#">{{ carrera.nombre|trans|capitalize }}</a></li>
+									{% endif %}
+								{% endfor %}
+							{% endif %}
+							<li class="divider"></li>
+						{% endif %}
+
+						{% if perfiles %}
+							<li class="nav-header">{{ 'perfil'|trans|capitalize }}</li>
+							{% for perfil in perfiles %}
+								{% if perfil_activo == perfil %}
+									<li data-perfil="{{ perfil }}" data-perfilnombre="{{ perfil|trans|capitalize }}" class='js-seleccion-perfil js-perfil-item'>
+										<a href="#"><i class="icon-ok"></i> {{ perfil|trans|capitalize }}</a>
+									</li>
+								{% else %}
+									<li data-perfil="{{ perfil }}" class="js-perfil-item"><a href="#">{{ perfil|trans|capitalize }}</a></li>
+								{% endif %}
+							{% endfor %}
+							<li class="divider"></li>
+						{% endif %}
+
+						<li><a href='{{ persona.url_logout }}'><i class="icon-off"></i> {{ 'header.cerrar_sesion'|trans }}</a></li>
+					</ul>
+				</div> <!-- boton usuario -->
+
+            {% endif %}
+
+            {% if menu %}
+				<div class="nav-collapse" role="navigation">
+					<ul class='nav'>
+					{% for item in menu %}
+
+                        {% if item.submenu is defined %}
+
+                            <li class='dropdown'>
+                                {{ _self.recursiveSubmenu(item, true) }}
+                            </li>
+
+						{% else %}
+
+						    <li id='{{ item.id }}'><a href='{{ item.url }}'>{{ item.nombre|trans|capitalize }}</a></li>
+
+                        {% endif %}
+
+					{% endfor %}
+					</ul>
+				</div><!--/.nav-collapse -->
+            {% endif %}
+
+			</div><!-- container-fluid -->
+			
+		</div><!-- navbar-inner -->
+		
+    </div><!-- navbar -->
+
+
+<!-- https://gist.github.com/tentacode/3892186 -->
+{% macro recursiveSubmenu(item, primer_nivel) %}
+
+    {% if primer_nivel %}
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ item.nombre|trans }} <b class="caret"></b></a>
+        <ul class='dropdown-menu'>
+    {% else %}
+        <li class="nav-header mobile">{{ item.nombre|trans }}</li>
+        <div class="submenu-mobile">
+    {% endif %}
+
+    {% for subitem in item.submenu %}
+
+        <li id='{{ subitem.id }}'><a href='{{ subitem.url }}'>{{ subitem.nombre|trans }}</a></li>
+
+    {% endfor %}
+
+    {% for submenu in item.submenues %}
+
+        {{ _self.recursiveSubmenu(item[submenu], false) }}
+
+    {% endfor %}
+
+    {% if primer_nivel %}
+        </ul>
+    {% else %}
+        </div>
+    {% endif %}
+
+{% endmacro %}

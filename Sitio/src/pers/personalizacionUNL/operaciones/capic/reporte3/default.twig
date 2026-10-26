@@ -1,0 +1,86 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+<script>
+    
+function bajaMateria(nombre,comision){
+   
+       if (confirm("Desea darse de baja en la materia '"+nombre+"' ?")){
+           $("#comision").val(comision);
+            document.inscribir.submit();
+        }
+       
+   }
+   
+</script>
+{% set nombre='Pasantias en la que estoy inscripto'%}
+{% set datos=this.get_data_reporte() %}
+{%if (datos.datosComisionDestino is defined)%}
+<div id="propio" style="width:470px;">
+
+<form method="POST" action="{{datos.url}}" name="inscribir" id="inscribir">
+   
+
+        <legend class="clearfix">
+            <span class="pull-left"><h3 class="resaltar">{{datos.nombreTitulo|trans}}</h3></span>
+
+        </legend>
+
+    <br>
+        {%if datos.cantInscripciones!=0%}
+        <table class="table table-striped table-condensed">
+            <tr>
+                <td><b>Facultad destino</b></td>
+                <td><b>Comisi&oacute;n</b></td>
+                <td><b>Materia</b></td>
+                <td></td>
+            </tr>
+            {% for fila in datos.datosComisionDestino %}
+            <tr >  
+                <td>
+                    {{fila.unidad_academica_destino}}
+                    
+                </td>
+                <td>
+                   {{fila.comision_nombre}} - {{fila.comision}} 
+                </td>
+                <td>
+                   {{fila.materia_nombre_reducido_destino}}
+                </td>
+                <td > 
+                    <a role="button" tabindex="0" class="btn btn-mini btn-warning pull-right" onclick="bajaMateria('{{fila.materia_nombre_reducido_destino}}','{{fila.comision}}');" >{{ "Dar baja"|capitalize }}</a>
+                </td>
+               
+                
+            </tr>
+             {%endfor%}
+        </table>
+        {%else%}
+            <br>
+            <br>
+            <div style="margin-left: 30px;font-size: 11pt;">
+                <b>No estas inscripto a ninguna materia</b>
+            </div>
+        {%endif%}
+       
+        <input type="hidden" id="comision" name="comision" value=""/>
+       
+    
+    {% if this.data.mensajes2 %}
+    <div class='alert alert-error' style="width:300px;">
+           {% import "kernel/macro_notificaciones.twig" as notificaciones %}
+	   {{ notificaciones.render_notif(this.data.mensajes2) }}
+    </div> 
+    {%elseif this.data.mensajes2%}
+        <br>
+        <br>
+        <br>
+        <div style="width:400px;">
+               {% import "kernel/macro_notificaciones.twig" as notificaciones %}
+               {{ notificaciones.render_notif(this.data.mensajes2) }}
+        </div>
+    {% endif %}
+</form>  
+
+</div>
+{%endif%}
+{% endblock contenido %}

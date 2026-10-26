@@ -1,0 +1,49 @@
+{% macro examen(datos) %}
+	{% for turno in datos %}
+
+        {% set materia_index = 'materia'~loop.index %}
+
+		<div class="corte">
+			<div class="encabezado_cuadro">
+				<div class="row-fluid">
+					<div class="span12">
+						<strong>{{'fecha_examen.cuadro.materia'|trans|capitalize}}: </strong>({{turno.MATERIA}}) {{turno.MATERIA_NOMBRE}}
+					</div>
+				</div>
+			</div>
+
+			<table class='table table-condensed table-hover table-striped'>
+				<thead>
+					<tr>
+						<th class="span3">{{'fecha_examen.cuadro.mesa'|trans|capitalize}}</th>
+						<th class="span2">{{'fecha_examen.cuadro.fecha'|trans|capitalize}}</th>
+						<th class="span2">{{'fecha_examen.cuadro.tipo'|trans|capitalize}}</th>
+						<th class="span2">{{'fecha_examen.cuadro.inscrip_inicio'|trans|capitalize}}</th>
+						<th class="span2">{{'fecha_examen.cuadro.inscrip_fin'|trans|capitalize}}</th>
+						<th class="span1">{{'fecha_examen.cuadro.ver'|trans|capitalize}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for examen in turno.examenes %}
+
+                        {% set examen_index = 'mesa'~loop.index %}
+
+						<tr>
+							<td>{{examen.MESA}}</td>
+							<td>{{examen.FECHA}}</td>
+							<td>{{examen.TIPO_MESA}}</td>
+							<td>{{examen.INSCR_INICIO}}</td>
+							<td>{{examen.INSCR_FIN}}</td>
+							<td>
+								<a href="#" class="btn btn-info btn-mini ver_mas_info" data-id="{{materia_index~examen_index}}" data-estado="v">{{'ver'|trans|capitalize}}</a>
+							</td>
+						</tr>
+						<tr class="mas_info" id="{{materia_index~examen_index}}">
+                            {% include 'filtro/info_extra.twig' with examen.INFO_EXTRA %}
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	{% endfor %}
+{% endmacro %}

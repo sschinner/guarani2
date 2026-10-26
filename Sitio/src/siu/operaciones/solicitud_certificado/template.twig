@@ -1,0 +1,15 @@
+{% extends "kernel/dos_columnas.twig" %}
+{% block titulo_operacion %}
+	<h2>{{"header.menu.solicitud_certificado"|trans|capitalize}}</h2>
+	{% if hay_mensajes %}
+        {% import "kernel/macro_notificaciones.twig" as notificaciones %}
+        {{ notificaciones.render_notif(mensajes) }}
+    {% endif %}
+{% endblock %}
+
+{% block columna_1 %}
+	{{ this.render_pagelet('certificados') }}
+{% endblock %}
+{% block columna_2 %}
+	{{ this.render_pagelet( this.get_pagelet_segunda_columna() ) }}
+{% endblock %}

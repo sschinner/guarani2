@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="materias" language="groovy" pageWidth="455" pageHeight="752" columnWidth="455" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="2b160515-f447-4986-b755-d55efa5423d6">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA["guarani_estilo.jrtx"]]></template>
+	<queryString language="xPath">
+		<![CDATA[/HistoriaAcademica/datos/item]]>
+	</queryString>
+	<field name="nombreMateria" class="java.lang.String">
+		<fieldDescription><![CDATA[nombreMateria]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.lang.String">
+		<fieldDescription><![CDATA[fecha]]></fieldDescription>
+	</field>
+	<field name="renglon" class="java.lang.String">
+		<fieldDescription><![CDATA[renglon]]></fieldDescription>
+	</field>
+	<field name="descripcionNota" class="java.lang.String">
+		<fieldDescription><![CDATA[descripcionNota]]></fieldDescription>
+	</field>
+	<field name="nota" class="java.lang.String">
+		<fieldDescription><![CDATA[nota]]></fieldDescription>
+	</field>
+	<field name="concepto" class="java.lang.String">
+		<fieldDescription><![CDATA[concepto]]></fieldDescription>
+	</field>
+	<field name="formaAprobacion" class="java.lang.String">
+		<fieldDescription><![CDATA[formaAprobacion]]></fieldDescription>
+	</field>
+	<field name="nroResolucion" class="java.lang.String">
+		<fieldDescription><![CDATA[nroResolucion]]></fieldDescription>
+	</field>
+	<field name="actaPromocion" class="java.lang.String">
+		<fieldDescription><![CDATA[actaPromocion]]></fieldDescription>
+	</field>
+	<field name="acta" class="java.lang.String">
+		<fieldDescription><![CDATA[acta]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement style="tabla_titulo" mode="Opaque" x="0" y="0" width="20" height="15" uuid="059d0147-92ee-4765-9a60-5a43b67e876b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabla_titulo" mode="Opaque" x="20" y="0" width="205" height="15" uuid="830ba09c-84a6-4141-8c61-351a53e26bab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Asignatura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabla_titulo" mode="Opaque" x="225" y="0" width="54" height="15" uuid="d59045e3-1aa4-4679-9670-3d9d65d892a2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabla_titulo" mode="Opaque" x="279" y="0" width="110" height="15" uuid="3686f738-d38f-4e3e-b676-a37d0973671c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Calificación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabla_titulo" mode="Opaque" x="389" y="0" width="66" height="15" uuid="4ce94201-be13-4895-b2ff-c427177baa5b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Acta o Resol.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement style="tabla_celda" stretchType="RelativeToTallestObject" x="0" y="0" width="20" height="15" isPrintWhenDetailOverflows="true" uuid="3f23fc93-7818-4296-b874-21332fd7b6e1"/>
+				<textElement>
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="tabla_celda_no_borde" stretchType="RelativeToTallestObject" x="0" y="0" width="20" height="15" uuid="82eac57d-2a5a-4a6b-868e-0354fdb1de2e"/>
+				<textElement verticalAlignment="Middle">
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{renglon}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="tabla_celda" stretchType="RelativeToTallestObject" x="20" y="0" width="205" height="15" isPrintWhenDetailOverflows="true" uuid="2f3c8f88-519f-4ddb-b8e7-6a47183a36a3"/>
+				<textElement>
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="tabla_celda_no_borde" stretchType="RelativeToTallestObject" x="20" y="0" width="205" height="15" uuid="9292ff72-6a7e-45b3-b60f-7ab9238bb497"/>
+				<textElement verticalAlignment="Middle">
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreMateria}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="tabla_celda" stretchType="RelativeToTallestObject" x="225" y="0" width="54" height="15" isPrintWhenDetailOverflows="true" uuid="0ab0f41e-05c2-49fc-aedc-8c13fcc32157"/>
+				<textElement>
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="tabla_celda_no_borde" stretchType="RelativeToTallestObject" x="225" y="0" width="54" height="15" uuid="a95f7767-212a-4700-b5da-ac07d32f06b9"/>
+				<textElement verticalAlignment="Middle">
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha}.substring( 8, 10 ) + "/" + $F{fecha}.substring( 5, 7 ) + "/" + $F{fecha}.substring( 0, 4 )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="tabla_celda" stretchType="RelativeToTallestObject" x="279" y="0" width="110" height="15" isPrintWhenDetailOverflows="true" uuid="29e2b535-29dc-487a-8c38-e4ce16b00223"/>
+				<textElement>
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="tabla_celda_no_borde" stretchType="RelativeToTallestObject" x="279" y="0" width="110" height="15" uuid="3c7b589b-595d-4515-9915-c2a2a3881fca"/>
+				<textElement verticalAlignment="Middle">
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{nota} && $F{concepto} && $F{descripcionNota} ? $F{concepto} + " - " + $F{descripcionNota} + " (" + $F{nota} + ")" : $F{formaAprobacion} )]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="tabla_celda" stretchType="RelativeToTallestObject" x="389" y="0" width="66" height="15" isPrintWhenDetailOverflows="true" uuid="0c1dc7f6-e1de-4edf-84f3-32092f369f7d"/>
+				<textElement>
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="tabla_celda_no_borde" stretchType="RelativeToTallestObject" x="389" y="0" width="66" height="15" uuid="336f6d21-54f1-4f65-9c05-d20b3286f916"/>
+				<textElement verticalAlignment="Middle">
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[( $F{formaAprobacion}.contains("Examen") ? $F{acta} : ( $F{formaAprobacion} == "Promoción" ? $F{actaPromocion} : $F{nroResolucion}))]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

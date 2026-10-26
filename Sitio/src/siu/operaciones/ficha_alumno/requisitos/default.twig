@@ -1,0 +1,48 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_ficha_alumno.twig" as ficha_alumno %}
+{% block contenido %}
+    {{ ficha_alumno.render_menu(this.data.menu_reportes, this.data.categoria_actual, this.data.reporte_actual) }}
+	<div id="reporte_contenido">
+		<h3>{{ 'ficha_alumno.rep_requisitos' | trans }}</h3>
+		{% for carrera in this.data.carreras %}
+		
+			<ul class="ficha_alumno_ul">
+				
+					<li><strong>{{ 'ficha_alumno.carrera' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.carrera)}}</li>
+					<li><strong>{{ 'ficha_alumno.legajo' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.legajo)}}</li>
+					
+			</ul>
+			{% if carrera.requisitos %}
+				<table class='table table-condensed table-hover table-striped'>
+						<thead>
+							<tr>
+								<th>{{'ficha_alumno.requisito'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.fecha_de_presentacion'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.obligatorio'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.exceptuado'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.prorroga'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.observaciones'|trans|capitalize}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for requisito in carrera.requisitos %}
+								<tr>
+									<td>{{ficha_alumno.mostrar(requisito.requisito)}}</td>
+									<td>{{ficha_alumno.mostrar(requisito.fecha_presentacion)}}</td>
+									<td>{{ficha_alumno.mostrar(requisito.obligatorio)}}</td>
+									<td>{{ficha_alumno.mostrar(requisito.exceptuado)}}</td>
+									<td>{{ficha_alumno.mostrar(requisito.prorroga)}}</td>
+									<td>{{ficha_alumno.mostrar(requisito.observaciones)}}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+			{% else %}
+				<div class="alert text-warning">{{'ficha_alumno.no_hay_requisitos_para_esta_carrera'|trans}}</div>
+			{% endif %}
+		
+		{% else %}
+			<div class="alert text-warning">{{'ficha_alumno.no_hay_informacion'|trans}}</div>
+		{% endfor %}
+	</div>
+{% endblock %}

@@ -1,0 +1,673 @@
+[TAG-GUARANI_2.9.5.35.0] - 2026-09-23]
+-- Modifica archivos por migracion posgrado_fiq
+
+[TAG-GUARANI_2.9.5.34.1] - 2026-06-16]
+-- Corrige bug al solicitar un Diploma Digital
+
+[TAG-GUARANI_2.9.5.34.0] - 2026-06-16]
+-- Modifica archivos por migracion posgrado_fcjs
+
+[TAG-GUARANI_2.9.5.33.1] - 2026-06-01]
+-- Elimina tipo de datos complejo en insertaDatosCensales
+
+[TAG-GUARANI_2.9.5.33.1] - 2026-05-11]
+-- Corrige bug en insertaDatosCensales
+
+[TAG-GUARANI_2.9.5.33.0] - 2026-04-09]
+-- Elimina pagina en blanco en CAE
+
+[TAG-GUARANI_2.9.5.32.1] - 2026-03-18]
+-- Permite obtener datos de tesis aun cuando la fecha de defensa no fue cargada
+
+[TAG-GUARANI_2.9.5.32.0] - 2026-02-27]
+-- Modifica la fecha de aprobacion de tesis
+
+[TAG-GUARANI_2.9.5.31.0] - 2026-02-27]
+-- Corrige problema de encoding en ws mesasExamen
+
+[TAG-GUARANI_2.9.5.31.0] - 2026-02-13]
+-- Modifica logos y reportes para que se vean mejor
+-- Modifica ws de Boleto
+
+[TAG-GUARANI_2.9.5.30.0] - 2025-10-28]
+-- Modifica detallesComisiones para indicar si posee o no subcomisiones
+-- Modifica accesos a posgrados (FICH, FHUC, FBCB) por migracion a G3
+
+[TAG-GUARANI_2.9.5.29.4] - 2025-09-18]
+-- Permite que solo alumnos de Grado y Pregrado anexen Suplemento al Titulo en CAE
+
+[TAG-GUARANI_2.9.5.29.3] - 2025-08-29]
+-- Corrige resolucion en Suplemento al Titulo.
+
+[TAG-GUARANI_2.9.5.29.2] - 2025-08-01]
+-- Corrige bug de CAEs que no llegaban a Tramites
+
+[TAG-GUARANI_2.9.5.29.1] - 2025-07-25]
+-- Otorga credenciales de acceso para 'bedeliamovil'
+
+[TAG-GUARANI_2.9.5.29.0] - 2025-06-27]
+-- Sprint de Suplemento al Titulo para CAE
+
+[TAG-GUARANI_2.9.5.28.0] - 2025-06-19]
+-- Actualiza montos de constancias y certificados.
+
+[TAG-GUARANI_2.9.5.27.0] - 2025-06-09]
+-- Se refactorizan retornos de altaNotasIngreso y bajaNotasIngreso
+
+[TAG-GUARANI_2.9.5.26.3] - 2025-05-21]
+-- Se agrega usuario fhuc para turnosExamen y mesasExamen
+
+[TAG-GUARANI_2.9.5.26.2] - 2025-04-28]
+-- Se agrega usuario solicitudes para estadoAlumno
+
+[TAG-GUARANI_2.9.5.26.1] - 2025-03-05]
+-- Modifica ws mesasExamen
+-- Modifica flujo de expedientes
+
+[TAG-GUARANI_2.9.5.26.0] - 2025-02-25]
+-- Modifica logos
+
+[TAG-GUARANI_2.9.5.25.0] - 2024-12-19]
+-- Corrige bug en monto de tramite especial cuando el mismo se vence.
+-- Actualiza montos de constancias y certificados.
+
+[TAG-GUARANI_2.9.5.24.2] - 2024-11-21]
+-- Refactoriza ws mesasExamen para retornar coleccion de llamados.
+
+[TAG-GUARANI_2.9.5.24.1] - 2024-11-14]
+-- Modifica retorno de G3 en ws rendimientoAcademico
+
+[TAG-GUARANI_2.9.5.24.0] - 2024-10-31]
+-- Elimina referencias a ISM en bases de G2
+
+[TAG-GUARANI_2.9.5.23.0] - 2024-10-07]
+-- Crea ws turnosExamen y mesasExamen.
+
+[TAG-GUARANI_2.9.5.22.2] - 2024-09-12]
+-- Corrige la no-aparicion del requisito de Tramite Especial.
+
+[TAG-GUARANI_2.9.5.22.1] - 2024-06-12]
+-- Soluciona bug en requisitos de DD que no se veian ni se podian cargar (CEMED)
+
+[TAG-GUARANI_2.9.5.22.0] - 2024-06-03]
+-- Se quitan accesos por migracion de FCE
+-- Correccion en WS de rendimiento academico
+-- Correccion en WS de estado alumno
+
+[TAG-GUARANI_2.9.5.21.0] - 2024-04-12]
+-- Permite la solicitud de un Tramite Especial
+-- Modifica encoding en archivos del cron de Tramites para corregir cuerpo de emails enviados.
+-- Modifica WS periodosLectivos y detallesComisiones
+
+[TAG-GUARANI_2.9.5.20.3] - 2024-04-11]
+-- Cambio de valores de tasas
+
+[TAG-GUARANI_2.9.5.20.2] - 2024-03-26]
+-- Se modifican IDs de origenes para sistema de mesa de entradas de CUG y CURA
+
+[TAG-GUARANI_2.9.5.20.1] - 2024-03-06]
+-- Modifica cuerpo de mail la notificar alumno para que retire diploma.
+
+[TAG-GUARANI_2.9.5.20.0] - 2024-02-27]
+-- Agrega ubicacion en Ws detallesComisiones
+
+[TAG-GUARANI_2.9.5.19.2] - 2024-02-08]
+-- Reemplaza el logo100 
+
+[TAG-GUARANI_2.9.5.19.1] - 2023-12-18]
+-- Agrega usuario bedeliamovil a ws autenticarAlumno
+
+[TAG-GUARANI_2.9.5.19.0] - 2023-11-28]
+-- Genera autenticarAlumnoV2
+-- Actualiza tasas
+
+[TAG-GUARANI_2.9.5.18.2] - 2023-10-14]
+-- Modifica funcion de RendimientoAcademico para ajustes en devolucion dato de egreso.
+
+[TAG-GUARANI_2.9.5.18.1] - 2023-10-27]
+-- Modifica funcion de RendimientoAcademico en RepositorioWs para devolver fecha egreso del titulo final.
+-- Modificaciones en ws detallesComisiones
+
+[TAG-GUARANI_2.9.5.18.0] - 2023-10-18
+-- Crea web service de Periodos Lectivos
+-- Modifica funcion de RendimientoAcademico en RepositorioWs
+
+[TAG-GUARANI_2.9.5.17.1] - 2023-09-25
+-- Agrega auditoria en ws notificarUrlCertificado
+
+[TAG-GUARANI_2.9.5.17.0] - 2023-09-15
+-- Se quitan accesos por migracion de FCM
+-- Correccion en WS de rendimiento academico
+-- Correccion en WS de estado alumno
+
+[TAG-GUARANI_2.9.5.16.3] - 2023-09-04
+-- Agrega usuario 'bedeliamovil' a ws detallesComisiones
+-- Agrega notificacion de Diploma digital impreso
+
+[TAG-GUARANI_2.9.5.16.2] - 2023-08-17
+-- Corrige bug en ws estaInscripto
+
+ [TAG-GUARANI_2.9.5.16.1] - 2023-08-08
+-- Otorga permiso a SIGUV en ws estaInscripto
+
+ [TAG-GUARANI_2.9.5.16.0] - 2023-05-24
+-- Modifica endpoint de expedienteElectronico para todos los certificados
+-- Corrige devolucion en ws de autenticarAlumno con SIGUV
+-- Corrige duplicidad en ws de rendimientoAcademico cuando la propuesta tiene mas de una resp. acad.
+
+ [TAG-GUARANI_2.9.5.15.2] - 2023-03-30
+-- Elimina codificacion innecesaria en de CUIL para extranjeros en insertarAspirante
+
+ [TAG-GUARANI_2.9.5.15.1] - 2023-03-13
+-- Actualiza montos de tasas
+
+[TAG-GUARANI_2.9.5.15.0] - 2023-03-07
+-- Modifica logos y membretes
+
+[TAG-GUARANI_2.9.5.14.2] - 2023-02-24
+-- Ajusta las que bases de conexion al consultar por FADU
+-- Corrige bug en autenticarAlumno para que no devuelva NULL cuando falla la autenticacion
+
+[TAG-GUARANI_2.9.5.14.1] - 2023-02-08
+-- Corrige devolucion de campo nombrePlan nulo en carrerasUA
+
+[TAG-GUARANI_2.9.5.14.0] - 2022-12-22
+-- Activa la operacion original de Requisitos de Ingreso Pendientes
+-- Agrega campo de retorno en WS historiaAcademicaAlumno
+
+[TAG-GUARANI_2.9.5.13.0] - 2022-11-29
+-- Modifica la fecha que se registra en tramites como fecha de solicitud
+-- Otorga acceso a GEA para servicio de autenticacion
+
+[TAG-GUARANI_2.9.5.12.25] - 2022-11-09
+-- Versión de migración de datos de FCJS
+
+[TAG-GUARANI_2.9.5.12.23] - 2022-10-18
+-- Agrego devolución de plan y nombre plan en WS estadoAlumno
+-- Agrego devolución de plan y nombre plan en WS carrerasUA
+
+[TAG-GUARANI_2.9.5.12.22] - 2022-10-06
+-- Otorga credenciales de acceso a estadoAlumno para hefesto y GEA
+
+[TAG-GUARANI_2.9.5.12.21] - 2022-10-03
+-- Modifica el tipoTitulo devuetlto para el caso FADU
+
+[TAG-GUARANI_2.9.5.12.20] - 2022-09-27
+-- Merge con branch luego de migración de datos de FADU
+
+[TAG-GUARANI_2.9.5.12.19] - 2022-09-14
+-- Modificaciones de archivos de configuracion para no conectar con alumnado_fadu por migracion
+
+[TAG-GUARANI_2.9.5.12.17] - 2022-09-13
+-- Corrige visualizacion en Reporte de Auditoria
+-- Persiste los datos del autorizante como tipo de dato NULL y no string, si corresponde
+
+[TAG-GUARANI_2.9.5.12.16] - 2022-08-29
+### Agrega log y auditoria a cliente de Mesa de Entradas (expedientes)
+
+[TAG-GUARANI_2.9.5.12.15] - 2022-08-25
+### Bug de conexion cliente de mesa de entradas
+-- Se modifica que solamente Diploma Digital vaya por endpoint de expediente electronico
+
+[TAG-GUARANI_2.9.5.12.14] - 2022-08-01
+### Modificación de jasper para inicio de expediente
+-- Se genera Jasper para inicio de expediente de un diploma digital
+
+[TAG-GUARANI_2.9.5.12.13] - 2022-06-24
+### Bug en solicitud de CA
+-- Corrige indices de arreglo desplazado al agregar columna path_nuxeo
+
+[TAG-GUARANI_2.9.5.12.12] - 2022-06-13
+### Hotfix
+-- Arreglo en guardado de certificados arancelados por nuevo path de Nuxeo
+
+[TAG-GUARANI_2.9.5.12.11] - 2022-06-13
+### Hotfix
+-- Arreglo en guardado de certificados arancelados por nuevo path de Nuxeo
+
+[TAG-GUARANI_2.9.5.12.10] - 2022-05-24
+### Cron tramites
+-- Se agrega funcionalidad para apuntar a nuevo WS de expediente (expedienteElectronico)
+-- Se modifica envio de informacion a tramites para asegurar la carpeta de Nuxeo
+
+[TAG-GUARANI_2.9.5.12.9] - 2022-04-01
+### Regularidad en la carrera
+-- Incorpora reinscripcion al año como requisito de regularidad
+
+[TAG-GUARANI_2.9.5.12.8] - 2022-03-29
+### historiaAcademicaAlumno
+-- Fix en codigos de retorno.
+
+[TAG-GUARANI_2.9.5.12.7] - 2022-03-25
+### Se modifica mensaje de retorno WS insertaAspirante-
+-- Modifica verificacion de CUIL nulo.
+
+
+[TAG-GUARANI_2.9.5.12.6] - 2022-03-02
+### Se desarrolla un healtchek para las bases
+-- Se actualizan tasas de certificados
+
+[TAG-GUARANI_2.9.5.12.5] - 2022-02-24
+### Modificacion en WS insertarAspirante
+-- Error al insertar apellido con apostrofe.
+-- Se pasa de consulta string a prepared statement.
+
+[TAG-GUARANI_2.9.5.12.4] - 2022-02-09
+### Modificacion en WS de Historia Academica
+-- Codigos de retorno consistentes
+-- Cambio de leyenda en solicitud de CAEs.
+
+[TAG-GUARANI_2.9.5.12.3] - 2021-27-12
+### Modificacion del ws carrerasUA
+-- Modificacion del ws carrerasUA - devuelve dato nuevo
+
+[TAG-GUARANI_2.9.5.12.2] - 2021-02-12
+### Corrección en WS estadoAlumno
+-- Modificación en el WS de EstadoAlumno
+
+[TAG-GUARANI_2.9.5.12.1] - 2021-24-11
+### Corrección de bug en cron trámites
+-- Se modifican mensajes de log al momento de actualizar los pagos ya que ahora arroja mensajes erroneos
+
+[TAG-GUARANI_2.9.5.12.0] - 2021-05-11
+### Modificación de configuraciones
+-- Se modifican configuraciones de base de datos por migración de alumnado_fich a G3
+
+[TAG-GUARANI_2.9.5.11.3] - 2021-04-10
+### Modificación de WS de notas de ingreso
+-- Se modifican servicios web de altas de notas de ingreso y se agrega auditoria de las mismas
+
+[TAG-GUARANI_2.9.5.11.2] - 2021-08-20
+### Modificacion dw WS de ingreso
+-- Se modifican servicios web de inserciones de requisitos y altas de aspirantes
+
+[TAG-GUARANI_2.9.5.11.1] - 2021-07-23
+### Modificacion de certificado titulo en tramite
+-- Se modifica el certificado de título en trámite que se emite en el circuito de diploma digital, modificando una leyenda para ISM
+-- Se modifica mapeo de base de datos de convenios_fcjs para obtener las mesas de entradas. Si ua es SIU se convierte a mesa de entradas de FCJS
+
+[TAG-GUARANI_2.9.5.11.0] - 2021-07-02
+### Nueva funcionalidad de auditoria
+-- Se agrega funcionalidad de auditoria de WS para que comiencen a registrar inputs y outputs.
+-- Se comienza con los clientes_ws de medio de cobro y digitalizacion
+
+[TAG-GUARANI_2.9.5.10.3] - 2021-06-09
+### Se elimina operacion de autogestion
+-- Se elimina la operacion TASA DE EGRESO para todas las personalizaciones
+
+[TAG-GUARANI_2.9.5.10.2] - 2021-05-17
+### Se habilita ws comisiones para G3
+-- Se habilita ws comisiones para G3
+
+[TAG-GUARANI_2.9.5.10.1] - 2021-05-07
+### FIX BUG en WS de insercion de datos censales
+-- Se corrige error en ws de insercion de datos censales
+
+[TAG-GUARANI_2.9.5.10.0] - 2021-04-27
+### Cambio en el TargetNameSpace para los WS
+-- Se modifica y se estandariza el TargetNameSpace para todos los servicios web 
+
+[TAG-GUARANI_2.9.5.9.15] - 2021-04-23
+### FIX BUG de solicitud de diploma
+-- Se modifica el modelo porque una consulta no funcionaba OK y daba error en la inserción de los requisitos de egreso
+
+[TAG-GUARANI_2.9.5.9.14] - 2021-04-12
+### FIX BUG de solicitud de diploma
+
+[TAG-GUARANI_2.9.5.9.13] - 2021-04-08
+### Se repara funcionalidad de exportacion y solicitud de diploma
+-- Para examenes y cursadas se corrije la forma de exportar los datos separando el correo electronico
+-- Se corrije problema en la solicitud de diploma digital para que no confunda cuando existe uno pedido
+
+[TAG-GUARANI_2.9.5.9.12] - 2021-04-05
+### Se cambia la conexion de de los ws para FBCB y ESS
+-- Se realizan cambios en general.php para adecuar la conexion a FBCB y ESS hacia G3
+
+[TAG-GUARANI_2.9.5.9.11] - 2021-03-23
+### Se modifican los logos 2021
+-- Logos grandes no se redimensionan por codigo. Se suben con resolucion para reportes
+
+[TAG-GUARANI_2.9.5.9.10] - 2021-03-17
+### FIX BUG reporte inscriptos a examenes en excel 
+-- Se limpia el buffer antes de generar el archivo
+
+[TAG-GUARANI_2.9.5.9.9] - 2021-03-16
+### Se agrega bloque de diploma digital para personalizacion PROCAP 
+-- Se modifican logos institucionales 2021
+
+[TAG-GUARANI_2.9.5.9.8] - 2021-02-17
+### SE AGREGA EL USUAIRO siguv PARA EL SERVICIO INSERTAASPIRANTE 
+-- se agrega usuario
+
+[TAG-GUARANI_2.9.5.9.7] - 2021-02-11
+### SE HABILITA OPERACION DIPLOMA DIGITAL PARA ATILRA
+-- Se habilita operacion
+
+[TAG-GUARANI_2.9.5.9.6] - 2021-02-05
+### FIX BUG WS RENDIMIENTO ACADEMICO
+-- Fix bug nombre de la unidad academica
+
+[TAG-GUARANI_2.9.5.9.5] - 2020-12-28
+### FIX BUG DIPLOMA DIGITAL Y PAGOS
+-- Se modifica el proceso de vencimientos de diplomas digitales que duplicaba mal los tramites
+
+[TAG-GUARANI_2.9.5.9.4] - 2020-12-22
+### FIX BUG GENERACION LEGAJO WS
+-- Se modifica la condicion para que se intente generar legajo
+
+[TAG-GUARANI_2.9.5.9.3] - 2020-12-11
+### FIX BUG DIPLOMA
+-- Se arregla el bug que generaba nuevos identificadores de cobro
+
+[TAG-GUARANI_2.9.5.9.2] - 2020-11-30
+### Acceso a servicio web
+-- Se le otorga acceso a siguv para el servicio estadoAlumno
+
+[TAG-GUARANI_2.9.5.9.1] - 2020-11-30
+### FIX BUG
+-- Corrección de bug de certificado analitico para encabezados de posgrados
+
+[TAG-GUARANI_2.9.5.9.0] - 2020-11-18
+### Cambio de funcionalidades
+-- Se agregan parametros nuevos de tramite de diploma digital
+-- Se corrige PDF de certificado analitico para encabezado de posgrados
+-- Se corrigen validaciones de solicitudes de diploma digital
+
+[TAG-GUARANI_2.9.5.8.12] - 2020-11-02
+### FIX BUG
+-- Se agrega visibilidad de operacion de solicitud de diploma en personalizacion PROCAP
+
+[TAG-GUARANI_2.9.5.8.11] - 2020-10-29
+### FIX BUG
+--Se castea la UA ECM de cemed a FCM  para el retorno del servicio rendimientoAcademico
+
+[TAG-GUARANI_2.9.5.8.10] - 2020-10-24
+### FIX BUG
+-- Quito visibilidad de operacion de solicitud de diploma en personalizacion PROCAP porque se tiene que habilitar en noviembre
+
+[TAG-GUARANI_2.9.5.8.9] - 2020-09-09
+### FIX BUG
+-- Se agrega visibilidad de operacion de solicitud de diploma en personalizacion PROCAP
+-- Se agregan los ultimos cambios de la personalizacion de diploma digital en el bloque PROCAP
+-- Agrego nuevo parametro para diploma digital que no estaba: titulo_anterior
+-- Se agrega cambio por FIX de certificado de alumno regular que sale en blanco
+-- Se agrega FIX de https para librerias nusoap
+-- Se agrega TRIM en ws de validacion de requisitos de diploma
+-- Se agrega que no se rechacen los tramites de diploma una vez que se encuentran vencidos de pago
+
+[TAG-GUARANI_2.9.5.8.8] - 2020-09-01
+### FIX BUG
+-- Se arregla el tema de nombre y apellido en el acta de examen
+
+[TAG-GUARANI_2.9.5.8.7] - 2020-08-27
+### Cambio de funcionalidades
+-- Se agrega nuevo requisito de ingreso para posgrado
+
+[TAG-GUARANI_2.9.5.8.6] - 2020-08-03
+### FIX BUG
+-- Se arregla bug de pagos al momento del pedido de certificados arancelados
+
+[TAG-GUARANI_2.9.5.8.5] - 2020-07-28
+### FIX BUG
+-- Se personaliza envio de mensjes para docentes debido a un bug en el sistema base
+
+[TAG-GUARANI_2.9.5.8.4] - 2020-07-21
+### FIX BUG
+-- Reparación de certificado analítico para que muestre las formas de pago
+-- Reparación en actas de distancia
+
+[TAG-GUARANI_2.9.5.8.3] - 2020-07-02
+### FIX BUG
+-- Vuelta atras en solicitud de certificado 100 para validacion si ya existe
+-- y evitar la duplicidad del pedido. Se vuelve atras para permitir el doble
+-- pedido.
+
+[TAG-GUARANI_2.9.5.8.1] - 2020-06-12
+### FIX BUG
+-- Fix bug de ruteo 
+
+[TAG-GUARANI_2.9.5.8.0] - 2020-05-19
+### Cambio de funcionalidades
+-- Se modifica la forma de registracion de pagos de los certificados
+-- Se modifican servicios web de historia academica y beca de alumno
+
+[TAG-GUARANI_2.9.5.7.0] - 2020-04-01
+### Cambio de funcionalidades
+-- Se realizan cambios de logos institucionales para certificados.
+-- Se corrije bug de generacion de certificado de historia academica
+-- Modificacion en mapeo de requisitos de ingreso
+
+[TAG-GUARANI_2.9.5.6.2] - 2020-03-18
+### Cambio de funcionalidades
+-- Se modifican parametros con digitalizador
+
+[TAG-GUARANI_2.9.5.6.1] - 2020-03-16
+### Cambio de funcionalidades
+-- Se modifican parametros para ws gobierno
+
+[TAG-GUARANI_2.9.5.6.0] - 2020-03-05
+### Cambio de funcionalidades
+-- Se modifican funcionalidades de Sprint3 - 2020
+
+[TAG-GUARANI_2.9.5.5.2] - 2020-02-27
+### Cambio de mensaje en ws becaAlumno
+-- Modificacion en el retorno del mensaje 
+
+[TAG-GUARANI_2.9.5.5.1] - 2020-02-27
+### Fix de electivas
+-- Se corrigen datos para que pasen como UTF8
+
+[TAG-GUARANI_2.9.5.5.0] - 2020-02-18
+### Se agregan funcionalidades.
+-- Modificaciones de operacion de seleccion de electivas para alumnos
+
+[TAG-GUARANI_2.9.5.4.0] - 2020-02-14
+### Se agregan funcionalidades.
+-- Modificaciones de WS para sistema de electivas
+-- Modificaciones de operacion de seleccion de electivas para alumnos
+
+[TAG-GUARANI_2.9.5.3.0] - 2020-02-07
+### Se agregan funcionalidades.
+-- Modificaciones de circuito de titulo digital
+
+[TAG-GUARANI_2.9.5.2.3] - 2019-12-18
+### FIX BUG.
+-- Se soluciona problema de caracter en ws alta aspirante
+
+[TAG-GUARANI_2.9.5.2.2] - 2019-12-05
+### Modificación de funcionalidades.
+-- Se habilita la funcion de diploma para personalizacionesUA
+
+[TAG-GUARANI_2.9.5.2.1] - 2019-12-05
+### Modificación de funcionalidades.
+-- Se agregan cambios en el circuito de diploma
+
+[TAG-GUARANI_2.9.5.2.0] - 2019-11-25
+### Nuevas funcionalidades
+-- Se agregan todas las funcionadlidades por el circuito de diploma digital
+-- Se agregan y modifican WS
+-- Se agregan operaciones nuevas en 3W para la solicitud y seguimiento del tramite
+-- Se agregan y modifican procedimientos de base de datos
+
+[TAG-GUARANI_2.9.5.1.2] - 2019-10-31
+### Modificacion de bug
+-- Se modifica certificado de historia academica digital
+
+[TAG-GUARANI_2.9.5.1.1] - 2019-10-30
+### Modificacion de bug
+-- Se modifica la forma de conexion a la base de datos de cronTramites
+
+[TAG-GUARANI_2.9.5.1.0] - 2019-09-17
+### Nuevas funcionalidades 
+-- Se agregan 2 servicios web nuevos: alta alumno (con datos minimos) y actualizacion de datos censales
+-- Se modifica WS de estado alumno para agregar el parametro si es egresado o no
+-- Se modifica el WS de carrerasPlan para retornar el tipo de carrera
+
+[TAG-GUARANI_2.9.5.0.7] - 2019-09-09
+### Modificion de obligatoriedad en datos censales autogestion 
+-- Se quita obligartoriedad de algunos campos 
+
+[TAG-GUARANI_2.9.5.0.6] - 2019-09-09
+### Modificion de comunicacion con mesa de entradas
+-- Se agrega si los tramites son con o sin intervencion ministerial
+
+[TAG-GUARANI_2.9.5.0.5] - 2019-08-14
+### Modificion de reporte plan de estudios autogestion:
+-- Se dejan las funciones originales.
+
+[TAG-GUARANI_2.9.5.0.4] - 2019-08-12
+### Modificion de encoding de certificados  [changed]:
+-- Se modifican los encoding para todos los certificados emitidos desde postgres por el cron.
+
+[TAG-GUARANI_2.9.5.0.3] - 2019-08-08
+### Modificion en certificado analitico  [changed]:
+-- Se modifica leyenda de no convalidacion en certificado analitico 
+
+[TAG-GUARANI_2.9.5.0.2] - 2019-07-25
+### Nueva version  [changed]:
+-- Se realizan modificaciones en general.php de los ws
+-- Se Modifica el Repositorio.php de los ws 
+
+[TAG-GUARANI_2.9.5.0.1] - 2019-06-12
+### Nueva version  [changed]:
+-- Modificacion de planillas Jasper
+
+[TAG-GUARANI_2.9.5.0.0] - 2019-06-11
+### Nueva version  [changed]:
+-- Se migra a la version 2.9.5
+
+[TAG-GUARANI_2.9.4.5.3] - 2019-05-10
+### Modificaciones redecode [changed]:
+-- Se agrega codificacion para cuil en caso de aspirante extranjero
+
+[TAG-GUARANI_2.9.4.5.2] - 2019-04-24
+### Modificaciones wifi [changed]:
+-- Fix bug
+
+[TAG-GUARANI_2.9.4.5.1] - 2019-04-22
+### Modificaciones en controles al momento de solicitar certificados arancelados [changed]:
+-- Fix bug certificados CA
+
+[TAG-GUARANI_2.9.4.5.0] - 2019-04-11
+### Modificaciones en controles al momento de solicitar certificados arancelados [changed]:
+-- Se ajustan los controles al momento de la solicitud del certificado analítico, permitiendo solicitar en paralelo trámites con y sin intervención ministerial
+-- Fix bug control no egresados para certificados CA
+
+[TAG-GUARANI_2.9.4.4.0] - 2019-04-06
+### Recalculo de rendimiento academico [changed]:
+-- Recalculo de cantidad de materias aprobadas para el calculo de rendimiento academico
+
+[TAG-GUARANI_2.9.4.3.9] - 2019-03-27
+### Modificaciones en la vista de la historia académica en 3w solo para FCJS [changed]:
+-- Se modifica la vista de la historia académica en 3w solo para FCJS, se visualizan los nombres de las materias de acuerdo al plan actual del alumno.
+
+[TAG-GUARANI_2.9.4.3.8] - 2019-03-21
+### Modificaciones en la imagen para el tramite de certificados [changed]:
+-- Se modifica el logo de la derecha para que contenga el de los 100 años
+
+[TAG-GUARANI_2.9.4.3.7] - 2019-03-13
+### Modificaciones en el ws alta aspirante [changed]:
+-- No se verifica mas colegio secundario para g3
+
+[TAG-GUARANI_2.9.4.3.6] - 2019-02-14
+### Modificaciones en el ws de gobierno [changed]:
+-- No se verifica mas el apellido y nombre de la persona.
+-- Solo se valida que el alumno sea regular
+-- Se agrega la conexion para postgres y sus respectivas llamadas a funciones
+
+
+[TAG-GUARANI_2.9.4.3.5] - 2019-02-13
+### Reparacion de bug en cron tramites [changed]:
+-- Se modifican las formas de logueo, sale todo al syslog. 
+-- No se envian mas mails de log
+
+[TAG-GUARANI_2.9.4.3.0] - 2018-12-21
+### Nueva funcionalidad para servicio web Alumno [changed]:
+-- Se agrega nuevo servicio web estadoAlumno
+
+[TAG-GUARANI_2.9.4.2.6] - 2018-12-04
+### Correcciones y bugs [fixed]:
+-- Se agregan nuevos campos en el retorno de ws datos censales alumno 
+
+[TAG-GUARANI_2.9.4.2.5] - 2018-11-09
+### Correcciones y bugs [fixed]:
+-- SidCer, se modifica la accion "persona" por "personas" 
+
+[TAG-GUARANI_2.9.4.2.4] - 2018-11-08
+### Correcciones y bugs [fixed]:
+-- Se corrigen fuentes de SIDCER para G2
+-- Se agrega cambio en el WS de Becas para conexion con G3
+-- Se modifican plantillas de Jasper para certificados
+
+[TAG-GUARANI_2.9.4.2.3] - 2018-11-01
+### Correcciones y bugs [fixed]:
+-- Se modifican recodes para WS de alta de aspirante para G3
+-- Se corrigen fuentes de SIDCER para G2
+
+[TAG-GUARANI_2.9.4.2.2] - 2018-11-01
+### Correcciones y bugs [fixed]:
+-- Se modifica encabazado en jasper de historia academica
+
+[TAG-GUARANI_2.9.4.2.1] - 2018-10-23
+### Correcciones y bugs [fixed]:
+-- Se agrega metodo para el tratamiento de encoding en los WS
+-- Tambien se agrega limpieza de espacios en blanco de unidad academica
+-- Para rendimiendo academico en g3 se descartan las carreras 1014 y 1015 
+
+[TAG-GUARANI_2.9.4.2.0] - 2018-10-11
+### Nueva funcionalidad para SIDCER [changed]:
+-- Se agrega el modulo de WS para obtener los datos necesarios para la aplicación SIDCER
+
+[TAG-GUARANI_2.9.4.1.1] - 2018-10-04
+### Correcciones y bugs [fixed]:
+-- Se agrega en el retorno el tipo de materia
+Personalizaciones_UNL/Sps/web_service_historia_academica_alumno.sql
+
+[TAG-GUARANI_2.9.4.1.0] - 2018-09-06
+### Funcionalidades nuevas [changed]:
+-- Se agrega la personalizacion de tasa de egreso para CEMED
+
+[TAG-GUARANI_2.9.4.0.6] - 2018-08-30
+### Correcciones y bugs [fixed]:
+-- Se da permisos de acceso a WS de historia academica al usuario de ingreso
+-- Se modifican ws de biblioteca para que contemplen cemed
+
+[TAG-GUARANI_2.9.4.0.5] - 2018-08-21
+### Correcciones y bugs [fixed]:
+-- Se da permisos de acceso a WS de datos censales al usuario de ingreso
+-- Se modifican procedimientos para la impresion de actas por auogestion
+Personalizaciones_UNL/Sps/sp820_alumnos_com.sql
+Personalizaciones_UNL/Sps/sp820_detalle_acta_pr.sql
+Personalizaciones_UNL/Sps/web_service_historia_academica_alumno.sql
+
+[TAG-GUARANI_2.9.4.0.4] - 2018-08-09
+### Correcciones y bugs [fixed]:
+-- Se agrega sentencia para la impresion de comprobantes de cursadas.
+
+[TAG-GUARANI_2.9.4.0.3] - 2018-08-09
+### Correcciones y bugs [fixed]:
+-- Se agrega archivo faltante para la generacion de archivos PDF por medio de Jasper en el Cron de Tramites
+
+[TAG-GUARANI_2.9.4.0.2] - 2018-08-07
+### Correcciones y bugs [fixed]:
+-- Se quita posgrado fadu de las conexiones a informix en los ws
+
+[TAG-GUARANI_2.9.4.0.1] - 2018-08-1
+### Correcciones y bugs [fixed]:
+-- Descarga de certificados desde Autogestión
+
+[TAG-GUARANI_2.9.4.0.0] - 2018-07-26
+### Funcionalidades nuevas [changed]:
+-- Se agregan nuevas funcionalidades para el circuito de ingreso.
+Personalizaciones_UNL/Sql/Sps/web_serv_esta_inscripto.sql
+Personalizaciones_UNL/Sql/Sps/web_service_condicion_aspirante.sql
+Personalizaciones_UNL/Sql/Sps/web_service_dat_acad_completos.sql
+Personalizaciones_UNL/Sql/Sps/web_service_genera_legajo.sql
+Personalizaciones_UNL/Sql/Sps/web_service_insc_aspirante.sql
+Personalizaciones_UNL/Sql/Sps/web_service_rendimiento_acad.sql
+Personalizaciones_UNL/Sql/Sps/web_service_requisitos_ingreso.sql
+Personalizaciones_UNL/Sql/Sps/web_service_baja_requisito.sql
+Personalizaciones_UNL/Sql/Sps/web_service_insc_requisito.sql
+Personalizaciones_UNL/Sql/Sps/web_serv_dat_cen_alu.sql
+
+

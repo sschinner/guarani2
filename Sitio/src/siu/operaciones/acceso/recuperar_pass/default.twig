@@ -1,0 +1,97 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}    
+	{% if this.estado == 'inicial' %}
+            
+        {% import "kernel/macro_recaptcha.twig" as recaptcha %}
+        {{ recaptcha.script() }}
+	
+        <h2>{{"recuperar_contrasenia"|trans|capitalize}}</h2>
+	<p>{{"descripcion_recuperar_contrasenia"|trans}}</p>
+		<form method="post" action="{{ this.data.action_recuperar }}" id="guarani_form_recuperar_pass">
+		<div class="control-group">
+			<label class="control-label" for="pais">{{ "pais"|trans|capitalize }}</label>
+			<div class="controls">
+				<select id='pais' name='pais'>
+					{% for pais in this.data.paises %}
+					<option value='{{ pais.ID }}' {{(pais.ID == 54) ? 'selected' : '' }}>{{ pais.DESC }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			
+			<label class="control-label" for="tipo_doc">{{ "tipo_documento"|trans|capitalize }}</label>
+			<div class="controls">
+				<select id='tipo_doc' name='tipo_doc'>
+					{% for tipo in this.data.tipos_doc %}
+					<option value='{{ tipo.id }}'>({{ tipo.abrev }}) {{ tipo.nombre }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			
+			<label class="control-label" for="documento">{{ "numero_documento"|trans|capitalize }} ({{ 'sin_puntos'|trans }})</label>
+			<div class="controls">
+				<input id="documento" name="documento" type="text" value="{{this.data.documento}}" maxlength="15" />
+			</div>
+                        
+			<div class="control-group">
+                            {{ recaptcha.widget() }}
+			</div>
+                                
+			{% if this.data.mensajes %}
+				{% import "kernel/macro_notificaciones.twig" as notificaciones %}
+				{{ notificaciones.render_notif(this.data.mensajes) }}
+			{% endif %}
+			<div class="control-group">
+				<div class="controls">
+					<input id="continuar" name="continuar" type="submit" value="{{'continuar'|trans|capitalize}}" class="btn btn-info" />
+				</div>
+			</div>
+		</div>
+	</form>
+	{% elseif this.estado == 'mail_enviado' %}
+	<h2>{{"se_envio_email_a"|trans({'%1%': this.data.mail})|capitalize}}</h2>
+	<p>{{ "descripcion_mail_recuperar_contrasenia"|trans({'%1%': this.data.mail}) }}</p>
+	{% elseif this.estado == 'token_correcto' %}
+	<h2>{{"recuperar_contrasenia"|trans|capitalize}}</h2>
+	<p>{{ "descripcion_nueva_contrasenia"|trans }}</p>
+	<form method="post" action="{{ this.data.action_reset_pass }}" id="guarani_form_reset_pass">
+		{% if this.data.errores %}
+			<div class="alert alert-error">
+				{% for error in this.data.errores %}
+					<p>{{ error | raw }}</p>
+				{% endfor %}
+			</div>
+		{% endif %}
+		<div class="control-group">
+			<label class="control-label" for="password">{{ "nueva_contrasenia"|trans|capitalize }}</label>
+			<div class="controls">
+				<input id="password" name="password" type="password" value="" maxlength="20" />
+				<p id="password-error" class="alert-error"><span class="g3w-icono-fail"></span></p>
+				<div style="clear: both;"></div>
+			</div>
+
+			<div class="alert alert-info">
+              {{ this.data.info_clave_fuerte }}
+            </div>
+
+			<label class="control-label" for="rpassword">{{ "repetir_nueva_contrasenia"|trans|capitalize }}</label>
+			<div class="controls">
+				<input id="rpassword" name="rpassword" type="password" value="" maxlength="20" />
+				<p id="rpassword-error" class="alert-error"><span class="g3w-icono-fail"></span></p>
+				<div style="clear: both;"></div>
+			</div>
+			<input id="token" name="token" type="hidden" value="{{ this.data.token }}" />
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<input id="continuar" name="acceder" type="submit" value="{{'acceder'|trans|capitalize}}" class="btn btn-info" />
+			</div>
+		</div>
+	</form>
+	{% elseif this.estado == 'token_incorrecto' %}
+	<h2>{{"no_se_puede_recuperar_pass"|trans|capitalize}}</h2>
+	<p>{{"desc_no_se_puede_recuperar_pass"|trans}}</p>
+	{% else %}
+	<h2>{{"no_se_envio_email_recuperar_contrasenia"|trans|capitalize}}</h2>
+	<p>{{ "descripcion_mail_no_existente_recuperar_contrasenia"|trans }}</p>
+	{% endif %}
+{% endblock %}

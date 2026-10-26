@@ -1,0 +1,30 @@
+.brand-nav-desarrollo {
+	background: #2c3E50;
+}
+.brand-nav-integracion {
+	background: #626578;
+}
+.brand-nav-test {
+	background: #86342D;
+}
+.brand-nav{
+	background: #f7f7f7;
+}
+
+.g3w-info {
+  background-image: url('../img/icono-info.png');
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 30px auto;
+  cursor: pointer; 
+  
+}
+
+.g3w-cruz {
+  background-image: url('../img/cross.png');
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 24px auto;
+  height: 28px;
+  cursor: pointer; 
+}

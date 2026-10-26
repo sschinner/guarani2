@@ -1,0 +1,42 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_ficha_alumno.twig" as ficha_alumno %}
+{% block contenido %}
+    {{ ficha_alumno.render_menu(this.data.menu_reportes, this.data.categoria_actual, this.data.reporte_actual) }}
+	<div id="reporte_contenido">
+		<h3>{{ 'ficha_alumno.rep_antecedentes_docentes' | trans }}</h3>
+		{% for carrera in this.data.carreras %}
+		
+			{% if carrera.antecedentes %}
+				<table class='table table-condensed table-hover table-striped'>
+						<thead>
+							<tr>
+								<th>{{'ficha_alumno.institucion'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.cargo'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.materia'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.fecha_desde'|trans}}</th>
+								<th>{{'ficha_alumno.fecha_hasta'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.horas_semanales_trabajadas'|trans|capitalize}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for antecedente in carrera.antecedentes %}
+								<tr>
+									<td>{{ficha_alumno.mostrar(antecedente.institucion)}}</td>
+									<td>{{ficha_alumno.mostrar(antecedente.cargo)}}</td>
+									<td>{{ficha_alumno.mostrar(antecedente.materia)}}</td>
+									<td>{{ficha_alumno.mostrar(antecedente.fecha_desde)}}</td>
+									<td>{{ficha_alumno.mostrar(antecedente.fecha_hasta)}}</td>
+									<td>{{ficha_alumno.mostrar(antecedente.horas_semanales_trabajadas)}}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+			{% else %}
+				<div class="alert text-warning">{{'ficha_alumno.no_hay_antecedentes'|trans|capitalize}}</div>
+			{% endif %}
+		
+		{% else %}
+			<div class="alert text-warning">{{'ficha_alumno.no_hay_informacion'|trans}}</div>
+		{% endfor %}
+	</div>
+{% endblock %}

@@ -1,0 +1,84 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+{% if this.data.renglones %}
+    <form class='form-renglones' action='{{ this.data.url_guardar }}' method='post'>
+        <fieldset>
+        <legend><h4>Completar</h4></legend>
+	{{ _self.barra_acciones() }}	
+	<table class="tabla-renglones table table-bordered table-condensed" summary="Alumnos para carga de notas">
+	    <thead>
+		<th id="nombre" scope="col">{{ 'nombre_alumno'|trans|capitalize }}</th>
+		<th id="nota" scope="col">{{ 'nota'|trans|capitalize }}</th>
+		<th id="resultado" scope="col">{{ 'resultado'|trans|capitalize }}</th>
+		<th id="corregido" scope="col">{{ 'corregido_por'|trans|capitalize }}</th>
+		<th id="obs" scope="col">{{ 'observaciones'|trans|capitalize }}</th>
+	    </thead>
+
+	    <tbody>
+		{% for alumno in this.data.renglones %}
+		    <tr id='renglon_{{ alumno.RENGLON }}' 
+			    class='{{ (alumno.ERROR) ? 'error-renglon' : '' }}'
+			    title='{{ (alumno.ERROR) ? alumno.ERROR    : '' }}'
+		    >
+			<td headers="nombre"><input type='hidden' 
+					   data-tipo='resultado'
+					   name='renglones[{{ alumno.RENGLON }}][RENGLON]' 
+					   value='{{ alumno.RENGLON }}'/>
+				<div class="ficha-alumno clearfix"
+					 data-url-ficha="{{ alumno.URL_FICHA }}">
+					<img src='{{alumno.URL_IMAGEN}}' width='35' height="35" alt='{{ alumno.NOMBRE }}' class="pull-left" />
+					<div class="pull-left">
+						<span class="nombre">{{ alumno.NOMBRE }}</span>
+						<span class="legajo">{{'legajo'|trans|capitalize}}: {{ alumno.LEGAJO }}</span>
+					</div>
+				</div>
+			</td>
+			<td headers="nota" class="centrar alinear col-nota">
+			    <label class="acchide" for="renglones[{{ alumno.RENGLON }}][nota]">Nota: de 0 a 10</label>
+                            <select id="renglones[{{ alumno.RENGLON }}][nota]" class='nota' data-tipo='nota' name='renglones[{{ alumno.RENGLON }}][NOTA]' 
+									prev-value='{{ alumno.NOTA }}' >
+                                <optgroup label="Notas">
+                                <option value='' data-resultado='vacio'>{{ '-' }}</option>
+					{% for nota in this.data.escala_notas %}
+						{% set selected = (alumno.NOTA == nota.DESCRIPCION) ? 'SELECTED' : '' %}
+						<option {{ selected }} value='{{nota.DESCRIPCION}}'>{{nota.DESCRIPCION}}</option>
+					{% endfor %}
+                                </optgroup>	
+				</select>
+			</td>
+			<td headers="resultado" class='centrar alinear resultado'>{{ alumno.RESULTADO }}</td>
+			<td headers="corregido" class="centrar alinear observaciones_wrapper">
+			     <label class="acchide" for="renglones[{{ alumno.RENGLON }}][CORREGIDO_POR]">Ingrese nombre sobre quien corrigio el parcial</label>
+                            <textarea data-tipo='corregido_por'
+                                        id='renglones[{{ alumno.RENGLON }}][CORREGIDO_POR]'
+					name='renglones[{{ alumno.RENGLON }}][CORREGIDO_POR]' 
+					class='corregido_por' prev-value='{{ alumno.CORREGIDO_POR }}' 
+					{% if not alumno.NOTA %} disabled="disabled"{% endif %}>{{ alumno.CORREGIDO_POR }}</textarea>
+			</td>
+			<td headers="obs" class="centrar alinear observaciones_wrapper">
+			    <label class="acchide" for="renglones[{{ alumno.RENGLON }}][OBSERVACIONES]">Ingrese nombre sobre quien corrigio el parcial</label>
+                            <textarea data-tipo='observaciones'
+                                      id='renglones[{{ alumno.RENGLON }}][OBSERVACIONES]' 
+					name='renglones[{{ alumno.RENGLON }}][OBSERVACIONES]' 
+					class='observaciones' prev-value='{{ alumno.OBSERVACIONES }}' 
+					{% if not alumno.NOTA %} disabled="disabled"{% endif %}>{{ alumno.OBSERVACIONES }}</textarea>
+			</td>
+		    </tr>
+		{% endfor %}
+	    </tbody>
+	</table>
+	{{ _self.barra_acciones() }}
+        </fieldset>
+    </form>
+{% else %}
+    <div class="alert">{{"no_hay_renglones"|trans|capitalize}}</div>
+{% endif %}
+
+{% endblock %}
+	
+{% macro barra_acciones() %}
+	<div class="form-actions clearfix">
+		<input type='submit' value='{{"guardar"|trans|capitalize}}' class="btn btn-info btn-small pull-right" />
+	</div>
+{% endmacro %}

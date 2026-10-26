@@ -1,0 +1,29 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+<div>
+<h3 class="titulo-navbar clearfix">
+	<div class="pull-left">
+		{{ this.data.MATERIA_NOMBRE }} ({{ this.data.MATERIA }})		
+	</div>
+	<div class="pull-right">
+		<div id="js-info-mesa">{{ this.data.TIPO_CLASE }} <span>{{ this.data.FECHA_CLASE }}</span></div>
+	</div>
+</h3>
+</div>
+
+<table class="table table-condensed detalle-mesa" summary="informaci&oacute;n de comisi&oacute;n">
+	<tr>
+		<th scope="row"><strong>{{'comision'|trans|capitalize}}:</strong></th>
+		<td>{{ this.data.COMISION_NOMBRE }}</td>
+		{% if this.data.SUBCOMISION != 0 %}
+			<th scope="row"><strong>{{'subcomision'|trans|capitalize}}:</strong></th>
+			<td>{{ this.data.SUBCOMISION_NOMBRE }}</td>
+		{% endif %}
+		<th scope="row"><strong>{{'horario'|trans|capitalize}}:</strong></th>
+		<td>{{ this.data.DIA_SEMANA_DESC }} de {{ this.data.HS_COMIENZO_CLASE }} a {{ this.data.HS_FINALIZ_CLASE }} </td>
+		<th scope="row"><strong>{{'cantidad_horas'|trans|capitalize}}:</strong></th>
+		<td>{{ this.data.CANTIDAD_HORAS }}</td>
+	</tr>
+</table>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "kernel/una_columna.twig" %}
+{% block titulo_operacion %}
+ <div class="titulo_operacion row-fluid">
+     <div class="span12">
+     <h2 class="clear resaltar" style="overflow: hidden;">
+            <span class="pull-left">{{"titulo.datos_personales"|trans|capitalize}}</span>
+            <div class="pull-right">
+                <button  type="submit" name="guardar" class="guardar btn btn-info pull-right" disabled="disabled">Guardado</button>
+            </div>
+     </h2>
+     </div>
+ </div>   
+{% endblock %}
+{% block columna_1 %}    
+    {{ formulario.render }} 
+{% endblock %}

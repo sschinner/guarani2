@@ -1,0 +1,50 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    <div class="titulo_operacion">
+		<h2 class="clearfix"><span class="pull-left">{{"reinscripciones_a_carreras.titulo"|trans|capitalize}}</span></h2>
+	</div>
+    <div id="tabla_reinscripciones">
+        {% if this.datos() %}
+        <table class='table table-condensed table-hover table-striped'>
+            <thead>
+                <tr>
+                    <th>{{'reinscrips.tabla.anio_academico'|trans|capitalize}}</th>
+                    <th>{{'reinscrips.tabla.carrera_nombre'|trans|capitalize}}</th>
+                    <th>{{'reinscrips.tabla.legajo'|trans|capitalize}}</th>
+                    <th>{{'reinscrips.tabla.fecha'|trans|capitalize}}</th>
+                    <th>{{'reinscrips.tabla.comprobantes'|trans|capitalize}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for linea, reinscripcion in this.datos() %}
+                    <tr>
+                        <td>{{reinscripcion.ANIO_ACADEMICO}}</td>
+                        <td>{{reinscripcion.CARRERA_NOMBRE}}</td>
+                        <td>{{reinscripcion.LEGAJO}}</td>
+                        <td>{{reinscripcion.SFECHA_REINSCRIP}}</td>
+                        <td>
+                            <button type="button" class="btn ver_comprobante" data-comprobante="{{linea}}">{{'reinscripciones.mostrar_detalle' | trans }}</button>
+                        </td>
+                    </tr>
+                    <tr comprobante="{{linea}}" style="display:none;">
+                        <td colspan="5">
+                            {% if reinscripcion.URL_COMP != "-.-" %}
+                            <a class='btn btn-small js-print-comprobante' href='#' data-img='{{reinscripcion.URL_COMP}}'<div class="icon icon-print"></div>{{'imprimir'|trans|capitalize}}</a>
+                            <img src="{{reinscripcion.URL_COMP}}" />
+                            {% else %}
+                            <div class="alert-info alert">
+                            {{'reinscripciones.comprobante_no_disponible'|trans|capitalize}}
+                            </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <div class="alert">
+                {{"reporte.no_hay_datos.reinscripciones"|trans|capitalize}}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

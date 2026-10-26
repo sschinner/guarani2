@@ -1,0 +1,6 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 1.3.0
+-- *******************************************************************************
+Execute procedure dba.sp_cambiaparametro( 'exa00022', 2 , 10 , "dr820_acta_examen_cordoba" );
+Execute procedure dba.sp_cambiaparametro( 'exa00022', 2 , 3 , "d820_acta_de_examen" );

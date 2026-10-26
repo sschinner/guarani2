@@ -1,0 +1,20 @@
+-- inserta la operacion  de reporte simple - sui_operaciones limpia todo
+execute procedure dba.sui_operaciones ('820req01', 'Alumnos con requisitos no cumplidos ', 'Alumnos con requisitos no cumplidos ',NULL);
+-- inserta operacion_mod
+Begin;
+
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = "820req01";
+
+
+insert into dba.acc_operacion_mod (modulo, operacion, submodulo, orden) VALUES
+   ('82000001', '820req01', '820requi', 10); 
+insert into dba.acc_parametros (operacion, orden, ventana, parametros, cierra_anterior) VALUES
+               ('820req01', 1, 'w_reporte', 'uo_dw, dp_820_periodo_ingreso, uo_dw, dr_820_requisitos_cumplidos, dl_820_requisitos_cumplidos', 'N');
+
+insert into dba.acc_acciones_oper (operacion, accion) VALUES
+      ('820req01', 'C');
+
+
+commit;
+

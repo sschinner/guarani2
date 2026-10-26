@@ -1,0 +1,69 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<form id="principales" action="{{ this.data.url_guardar }}" method="post">
+		{% import "kernel/macro_csrf.twig" as input_csrf %}
+		{{ input_csrf.mostrar(this.generar_csrf) }}
+
+		{{this.data.form.form_id.renderViewHelper|raw}}
+
+		{#{this.data.form.CENS_E_MAIL.renderLabel|raw}}
+		{{this.data.form.CENS_E_MAIL.renderViewHelper|raw}#}
+
+		{{this.data.form.CENS_CALLE_PER_LECT.renderLabel|raw}}
+		{{this.data.form.CENS_CALLE_PER_LECT.renderViewHelper|raw}}
+		<div class="clearfix">
+			
+			<div class="pull-left">
+				{{this.data.form.CENS_NUMERO_PER_LECT.renderLabel|raw}}
+				{{this.data.form.CENS_NUMERO_PER_LECT.renderViewHelper|raw}}
+			</div>
+			<div class="pull-left">
+				{{this.data.form.CENS_PISO_PER_LECT.renderLabel|raw}}
+				{{this.data.form.CENS_PISO_PER_LECT.renderViewHelper|raw}}
+			</div>
+			<div class="pull-left">
+				{{this.data.form.CENS_DPTO_PER_LECT.renderLabel|raw}}
+				{{this.data.form.CENS_DPTO_PER_LECT.renderViewHelper|raw}}
+			</div>
+			<div class="pull-left">
+				{{this.data.form.CENS_UNIDAD_PER_LECT.renderLabel|raw}}
+				{{this.data.form.CENS_UNIDAD_PER_LECT.renderViewHelper|raw}}
+			</div>
+		</div>
+
+
+		<div class="clearfix">
+			<div class="pull-left">
+				{{this.data.form.CENS_LOC_PER_LECT_TEXTO.renderLabel|raw}}
+				{{this.data.form.CENS_LOC_PER_LECT_TEXTO.renderViewHelper|raw}}
+				{{this.data.form.CENS_LOC_PER_LECT.renderViewHelper|raw}}
+			</div>
+			<div class="pull-left fix-boton">
+				<input id="btnLocPersonal" name="btnLocPersonal" value="Buscar Localidad" type="button" class="btn btn-inverse" />
+			</div>
+			<div class="pull-left">
+				{{this.data.form.CENS_CP_PER_LECT.renderLabel|raw}}
+				{{this.data.form.CENS_CP_PER_LECT.renderViewHelper|raw}}
+			</div>
+			<div class="pull-left fix-boton">
+				<input id="btnLocPersonalBorrar" name="btnLocPersonalBorrar" value="Borrar" type="button" class="btn  btn-borrar icon-trash" />
+			</div>
+		</div>
+
+		<img id="imagen_perfil" class="pull-right img-rounded" src='{{ this.data.url_imagen }}' alt="Imagen ficha"/>
+
+		{{this.data.form.CENS_TE_PER_LECT.renderLabel|raw}}
+		{{this.data.form.CENS_TE_PER_LECT.renderViewHelper|raw}}
+
+		<div class="clearfix">
+			<div class="pull-left">
+				{{this.data.form.AUX1_CELULAR_NUMERO.renderLabel|raw}}
+				{{this.data.form.AUX1_CELULAR_NUMERO.renderViewHelper|raw}}
+			</div>
+			<div class="pull-left">
+				{{this.data.form.AUX1_CELULAR_COMPANIA.renderLabel|raw}}
+				{{this.data.form.AUX1_CELULAR_COMPANIA.renderViewHelper|raw}}
+			</div>
+		</div>
+	</form>
+{% endblock %}

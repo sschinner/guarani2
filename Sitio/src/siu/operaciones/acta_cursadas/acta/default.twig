@@ -1,0 +1,86 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<div class="titulo_operacion">
+		<h2 class="clearfix">
+			<button class='btn btn-primary btn-small js-btn-back pull-left' data-url-back="{{this.data.url_back}}" alt="Volver"><span class="icon-chevron-left icon-white"></span></button>
+			<span class="pull-left">{{"actas_regulares"|trans|capitalize}}</span>
+			<div class="pull-right">
+				<a class="btn no-ajax" target="_blank" href="{{this.data.generar_pdf}}"><span class="acchide">Exportar a PDF</span><span class="g3w-icono-pdf"></span></a>
+				<a class="btn no-ajax" target="_blank" href="{{this.data.generar_xls}}"><span class="acchide">Exportar a XLS</span><span class="g3w-icono-xls"></span></a>
+			</div>			
+		</h2>
+	</div>
+
+	{% set ENCABEZADO = this.data.alumnos.ENCABEZADO %}
+	{% if ENCABEZADO %}
+		<table class="table table-condensed" summary="Informacion de acta">
+			<tr>
+				<th scope="row" id="info_materia"><strong>{{"info_materia.materia" | trans | capitalize}}:</strong></td>
+				<td headers="info_materia">{{ENCABEZADO.MATERIA}}</td>
+				<th scope="row" id="info_acta"><strong>{{"info_materia.acta" | trans | capitalize}}:</strong></td>
+				<td headers="info_acta">{{ENCABEZADO.ACTA}}</td>
+			</tr>
+			<tr>
+				<th scope="row" id="info_anio"><strong>{{"anio_academico" | trans | capitalize}}:</strong> </th>
+				<td headers="info_anio">{{ENCABEZADO.ANIO_ACAD}}</td>
+				<th scope="row" id="info_folios"><strong>{{"folios" | trans | capitalize}}:</strong></th>
+				<td headers="info_folios">{{ENCABEZADO.FOLIOS}}</td>
+			</tr>
+			<tr>
+				<th scope="row" id="info_periodo"><strong>{{"periodo_lectivo" | trans | capitalize}}:</strong></th>
+				<td headers="info_periodo">{{ENCABEZADO.PER_LEC}}</td>
+				<th scope="row" id="info_comision"><strong>{{"comision" | trans | capitalize}}:</strong></th>
+				<td headers="info_comision">({{ENCABEZADO.COMISION}}) {{ENCABEZADO.COMISION_NOMBRE}}</td>
+			</tr>
+			<tr>
+				<th scope="row" id="info_libro"><strong>{{"libro" | trans | capitalize}}:</strong></th>
+				<td headers="info_libro">{{ENCABEZADO.LIBRO}}</td>
+				<th scope="row" id="info_plan"><strong>{{"plan.estado" | trans | capitalize}}:</strong></th>
+				<td headers="info_plan">{{ENCABEZADO.ESTADO_ACTA}}</td>
+			</tr>
+			<tr>
+				<th scope="row" id="info_docente"><strong>{{"docente_comision" | trans | capitalize}}:</strong></th>
+				<td headers="info_docente" colspan="3">{{ENCABEZADO.DOCENTES}}</td>
+			</tr>
+			<tr>
+				<th scope="row" id="info_observaciones"><strong>{{"observaciones" | trans | capitalize}}:</strong></th>
+				<td headers="info_observaciones" colspan="3">{{ENCABEZADO.OBS}}</td>
+			</tr>
+		</table>
+	{% endif %}
+
+	{% if this.data.alumnos.CUERPO %}
+		{% for clave, folio in this.data.alumnos.CUERPO %}
+			<table class="table table-striped table-bordered table-condensed">
+                        <caption><strong>{{"folio" | trans | capitalize}}:</strong> {{clave}}</caption>
+			<thead>
+			<tr>
+				<th scope="col" id="renglon{{clave}}">{{"renglon" | trans | capitalize}}</th>
+				<th scope="col" id="legajo{{clave}}">{{"legajo" | trans | capitalize}}</th>
+				<th scope="col" id="apellido_y_nombre{{clave}}">{{"apellido_y_nombre" | trans | capitalize}}</th>
+				<th scope="col" id="fecha{{clave}}">{{"fecha" | trans | capitalize}}</th>
+				<th scope="colgroup" colspan="2" id="nota{{clave}}">{{"nota" | trans | capitalize}}</th>
+				<th scope="col" id="condicion{{clave}}">{{"condicion" | trans | capitalize}}</th>
+				<th scope="col" id="resultado{{clave}}">{{"resultado" | trans | capitalize}}</th>
+			</tr>
+			</thead>
+				{% for alumno in folio %}
+				<tr>
+					<td headers="renglon{{clave}}">{{alumno.RENGLON|raw}}</td>
+					<td headers="legajo{{clave}}">{{alumno.LEGAJO|raw}}</td>
+					<td scope="row" headers="apellido_y_nombre{{clave}}">{{alumno.APE_NOM|raw}}</td>
+					<td headers="fecha{{clave}}">{{alumno.FECHA|raw}}</td>
+					<td headers="nota{{clave}}">{{alumno.NOTA_NUM|raw}}</td>
+					<td headers="nota{{clave}}">{{alumno.NOTA_LETRAS|raw}}</td>
+					<td headers="condicion{{clave}}">{{alumno.CONDICION|raw}}</td>
+					<td headers="resultado{{clave}}">{{alumno.RESULTADO|raw}}</td>
+				</tr>
+				{% endfor %}
+			</table>
+		{% endfor %}
+	{% else %}
+		<div role="alert" class="alert">
+			{{"reporte.no_hay_datos.acta_detalle_alumnos"|trans|capitalize}}
+		</div>
+	{% endif %}
+{% endblock %}

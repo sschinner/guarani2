@@ -1,0 +1,10 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 1.0.1
+-- Reemplazar la cadena FICH por la sigla de la UA
+-- *******************************************************************************
+Execute procedure sui_parametros_sis( '820_cant_de_mat_turno_esp', 'Cnt de Materias para rendir en turno Especial', 'Determina la Máxima Cantidad de Materias que le deben faltar al alumno para poder inscribirse a rendir en un Turno Especial.', 'R', 'I', null, null, null );
+
+delete from sga_param_sistema where parametro = '820_cant_de_mat_turno_esp';
+insert into sga_param_sistema select unidad_academica, '820_cant_de_mat_turno_esp', '4' from sga_valor_inicial;
+

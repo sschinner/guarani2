@@ -1,0 +1,5 @@
+
+	Transacciones:
+
+		- no usan a siu\guarani, reciben su contexto por parametro
+		- Usan siu\modelo\controles\controles

@@ -1,0 +1,487 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    <style>
+        #popup {
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 1001;
+        }
+
+        .content-popup {
+            margin:0px auto;
+            margin-top:120px;
+            position:relative;
+            padding:10px;
+            width:950px;
+            min-height:550px;
+            border-radius:4px;
+            background-color:#FFFFFF;
+            box-shadow: 0 2px 5px #666666;
+        }
+
+        .content-popup h2 {
+            color:#48484B;
+            border-bottom: 1px solid #48484B;
+            margin-top: 0;
+            padding-bottom: 4px;
+        }
+
+        .popup-overlay {
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            z-index: 999;
+            display:none;
+            background-color: #777777;
+            cursor: pointer;
+            opacity: 0.7;
+        }
+        .closeButton {
+            position: absolute;
+            right: 8px;
+        }
+    </style>
+    <script >
+
+        $(document).ready(function () {
+            $("#textoCertificadoMESI").hide();
+            $("#textoCertificadoDecanoNO").hide();
+            $("#spanCertificado9").hide();
+            $("#spanCertificado100MESI").hide();
+            
+            verifica();
+            
+            $("#interesado").blur(function () {
+              
+                if ($('#nro_certificado').val() === '9' && $.trim( $("#interesado").val()) === '') {
+                    $("button[name='solicitar']").attr('disabled', 'true');
+
+                } else if ($('#nro_certificado').val() === '9' && $.trim( $("#interesado").val()) !== '' && $("#certDecano").val()==='S') {
+                    $("button[name='solicitar']").removeAttr('disabled');
+                }
+            });
+
+            $('select#certificado_me').on('change', function () {
+                var valor = $(this).val();
+                
+                /* Se habilita el boton para solicitar */
+                $("button[name='solicitar']").removeAttr('disabled');
+                verifica();
+                /*-----*/
+                if (valor === "S") {
+                    $("#textoCertificadoMESI").show(1000);
+                    $("#textoCertificadoMENO").hide();
+                    $("#divDecano").hide(1000);
+                    if ($('#nro_certificado').val() === '9'){
+                        $("#spanCertificado9").show();
+                        $(".cert9").attr('title','{{this.data.DNGyFU}}');
+                        
+                    }else{
+                        $("#spanCertificado9").hide();
+                        $(".cert9").attr('title',"Campo Obligatorio");
+                    }
+                    if ($('#nro_certificado').val() === '100'){
+                        $("#spanCertificado100MESI").show();
+                      
+                    }else{
+                        $("#spanCertificado100MESI").hide();
+                    }
+                } else {
+                    $("#spanCertificado9").hide();
+                    $("#spanCertificado100MESI").hide();
+                    $(".cert9").attr('title',"Campo Obligatorio");
+                    /* Se agrega validacion decano */
+                    $('select#certDecano').val('S');
+                    $("#textoCertificadoDecanoNO").hide();
+                    $("#textoCertificadoDecanoSI").show(1000);
+                    $("#divDecano").show(1000);
+                    /*-----*/
+                    if ($('select#certDecano').val() == 'S') {
+                        $("#textoCertificadoMENO").hide();
+                    } else {
+                        $("#textoCertificadoMENO").show(1000);
+                    }
+                    $("#textoCertificadoMESI").hide();
+
+
+                }
+
+            });
+
+            /*Selector decano*/
+            $('select#certDecano').on('change', function () {
+                var valor = $(this).val();
+                if (valor === "S") {
+                    /* Se habilita el boton para solicitar */
+                    $("button[name='solicitar']").removeAttr('disabled');
+                    verifica();
+                    /*-----*/
+                    $("#textoCertificadoDecanoSI").show(1000);
+                    $("#textoCertificadoDecanoNO").hide();
+
+
+                } else {
+                    /* Se deshabilita el boton para solicitar */
+                    $("button[name='solicitar']").attr('disabled', 'true');
+                    /*-----*/
+                    $("#textoCertificadoDecanoNO").show(1000);
+                    $("#textoCertificadoDecanoSI").hide();
+                    $("#textoCertificadoMENO").hide();
+
+
+                }
+
+            });
+
+            if ($('select#certDecano').val() == 'S') {
+                $("#textoCertificadoMENO").hide();
+            }
+
+            $("#open").click(function () {
+                url = $(this).attr("href");
+                window.open(url, '_blank');
+                return false;
+            });
+            $("#open1").click(function () {
+                url = $(this).attr("href");
+                window.open(url, '_blank');
+                return false;
+            });
+            
+            $('select#seltitulo').on('change', function () {
+                var valor = $(this).val();
+               
+                $("#titulo").val(valor);
+                
+        });
+        });
+
+
+        function verifica() {
+
+           if ($('#nro_certificado').val() === '9' && $.trim( $("#interesado").val()) === '') {
+                $("button[name='solicitar']").attr('disabled', 'true');
+
+            } else if ($('#nro_certificado').val() === '9' && $.trim( $("#interesado").val()) != '') {
+                $("button[name='solicitar']").removeAttr('disabled');
+            }
+        }
+
+       
+
+    </script>
+    <div id="popup" style="display: none;">
+        <div class="content-popup">
+            <div class="closeButton"><input type="button" id="botonClose" class="g3w-cruz" style="width:28px;"/></div>
+            <div>
+                <iframe src="{{this.data.urlPagar}}" width="97%" height="550px" frameborder="0"> </iframe>
+            </div>
+        </div>
+    </div>
+    {% if (this.data.id_form) %}
+
+        {% if (this.data.id_form == this.data.nroCertificado and this.data.debePagar) or this.data.yaSolicitado %}    
+            {% if this.data.retornoWS == 1 %}
+                <div class="form-container">
+                    <div id="mensaje" role="alert" class="alert alert-error hide">				
+                    </div>
+                    <div class="row">
+                        <div class="alert-info" style="margin-left:10%;background-color: #DDEFFF;">
+                            <p style="color:#333333"><b>{{this.data.texto1}}</b></p>
+                            <p style="color:#333333"><b>{{this.data.texto2}}</b></p>
+                            <p  style="color:#333333">{{this.data.texto3}} <b><a  href="{{this.data.urlPagar}}"  id="open" name="open" > MEDIOS DE PAGO </a></b> <br>
+                                {{this.data.texto4}}
+                            </p>
+                            <p  style="color:#333333">{{this.data.texto5}}</p>
+                            <p style="color:#333333">{{this.data.texto6}}</p>
+                            <p style="color:#333333">{{this.data.texto7}}</p>
+                            <br>
+                            <p style="color:#333333;font-size:8pt;"><b>{{this.data.texto8}}</b></p>
+                            <br>
+
+                        </div>
+                    </div>
+                </div>
+            {%elseif this.data.retornoWS == 2 or this.data.retornoWS == 5 %}
+                <div class="form-container">
+                    <div id="mensaje" role="alert" class="alert alert-error hide">				
+                    </div>
+                    <div class="row">
+                        <div class="alert-info" style="margin-left:5%;background-color: #DDEFFF;width:115%">
+                            <p style="color:#333333"><b>{{this.data.texto1}}</b></p>
+                            <p style="color:#333333"><b>{{this.data.texto2}}</b></p>
+                            <p  style="color:#333333">{{this.data.texto3}} <b><a  href="{{this.data.urlPagar}}"  id="open1" name="open1" > MEDIOS DE PAGO </a></b> <br>
+                                {{this.data.texto4}}
+                            </p>
+                            <p  style="color:#333333">{{this.data.texto5}}</p>
+                            <p style="color:#333333">{{this.data.texto6}}</p>
+                            <p style="color:#333333">{{this.data.texto7}}</p>
+                            <br>
+                            <p style="color:#333333;font-size:8pt;"><b>{{this.data.texto8}}</b></p>
+                            <br>
+
+                        </div>
+                    </div>
+                </div>
+            {%elseif this.data.retornoWS == 3 or this.data.retornoWS == 4 %}
+                <div class="form-container">
+                    <div id="mensaje" role="alert" class="alert alert-error hide">				
+                    </div>
+                    <div class="row">
+                        <div class="alert alert-warning" style="margin-left:5%;width:115%;text-align: left;">
+                            <p style="color:#333333"><b>{{this.data.texto1}}</b></p>
+                            <p style="color:#333333"><b>{{this.data.texto2}}</b></p>
+                            <br>
+
+                        </div>
+                    </div>
+                </div>                
+            {%elseif this.data.retornoWS == 500 %}
+                <div class="form-container">
+                    <div id="mensaje" role="alert" class="alert alert-error ">
+                        <p>Momentaneamente el servicio se encuentra interrumpido, por favor intente mas tarde</p>
+                        <p>Disculpe las molestias</p>
+                    </div>
+                </div>
+            {% endif %}
+
+        {% else %}    
+
+            {% if this.data.id_form == 1 %}
+
+                {% if this.data.mostrar_error_no_regular %}
+                    <div class="alert alert-error">
+                        <button type="button" class="close" data-dismiss="alert"></button>
+                        {{ 'form.alumno_no_regular'|trans }}
+                    </div>
+                {% endif %}
+
+                {% if this.data.mostrar_error_no_reinscripto %}
+                    <div class="alert alert-error">
+                        <button type="button" class="close" data-dismiss="alert"></button>
+                        {{ 'form.alumno_no_reinscripto'|trans }}
+                    </div>
+                {% endif %}
+
+                {% if this.data.mostrar_error_al_generar_certificado %}
+                    <div class="alert alert-error">
+                        <button type="button" class="close" data-dismiss="alert"></button>
+                        {{ 'form.error_al_generar_certificado'|trans }}
+                    </div>
+                {% endif %}
+
+            {% endif %}
+            <form method="post" action="{{this.data.url_form}}" id="js-form-certificado" class="form-horizontal">
+                {% if (this.data.id_form and this.data.form_argumentos) %}
+
+                    <h3 class="clearfix"><span class="pull-left">
+                            {{this.data.form_argumentos.nombre|trans|capitalize}}
+                            {{ this.data.form_argumentos.solicitud_pendiente == "S" ? '<span class="icon-ok"><span class="acchide">Solicitud pendiente</span></span>' : ''}}</span>
+
+                        {% if (this.data.form_argumentos.generacion_web == 'OnLine') %}
+                            {{this.get_url_cert_online(this.data.id_form)}}
+                            <a class="btn no-ajax pull-right btn_imprimir_car" href="{{ this.data.url_generar_car }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'solicitud_certificados_online.descripcion'|trans }}">
+                                <span class="acchide">{{'solicitud_certificados_online'|trans}}</span>
+                                <span class="g3w-icono-pdf"></span>
+                                {{"solicitud_certificados_online"|trans}}
+                            </a>
+
+                        {% endif %}
+
+                        {% if (this.data.form_argumentos.generacion_web == 'Manual') %}	
+                            <button type="button" name="solicitar" class="btn btn-info js-btn-solicitar pull-right" data-toggle="tooltip" data-placement="bottom" title="{{'solicitud_certificados_manual.descripcion'|trans|capitalize}}" >{{"solicitud_certificados_manual"|trans|capitalize}}</button>
+                        {% endif %}	
+                    </h3>
+
+                    <div class="form-container">
+                        <div id="mensaje" role="alert" class="alert alert-error hide">				
+                        </div>
+                        <div class="row">
+                            <input type="hidden" value="{{this.data.form_argumentos.id}}" name="nro_certificado" id="nro_certificado" />
+                            {% for argumento in this.data.form_argumentos.argumentos %}
+                                {% if (argumento.1 == 'unidad_academica' or (argumento.1 == 'carrera' and this.data.id_form != this.data.nroCertificado))  %}	
+                                    <div class="control-group" >			
+                                        <div class="control-label" style="width:25%">
+                                            <label for="{{argumento.1}}">{{argumento.5|trans|capitalize}}: </label>
+                                        </div>
+                                        <div class="controls">						
+                                            <input type="text" maxlength="255" value="{{argumento.nombre}}" name="{{argumento.1}}" id="{{argumento.1}}" {{ argumento.4 == "N" ? 'readonly="readonly"' : ''}} />
+                                        </div>
+                                    </div>
+                                    <input type="hidden" maxlength="255" value="{{argumento.3}}" name="args[{{argumento.0}}]" id="{{argumento.1}}" {{ argumento.4 == "N" ? 'readonly="readonly"' : ''}} />				
+                                {% elseif (argumento.1 == 'observaciones')%}
+                                    {% if this.data.id_form != 1 %}
+                                        {% if this.data.id_form == 5 %}                   
+                                            <textarea type="text" style="display:none" maxlength="255" value="{{argumento.3}}" name="args[{{argumento.0}}]" id="{{argumento.1}}" {{ argumento.4 == "N" ? 'readonly="readonly"' : ''}}></textarea>
+                                        {% else %}
+                                            <div class="control-group">         
+                                                <div class="control-label" style="width:25%">
+                                                    <label for="{{argumento.1}}">{{argumento.5|trans|capitalize}}: </label>
+                                                </div>
+                                                <div class="controls">                      
+                                                    <textarea type="text" maxlength="255" value="{{argumento.3}}" name="args[{{argumento.0}}]" id="{{argumento.1}}" {{ argumento.4 == "N" ? 'readonly="readonly"' : ''}}></textarea>
+                                                </div>
+                                            </div>
+                                        {%endif%}
+                                    {%endif%}
+                                {% elseif (argumento.1 == 'certificado_me')%}
+                                    <div class="control-group">
+                                        <div class="control-label" style="width:25%">
+                                            <label for="{{argumento.1}}">{{argumento.5|trans}}: </label>
+                                        </div>
+                                        <div class="controls">
+                                            <select name="args[{{argumento.0}}]" id="{{argumento.1}}" {%if (this.data.id_form == 1) or (argumento.4 == "N")%} readonly="readonly"{%endif%}>
+                                                <option  value="N">NO</option>
+                                                <option  value="S">SI</option>
+                                            </select>
+
+                                            <span id="textoCertificadoMENO" style="font-size:8pt;color:#003399">(Valor del Certificado <b>sin</b> la certificaci&oacute;n del Ministerio: ${{this.data.montoSin}})</span>    
+                                            <span id="textoCertificadoMESI" style="font-size:8pt;color: green">(Certificaci&oacute;n DNGU del Minist. de Educ. de la Naci&oacute;n: ${{this.data.montoCon}})</span>    
+                                        </div>
+                                        {% if this.data.id_form == 100 %}
+                                            <div class="control-label" style="width:25%">
+                                            </div>
+                                            <span id="spanCertificado100MESI" style="font-size:8pt;color:#003399">Según disposiciones de la DNGU del Ministerio de Educación de la Nación, el trámite de certificación y registro del Certificado Analítico de Estudios requiere de la presentación conjunta del título Diploma. Si Ud. ya posee el diploma, una vez solicitado el analítico, debe enviar imagen del frente y dorso del diploma a diplomas@rectorado.unl.edu.ar con el asunto: Intervención Ministerial. El trámite es completamente on-line. Si su diploma es digital no debe solicitar este certificado.</span>    
+                                        {%endif%}
+                                    </div>
+
+                                {% elseif (argumento.1 == 'carrera')%}
+                                    <input type="text" maxlength="255" style="display:none;" value="{{argumento.3}}" name="args[{{argumento.0}}]" id="{{argumento.1}}" {%if (this.data.id_form == 1) or (argumento.4 == "N")%} readonly="readonly"{%endif%} {#{ argumento.4 == "N" ? 'readonly="readonly"' : ''}#} />
+
+                                {% elseif (argumento.1 == 'titulo') and  (this.data.form_argumentos.id == '100') %} 
+                                    <div class="control-group">
+                                        <div class="control-label" style="width:25%">
+                                            <label for="{{argumento.1}}">Nombre del T&iacute;tulo: </label>
+                                        </div>
+                                        <div class="controls">
+                                            <select name="args[{{argumento.0}}]" id="sel{{argumento.1}}">
+                                                {%for keys,filas in argumento.nombre %}
+                                                   <option  value="{{argumento.3[keys]}}">{{filas}}</option>
+                                            {%endfor%}
+                                        </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <input type="text" maxlength="255" style="display:none;" value="{{argumento.3[0]}}" name="args[{{argumento.0}}]" id="{{argumento.1}}" {%if (this.data.id_form == 1) or (argumento.4 == "N")%} readonly="readonly"{%endif%} {#{ argumento.4 == "N" ? 'readonly="readonly"' : ''#} />
+                                {% elseif (argumento.1 == 'titulo') %}    
+                                    <input type="text" maxlength="255" style="display:none;" value="{{argumento.3}}" name="args[{{argumento.0}}]" id="{{argumento.1}}" {%if (this.data.id_form == 1) or (argumento.4 == "N")%} readonly="readonly"{%endif%} {#{ argumento.4 == "N" ? 'readonly="readonly"' : ''}#} />
+                                {% elseif (argumento.1 == 'interior')%}
+                                    <input type="text" maxlength="255" style="display:none;" value="{{argumento.3}}" name="args[{{argumento.0}}]" id="{{argumento.1}}" {%if (this.data.id_form == 1) or (argumento.4 == "N")%} readonly="readonly"{%endif%} {#{ argumento.4 == "N" ? 'readonly="readonly"' : ''}#} />                                
+                                {% elseif ((argumento.1 == 'interesado') and  (this.data.form_argumentos.id == '5')) %}
+                                    <div class="control-group">			
+                                        <div class="control-label" style="width:25%">
+                                            <label for="{{argumento.1}}">{{argumento.5|trans|capitalize}}: </label>
+                                        </div>
+                                        <div class="controls">						
+                                            <input type="text" maxlength="255" value="{{argumento.3}}" name="args[{{argumento.0}}]" id="{{argumento.1}}" readonly="readonly" {#{ argumento.4 == "N" ? 'readonly="readonly"' : ''}#} />
+                                        </div>
+                                    </div>
+                                {% elseif ((argumento.1 == 'interesado') and  (this.data.form_argumentos.id == '9')) %}
+                                    <div class="control-group">			
+                                        <div class="control-label" style="width:25%">
+                                            <label for="{{argumento.1}}">{{argumento.5|trans|capitalize}}: </label>
+                                        </div>
+                                        <div class="controls" id='interesado_cert_9'>						
+                                            <input type="text" class="cert9"  maxlength="255"  value="{{argumento.3}}" name="args[{{argumento.0}}]" id="{{argumento.1}}" required="true" title="" />
+                                        </div>
+                                        <div class="control-label" style="width:25%">
+                                            </div>
+                                        <span id="spanCertificado9" style="font-size:8pt;color:#003399">Si lo presenta en el exterior, debe consignar obligatoriamente el nombre de un Organismo/Instituic&oacute;n/Pa&iacute;s.</span>    
+                                    </div>        
+                                {# % elseif ((argumento.1 == 'titulo') and  (this.data.form_argumentos.id == '100')) %} 
+                                    <div class="control-group">			
+                                        <div class="control-label" style="width:25%">
+                                            <label for="{{argumento.1}}">{{argumento.5|trans}}: </label>
+                                        </div>
+                                        <div class="controls">
+                                            <select name="args[{{argumento.0}}]" id="{{argumento.1}}">
+                                                {%for fila in argumento.nombre  %}
+                                                <option  value="{{fila.3}}">{{fila}}</option>
+                                                {%endfor%}
+                                            </select>
+                                        </div>
+                                    </div>#}
+                                {% elseif argumento.1 != 'nombre_titulo' %}                                     
+                                    <div class="control-group">			
+                                        <div class="control-label" style="width:25%">
+                                            <label for="{{argumento.1}}">{{argumento.5|trans|capitalize}}: </label>
+                                        </div>
+                                        <div class="controls">						
+                                            <input type="text" maxlength="255" value="{{argumento.3}}" name="args[{{argumento.0}}]" id="{{argumento.1}}" {%if (this.data.id_form == 1) or (argumento.4 == "N")%} readonly="readonly"{%endif%} {#{ argumento.4 == "N" ? 'readonly="readonly"' : ''}#} />
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                            {% endfor %}
+                            {% if this.data.id_form == 9 or this.data.id_form == 5  %}
+                                <div class="control-group" id="divDecano">
+                                    <div class="control-label" style="width:25%">
+                                        <label for="">Validaci&oacute;n:</label>
+                                    </div>
+                                    <div class="controls">
+                                        <select name="certDecano" id="certDecano">
+                                            <option  value="S">Decano</option>
+                                            <option  value="N">Alumnado</option>
+                                        </select>
+
+                                        <span id="textoCertificadoDecanoSI" style="font-size:8pt;color: green">(Valor Certificado: ${{this.data.montoSin}})</span>    
+                                    </div>
+                                    <span id="textoCertificadoDecanoNO" style="font-size:8pt;color:red;margin-left:2%">{% if this.data.id_form == 9 %}(Importante: De no requerir la firma del Decano puede obtener un reporte de Historia Acad&eacute;mica yendo a Reportes --> Historia Acad&eacute;mica){%else%}(Importante: De no requerir la firma del Decano puede obtener un reporte de Materias Aprobadas yendo a Reportes --> Historia Acad&eacute;mica){%endif%}</span>
+                                </div>
+                            {% endif %}
+                            {% if this.data.id_form == 9  %}
+
+                                <span id="textoHA" style="font-size:10pt;color:#0088cc;margin-left:2%">
+                                    <ul><b>RECUERDE:</b>
+                                        <li style="margin-left:7%">Usted no necesita realizar &eacute;ste tr&aacute;mite para gesti&oacute;n de becas</li>
+                                        <li style="margin-left:7%">La DNGyFU del Ministerio s&oacute;lo apostilla documentaci&oacute;n que se deba presentar en el exterior del pa&iacute;s.</li>
+                                        <li style="margin-left:7%">La DNGyFU rechaza la intervenci&oacute;n de documentos expedidos a presentar 'Ante quien corresponda', por ello, debe indicar efectivamente un Organismo/Instituci&oacute;n/Pa&iacute;s, entre otros, en este campo.</li>
+                                    </ul>
+                                </span>
+                                    {%endif%}
+                                    {% if this.data.id_form != 1  %}
+                                        <div class="control-group">
+                                            <div class="control-label" style="width:25%">
+                                                {% if this.data.id_form != this.data.nroCertificado %}
+                                                    <label for="cantidad">{{"form.cantidad_copias"|trans|capitalize}}: </label>
+                                                {%endif%}
+                                            </div>
+                                            <div class="controls">
+                                                {% if this.data.id_form != this.data.nroCertificado %}
+                                                    <select name="cantidad" id="cantidad">
+                                                        {% for i in 1..this.data.form_argumentos.maximo_copias %}
+                                                            <option value="{{ i }}">{{ i }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                {%else%}
+                                                    <input type='text' id='cantidad' name='cantidad' readonly style='display:none;' value='1'/>
+                                                {%endif%}
+                                            </div>
+                                        </div>
+                                    {%endif%}
+                                    </div>
+                                    </div>
+                                {% endif %}
+
+                                {# {% if (this.data.id_form == 1) %}
+                     
+                                     <a class="btn no-ajax pull-right btn_imprimir_car" href="{{ this.data.url_generar_car }}"  title="{{ 'descargar_pdf'|trans|capitalize }}">
+                                         <span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span>
+                                         <span class="g3w-icono-pdf"></span>
+                                         {{"descargar_pdf"|trans|capitalize}}
+                                     </a>
+                     
+                                 {% endif %}
+                     
+                                     <button type="button" name="solicitar" class="btn btn-info js-btn-solicitar pull-right">{{"form.solicitar"|trans|capitalize}}</button>#}
+                                </form>
+                            {% endif %}
+                        {% else %}
+                            <div id="mensaje" class="alert alert-info">
+                                <strong>Seleccione un certificado</strong>
+                            </div>
+                        {% endif %}
+                    {% endblock %}

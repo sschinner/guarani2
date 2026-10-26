@@ -1,0 +1,11 @@
+-- Alta del mensaje
+-- Mensaje: 820004.dca
+
+--********************************************
+-- mensaje 820004, asociado al control: Finalización OK de inscripción a pasantía
+-- 
+--********************************************
+
+DELETE FROM mme_mensajes WHERE mensaje = 820004;
+insert into mme_mensajes (tipo, mensaje, mascara_original,mascara,clasificacion,boton)
+values (5,	820004, "Tu Inscripción a Pasantía se ha registrado correctamente en estado Pendiente, con el Nro. de Transacción: %s", "Tu Inscripción a Pasantía se ha registrado correctamente en estado Pendiente, con el Nro. de Transacción: %s",1,1);

@@ -1,0 +1,144 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<div class="titulo_operacion">
+		<h2 class="clearfix"><span class="pull-left">{{"header.menu.inscripciones_rechazadas"|trans|capitalize}}</span>
+			<div class="pull-right">
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url.generar_pdf}}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url.generar_excel}}"><span class="acchide">{{'descargar_xls'|trans|capitalize}}</span><span class="g3w-icono-xls"></span></a>
+			</div>
+		</h2>
+	</div>
+
+	{% if this.data.datos or this.data.datos_corte %}
+		{% import "kernel/macro_pager.twig" as pager %}
+		<div class="pagination pagination-centered">
+			{{ pager.render_paginator(this.get_paginas, this.get_pagina) }}
+		</div>
+	{% endif %}	
+
+	{% if this.data.datos or this.data.datos_corte %}
+		{% import "kernel/macro_columnas_tabla.twig" as macro_titulos %}
+		{% if this.get_encabezado() %}
+			<table class="table table-condensed table-bordered">
+				<tr>
+					<th>{{"legajo"|trans|capitalize}}</th>
+					<td>{{ this.get_encabezado.legajo }}</td>
+				</tr>
+				<tr>
+					<th>{{"turno"|trans|capitalize}}</th>
+					<td>{{ this.get_encabezado.turno }}</td>
+				</tr>
+			</table>	
+		{% endif %}
+		<table class="table table-striped table-bordered table-condensed">
+			{% if this.data.datos_corte %}
+				{% for dato in this.data.datos_corte %}
+					{% if dato.titulo_corte %}
+					<tr>
+						<td class="cc-titulo-nivel-0" colspan="{{this.data.cantidad_columnas}}">
+							{{dato.titulo_corte}}
+						</td>
+					</tr>
+					{% endif %}
+					<!-- Títulos -->
+					{{ macro_titulos.render_titulador(this.data.titulos, this.data.atributos_titulos, this.data.corte.campo) }}
+					{% if dato.datos %}
+						{% for clave, item in dato.datos %}
+						<tr{% if (item.URL_LINEA) %} class="link-in-data" data-link="{{item.URL_LINEA}}"{% endif %}>
+						{% for keyline, linea in item %}
+							{% if (keyline != "URL_LINEA") %}
+							<td>
+								{{linea}}
+							</td>
+							{% endif %}
+						{% endfor %}
+						</tr>
+						{% endfor %}
+
+						{% if dato.funciones_pie_corte %}
+						{% for funcion in dato.funciones_pie_corte %}
+						<tr>
+							{% for col_fn, titulo in dato.datos[0] %}
+								{% if col_fn != this.data.corte.campo %}
+								<td><strong>{{funcion[col_fn]}}</strong></td>
+								{% endif %}
+							{% endfor %}
+						</tr>
+						{% endfor %}
+						{% endif %}
+
+						{% if dato.mensaje_pie_corte %}								
+						{% for funcion in dato.mensaje_pie_corte %}
+						<tr>
+							<td colspan="{{this.data.cantidad_columnas}}"><strong>{{funcion}}</strong></td>
+						</tr>
+						{% endfor %}
+						{% endif %}
+					{% endif %}
+				{% endfor %}
+				<!-- Pie de reporte -->
+				<tr>
+					<td colspan="{{this.data.cantidad_columnas}}"><br><br></td>
+				</tr>
+				{% if this.data.datos_corte.funciones_pie_reporte %}			
+				{% for funcion in this.data.datos_corte.funciones_pie_reporte %}			
+				<tr>
+					{% for col_fn, nombre in this.data.datos_corte[0].datos[0] %}
+					{% if col_fn != this.data.corte.campo %}
+					<td><strong>{{funcion[col_fn]}}</strong></td>
+					{% endif %}
+					{% endfor %}
+				</tr>
+				{% endfor %}
+				{% endif %}
+
+				{% if this.data.datos_corte.mensaje_pie_reporte %}								
+				{% for funcion in this.data.datos_corte.mensaje_pie_reporte %}
+				<tr>
+					<td colspan="{{this.data.cantidad_columnas}}"><strong>{{funcion}}</strong></td>
+				</tr>
+				{% endfor %}
+				{% endif %}
+			{% endif %}
+			{% if this.data.datos %}
+				<!-- Titulos -->
+				<thead>
+				<!-- Títulos -->
+					{{ macro_titulos.render_titulador(this.data.titulos, this.data.atributos_titulos, this.data.corte.campo) }}
+				</thead>
+
+				<!-- Datos -->
+				{% for clave, columnas in this.data.datos %}
+					<tr{% if (columnas.detalle) %} class="link-js" data-link="detalle_{{clave}}"{% endif %}>
+
+					{% for keyline, columna in columnas %}
+						{% if (keyline != "URL_LINEA" and  keyline != "detalle") %}
+							<td>
+								{% if keyline == "materia" %}
+									<i class="toggle icon-chevron-up"></i>
+								{% endif %}
+								{{columna}}
+							</td>
+						{% endif %}
+					{% endfor %}
+					</tr>
+					{% if (columnas.detalle) %}
+					<tr id="detalle_{{clave}}" class="detalle">
+						<td colspan="{{this.data.cantidad_columnas}}">
+							<ul>
+								{% if (columnas.detalle.transaccion) %}<li>Número de transacción: {{columnas.detalle.transaccion}}</li>{% endif %}
+								{% if (columnas.detalle.fecha_inscripcion) %}<li>Fecha de inscripción: {{columnas.detalle.fecha_inscripcion}}</li>{% endif %}
+								{% if (columnas.detalle.motivo) %}<li>Motivo del rechazo: {{columnas.detalle.motivo}}</li>{% endif %}
+							</ul>
+						</td>
+					</tr>
+					{% endif %}	
+				{% endfor %}       
+			{% endif %}
+		</table>
+	{% else %}
+	<div class="alert">
+		{{"reporte.no_hay_datos.inscripciones_rechazadas"|trans|capitalize}}
+	</div>
+	{% endif %}
+{% endblock %}

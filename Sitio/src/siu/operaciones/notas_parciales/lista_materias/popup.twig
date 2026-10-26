@@ -1,0 +1,61 @@
+<form method='post' id='form-crear' class="form-horizontal">
+	<div class="control-group">
+		<label class="control-label" for='tipo'>{{ "tipo"|trans|capitalize }}</label>
+		<div class="controls">
+			<select id='tipo' name='tipo'>
+				<option>---SELECCIONE---</option>
+				{% for eval in tipo_eval %}
+				<option value='{{ eval.EVALUACION }}'>{{ eval.DESCRIPCION_ABREV }}</option>
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label" for='fecha'>{{ "fecha"|trans|capitalize }}</label>
+		<div class="controls">
+			<input id='fecha' type='text' name='fecha' value='' />
+		</div>
+	</div>
+	
+    <div class="control-group">
+		<label class="control-label" for='hora'>{{ "hora"|trans|capitalize }}</label>
+		<div class="controls">
+			<div class="span hora">
+				<select id='hora' name='hora'>
+				{% for i in 0..9 %}
+					<option value='0{{i}}' {% if i == 0 %} selected='selected'{% endif %}>0{{i}}</option>
+				{% endfor %}
+				{% for i in 10..23 %}
+					<option value='{{i}}'>{{i}}</option>
+				{% endfor %}
+				</select>
+			</div>
+		</div>
+
+        <label class="control-label minutos" for='minutos'>{{ "minutos"|trans|capitalize }}</label>
+		<div class="controls">
+			<div class="span minutos">
+				<select id='minutos' name='minutos'>
+					<option value='00' selected='selected'>00</option>
+					<option value='05'>05</option>
+				{% for i in 2..11 %}
+					<option value='{{i*5}}'>{{i*5}}</option>
+				{% endfor %}
+				</select>
+			</div>
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label" for='escala'>{{ "escala"|trans|capitalize }}</label>
+		<div class="controls">
+			<select id='escala' name='escala'>
+				{% for escala in escalas %}
+				<option value='{{ escala.ESCALA_NOTAS }}'>{{ escala.NOMBRE }}</option>
+				{% endfor %}
+			</select>
+		</div>
+	</div>
+</form>
+

@@ -1,0 +1,63 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_ficha_alumno.twig" as ficha_alumno %}
+{% block contenido %}
+    {{ ficha_alumno.render_menu(this.data.menu_reportes, this.data.categoria_actual, this.data.reporte_actual) }}
+	<div id="reporte_contenido">
+		<h3>{{ 'ficha_alumno.rep_carreras' | trans | capitalize }}</h3>
+		{% for carrera in this.data.carreras %}
+			
+			<div class="row-fluid">
+				<div class="span6">
+					<ul class="ficha_alumno_ul">
+							<li><strong>{{ 'ficha_alumno.carrera' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.carrera)}}</li>
+							<li><strong>{{ 'ficha_alumno.legajo' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.legajo)}}</li>
+							{% if carrera.insc_rechazada %}<li>{{ficha_alumno.mostrar(carrera.desc_situacion_insc_carrera)}}</li>{% endif %}
+							<li><strong>{{ 'ficha_alumno.anio_de_inscripcion' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.anio_de_inscripcion)}}</li>
+							<li><strong>{{ 'ficha_alumno.estado_de_la_inscripcion' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.estado_de_la_inscripcion)}}</li>
+
+							{% if not carrera.insc_rechazada %}
+								<li><strong>{{ 'ficha_alumno.situacion_en_la_carrera' | trans | capitalize }}:</strong></li>
+								<li class="sangria"><strong>{{ 'ficha_alumno.calidad' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.calidad)}}</li>
+								<li class="sangria"><strong>{{ 'ficha_alumno.condicion' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.condicion)}}</li>
+							{% endif %}
+					</ul>
+				</div>
+				<div class="span6">
+						<ul class="ficha_alumno_ul">
+							{% if not carrera.insc_rechazada %}<li><strong>{{ 'ficha_alumno.ultima_reinscripcion' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.ultima_reinscripcion)}}</li>{% endif %}
+							<li><strong>{{ 'ficha_alumno.sede_origen' | trans }}:</strong> {{ficha_alumno.mostrar(carrera.sede_origen)}}</li>
+							{% if not carrera.insc_rechazada %}<li><strong>{{ 'ficha_alumno.sede_actual' | trans }}:</strong> {{ficha_alumno.mostrar(carrera.sede_actual)}}</li>{% endif %}
+							<li><strong>{{ 'ficha_alumno.tipo_de_ingreso' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.tipo_de_ingreso)}}</li>
+							<li><strong>{{ 'ficha_alumno.resolucion_de_ingreso' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.resolucion_de_ingreso)}}</li>
+							<li><strong>{{ 'ficha_alumno.observaciones' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.observaciones)}}</li>
+					</ul>
+				</div>
+			</div>
+			{% if carrera.movimientos %}
+				<table class='table table-condensed table-hover table-striped'>
+						<thead>
+							<tr>
+								<th>{{'ficha_alumno.movimientos'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.plan'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.fecha'|trans|capitalize}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for movimiento in carrera.movimientos %}
+								<tr>
+									<td>{{ficha_alumno.mostrar(movimiento.movimiento)}}</td>
+									<td>{{ficha_alumno.mostrar(movimiento.plan)}}</td>
+									<td>{{ficha_alumno.mostrar(movimiento.fecha)}}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+			{% else %}
+				<div class="alert text-warning">{{'ficha_alumno.no_hay_movimientos'|trans}}</div>
+			{% endif %}
+		
+		{% else %}
+			<div class="alert text-warning">{{'ficha_alumno.no_hay_informacion'|trans}}</div>
+		{% endfor %}
+	</div>
+{% endblock %}

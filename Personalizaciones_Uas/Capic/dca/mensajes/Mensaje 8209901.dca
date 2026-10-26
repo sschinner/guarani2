@@ -1,0 +1,8 @@
+-- Alta del mensaje
+-- Mensaje: 8209901.dca
+
+--********************************************
+-- mensaje 8209901, asociado al control:Controla si el Alumno tiene la Materia Regularizada!. CAPIC
+-- 
+--********************************************
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 8209901, "Tenés regularizada la Materia %s en la Carrera %s2.",  "Tenés regularizada la Materia %s en la Carrera %s2.", 2, 1);

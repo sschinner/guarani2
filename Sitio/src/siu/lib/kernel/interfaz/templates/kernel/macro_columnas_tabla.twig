@@ -1,0 +1,28 @@
+{% macro render_titulador(titulos, atributos_titulos, campo_corte,index) %}
+	{% if titulos %}
+    <!-- Titulos -->	
+	<tr>
+		{% for clave, titulo in titulos %}
+			{% if clave != campo_corte %}
+			<th scope="col" id="{{clave}}{{index|default()}}">
+				<span class="texto">{{titulo}}</span>
+				{% if atributos_titulos %}
+					{% for clav, atrib in atributos_titulos %}
+						{% if clav == clave %}						
+							<div class="btns-orden">
+								{% for clase, url in atrib %}
+								<a href="{{url}}">
+									<span class="acchide">Ordenar en forma {% if clase == "asc" %}ascendente{% else %}descendente{% endif %}</span>
+									<span class="{% if clase == 'asc' %}icon-arrow-up{% else %}icon-arrow-down{% endif %}"></span>
+								</a>
+								{% endfor %}
+							</div>
+						{% endif %}
+					{% endfor %}
+				{% endif %}
+			</th>
+			{% endif %}
+		{% endfor %}
+	</tr>
+	{% endif %}
+{% endmacro %}

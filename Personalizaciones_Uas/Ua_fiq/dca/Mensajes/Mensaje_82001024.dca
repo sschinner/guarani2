@@ -1,0 +1,9 @@
+-- Alta del mensaje
+-- Mensaje: 82001024
+
+--********************************************
+-- mensaje 82001024, Asociado a la correlativa especial u820_14_aprobadas
+-- 
+--********************************************
+DELETE FROM mme_mensajes WHERE mensaje = 82001024;
+INSERT INTO  mme_mensajes (	tipo, mensaje,	mascara_original,mascara,clasificacion,	boton) VALUES (	3,82001024,"Necesitas al menos 14 materias aprobadas","Necesitas al menos 14 materias aprobadas",	2, 1);

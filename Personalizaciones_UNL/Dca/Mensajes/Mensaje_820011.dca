@@ -1,0 +1,11 @@
+-- Alta del mensaje
+-- Mensaje: 820011.dca
+
+--********************************************
+-- mensaje 820011, asociado al control: Controla si la persona tiene las condiciones para solicitar certificado pagos.
+-- 
+--********************************************
+
+DELETE FROM mme_mensajes WHERE mensaje = 820011;
+insert into mme_mensajes (tipo,	mensaje, mascara_original,mascara,clasificacion,boton)
+values (5, 820011, "Configurá correctamente el mail y la recepción de mails (Configuración->Notificaciones).","Configurá correctamente el mail y la recepción de mails (Configuración->Notificaciones).", 1, 1);

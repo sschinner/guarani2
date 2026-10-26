@@ -1,0 +1,9 @@
+-- Alta del mensaje
+-- Mensaje: 820003.dca
+
+--********************************************
+-- mensaje 820003, asociado al control:Controla si el Alumno NO tiene la Materia Regularizada!. FIQ
+-- 
+--********************************************
+DELETE FROM mme_mensajes WHERE mensaje = 820003;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 820003, "No tenes regularizada la Materia %s en la Carrera %s2.",  "No tenes regularizada la Materia %s en la Carrera %s2.", 2, 1);

@@ -1,0 +1,7 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 1.3.0
+-- *******************************************************************************
+Execute procedure dba.sp_cambiaparametro( 'ifz00015', 1 , 4, "dr820_coneau_resultado_examenes_fadu" );
+Execute procedure dba.sp_cambiaparametro( 'ifz00015', 1 , 5, "dl820_coneau_resultado_examenes_fadu" );
+

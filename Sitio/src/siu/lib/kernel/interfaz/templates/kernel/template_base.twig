@@ -1,0 +1,13 @@
+{% if js_vars %}
+	<script type='text/javascript'>
+	{% for name, value in js_vars %}
+		var {{name}} = '{{value}}';
+	{% endfor %}
+	</script>
+{% endif %}
+{% block zona %}
+	{% if (zona) %}
+		{{ zona.render }}
+	{% endif %}
+{% endblock %}
+{% block layout %}{% endblock %}

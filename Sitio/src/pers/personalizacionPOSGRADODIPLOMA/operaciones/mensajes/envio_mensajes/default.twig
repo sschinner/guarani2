@@ -1,0 +1,216 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<div class="titulo_operacion">
+		<h2>
+			<span style="float: left;">{{"tit_mensajes_enviar"|trans|capitalize}}</span>
+			<div class="pull-right">
+			{% if this.data.url_enviados and this.data.es_docente %}
+				<a class="btn btn-info btn-small" href="{{this.data.url_enviados}}" title="Ir a {{"btn_mensajes_enviados"|trans|capitalize}}"><span class="icon-upload icon-white" alt="{{"btn_mensajes_enviados"|trans|capitalize}}"></span> {{"btn_mensajes_enviados"|trans|capitalize}}</a>
+			{% endif %}
+			{% if this.data.url_recibidos %}
+				<a class="btn btn-info btn-small" href="{{this.data.url_recibidos}}" title="Ir a {{"btn_mensajes_recibidos"|trans|capitalize}}"><span class="icon-download icon-white" alt="{{"btn_mensajes_recibidos"|trans|capitalize}}"></span> {{"btn_mensajes_recibidos"|trans|capitalize}}</a>
+			{% endif %}
+			</div>
+		</h2>
+	</div>
+	<form method="post" action="{{this.data.url_envio}}" id="js-form-enviar" class="form-horizontal" enctype="multipart/form-data">    
+	<div class="pull-left formulario">
+        {% if this.data.mensaje_guardado %}
+            <div class="alert alert-success">
+                {{"mensajes_enviar_exito"|trans|capitalize}}
+            </div>
+        {% elseif this.data.mensaje %}
+            <div class="alert alert-error">
+                {{this.data.mensaje}}
+            </div>
+        {% endif %}
+					<div class="control-group">
+			{% if this.data.comisiones and this.data.mesas %}
+				<label class="control-label">{{ "enviar_a"|trans|capitalize }}</label>
+			{% endif %}
+			<div class="controls">
+			{% if not this.data.deshabilitado %}
+				{% if this.data.comisiones and this.data.mesas %}
+					<label class="radio inline" for="radio_comisiones">
+						<input type="radio" name="tipo" value="com" id="radio_comisiones"{% if this.data.tipo_anuncio == 'O' or  this.data.tipo_anuncio == 'B' or this.data.tipo_anuncio == 'X' or this.data.tipo_anuncio is null %} checked="checked"{% endif %} />
+						{{"Comisiones"|trans|capitalize}}
+					</label>
+					<label class="radio inline" for="radio_mesas">
+						<input type="radio" name="tipo" value="mesa" id="radio_mesas"{% if this.data.tipo_anuncio == 'M' or this.data.tipo_anuncio == 'T' or this.data.tipo_anuncio == 'Y' %} checked="checked"{% endif %} />
+						{{"Mesas"|trans|capitalize}}
+					</label>
+				{% elseif this.data.comisiones %}
+					<label class="radio inline" for="radio_comisiones">
+						<input type="radio" name="tipo" value="com" id="radio_comisiones" checked="checked" /> 
+						{{"Comisiones"|trans|capitalize}}
+					</label>
+				{% elseif this.data.mesas %}
+					<label class="radio inline" for="radio_mesas">
+						<input type="radio" name="tipo" value="mesa" id="radio_mesas" checked="checked" />
+						{{"Mesas"|trans|capitalize}}
+					</label>
+				{% endif %}
+			{% else %}
+				<p>{{ "tit_mensajes_no_destinatarios"|trans|capitalize }}</p>
+			{% endif %}
+			</div>
+
+		</div>
+		<div class="control-group" id="js-comisiones" >
+			<label class="control-label" for="js-comision">{{ "comision"|trans|capitalize }}</label>
+			<div class="controls">
+			<select name="comision" id="js-comision" class="js-obligatorio" aria-controls="js-desc-comision">
+				{% if this.data.comision not in this.data.comisiones|keys %}<option value="">{{ "SELECCIONE COMISI�N"|trans|capitalize }}</option>{% endif %}
+				{% for key, comision in this.data.comisiones %}
+				<option value="{{key}}"{% if key == this.data.comision %} selected="selected"{% endif %}>{{comision.MATERIA_NOMBRE}} ({{comision.COMISION_NOMBRE}})</option>
+				{% endfor %}
+			</select>
+			</div>
+		</div>
+		<div class="control-group" id="js-mesas" style="display: none;">
+			<label class="control-label" for="js-mesa">{{ "mesa"|trans|capitalize }}</label>
+			<div class="controls">
+			<select name="mesa" id="js-mesa">
+                {% if this.data.mesa not in this.data.mesas|keys %}<option value="">{{ "SELECCIONE MESA"|trans|capitalize }}</option>{% endif %}
+				{% for key, mesas in this.data.mesas %}
+				<option value="{{key}}"{% if key == this.data.mesa %} selected="selected"{% endif %}>{{mesas.MATERIA_NOMBRE}}</option>
+				{% endfor %}
+			</select>
+			</div>
+		</div>
+			
+		{# A quienes enviar el mail #}
+		<div class="control-group" id="js-todos_algunos" style="">
+			<label class="control-label" for="js-todos_algunos">{{ "destinatarios"|trans|capitalize }}</label>
+			<div class="controls">
+					<label class="radio inline" for="radio_todos">
+						<input type="radio" name="todos_algunos" value="T" id="radio_todos"{% if this.data.todos_algunos == 'T' or this.data.todos_algunos is null %} checked="checked"{% endif %} />
+						{{"Todos"|trans|capitalize}}
+					</label>
+					<label class="radio inline" for="radio_algunos">
+						<input type="radio" name="todos_algunos" value="AA" id="radio_algunos_alumnos"{% if this.data.tipo_anuncio == 'O' or  this.data.tipo_anuncio == 'M' %} checked="checked"{% endif %} />
+						{{"Algunos alumnos"|trans|capitalize}}
+					</label>
+					<label class="radio inline" for="radio_algunos">
+						<input type="radio" name="todos_algunos" value="AD" id="radio_algunos_docentes"{% if this.data.tipo_anuncio == 'T' or  this.data.tipo_anuncio == 'B' %} checked="checked"{% endif %} />
+						{{"Algunos docentes"|trans|capitalize}}
+					</label>
+			</div>
+		</div>	
+				
+		<div class="control-group">
+			<label class="control-label" for="titulo">{{ "título"|trans|capitalize }}</label>
+			<div class="controls">
+				<input id="titulo" name="titulo" type="text" class="js-obligatorio" maxlength="60" value="{{ this.data.titulo }}" />
+			</div>
+		</div>			
+
+		<div id="fechas" class="clearfix">
+			<div class="pull-left" id="grp_fecha_desde">
+				<label class="control-label" for="fecha_desde">{{ "fecha_desde_mensaje"|trans|capitalize }}</label>
+				<div class="controls">
+				<input id='fecha_desde' {{ (this.es_mobile) ? 'readonly' : ''}} type='text' data-tipo='fecha'
+						name='fecha_desde' 
+						{% if this.data.default_fecha_desde %}
+						value='{{this.data.default_fecha_desde}}' 
+						{% endif %}
+						class='fecha nav' />
+				</div>
+			</div>
+			<div class="pull-right" id="grp_fecha_hasta">
+				<label class="control-label" for="fecha_hasta">{{ "fecha_hasta_mensaje"|trans|capitalize }}</label>
+				<div class="controls">
+					<input id='fecha_hasta' {{ (this.es_mobile) ? 'readonly' : ''}} type='text' data-tipo='fecha'
+						name='fecha_hasta' 
+						{% if this.data.default_fecha_hasta %}
+						value='{{this.data.default_fecha_hasta}}' 
+						{% endif %}
+						class='fecha nav' />
+				</div>
+			</div>
+		</div>		
+		<div class="control-group adjuntos">
+			<div class="clearfix js-adjuntos">
+				<a id='js-btn-agregar-archivo' class='btn btn-small btn-info pull-right' href='#'>Agregar archivo</a>
+			</div>
+		</div>
+		<div id='js-envia_mail' class="control-group">
+			<label class="control-label" for="radio_envia_mail">{{ "Envia Mail"|trans|capitalize }}</label>
+			<div class="controls">
+				<input type="checkbox" name="envia_mail" value="S" id="envia_mail"{% if this.data.envia_mail == 'S' or this.data.envia_mail is null %} checked="checked"{% endif %} />
+			</div>
+		</div>			
+		<div id='js-control-group-mensaje' class="control-group">
+			<label class="control-label" for="mensaje">{{ "mensaje"|trans|capitalize }}</label>
+			<div class="controls">
+				<textarea id="mensaje" name="mensaje" class="js-obligatorio" maxlength="1024">{{ this.data.contenido }}</textarea>
+			</div>
+		</div>
+		<div class="form-actions">
+			<input type='submit' value='{{ "enviar"|trans|capitalize }}' class="btn btn-small btn-info pull-right" />
+		</div>
+	</div>
+	<div class="pull-left">
+		<div class="control-group " id="js-descripcion">
+			<ul aria-live="polite" id="js-desc-comision">
+				{% for key, comision in this.data.comisiones %}
+				<li id="O{{key}}">
+					<p>
+						<strong>{{'comision'|trans|capitalize}}:</strong> ({{comision.COMISION}}) {{comision.COMISION_NOMBRE}}
+					</p>
+					<p>
+						<strong>{{'sede'|trans|capitalize}}:</strong> {{comision.SEDE}}
+					</p>
+					<p>
+						<strong>{{'periodo_lectivo'|trans|capitalize}}:</strong> {{comision.PERIODO_LECTIVO}}
+					</p>
+					<p>
+						<strong>{{'catedra'|trans|capitalize}}:</strong> {{comision.CATEDRA}}
+					</p>
+					<p>
+						<strong>{{'turno'|trans|capitalize}}:</strong> {{comision.TURNO}}
+					</p>
+					<p>
+						<strong>{{'cantidad_de_inscriptos'|trans|capitalize}}:</strong> {{comision.CANTIDAD_INSCR}}
+					</p>
+					<p>
+						<strong>{{'materia'|trans|capitalize}}:</strong> {{comision.MATERIA_NOMBRE}}
+					</p>				
+					<div id="contenedor_alumnos_comision_{{key}}" class="contenedor_personas hide">
+						<p><strong>{{'Seleccione Alumnos'|trans|capitalize}}</strong></p>
+							{% for alumno in comision.ALUMNOS %}
+								<input class="personas alumnos_comision_{{key}}" type="checkbox" name="alumno[]" value="{{alumno.NRO_INSCRIPCION}}"> {{alumno.ALUMNO}}<br>						
+							{% endfor %}
+					</div>
+					<div id="contenedor_docentes_comision_{{key}}" class="contenedor_personas hide">
+						<p><strong>{{'Seleccione Docentes'|trans|capitalize}}</strong></p>
+							{% for docente in comision.DOCENTES %}
+								<input class="personas docentes_comision_{{key}}" type="checkbox" name="docente[]" value="{{docente.NRO_INSCRIPCION}}"> {{docente.NOMBRES}} {{docente.APELLIDO}}<br>							
+							{% endfor %}
+					</div>					
+				</li>
+				{% endfor %}
+			</ul>
+			<ul id="js-desc-mesa">
+				{% for key, mesa in this.data.mesas %}
+				<li id="M{{key}}">
+					<p><strong>{{'materia'|trans}}:</strong> ({{mesa.MATERIA}}) {{mesa.MATERIA_NOMBRE}}</p>
+					<div id="contenedor_alumnos_mesa_{{key}}" class="contenedor_personas hide">
+						<p><strong>{{'Seleccione Alumnos'|trans|capitalize}}</strong></p>
+							{% for alumno in mesa.ALUMNOS %}
+								<input class="personas alumnos_mesa_{{key}}" type="checkbox" name="alumno[]" value="{{alumno.NRO_INSCRIPCION}}"> {{alumno.APELLIDO_NOMBRE}}<br>
+							{% endfor %}
+					</div>					
+					<div id="contenedor_docentes_mesa_{{key}}" class="contenedor_personas hide">
+						<p><strong>{{'Seleccione Docentes'|trans|capitalize}}</strong></p>
+						{% for docente in mesa.DOCENTES %}
+							<input class="personas docentes_mesa_{{key}}" type="checkbox" name="docente[]" value="{{docente.NRO_INSCRIPCION}}"> {{docente.NOMBRES}} {{docente.APELLIDO}}<br>
+						{% endfor %}
+					</div>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>		
+	</div>
+	</form>
+{% endblock %}

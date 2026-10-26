@@ -1,0 +1,378 @@
+CREATE PROCEDURE verifica_objeto()
+BEGIN
+	IF EXISTS (SELECT procid
+			FROM sysprocedures
+			WHERE procname = 'sp_carga_enc_crea') THEN
+		DROP PROCEDURE sp_carga_enc_crea;
+	END IF;		
+END
+END PROCEDURE;
+
+EXECUTE PROCEDURE verifica_objeto();
+DROP PROCEDURE verifica_objeto();
+
+
+-- ***********************************************************************************
+-- SIU-GUARANI
+-- Version 2.07.0
+-- 
+-- Procedure sp_carga_enc_crea
+-- ***********************************************************************************
+-- DROP PROCEDURE sp_carga_enc_crea;
+CREATE PROCEDURE "dba".sp_carga_enc_crea(pAlcance LIKE gde_encues_alcance.alcance)
+
+                             RETURNING integer, -- cantidad de personas
+                                       integer, -- minimo id
+			integer; -- maximo id
+
+
+DEFINE vcUA VARCHAR(5);
+DEFINE vcNroInsc varchar(10);
+DEFINE i_anio_academico integer;
+DEFINE vc_periodo_lect  LIKE sga_comisiones.periodo_lectivo;
+
+DEFINE c_una_x_car      LIKE gde_encues_alcance.una_por_carrera;
+DEFINE c_una_x_com      LIKE gde_encues_alcance.una_por_comision;
+DEFINE c_una_x_doc      LIKE gde_encues_alcance.una_por_docente; 
+DEFINE c_mat_regul      LIKE gde_encues_alcance.materia_regul;
+
+DEFINE vi_min_id integer;
+DEFINE vi_max_id integer;
+DEFINE vi_cant_personas integer;
+BEGIN
+
+  -- Bloque para crear tablas temporales.
+  BEGIN
+    ON EXCEPTION IN (-958, -316) -- Temp table  already exists in session 
+      -- Si existe la tabla continua en la siguiente sentencia...
+    END EXCEPTION WITH RESUME;
+    
+    -- Creo la tabla temporal de carreras
+    CREATE TEMP TABLE tmp_carreras_enc11 (
+      unidad_academica VARCHAR(5),
+      carrera  VARCHAR(5),
+      legajo varchar(15),
+      nro_inscripcion varchar(10)
+    ) WITH NO LOG;
+
+create index tmp_carreras_alu on tmp_carreras_enc11(unidad_academica, carrera, legajo);
+create index tmp_carreras_per on tmp_carreras_enc11(unidad_academica, nro_inscripcion);
+    
+    -- Creo la tabla temporal de comisiones
+    CREATE TEMP TABLE tmp_comision_enc11 (
+      comision INTEGER,
+      unidad_academica  VARCHAR(5),
+      carrera  VARCHAR(5),
+      legajo   VARCHAR(15), 
+      materia  VARCHAR(5),
+      carrera_alu varchar(5),
+      plan_alu varchar(5),
+      version_alu varchar(5)
+    ) WITH NO LOG;
+
+create index tmp_comisiones_alu on tmp_comision_enc11(unidad_academica, carrera, legajo, comision);
+create index tmp_comisiones_com on tmp_comision_enc11(comision);
+    
+    -- Creo la tabla temporal de legajos de docentes
+    CREATE TEMP TABLE tmp_legajos_enc11 (
+      comision INTEGER,
+      legajo   VARCHAR(10)
+    ) WITH NO LOG;
+
+create index tmp_legajo_com on tmp_legajos_enc11(comision, legajo);
+    
+    -- Creo la tabla temporal de encuestas
+    CREATE TEMP TABLE tmp_encuesta_enc11 (
+      unidad_academica  VARCHAR(5),
+      carrera  VARCHAR(5),
+      legajo   VARCHAR(15), 
+      comision INTEGER,
+      materia  VARCHAR(5),   
+      legajo_docente   VARCHAR(10),
+      nro_inscripcion varchar(10),
+      carrera_alu varchar(5),
+      plan_alu varchar(5),
+      version_alu varchar(5),
+      alcance integer
+    ) WITH NO LOG;
+    
+    -- Creo la tabla temporal de la vista de cursadas
+    CREATE TEMP TABLE tmp_cursadas_enc11 (
+      unidad_academica  VARCHAR(5),   
+      carrera  VARCHAR(5),
+      legajo   VARCHAR(15),
+      comision INTEGER
+    ) WITH NO LOG;
+
+create index ix_tmp_cursadas on tmp_cursadas_enc11 (unidad_academica, carrera, legajo, comision);
+
+    -- Creo la tabla temporal de las inscricpiones
+    CREATE TEMP TABLE tmp_inscrip_enc11 (
+      unidad_academica  VARCHAR(5),   
+      carrera  VARCHAR(5),
+      legajo   VARCHAR(15),
+      comision INTEGER,
+      materia VARCHAR(5),
+      plan_alu VARCHAR(5),
+      version_alu VARCHAR(5),
+      nro_inscripcion VARCHAR(10)
+    ) WITH NO LOG;
+
+create index tmp_inscrip_alu on tmp_inscrip_enc11 (unidad_academica, carrera, legajo, comision);
+create index tmp_inscrip_per on tmp_inscrip_enc11 (unidad_academica, nro_inscripcion);
+
+   CREATE TEMP TABLE tmp_total_personas(
+	ID serial,
+	unidad_academica varchar(5),
+	nro_inscripcion varchar(10)
+   ) WITH NO LOG;
+
+  END;
+
+    -- Borro los datos si la tabla temporal existia...    
+    DELETE FROM tmp_encuesta_enc11;
+    DELETE FROM tmp_carreras_enc11;
+    DELETE FROM tmp_comision_enc11;
+    DELETE FROM tmp_legajos_enc11;
+    DELETE FROM tmp_cursadas_enc11;
+    DELETE FROM tmp_inscrip_enc11;
+    DELETE FROM tmp_total_personas;
+
+SELECT anio_academico, periodo_lectivo, una_por_comision, una_por_docente, una_por_carrera, materia_regul
+	INTO i_anio_academico, vc_periodo_lect, c_una_x_com, c_una_x_doc, c_una_x_car, c_mat_regul
+	FROM gde_encues_alcance
+	WHERE alcance = pAlcance;
+
+
+IF c_mat_regul = 'S' THEN
+
+   INSERT INTO tmp_cursadas_enc11
+  SELECT sga_det_acta_promo.unidad_academica,
+         sga_det_acta_promo.carrera,
+         sga_det_acta_promo.legajo,
+         sga_actas_promo.comision
+    FROM  sga_det_acta_promo,
+         sga_actas_promo,
+        sga_comisiones
+   WHERE sga_actas_promo.unidad_academica = sga_det_acta_promo.unidad_academica
+     AND sga_actas_promo.acta = sga_det_acta_promo.acta
+     AND sga_actas_promo.estado = 'C'
+     AND sga_actas_promo.tipo = 'P'
+     AND sga_det_acta_promo.rectificado = 'N'
+     AND sga_det_acta_promo.resultado = 'P'
+     AND sga_det_acta_promo.estado = 'A'
+     AND sga_comisiones.comision = sga_actas_promo.comision
+     AND sga_comisiones.anio_academico=i_anio_academico
+     AND (sga_comisiones.periodo_lectivo = vc_periodo_lect or vc_periodo_lect is null);
+
+   INSERT INTO tmp_cursadas_enc11
+  SELECT det_2.unidad_academica,   
+         det_2.carrera,   
+         det_2.legajo,   
+         sga_actas_promo.comision 
+    FROM sga_det_acta_promo  det_2,	 -- Detalle del Acta Rectificada
+	 sga_actas_promo,   		 -- Cabecera del Acta
+	 OUTER sga_det_acta_promo  det_1,	 -- Detalle del Acta Original
+	 sga_comisiones
+   WHERE sga_actas_promo.unidad_academica = det_2.unidad_academica 
+     AND sga_actas_promo.acta             = det_2.acta  
+     AND sga_actas_promo.tipo             = 'R' 
+     AND sga_actas_promo.estado           = 'C' 
+     AND det_2.rectificado   = 'N' 
+     AND det_2.resultado     = 'P' 
+     AND det_2.estado        = 'A'
+     AND det_1.unidad_academica = det_2.unidad_academica
+     AND det_1.carrera          = det_2.carrera
+     AND det_1.legajo           = det_2.legajo
+     AND det_1.acta             = sga_actas_promo.acta_referencia
+     AND det_1.estado           = 'A'
+     AND sga_comisiones.comision = sga_actas_promo.comision
+     AND sga_comisiones.anio_academico=i_anio_academico
+     AND (sga_comisiones.periodo_lectivo = vc_periodo_lect or vc_periodo_lect is null)
+     AND NOT EXISTS (SELECT ''  FROM sga_det_acta_promo  det_acta_orig
+		WHERE det_acta_orig.unidad_academica = sga_actas_promo.unidad_academica
+		   AND det_acta_orig.carrera = det_2.carrera
+		   AND det_acta_orig.legajo   = det_2.legajo
+		   AND det_acta_orig.acta     =  sga_actas_promo.acta_referencia
+		   AND det_acta_orig.estado  <> 'A');  -- Que no este invalidado el registro original, si existe
+-- Acta de Regulares
+   INSERT INTO tmp_cursadas_enc11
+  SELECT dac.unidad_academica,   
+        dac.carrera,   
+        dac.legajo,   
+        ac.comision
+    FROM sga_det_acta_curs   dac,
+	sga_actas_cursado   ac,   
+	sga_comisiones
+   WHERE dac.unidad_academica = ac.unidad_academica
+     AND dac.acta = ac.acta
+     AND ac.estado = 'C'
+     AND dac.resultado = 'A'
+     AND dac.estado = 'A'
+     AND sga_comisiones.comision = ac.comision 
+     AND sga_comisiones.anio_academico=i_anio_academico
+     AND (sga_comisiones.periodo_lectivo = vc_periodo_lect or vc_periodo_lect is null);
+
+END IF;
+
+-- ********************************************************************************************************************************************************************************
+-- U820: se redefine el conjunto de alumnos "Inscriptos a Cursar" --> Alumnos que figuran en acta y que no obtuvieron una condicion de Abandono "U"
+-- ********************************************************************************************************************************************************************************
+
+
+-- INSERT INTO tmp_inscrip_enc11
+--   select sic.unidad_academica, sic.carrera, sic.legajo, sic.comision, sc.materia, sic.plan, sic.version, sa.nro_inscripcion
+--	from sga_insc_cursadas sic,
+--		sga_comisiones sc,
+--		sga_alumnos sa
+--	where sic.comision = sc.comision
+--		AND sa.unidad_academica = sic.unidad_academica
+--		AND sa.carrera = sic.carrera
+--		AND sa.legajo = sic.legajo
+--		AND sc.anio_academico=i_anio_academico
+--		AND (sc.periodo_lectivo = vc_periodo_lect or vc_periodo_lect is null);
+
+
+INSERT INTO tmp_inscrip_enc11
+   select sga_det_acta_promo.unidad_academica, sga_det_acta_promo.carrera, sga_det_acta_promo.legajo, sga_comisiones.comision, sga_comisiones.materia, sga_det_acta_promo.plan, sga_det_acta_promo.version, sga_alumnos.nro_inscripcion
+
+    FROM  sga_det_acta_promo,
+         sga_actas_promo,
+        sga_comisiones,
+	sga_alumnos 
+   WHERE sga_actas_promo.unidad_academica = sga_det_acta_promo.unidad_academica
+     AND sga_actas_promo.acta = sga_det_acta_promo.acta
+     AND sga_actas_promo.estado = 'C'
+     AND sga_actas_promo.tipo = 'P'
+     AND sga_det_acta_promo.rectificado = 'N'
+     AND sga_det_acta_promo.resultado = 'P'
+     AND sga_det_acta_promo.estado = 'A'
+
+	AND sga_det_acta_promo.unidad_academica = sga_alumnos.unidad_academica
+	AND sga_det_acta_promo.carrera = sga_alumnos.carrera
+	AND sga_det_acta_promo.legajo = sga_alumnos.legajo
+
+     AND sga_comisiones.comision = sga_actas_promo.comision
+     AND sga_comisiones.anio_academico=i_anio_academico
+     AND (sga_comisiones.periodo_lectivo = vc_periodo_lect or vc_periodo_lect is null);
+
+   INSERT INTO tmp_inscrip_enc11
+   select det_2.unidad_academica, det_2.carrera, det_2.legajo, sga_comisiones.comision, sga_comisiones.materia, det_2.plan, det_2.version, sga_alumnos.nro_inscripcion
+
+    FROM sga_det_acta_promo  det_2,	 -- Detalle del Acta Rectificada
+	 sga_actas_promo,   		 -- Cabecera del Acta
+	sga_alumnos,
+	 OUTER sga_det_acta_promo  det_1,	 -- Detalle del Acta Original
+	 sga_comisiones
+   WHERE sga_actas_promo.unidad_academica = det_2.unidad_academica 
+     AND sga_actas_promo.acta             = det_2.acta  
+     AND sga_actas_promo.tipo             = 'R' 
+     AND sga_actas_promo.estado           = 'C' 
+     AND det_2.rectificado   = 'N' 
+     AND det_2.resultado     = 'P' 
+     AND det_2.estado        = 'A'
+     AND det_1.unidad_academica = det_2.unidad_academica
+     AND det_1.carrera          = det_2.carrera
+     AND det_1.legajo           = det_2.legajo
+     AND det_1.acta             = sga_actas_promo.acta_referencia
+     AND det_1.estado           = 'A'
+
+	AND det_2.unidad_academica = sga_alumnos.unidad_academica
+	AND det_2.carrera = sga_alumnos.carrera
+	AND det_2.legajo = sga_alumnos.legajo
+
+
+     AND sga_comisiones.comision = sga_actas_promo.comision
+     AND sga_comisiones.anio_academico=i_anio_academico
+     AND (sga_comisiones.periodo_lectivo = vc_periodo_lect or vc_periodo_lect is null)
+     AND NOT EXISTS (SELECT ''  FROM sga_det_acta_promo  det_acta_orig
+		WHERE det_acta_orig.unidad_academica = sga_actas_promo.unidad_academica
+		   AND det_acta_orig.carrera = det_2.carrera
+		   AND det_acta_orig.legajo   = det_2.legajo
+		   AND det_acta_orig.acta     =  sga_actas_promo.acta_referencia
+		   AND det_acta_orig.estado  <> 'A');  -- Que no este invalidado el registro original, si existe
+-- Acta de Regulares
+   INSERT INTO tmp_inscrip_enc11
+   select dac.unidad_academica, dac.carrera, dac.legajo, sga_comisiones.comision, sga_comisiones.materia, dac.plan, dac.version, sga_alumnos.nro_inscripcion
+
+    FROM sga_det_acta_curs   dac,
+	sga_actas_cursado   ac,   
+	sga_comisiones,
+	sga_alumnos
+   WHERE dac.unidad_academica = ac.unidad_academica
+     AND dac.acta = ac.acta
+     AND ac.estado = 'C'
+     AND dac.cond_regularidad <> 2
+     AND dac.estado = 'A'
+
+	AND dac.unidad_academica = sga_alumnos.unidad_academica
+	AND dac.carrera = sga_alumnos.carrera
+	AND dac.legajo = sga_alumnos.legajo
+
+     AND sga_comisiones.comision = ac.comision 
+     AND sga_comisiones.anio_academico=i_anio_academico
+     AND (sga_comisiones.periodo_lectivo = vc_periodo_lect or vc_periodo_lect is null);
+
+
+-- ********************************************************************************************************************************************************************************
+-- U820
+-- ********************************************************************************************************************************************************************************
+
+
+INSERT INTO tmp_carreras_enc11
+SELECT DISTINCT sa.unidad_academica, sa.carrera, sa.legajo, sa.nro_inscripcion
+FROM sga_alumnos sa, tmp_inscrip_enc11 ti
+WHERE ti.unidad_academica = sa.unidad_academica
+	AND ti.nro_inscripcion = sa.nro_inscripcion;
+
+
+INSERT INTO tmp_comision_enc11 (unidad_academica, carrera, legajo, comision, materia, carrera_alu, plan_alu, version_alu)  
+       SELECT unidad_academica, carrera, legajo, comision, materia, carrera, plan_alu, version_alu
+         FROM tmp_inscrip_enc11;
+
+IF c_mat_regul = 'S' THEN       
+
+	DELETE FROM tmp_comision_enc11 
+		WHERE NOT EXISTS 
+			( SELECT '' 
+				FROM tmp_cursadas_enc11
+				WHERE unidad_academica = tmp_comision_enc11.unidad_academica
+					AND carrera = tmp_comision_enc11.carrera
+					AND legajo = tmp_comision_enc11.legajo
+					AND comision = tmp_comision_enc11.comision);
+END IF
+
+IF c_una_x_doc = 'S' THEN
+	INSERT INTO tmp_legajos_enc11
+	SELECT tc.comision, sdc.legajo
+		FROM tmp_comision_enc11 tc,
+--			outer(sga_docentes_com sdc)
+			sga_docentes_com sdc
+		WHERE tc.comision = sdc.comision;
+END IF;
+
+
+insert into tmp_total_personas (unidad_academica, nro_inscripcion)
+select distinct unidad_academica, nro_inscripcion
+	from tmp_inscrip_enc11;
+
+LET vi_cant_personas = DBINFO("SQLCA.sqlerrd2") ;
+
+select min(id)
+	into vi_min_id
+	from tmp_total_personas;
+
+select max(id)
+	into vi_max_id
+	from tmp_total_personas;
+
+RETURN vi_cant_personas, vi_min_id, vi_max_id;
+
+-- trace off;
+END;
+
+END PROCEDURE;
+-- +++++++++++++++++++++++++ Fin procedure sp_carga_enc_crea ++++++++++++++++++
+-- execute PROCEDURE "dba".sp_carga_enc_crea(8);
+
+

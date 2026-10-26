@@ -1,0 +1,11 @@
+-- Alta del mensaje
+-- Mensaje: 82002003.dca
+
+--********************************************
+-- mensaje 82002003, asociado al control de Orden de inscripcion a Cursadas. Inscripción por bloque a 1er. año.
+-- 
+--********************************************
+
+
+DELETE FROM mme_mensajes WHERE mensaje = 82002003;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82002003, "Solamente tenes que inscribirte a una Comisión de la Materia Contabilidad Básica. Finalizada la Inscripcion se te inscribirá a Análisis Matemático e Introducción a la Economía.",  "Solamente tenes que inscribirte a una Comisión de la Materia Contabilidad Básica. Finalizada la Inscripcion se te inscribirá a Análisis Matemático e Introducción a la Economía.", 2, 1);

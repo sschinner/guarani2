@@ -1,0 +1,40 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_ficha_alumno.twig" as ficha_alumno %}
+{% block contenido %}
+    {{ ficha_alumno.render_menu(this.data.menu_reportes, this.data.categoria_actual, this.data.reporte_actual) }}
+	<div id="reporte_contenido">
+		<h3>{{ 'ficha_alumno.rep_homologaciones' | trans | capitalize }}</h3>
+		{% for carrera in this.data.carreras %}
+		
+			<ul class="ficha_alumno_ul">
+				
+					<li><strong>{{ 'ficha_alumno.carrera' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.carrera)}}</li>
+					<li><strong>{{ 'ficha_alumno.legajo' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.legajo)}}</li>
+					<li><strong>{{ 'ficha_alumno.plan' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.plan)}}</li>
+			</ul>
+			{% if carrera.homologaciones %}
+				<table class='table table-condensed table-hover table-striped'>
+						<thead>
+							<tr>
+								<th>{{'ficha_alumno.materia'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.fecha'|trans|capitalize}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for homologacion in carrera.homologaciones %}
+								<tr>
+									<td>{{ficha_alumno.mostrar(homologacion.materia)}}</td>
+									<td>{{ficha_alumno.mostrar(homologacion.fecha)}}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+			{% else %}
+				<div class="alert text-warning">{{'ficha_alumno.no_hay_homologaciones_para_esta_carrera'|trans}}</div>
+			{% endif %}
+		
+		{% else %}
+			<div class="alert text-warning">{{'ficha_alumno.no_hay_informacion'|trans}}</div>
+		{% endfor %}
+	</div>
+{% endblock %}

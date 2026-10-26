@@ -1,0 +1,8 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 1.3.0
+-- *******************************************************************************
+Execute procedure dba.sp_cambiaparametro( 'mat00106', 1 , 2 , "dp_insc_a_carreras_inscripcion" );
+Execute procedure dba.sp_cambiaparametro( 'mat00106', 1 , 4 , "dr820_personas_no_matriculadas" );
+Execute procedure dba.sp_cambiaparametro( 'mat00106', 1 , 5 , "dl820_personas_no_matriculadas" );
+

@@ -1,0 +1,40 @@
+{#
+	Entrada:  subcomisiones
+#}
+{% if subcomisiones %}
+<h4>Subcomisiones</h4>
+<ul class="nav">
+	<li class='subcomisiones'>
+		<div class="row-fluid">
+		<div class="span2">
+			<span><strong> {{ "subcomisión"|trans|capitalize }}</strong></span> 
+		</div>
+		<div class="span2">
+			<span><strong> {{ "tipo de clase"|trans|capitalize }}</strong></span> 
+		</div>
+		
+	</li>
+	{% for subcomision in subcomisiones %}
+	<li class='subcomisiones {{ subcomision.TIPO_CLASE }}'>
+		<div class="row-fluid">
+			<div class="span2">
+				<span> {{ subcomision.NOMBRE }} ({{subcomision.SUBCOMISION}})</span> 
+			</div>
+			<div class="span2">
+				<span> {{subcomision.TIPO_CLASE_NOMBRE}}</span> 
+			</div>
+
+			<div class="span5" style="text-align: right;">
+				{#<a href='{{ url_listar }}' class="btn btn-mini"><i class="icon-list"></i> {{ "listar"|trans |capitalize}}</a>#}
+				<a href='{{ subcomision.URL_PLANILLA }}' class="btn btn-mini"><div class="icon-pencil"></div>{{ "Imprimir Planilla"|trans |capitalize}}</a>
+			</div>
+		</div>
+	</li>
+
+	{% endfor %}
+</ul>
+{% else %}
+	<div class="alert">
+		{{"no_hay_datos.clases"|trans|capitalize}}
+	</div>
+{% endif %}

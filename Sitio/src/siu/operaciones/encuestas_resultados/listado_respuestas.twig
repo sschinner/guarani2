@@ -1,0 +1,127 @@
+{% if pregunta.respuestas %}
+
+    <div class="tabbable">
+        <ul class="nav nav-tabs">
+            <li class="pull-left"><a
+                        class="not-active pull-left">{{ 'encuestas_resultados.obligatoria' | trans }}{{ (pregunta.obligatoria == 'S') ? 'SI' : 'NO' }}</a>
+            </li>
+            <li class="active pull-right">
+                <a href="#tab1{{ pregunta.data_grafico.id }}"
+                   data-toggle="tab"
+                   class="no-ajax">
+                        {{ 'encuesta_resultados.tab_tabla' | trans }}
+                </a>
+            </li>
+            {% if pregunta.es_libre == 'N' %}
+                <li class="pull-right">
+                    <a href="#tab2{{ pregunta.data_grafico.id }}"
+                       data-toggle="tab"
+                       data-cargado="false"
+                       data-tipo="torta"
+                       data-id="torta{{ pregunta.data_grafico.id }}"
+                       data-data="{{ pregunta.data_grafico.data | raw }}"
+                       class="no-ajax">
+                            {{ 'encuesta_resultados.tab_torta' | trans }}
+                    </a>
+                </li>
+                <li class="pull-right">
+                    <a href="#tab3{{ pregunta.data_grafico.id }}"
+                       data-toggle="tab"
+                       data-cargado="false" data-tipo="barra"
+                       data-id="barra{{ pregunta.data_grafico.id }}"
+                       data-data="{{ pregunta.data_grafico.data | raw }}"
+                       class="no-ajax">
+                            {{ 'encuesta_resultados.tab_barras' | trans }}
+                    </a>
+                </li>
+            {% endif %}
+
+        </ul>
+        <div class="tab-content">
+
+            <div class="tab-pane active" id="tab1{{ pregunta.data_grafico.id }}">
+
+                <table class="table table-bordered table-condensed">
+
+                    {% if pregunta.es_libre == 'N' %}
+
+                    <thead>
+                    <tr>
+                        <th> {{ 'encuestas_resultados.respuesta' | trans }} </th>
+                        <th> {{ 'encuestas_resultados.porcentaje' | trans }} </th>
+                        <th> {{ 'encuestas_resultados.veces_seleccionada' | trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for respuesta  in pregunta.respuestas %}
+
+                        <tr>
+                            <th>{{ respuesta.respuesta_valor }}</th>
+                            <th>{{ respuesta.porcentage_elegido~' %' }}</th>
+                            <th>{{ respuesta.elegida_veces }}</th>
+                        </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <div class="tab-pane" id="tab2{{ pregunta.data_grafico.id }}">
+
+                <div id="torta{{ pregunta.data_grafico.id }}" class="grafico"></div>
+
+            </div>
+
+            <div class="tab-pane" id="tab3{{ pregunta.data_grafico.id }}">
+
+                <div id="barra{{ pregunta.data_grafico.id }}" class="grafico"></div>
+
+            </div>
+
+            {% else %}
+
+            <tbody>
+
+            {% for respuesta  in pregunta.respuestas %}
+
+                <tr>
+                    <th> {{ respuesta.respuesta_valor }}</th>
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+            </table>
+
+        </div>
+
+        {% endif %}
+
+        </div>
+
+    </div>
+
+{% elseif mensaje_error %}
+
+    <div id="alert-no-hay-preguntas" class="alert alert-error">{{ mensaje_error | trans }}</div>
+
+{% else %}
+
+    <div id="alert-no-hay-preguntas" class="alert">{{ 'encuestas_resultados.sin_respuestas' | trans }}</div>
+
+{% endif %}
+
+{% if pregunta.rtas_omitidas %}
+
+    <div>
+        <b>
+            <p class="not-active">{{ 'encuesta_resultados.rtas_omitidas' | trans ({'%cantidad%': pregunta.rtas_omitidas}) }}</p>
+        </b>
+    </div>
+
+{% endif %}

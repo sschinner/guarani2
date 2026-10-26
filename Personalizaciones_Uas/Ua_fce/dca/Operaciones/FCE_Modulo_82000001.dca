@@ -1,0 +1,40 @@
+CREATE PROCEDURE verifica_objeto()
+BEGIN
+	IF EXISTS (SELECT procid
+			FROM sysprocedures
+			WHERE procname = 'sp820_insert_modulo') THEN
+		DROP PROCEDURE sp820_insert_modulo;
+	END IF;		
+END
+END PROCEDURE;
+
+EXECUTE PROCEDURE verifica_objeto();
+DROP PROCEDURE verifica_objeto();
+
+CREATE PROCEDURE sp820_insert_modulo();
+BEGIN
+
+-- ANTE CUALQUIER ERROR CONTINUO
+ON EXCEPTION 
+END EXCEPTION WITH RESUME;
+
+
+insert into acc_modulos (modulo, nombre) values ("82000001", "Reportes Complementarios");
+
+insert into acc_modulos_perfil (modulo, perfil) values ("82000001", "Usuario");
+
+insert into acc_submodulos (submodulo, nombre, bitmap) values ("820exame", "Examenes", NULL);
+
+insert into acc_submodulos (submodulo, nombre, bitmap) values ("820histo", "Historico", NULL);
+
+insert into acc_submodulos (submodulo, nombre, bitmap) values ("820requi", "Requisitos", NULL);
+
+insert into acc_submodulos (submodulo, nombre, bitmap) values ("820cursa", "Cursadas", NULL);
+
+
+END
+END PROCEDURE;
+
+
+EXECUTE PROCEDURE sp820_insert_modulo();
+DROP PROCEDURE sp820_insert_modulo();

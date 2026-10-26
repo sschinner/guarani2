@@ -1,0 +1,1 @@
+insert into sga_certif_param values (102,	1, 'dp820_alumno_titulo', 'dl820_ted_1e_borrador',	'dl820_ted_1e_borrador');

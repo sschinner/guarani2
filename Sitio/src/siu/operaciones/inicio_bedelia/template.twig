@@ -1,0 +1,7 @@
+{% extends "kernel/una_columna.twig" %}
+
+{% block titulo_operacion %}<h2>{{ 'inicio_bedelia.bienvenido' | trans }} {{ persona.nombre }} </h2>{% endblock %}
+
+{% block columna_1 %}
+    {{ intro.render }}
+{% endblock %}

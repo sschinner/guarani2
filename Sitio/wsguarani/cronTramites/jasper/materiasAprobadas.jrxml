@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificadoAnalitico" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="455" leftMargin="100" rightMargin="40" topMargin="20" bottomMargin="80" uuid="0498dde2-d989-4948-ac07-ca978b2c11c6">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<template><![CDATA["guarani_estilo.jrtx"]]></template>
+	<parameter name="fecha_reporte" class="java.lang.String"/>
+	<queryString language="xPath">
+		<![CDATA[/]]>
+	</queryString>
+	<field name="ua" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/ua]]></fieldDescription>
+	</field>
+	<field name="nombreFacultad" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/nombreFacultad]]></fieldDescription>
+	</field>
+	<field name="nroInscripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/nroInscripcion]]></fieldDescription>
+	</field>
+	<field name="apellido" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/apellido]]></fieldDescription>
+	</field>
+	<field name="nombres" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/nombres]]></fieldDescription>
+	</field>
+	<field name="tipoDocDescripcion" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/tipoDocDescripcion]]></fieldDescription>
+	</field>
+	<field name="nroDocumento" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/nroDocumento]]></fieldDescription>
+	</field>
+	<field name="carrera" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/carrera]]></fieldDescription>
+	</field>
+	<field name="nombreCarrera" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/nombreCarrera]]></fieldDescription>
+	</field>
+	<field name="nombreCarreraReducido" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/nombreCarreraReducido]]></fieldDescription>
+	</field>
+	<field name="legajo" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/legajo]]></fieldDescription>
+	</field>
+	<field name="planAlumno" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/planAlumno]]></fieldDescription>
+	</field>
+	<field name="calidad" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/calidad]]></fieldDescription>
+	</field>
+	<field name="materia" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/materia]]></fieldDescription>
+	</field>
+	<field name="nombreMateria" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/nombreMateria]]></fieldDescription>
+	</field>
+	<field name="nombreMateriaReducido" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/nombreMateriaReducido]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/fecha]]></fieldDescription>
+	</field>
+	<field name="resultado" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/resultado]]></fieldDescription>
+	</field>
+	<field name="nota" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/nota]]></fieldDescription>
+	</field>
+	<field name="formaAprobacion" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/formaAprobacion]]></fieldDescription>
+	</field>
+	<field name="tipoActa" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/tipoActa]]></fieldDescription>
+	</field>
+	<field name="acta" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/acta]]></fieldDescription>
+	</field>
+	<field name="actaPromocion" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/actaPromocion]]></fieldDescription>
+	</field>
+	<field name="nroResolucion" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/nroResolucion]]></fieldDescription>
+	</field>
+	<field name="plan" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/plan]]></fieldDescription>
+	</field>
+	<field name="version" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/version]]></fieldDescription>
+	</field>
+	<field name="escalaNota" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/escalaNota]]></fieldDescription>
+	</field>
+	<field name="descripcionNota" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/descripcionNota]]></fieldDescription>
+	</field>
+	<field name="observaciones" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/observaciones]]></fieldDescription>
+	</field>
+	<field name="interesado" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/interesado]]></fieldDescription>
+	</field>
+	<field name="localidad" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/localidad]]></fieldDescription>
+	</field>
+	<field name="pais" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/pais]]></fieldDescription>
+	</field>
+	<field name="promedioSin" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/promedioSin]]></fieldDescription>
+	</field>
+	<field name="exterior" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/exterior]]></fieldDescription>
+	</field>
+	<field name="tipoDeCarrera" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/tipoDeCarrera]]></fieldDescription>
+	</field>
+	<field name="promedioPorResolucion" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/promedioPorResolucion]]></fieldDescription>
+	</field>
+	<field name="cantMateriasPlan" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/cantMateriasPlan]]></fieldDescription>
+	</field>
+	<field name="cantMateriasObligAprobadas" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/cantMateriasObligAprobadas]]></fieldDescription>
+	</field>
+	<field name="titSuperiorPrevio" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/titSuperiorPrevio]]></fieldDescription>
+	</field>
+	<field name="institucionOtorgante" class="java.lang.String">
+		<fieldDescription><![CDATA[/HistoriaAcademica/datos/item/institucionOtorgante]]></fieldDescription>
+	</field>
+	<pageHeader>
+		<band height="60">
+			<image scaleImage="RealSize" hAlign="Center" onErrorType="Blank">
+				<reportElement x="203" y="0" width="80" height="60" isRemoveLineWhenBlank="true" uuid="9579d61d-eab3-4ca7-a0f6-d41db9db8618"/>
+				<imageExpression><![CDATA["../img/efebo.png"]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape" hAlign="Left" onErrorType="Blank">
+				<reportElement x="0" y="0" width="150" height="60" isRemoveLineWhenBlank="true" uuid="299a1a90-f31c-40c7-9ce2-4272a54741cc"/>
+				<imageExpression><![CDATA["../img/logo-100.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="reporte_encabezado_pie" x="308" y="0" width="147" height="20" uuid="0f6702dc-c18d-418c-a7b5-0a00e8b8a02e"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Universidad Nacional del Litoral]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement style="reporte_titulo" x="0" y="0" width="455" height="20" uuid="a03b9814-64fb-4c85-8764-e04233763838"/>
+				<textElement>
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[CERTIFICADO DE ASIGNATURAS APROBADAS]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="reporte_subtitulo" positionType="Float" x="0" y="20" width="455" height="15" uuid="6c41a360-8ec1-4ab0-bb37-51ddb5abb4a5"/>
+				<textElement>
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreCarrera}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="75" splitType="Stretch">
+			<textField>
+				<reportElement style="reporte_texto" stretchType="RelativeToTallestObject" x="0" y="0" width="455" height="75" uuid="4ed7ad3f-b53a-4a74-a668-3bf40d28af5a"/>
+				<textElement textAlignment="Justified">
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{ua} == "ISM" ?
+"Las autoridades de la Facultad de Humanidades y Ciencias y del Instituto Superior de Música - dependiente de la FHUC - quienes suscriben, certifican que "
+:
+"La autoridad " + ($F{ua} == "CU-RA" || $F{ua} == "CU-G" ? "del " : "de la ") + $F{nombreFacultad} + " que suscribe, certifica que ") +
+(
+$F{tipoDeCarrera} == 'P' || $F{tipoDeCarrera} == 'W' ?
+( $F{titSuperiorPrevio}.equals( null ) ? "" : "el/la " + $F{titSuperiorPrevio} + " " )
+:
+""
+)
++ $F{apellido} + ", " + $F{nombres} + " " +
+$F{tipoDocDescripcion} + ": " + $F{nroDocumento} + " y Nro. de Legajo "+ ($F{legajo}.equals(null) ? "(pendiente)" : $F{legajo}) + ", ha obtenido las siguientes equivalencias (con o sin nota) y calificaciones en los exámenes aprobados" +
+(
+$F{tipoDeCarrera} == 'I' || $F{tipoDeCarrera} == 'E' || $F{tipoDeCarrera} == 'B' || $F{tipoDeCarrera} == 'V' ?
+    ".\n"
+    :
+    ", en la carrera de " + $F{nombreCarrera} + " (Plan: " + $F{planAlumno} + ").\n"
+)]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="50">
+			<printWhenExpression><![CDATA[($F{nombreMateria} != null ? true : false)]]></printWhenExpression>
+			<subreport>
+				<reportElement key="materias" x="0" y="0" width="455" height="50" uuid="fe064c1e-f157-40a9-bd85-9aebce846997"/>
+				<subreportParameter name="INSTITUCION"/>
+				<dataSourceExpression><![CDATA[((net.sf.jasperreports.engine.data.JRXmlDataSource)$P{REPORT_DATA_SOURCE}).subDataSource("/HistoriaAcademica/datos/item")]]></dataSourceExpression>
+				<subreportExpression><![CDATA["materias.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="26">
+			<printWhenExpression><![CDATA[($F{nombreMateria} != null ? true : false)]]></printWhenExpression>
+			<staticText>
+				<reportElement style="tabla_celda" stretchType="RelativeToTallestObject" x="0" y="0" width="75" height="20" uuid="f3c31b19-8b2a-46e7-8749-26a37360e8ed"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Escala de calificaciones:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabla_celda" stretchType="RelativeToTallestObject" x="75" y="0" width="70" height="20" uuid="e600c7f3-684a-41ad-bfd6-1faa09ef30cc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Sobresaliente (10)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabla_celda" stretchType="RelativeToTallestObject" x="145" y="0" width="58" height="20" uuid="5c85a9b2-1201-4b11-9529-5b4b1cf42b6d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Distinguido (9)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabla_celda" stretchType="RelativeToTallestObject" x="203" y="0" width="60" height="20" uuid="5cecf96e-98fc-4481-9971-9e9cb56ea5b5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Muy Bueno (8)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabla_celda" stretchType="RelativeToTallestObject" x="263" y="0" width="45" height="20" uuid="7d9574f5-2a4e-432d-880c-9a59919b8d88"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Bueno (7)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabla_celda" stretchType="RelativeToTallestObject" x="308" y="0" width="55" height="20" uuid="ada07439-fd8b-422e-b818-7a8f67dc56c4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Aprobado (6)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="tabla_celda" stretchType="RelativeToTallestObject" x="363" y="0" width="92" height="20" uuid="d86f4986-8e95-4562-be57-0b482cc5764a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[Insuficiente (1-2-3-4-5)]]></text>
+			</staticText>
+		</band>
+		<band height="55">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="tabla_celda" stretchType="RelativeToTallestObject" x="218" y="0" width="237" height="40" uuid="47c9c7c1-8d0a-43b5-a196-21478a3e1eb8">
+					<printWhenExpression><![CDATA[($F{nombreMateria} != null ? true : false)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font size="10" isBold="false" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Promedio sin aplazos: " + ($F{promedioSin}.equals(null) ? '-' : $F{promedioSin})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement style="tabla_celda" stretchType="RelativeToTallestObject" x="0" y="0" width="218" height="40" uuid="c5f87eaf-0b9a-4566-8cc2-88f6d31e2dc3">
+					<printWhenExpression><![CDATA[($F{nombreMateria} != null ? true : false)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Justified">
+					<font size="10" isBold="false" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Se ha verificado que esta información concuerda con las actas respectivas."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="tabla_celda" x="0" y="0" width="455" height="55" uuid="4a41ce2b-c012-4610-a808-04f2d069bb12">
+					<printWhenExpression><![CDATA[($F{nombreMateria} != null ? false : true)]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No posee asignaturas aprobadas.]]></text>
+			</staticText>
+		</band>
+		<band height="30" splitType="Stretch"/>
+		<band height="30">
+			<textField isStretchWithOverflow="true">
+				<reportElement style="reporte_texto" stretchType="RelativeToTallestObject" x="0" y="0" width="455" height="29" uuid="4ae4d571-52bf-422d-8b35-6bcc3de06d04"/>
+				<textElement textAlignment="Justified">
+					<font size="10" isBold="false" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["A pedido del/la interesado/a, y para ser presentado ante QUIEN CORRESPONDA. Expido el presente que firmo en la ciudad de " + $F{localidad} +", " + $P{fecha_reporte} + "."]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20">
+			<textField>
+				<reportElement style="reporte_encabezado_pie" positionType="Float" x="0" y="5" width="442" height="15" uuid="4a9a16db-5f4e-4efb-b2c1-2a3af6f91494"/>
+				<textElement textAlignment="Right">
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Hoja " + $V{PAGE_NUMBER} + " de "]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="reporte_encabezado_pie" positionType="Float" x="442" y="5" width="13" height="15" uuid="2a77357a-4f60-4156-ad8a-e4b4200d842b"/>
+				<textElement textAlignment="Center">
+					<font isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

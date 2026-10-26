@@ -1,0 +1,95 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    {% if this.data.providers.form %}
+        
+        {% import "kernel/macro_recaptcha.twig" as recaptcha %}
+        {{ recaptcha.script() }}
+    
+        {% set form = this.data.providers.form %}
+	<h2>{{"ingresa_tus_datos"|trans|capitalize}}</h2>
+        <form method="post" action="{{ form.accion }}" id="guarani_form_login">
+		<div class="control-group">
+			<label class="control-label" for="usuario">{{ "acceso.form_login.usuario"|trans|capitalize }}</label>
+
+			<div class="controls">
+                    <input id="usuario" name="{{ form.campos.usuario.name }}" type="{{ form.campos.usuario.type }}" value="{{ form.campos.usuario.value }}" maxlength="20"/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="password">{{ "acceso.form_login.clave"|trans|capitalize }}</label>
+
+			<div class="controls">
+                    <input id="password" name="{{ form.campos.password.name }}" type="{{ form.campos.password.type }}" value="{{ form.campos.password.value }}" maxlength="20"/>
+			</div>
+		</div>
+                        
+                {% if form.usar_captcha %}
+		<div class="control-group">
+                    {{ recaptcha.widget() }}
+		</div>
+		{% endif %}
+                
+		<div class="control-group">
+			<div class="controls">
+                            <input id="login"  name="{{ form.campos.submit.name }}" type="{{ form.campos.submit.type }}" value="{{ form.campos.submit.value }}" class="btn btn-info"/>
+			</div>
+		</div>			
+	</form>
+        {% if form.error %}
+            <div id="error_login" class='alert alert-error error-form'>
+            {{ form.error|trans|raw }}
+            </div>
+	{% endif %}
+	{#{% if this.data.mensajes.error_msg %}#}
+	    {#<div class='alert alert-error'>#}
+			{#{{ this.data.mensajes.error_msg }}#}
+	    {#</div>#}
+	{#{% endif %}#}
+        <a href='{{ this.data.url_recuperar }}'>{{ 'olvidaste_contrasenia'|trans }}</a>
+    {% endif %}
+    {% if this.data.providers.saml %}
+        {% set saml = this.data.providers.saml %}
+        <div class="well well-small text-center"><a class='btn btn-info no-ajax' href="{{ saml.url_login }}">{{ "login.saml"|trans}}</a></div>
+        {% if saml.error %}
+            <div class='alert alert-error error-saml'>
+                {{ saml.error |trans}}
+            </div>
+        {% endif %}
+    {% endif %}
+    {% if this.data.providers.cuenta_ext %}
+
+        {% set cuenta_ext = this.data.providers.cuenta_ext %}
+		<div class="services">
+		<div>{{ "login.sep_msg"|trans|capitalize }}</div>
+            {% for serv, d in cuenta_ext.proveedores %}
+                <a class="no-ajax login-link" href="{{ d.url }}">
+                    {% if d.icono %}
+                        <img alt="{{ "login.with"|trans({'%servicio%': d.id|capitalize})|raw }}" class="login-icon" src="{{ d.icono }}"/>
+			{% endif %}
+                    {{ d.id|trans|capitalize }}</a>
+		{% endfor %}
+            {% if cuenta_ext.error %}
+                <div class='alert alert-error'>
+                        {{ cuenta_ext.error |trans}}
+		</div>
+	{% endif %}
+        </div>
+    {% endif %}
+
+
+
+    {% if this.data.providers.dev %}
+        {% set dev = this.data.providers.dev %}
+        <div class="alert alert-danger">
+            <span>{{ dev.mensaje }}</span>
+            <form  class="form-inline" method="post"  action="{{ dev.accion }}" >
+                <input name="{{ dev.campos.usuario.name }}" type="{{ dev.campos.usuario.type }}" value="{{ dev.campos.usuario.value }}" maxlength="20"/>
+                <input type="submit" class='btn btn-danger no-ajax'/>
+            </form>
+            {% if dev.error %}
+                <p>{{ dev.error }}</p>
+            {% endif %}
+        </div>
+   {% endif %}
+
+{% endblock %}

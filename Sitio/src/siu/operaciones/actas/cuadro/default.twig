@@ -1,0 +1,17 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_tablas.twig" as tabla %}
+{% block contenido %}
+	{% if(this.data.cuadro) %}
+		{% if(this.data.tipo == "R") %}
+			{{ tabla.cursada(this.data.cuadro) }}
+		{% endif %}
+		{% if(this.data.tipo == "P") %}
+			{{ tabla.promocion(this.data.cuadro) }}
+		{% endif %}
+		{% if(this.data.tipo == "E") %}
+			{{ tabla.examen(this.data.cuadro) }}
+		{% endif %}
+	{% else %}
+		<div class="alert text-warning">{{'actas.no_hay_datos'|trans|capitalize}}</div>
+	{% endif %}
+{% endblock %}

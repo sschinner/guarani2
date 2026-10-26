@@ -1,0 +1,41 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_ficha_alumno.twig" as ficha_alumno %}
+{% block contenido %}
+    {{ ficha_alumno.render_menu(this.data.menu_reportes, this.data.categoria_actual, this.data.reporte_actual) }}
+	<div id="reporte_contenido">
+		<h3>{{ 'ficha_alumno.rep_prorrogas_regularidad' | trans }}</h3>
+		{% if (this.data.datos) %}
+		{% for carrera in this.data.datos %}
+			<ul class="ficha_alumno_ul">
+				<li><strong>{{ 'ficha_alumno.rep_prorrogas_regularidad.carrera' | trans | capitalize }}:</strong> {{'('~ficha_alumno.mostrar(carrera.carrera)~')'~ficha_alumno.mostrar(carrera.carrera_nombre)}}</li>
+				<li><strong>{{ 'ficha_alumno.rep_prorrogas_regularidad.legajo' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.legajo)}}</li>
+			</ul>
+			<table class='table table-condensed table-hover table-striped' id="tabla_prorrogas">
+				<thead>
+					<tr>
+						<th>{{'ficha_alumno.rep_prorrogas_regularidad.materia'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_prorrogas_regularidad.origen'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_prorrogas_regularidad.fecha_alta'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_prorrogas_regularidad.fecha_fin_vigencia_anterior'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_prorrogas_regularidad.fecha_prorrogada'|trans| capitalize}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for prorroga in carrera.prorrogas %}
+					<tr class="link-in-data" data-link="{{prorroga.link}}">
+						<td class="col_izq">{{'('~ficha_alumno.mostrar(prorroga.materia)~')'~ficha_alumno.mostrar(prorroga.materia_nombre)}}</td>
+						<td>{{ficha_alumno.mostrar(prorroga.origen_regularidad)}}</td>
+						<td>{{ficha_alumno.mostrar(prorroga.fecha_alta_prorroga)}}</td>
+						<td>{{ficha_alumno.mostrar(prorroga.fin_vigencia_anterior)}}</td>
+						<td>{{ficha_alumno.mostrar(prorroga.fecha_prorrogada)}}</td>
+					</tr>
+				{% endfor %}					
+					</tbody>
+				</table>
+		{% endfor %}
+		
+		{% else %}
+		<div class="alert alert-block">{{'ficha_alumno.no_hay_informacion'|trans| capitalize}}</div>
+		{% endif %}
+	</div>
+{% endblock %}

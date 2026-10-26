@@ -1,0 +1,21 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}	
+    <script>
+       
+        $(function () {
+            
+            $("#_msg_placeholder").hide();
+        });
+
+    </script>
+
+    <div class="form-container" >
+        <div class="row">
+            <div id="mensaje" role="alert" class="alert alert-error" style="margin-left:10%;">
+                <p>Momentaneamente el servicio se encuentra interrumpido, por favor intente mas tarde</p>
+                <p>Disculpe las molestias</p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

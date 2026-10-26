@@ -1,0 +1,15 @@
+#lista_notas .centrar { text-align: center; }
+#lista_notas .alinear { vertical-align: middle; }
+
+#lista_notas .ficha-alumno img {
+	margin-right: 5px;
+}
+
+#lista_notas span.nombre,
+#lista_notas span.legajo {
+	display: block;
+}
+
+#lista_notas span.legajo {
+	color: #666;
+}

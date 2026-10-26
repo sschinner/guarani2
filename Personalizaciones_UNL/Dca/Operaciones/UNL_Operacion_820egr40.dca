@@ -1,0 +1,60 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.6.3
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones( '820egr40', '08-Entregar Diploma', '08-Entregar Diploma', null );
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( '820egr40', 1, 'w_abm_lista_maq_estados', 'uo_dw,dk_titulos_otorg,10,1,8204', 'N' );
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( '820egr40', 2, 'w820_abm_detalle_maq_estados_2', 'uo_dw,d820_m_titulos_otorg_entrega,1,estado,uo_dw,d_eventos_posibles,1,uo_dw,d_forms_posibles,4,uo_ds,d_tit_otor_form,1,8204', 'N' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '820egr40', 'C' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '820egr40', 'M' );
+
+begin;
+
+set constraints all deferred;
+
+-- Estado:  1 - E - Entrega de Diploma - Entrega de Diploma
+delete from mce_estados where entidad = 1 and estado = 'E';
+insert into mce_estados values(1, 'E', 'Entrega de Diploma', 'Entrega de Diploma');
+
+-- Actividad: 8204 - Entregar Diploma
+delete from mce_actividades where entidad = 1 and actividad = 8204;
+insert into mce_actividades values (1, 8204, 'Entregar Diploma', 'Entregar Diploma');
+
+-- Eventos: 
+--	82041 - Entregar Diploma
+--	82042 - Revisar Confeccion
+delete from mce_eventos where entidad = 1 and evento in (82041, 82042);
+insert into mce_eventos values(1, 82041, 'Entregar Diploma', 'Entregar Diploma');
+insert into mce_eventos values(1, 82042, 'Revisar Confección de Diploma', 'Revisar Confección de Diploma');
+
+-- Eventos - Actividad
+delete from mce_eventos_activ where entidad = 1 and actividad = 8204;
+insert into mce_eventos_activ values (1, 8204, 82041);
+insert into mce_eventos_activ values (1, 8204, 82042);
+
+commit;
+
+begin;
+set constraints all deferred;
+
+-- Caminos:
+--1 - 82041 - E - D
+--1 - 82042 - E - R
+delete from mce_caminos where entidad = 1 and estado = 'E' and evento in (82041, 82042);
+insert into mce_caminos values (1, 82041, 'E', 'D');
+insert into mce_caminos values (1, 82042, 'E', 'R');
+
+-- Formularios que se emiten en este paso
+delete from mce_form_camino where entidad = 1 and evento = 82041 and estado = 'E';
+insert into mce_form_camino values (1, 'E', 82041, 40);
+insert into mce_form_camino values (1, 'E', 82041, 69);
+
+-- Modificación del camino desde egr05070
+-- Caminos:
+--1 - 5071 - 'R' - E
+update mce_caminos set nuevo_estado = 'E' where entidad = 1 and evento = 5071 and estado = 'R';
+
+update mce_formularios set reimprime = 'S' where formulario = 40;
+update mce_formularios set  reimprime = 'S' where formulario = 69;
+
+commit;

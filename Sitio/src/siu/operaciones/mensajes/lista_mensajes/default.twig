@@ -1,0 +1,138 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<div class="titulo_operacion">
+		<h2 class="clearfix">
+		{% if this.data.puede_enviar %}
+			{% if this.data.url_enviados %}
+				<span class="pull-left">{{"tit_mensajes_recibidos"|trans|capitalize}}</span>
+			{% endif %}
+			{% if this.data.url_recibidos and this.data.es_docente%}
+				<span class="pull-left">{{"tit_mensajes_enviados"|trans|capitalize}}</span>
+			{% endif %}
+
+			{% if this.data.es_docente %}
+			<div class="pull-right">
+				<a class="btn btn-info btn-small" href="{{this.data.url_enviar}}" title="{{"btn_mensajes_enviar"|trans|capitalize}}"><span class="icon-file icon-white" alt="{{"btn_mensajes_enviar"|trans|capitalize}}"></span> {{"btn_mensajes_enviar"|trans|capitalize}}</a>
+			</div>
+			<div class="pull-right">
+			{% if this.data.url_recibidos %}
+				<a class="btn btn-info btn-small" href="{{this.data.url_recibidos}}" title="{{"btn_mensajes_recibidos"|trans|capitalize}}"><span class="icon-upload icon-white" alt="{{"btn_mensajes_recibidos"|trans|capitalize}}"></span> {{"btn_mensajes_recibidos"|trans|capitalize}}</a>
+			{% endif %}
+			{% if this.data.url_enviados %}
+				<a class="btn btn-info btn-small" href="{{this.data.url_enviados}}" title="{{"btn_mensajes_enviados"|trans|capitalize}}"><span class="icon-download icon-white" alt="{{"btn_mensajes_enviados"|trans|capitalize}}"></span> {{"btn_mensajes_enviados"|trans|capitalize}}</a>
+			{% endif %} 
+			</div>
+			{% endif %}
+		{% else %}
+			<span class="pull-left">{{"tit_mensajes_recibidos"|trans|capitalize}}</span>
+		{% endif %}
+		</h2>
+	</div>
+	{% if this.data.mensajes %}
+		{%if this.data.vista == 'recibidos'%}
+			<table class="table">
+				<thead>
+					<tr>
+					<th>{{''|trans| capitalize}}</th>
+					<th>{{"mensajes.fecha_envio"|trans| capitalize}}</th>
+					<th>{{'mensajes.enviado_por'|trans| capitalize}}</th>
+					<th>{{'mensajes.titulo'|trans| capitalize}}</th>
+					<th>{{'mensajes.leido'|trans| capitalize}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for key, mensaje in this.data.mensajes %}
+						<tr id="{{mensaje.ANUNCIO}}"  class="detalle {% if not mensaje.LEIDO %}leido{% endif %}" title="{{mensaje.TITULO_ANUNCIO}}" data-url-leer="{{ mensaje.URL_LEER }}">
+							<td>
+								<div tabindex="0" class="icono-colapsado icon-plus"></div>
+							</td>		
+							<td>
+								<span>{{mensaje.FECHA_DE_REGISTRO}}</span>
+							</td>		
+							<td>
+								<span class="remitente">{{mensaje.ENVIADO_POR}}</span>
+							</td>		
+							<td>
+								<span class="titulo_anuncio">{{mensaje.TITULO_ANUNCIO}}</span>
+								<span class="adjuntos">
+									{% if mensaje.ADJUNTOS %}
+                                        {% for adjunto in mensaje.ADJUNTOS %}
+											<a class='adjunto' href='{{ adjunto.URL_DESCARGA }}' title='{{ adjunto.NOMBRE_ORIGINAL }}'><div class="icon-download"></div></a>
+                                        {% endfor %}
+                                    {% endif %}
+								</span>
+							</td>		
+							<td>
+								{% if mensaje.LEIDO %}
+									<div id="imgestado{{mensaje.ANUNCIO}}" class="icon-ok"><span class="acchide">Le&iacute;do</span></div>
+								{% else %}
+								<div id="imgestado{{mensaje.ANUNCIO}}" class="icon-envelope"><span class="acchide">Nuevo</span></div>
+								{% endif %}
+							</td>
+						</tr>
+						<tr id="msg_{{mensaje.ANUNCIO}}" class="hidden">
+							<td colspan="6">
+								<div id="mensaje{{mensaje.ANUNCIO}}" class="mensaje" aria-live="polite"></div>
+							</td>	
+						</tr>
+						{% endfor %}					
+				</tbody>
+			</table>
+		{%endif%}
+
+		{%if this.data.vista == 'enviados'%}
+			<table class="table">
+				<thead>
+					<tr>
+					<th>{{''|trans| capitalize}}</th>
+					<th>{{'mensajes.fecha_envio'|trans| capitalize}}</th>
+					<th>{{'mensajes.titulo'|trans| capitalize}}</th>
+					<th>{{'mensajes.destino'|trans| capitalize}}</th>
+					<th>{{'mensajes.enviado_a'|trans| capitalize}}</th>
+					<th>{{'mensajes.publicado'|trans| capitalize}}</th>
+					<th>{{'mensajes.envio_mail'|trans| capitalize}}</th>
+					<th>{{'mensajes.cant_dest'|trans| capitalize}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for key, mensaje in this.data.mensajes %}
+						<tr id="{{mensaje.ANUNCIO}}" class="detalle {% if not mensaje.LEIDO %}leido{% endif %}" title="{{mensaje.TITULO_ANUNCIO}}" data-url-leer="{{ mensaje.URL_LEER }}" >
+							<td>
+								<div tabindex="0" class="icono-colapsado icon-plus"></div>
+							</td>		
+							<td>
+								<span>{{mensaje.FECHA_DE_REGISTRO}}</span>
+							</td>		
+							<td>
+								<span class="titulo_anuncio">{{mensaje.TITULO_ANUNCIO}}</span>
+							</td>
+							<td>
+								<span class="destino">{{mensaje.DESTINO}}</span>
+							</td>		
+							<td>
+								<span class="enviado_a">{{mensaje.ENVIADO_A}}</span>
+							</td>		
+							<td>
+								<span class="publicado">{{mensaje.FECHA_DESDE}} - {{mensaje.FECHA_HASTA}}</span>
+							</td>		
+							<td>
+								<span class="envio_mail">{{mensaje.ENVIADO_POR_MAIL}}</span>
+							</td>		
+							<td>
+								<span class="cant_dest">{{mensaje.CANT_DESTINATARIOS}}</span>
+							</td>		
+						</tr>
+						<tr id="msg_{{mensaje.ANUNCIO}}" class="hidden">
+							<td colspan="9">
+								<div id="mensaje{{mensaje.ANUNCIO}}" class="mensaje" aria-live="polite"></div>
+							</td>	
+						</tr>
+					{% endfor %}					
+				</tbody>
+			</table>
+		{%endif%}
+
+	{% else %}
+	<div role="alert" class="alert">{{ "no_existen_mensajes_para_visualizar"|trans|capitalize }}</div>
+	{% endif %}
+{% endblock %}

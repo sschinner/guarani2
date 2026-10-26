@@ -1,0 +1,70 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    <div id='filtros' class="well">
+		<div id="form_filtros">
+        <ul class="nav nav-list">
+			<li>
+				<div>
+					<h3 class="texto-g" tabindex="0">{{"historia_academica.filtro.descripcion_uso"|trans}}:</h3>
+					<span>Marcar: </span>
+					<a  href="#" filtro="todo" class="todo">{{"todos" | trans | capitalize}}</a>
+					<span class="divisor"> / </span>
+					<a  href="#" filtro="ninguno" class="todo">{{"ninguno" | trans | capitalize}}</a>
+				</div>
+			</li>
+			<li class="divider"></li>
+			<li role="menu" >
+				{# {% if (this.data.estados.cursadas == "A") %} Ninguno marcado {% else if (this.data.estados.cursadas == 'N') %} Solo Aprobados {% else %} Todos marcados {% endif %} #}
+				<a href="#" filtro="cursada" title="{% if (this.data.estados.cursadas == "A") %}Marcar Aprobados y promocionados{% elseif (this.data.estados.cursadas == "T") %}Marcar todos{% else %}Desmarcar todos{%endif%}" estado="{{this.data.estados.cursadas ? this.data.estados.cursadas : "A"}}">{{"cursadas" | trans | capitalize}}</a>
+				<div class="resultados cursadas">
+					
+					<label role="menuitemcheckbox" aria-controls="listado" for="cursadasPromocionadas" class="checkbox">
+						<input  type="checkbox" name="cursadasPromocionadas" id="cursadasPromocionadas" class="cursada" value="PromocionA" />{{"cursada_promocionada" | trans | capitalize}}
+					</label>
+					<label role="menuitemcheckbox" aria-controls="listado" for="cursadasAprobadas" class="checkbox">
+						<input type="checkbox" name="cursadasAprobadas" id="cursadasAprobadas" class="cursada" value="CursadaA" />{{"cursada_aprobada" | trans | capitalize}}
+					</label>
+					<label role="menuitemcheckbox" aria-controls="listado" for="cursadasDesaprobadas" class="checkbox segundo_orden">
+						<input type="checkbox" name="cursadasDesaprobadas" id="cursadasDesaprobadas" class="cursada" value="CursadaR" />{{"cursada_desaprobada" | trans | capitalize}}
+					</label>
+					<label role="menuitemcheckbox" aria-controls="listado" for="cursadasAusentes" class="checkbox segundo_orden">
+						<input type="checkbox" name="cursadasAusentes" id="cursadasAusentes" class="cursada" value="CursadaU" />{{"cursada_ausente" | trans }}
+					</label>
+					<label role="menuitemcheckbox" aria-controls="listado" for="enCurso" class="checkbox segundo_orden">
+						<input type="checkbox" name="enCurso" id="enCurso" class="cursada" value="EnCurso" />{{"en_curso" | trans | capitalize}}
+					</label>
+					
+				</div>
+			</li>
+			<li class="divider"></li>
+			<li role="menu">
+				<a href="#" filtro="examen" title="{% if (this.data.estados.examenes == "A") %}Marcar Aprobados{% elseif (this.data.estados.examenes == "T") %}Marcar todos{% else %}Desmarcar todos{%endif%}" estado="{{this.data.estados.examenes ? this.data.estados.examenes : "A"}}">{{"examenes" | trans | capitalize}}</a>
+				<div class="resultados examenes">
+					
+					<label role="menuitemcheckbox" aria-controls="listado" for="examenesAprobados" class="checkbox">
+						<input type="checkbox" name="examenesAprobados" id="examenesAprobados" class="examen" value="ExamenA" />{{"examen_aprobado" | trans | capitalize}}
+					</label>
+					<label role="menuitemcheckbox" aria-controls="listado" for="examenesDesaprobados" class="checkbox segundo_orden">
+						<input type="checkbox" name="examenesDesaprobados" id="examenesDesaprobados" class="examen" value="ExamenR" />{{"examen_desaprobado" | trans | capitalize}}
+					</label>	
+									
+				</div>
+			</li>
+			<li class="divider"></li>
+			<li role="menu">
+				<a href="#" filtro="equivalencia" title="{% if (this.data.estados.equivalencias == "A") %}Marcar Aprobados{% elseif (this.data.estados.equivalencias == "T") %}Marcar todos{% else %}Desmarcar todos{%endif%}"  estado="{{this.data.estados.equivalencias ? this.data.estados.equivalencias : "A"}}">{{"equivalencias" | trans | capitalize}}</a>
+				<div class="resultados equivalencias">
+					
+					<label role="menuitemcheckbox" aria-controls="listado" for="equivalenciasAprobadas" class="checkbox">
+						<input type="checkbox" name="equivalenciasAprobadas" id="equivalenciasAprobadas" class="equivalencia" value="EquivalenciaA" />{{"equivalencia_aprobada" | trans | capitalize}}
+					</label>
+					<label role="menuitemcheckbox" aria-controls="listado" for="equivalenciasReprobadas" class="checkbox segundo_orden">
+						<input type="checkbox" name="equivalenciasReprobadas" id="equivalenciasReprobadas" class="equivalencia" value="EquivalenciaR" />{{"equivalencia_reprobada" | trans | capitalize}}
+					</label>
+					
+				</div>
+			</li>			
+        </ul>
+		</div>
+    </div>
+{% endblock %}

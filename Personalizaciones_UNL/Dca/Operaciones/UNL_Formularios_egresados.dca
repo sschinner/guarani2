@@ -1,0 +1,153 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 1.3.0
+-- *******************************************************************************
+
+--10	TED 1.a	dl_ted_1a
+--20	TED 1.b	dl_ted_1b
+--30	TED 1.c	dl_ted_1c
+--40	TED 1.d	dl_ted_1d
+--50	TED 1.e	dl_ted_1e
+--60	TED 1.f	dl_ted_1f
+--65	Resolución C.D. Fdo.
+--67	Despacho C.E. e I.R.
+--68	Certificación de Fin de Carrera (SUR-D3)
+--69	Recibo de Diploma
+--70	TED 1.g	dl_ted_1g
+--80	TED II (hoja 1)	dl_ted_2_1
+--90	Constancia de Inicio de Trámite	dl_constancia_inicio_tramite
+--85	TED II (hoja 2)	dl_ted_2_2
+--100	TED 1.e	dl_ted_1e
+--105	Certificado de Título en Trámite	dl_diploma_tramite
+--110	Certificado de Fin de Carrera	dl_certif_fin_carrera
+
+
+set triggers for mce_formularios disabled;
+set triggers for mce_estados disabled;
+set triggers for mce_form_camino disabled;
+set triggers for mce_caminos disabled;
+set triggers for mce_eventos disabled;
+
+-- rollback;
+begin;
+
+set constraints all deferred;
+
+update mce_formularios set objeto = "dl_ted_1a" where formulario = 10;
+update mce_formularios set nombre = "Seguimiento Interno de Título" where formulario = 10;
+update mce_formularios set descripcion = "Seguimiento Interno de Título" where formulario = 10;
+
+update mce_formularios set objeto = "dl820_ted_1b" where formulario = 20;
+update mce_formularios set nombre = "Solicitud de Diploma (SUR-D1)", reimprime = 'S' where formulario = 20;
+update mce_formularios set descripcion = "Solicitud de Diploma (SUR-D1)" where formulario = 20;
+
+update mce_formularios set objeto = "dl820_ted_1c" where formulario = 30;
+update mce_formularios set nombre = "Registro de Graduados (SUR-D22)", reimprime = 'S' where formulario = 30;
+update mce_formularios set descripcion = "Registro de Graudados (SUR-D22)" where formulario = 30;
+
+update mce_formularios set objeto = "dl820_ted_1e" where formulario = 50;
+update mce_formularios set nombre = "Certificado Analítico de Egreso (SUR-D2)" where formulario = 50;
+update mce_formularios set descripcion = "Certificado Analítico de Egreso (SUR-D2)" where formulario = 50;
+
+update mce_formularios set objeto = "dl820_certificado_fin_carrera" where formulario = 110;
+update mce_formularios set nombre = "Certificado de Fin de Carrera" where formulario = 110;
+update mce_formularios set descripcion = "Certificado de Fin de Carrera" where formulario = 110;
+
+update mce_formularios set objeto = "dl820_ted_1f" where formulario = 60;
+update mce_formularios set nombre = "Resolución C.D." where formulario = 60;
+update mce_formularios set descripcion = "Resolución C.D." where formulario = 60;
+
+update mce_formularios set objeto = "dl820_ted_1d" where formulario = 40;
+update mce_formularios set nombre = "Opción de Juramento" where formulario = 40;
+update mce_formularios set descripcion = "Opción de Juramento" where formulario = 40;
+
+update mce_formularios set objeto = "dl820_constancia_inicio_tramite" where formulario = 90;
+update mce_formularios set nombre = "Constancia de Inicio de Trámite" where formulario = 90;
+update mce_formularios set descripcion = "Constancia de Inicio de Trámite" where formulario = 90;
+
+update mce_formularios set objeto = "dl820_ted_1e" where formulario = 100;
+update mce_formularios set nombre = "Certificado Analítico de Egreso (SUR-D2)" where formulario = 100;
+update mce_formularios set descripcion = "Certificado Analítico de Egreso (SUR-D2)" where formulario = 100;
+
+update mce_formularios set objeto = "dl820_diploma_tramite" where formulario = 105; 
+update mce_formularios set nombre = "Certificado de Título en Trámite" where formulario = 105;
+update mce_formularios set descripcion = "Certificado de Título en Trámite" where formulario = 105;
+
+-- Agregar un nuevo formulario de egresados. 2do y 3er. Formulario de Resolución del CD, sobre pedido de titulo. Y Certificado de Fin de Carrera (este certificado es distinto de la certificación de fin de carrera SUR-D3)
+
+update mce_formularios set objeto = "dl820_ted_1f_2" where formulario = 65; 
+update mce_formularios set nombre = "Resolución C.D. Fdo." where formulario = 65;
+update mce_formularios set descripcion = "Resolución C.D. Fdo." where formulario = 65;
+
+update mce_formularios set objeto = "dl820_ted_1f_3" where formulario = 67; 
+update mce_formularios set nombre = "Despacho C.E e I.R." where formulario = 67;
+update mce_formularios set descripcion = "Despacho C.E e I.R." where formulario = 67;
+
+update mce_formularios set objeto = "dl820_certif_fin_carrera" where formulario = 68; 
+update mce_formularios set nombre = "Certificación de Fin de Carrera (SUR-D3)" where formulario = 68;
+update mce_formularios set descripcion = "Certificación de Fin de Carrera (SUR-D3)" where formulario = 68;
+
+update mce_formularios set objeto = "dl820_recibo_diploma" where formulario = 69; 
+update mce_formularios set nombre = "Recibo de Diploma" where formulario = 69;
+update mce_formularios set descripcion = "Recibo de Diploma" where formulario = 69;
+
+-- Actualizar nombres de estados:
+
+update mce_estados set nombre = "Sec. Admin.", descripcion = "Secretaría Administrativa" where entidad = 1 and estado = "T";
+update mce_estados set nombre = "Com. Ens. e Int. Reg.", descripcion = "Comisión de Enseñanza e Interpretación de Reglamentos" where entidad = 1 and estado = "S";
+update mce_estados set nombre = "Sec. Cons. Dir.", descripcion = "Secretaría de Consejo Directivo" where entidad = 1 and estado = "G";
+
+-- Actualizar nombres de eventos:
+
+update mce_eventos set nombre = "Certificado de Título en Tramite", descripcion = "Certificado de Título en Tramite" where evento = "5091";
+update mce_eventos set nombre = "Certificado de Fin de Carrera", descripcion = "Certificado de Fin de Carrera" where evento = "5092";
+update mce_eventos set nombre = "Emitir Disp. C.D.", descripcion = "Emitir Disp. C.D." where evento = "5201";
+update mce_eventos set nombre = "Revisar Disp. C.D.", descripcion = "Revisar Disp. C.D." where evento = "5072";
+update mce_eventos set nombre = "Confeccionar Diploma", descripcion = "Confeccionar Diploma" where evento = "5071";
+update mce_eventos set nombre = "Emitir Certificación", descripcion = "Emitir Certificación" where evento = "5061";
+
+-- Actualizar nombres de operaciones:
+
+update acc_operaciones set nombre = "Certificado analítico de estudios (SUR-D2)", descripcion =  "Certificado analítico de estudios (SUR-D2)" where operacion = "egr05040";
+update acc_operaciones set nombre = "04-Emisión de Certificación de Fin de Carrera (SUR-D3)", descripcion =  "Emisión de Certificación de Fin de Carrera (SUR-D3)" where operacion = "egr05060";
+update acc_operaciones set nombre = "05-Nota al C.D.", descripcion =  "Nota al C.D." where operacion = "egr05190";
+update acc_operaciones set nombre = "06-Emisión Disposición C.D.", descripcion =  "Emisión Disposición C.D." where operacion = "egr05200";
+update acc_operaciones set nombre = "07-Confeccionar Diploma", descripcion =  "Confeccionar Diploma" where operacion = "egr05070";
+update acc_operaciones set nombre = "Confeccionar Diploma (Por Colación)", descripcion =  "Confeccionar Diploma (Por Colación)" where operacion = "egr05071";
+
+-- Actualizar Camino: agregar paso a Observado cuando el tramite esta Adelantado
+
+delete from mce_caminos where entidad = 1 and evento = 5032 and estado = 'A';
+insert into mce_caminos values (1, 5032, 'A', 'O');
+
+-- Actualizar formularios a Imprimir en el camino
+
+delete from mce_form_camino where entidad = 1 and evento = 5031;
+insert into mce_form_camino values (1, '-', 5031, 20);
+insert into mce_form_camino values (1, '-', 5031, 30);
+insert into mce_form_camino values (1, 'A', 5031, 20);
+insert into mce_form_camino values (1, 'A', 5031, 30);
+
+-- T
+delete from mce_form_camino where entidad = 1 and evento = 5061;
+insert into mce_form_camino values (1, 'T', 5061, 68);
+
+-- S
+delete from mce_form_camino where entidad = 1 and evento = 5191;
+insert into mce_form_camino values (1, 'S', 5191, 67);
+
+-- G
+delete from mce_form_camino where entidad = 1 and evento = 5201;
+insert into mce_form_camino values (1, 'G', 5201, 60);
+insert into mce_form_camino values (1, 'G', 5201, 65);
+
+-- R
+delete from mce_form_camino where entidad = 1 and evento = 5071;
+
+commit;
+
+set triggers for mce_formularios enabled;
+set triggers for mce_estados enabled;
+set triggers for mce_form_camino enabled;
+set triggers for mce_caminos enabled;
+set triggers for mce_eventos enabled;

@@ -1,0 +1,85 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<form id="tecnologia" action="{{this.data.form.getAction}}" method="post">
+		{% import "kernel/macro_csrf.twig" as input_csrf %}
+		{{ input_csrf.mostrar(this.generar_csrf) }}
+		<fieldset>
+			<legend class="clearfix">
+				<span class="pull-left"><h3 id="form-title" class="resaltar">Tecnolog&iacute;a</h3></span>
+				<button style="margin-top: 2px;" type="button" name="guardar" class="guardar btn btn-info pull-right" disabled="disabled">{{'guardar' |trans|capitalize}}</button>
+			</legend>
+		{{this.data.form.form_id.renderViewHelper|raw}}	
+
+		<fieldset>
+		<legend>
+			{{'censo.dispone_PC'|trans|capitalize}}
+		</legend>
+		<div class="clearfix bloque">
+			{{this.data.form.AUX2_ALU_TEC_PC_CASA.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_TEC_PC_CASA.renderLabel|raw}}	
+
+			{{this.data.form.AUX2_ALU_TEC_PC_TRAB.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_TEC_PC_TRAB.renderLabel|raw}}
+
+			{{this.data.form.AUX2_ALU_TEC_PC_UNIV.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_TEC_PC_UNIV.renderLabel|raw}}
+
+			{{this.data.form.AUX2_ALU_TEC_PC_OTRO.renderViewHelper|raw}}
+			{{this.data.form.AUX2_ALU_TEC_PC_OTRO.renderLabel|raw}}
+		</div>
+		</fieldset>
+		
+		<fieldset>
+		<legend>
+			{{'censo.accede_a_internet'|trans|capitalize}}
+		</legend>
+		<div class="clearfix bloque">
+			{{this.data.form.AUX2_ALU_TEC_INT_REGUL.renderLabel|raw}}
+			{{this.data.form.AUX2_ALU_TEC_INT_REGUL.renderViewHelper|raw}}
+		</div>
+
+		<div id="acceso_internet">
+			<div class="clearfix bloque">
+				{{this.data.form.AUX2_ALU_TEC_INT_CASA.renderViewHelper|raw}}
+				{{this.data.form.AUX2_ALU_TEC_INT_CASA.renderLabel|raw}}
+
+				{{this.data.form.AUX2_ALU_TEC_INT_TRAB.renderViewHelper|raw}}
+				{{this.data.form.AUX2_ALU_TEC_INT_TRAB.renderLabel|raw}}
+
+				{{this.data.form.AUX2_ALU_TEC_INT_UNIV.renderViewHelper|raw}}
+				{{this.data.form.AUX2_ALU_TEC_INT_UNIV.renderLabel|raw}}
+
+				{{this.data.form.AUX2_ALU_TEC_INT_CYBER.renderViewHelper|raw}}
+				{{this.data.form.AUX2_ALU_TEC_INT_CYBER.renderLabel|raw}}
+
+				{{this.data.form.AUX2_ALU_TEC_INT_OTRO.renderViewHelper|raw}}
+				{{this.data.form.AUX2_ALU_TEC_INT_OTRO.renderLabel|raw}}
+			</div>
+		</div>
+		</fieldset>
+		<fieldset>
+			<legend>
+				{{'censo.utiliza_internet_para'|trans|capitalize}}
+			</legend>
+
+			<div id='utilizacion-internet' class="clearfix bloque">
+				{{this.data.form.AUX2_ALU_TEC_USINT_CAP.renderViewHelper|raw}}
+				{{this.data.form.AUX2_ALU_TEC_USINT_CAP.renderLabel|raw}}
+
+				{{this.data.form.AUX2_ALU_TEC_USINT_EST.renderViewHelper|raw}}
+				{{this.data.form.AUX2_ALU_TEC_USINT_EST.renderLabel|raw}}
+
+				{{this.data.form.AUX2_ALU_TEC_USINT_PER.renderViewHelper|raw}}
+				{{this.data.form.AUX2_ALU_TEC_USINT_PER.renderLabel|raw}}
+
+				{{this.data.form.AUX2_ALU_TEC_USINT_MAI.renderViewHelper|raw}}
+				{{this.data.form.AUX2_ALU_TEC_USINT_MAI.renderLabel|raw}}
+
+				{{this.data.form.AUX2_ALU_TEC_USINT_CHA.renderViewHelper|raw}}
+				{{this.data.form.AUX2_ALU_TEC_USINT_CHA.renderLabel|raw}}
+			</div>
+		</fieldset>
+		</fieldset>
+	</form>
+	<button type="button" name="guardar" class="guardar btn btn-info pull-right" disabled="disabled">{{'guardar' |trans|capitalize}}</button>
+{% endblock %}

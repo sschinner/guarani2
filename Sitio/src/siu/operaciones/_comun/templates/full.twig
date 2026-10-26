@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang='es-419'>
+    <head>
+		{%if url_recursos %}
+            {%set url_recursos = url_recursos ~ '/' %}
+		{% else %}
+			{%set url_recursos = '/g3w2/' %}
+        {%endif%}
+		
+        {% set js_jquery = url_recursos ~ 'js/lib/jquery-1.6.1.min.js' %}
+        
+        {% set js_history = url_recursos ~ 'js/lib/history/uncompressed/' %}
+        {% set js_history_json2   = js_history ~ 'json2.js' %}
+        {% set js_history_adapter = js_history ~ 'history.adapter.jquery.js' %}
+        {% set js_history_history = js_history ~ 'history.js' %}
+        {% set js_history_html4   = js_history ~ 'history.html4.js' %}
+        
+		{% set js_lazyload = url_recursos ~ 'js/lib/lazyload.js' %}
+        {% set js_kernel  = url_recursos ~ 'js/lib/kernel.js' %}
+        {% set js_facebox = url_recursos ~ 'js/facebox.js' %}
+        {% set js_guarani = url_recursos ~ 'js/guarani.js' %}
+        {% set js_html5   = url_recursos ~ 'js/html5.js' %}
+        
+        {% set css_reset   = url_recursos ~ 'css/reset.css' %}
+        {% set css_estilos = url_recursos ~ 'css/estilos.css' %}
+        {% set css_layout  = url_recursos ~ 'css/layout.css' %}
+        {% set css_facebox = url_recursos ~ 'css/facebox.css' %}
+		
+        <meta charset='utf-8' />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
+        <title>{{ etiquetas.titulo }} - {{ etiquetas.sub_titulo }}</title>
+        <script type='text/javascript' src='{{ js_jquery }}'></script>
+
+		<script>if ( typeof window.JSON === 'undefined' ) { document.write('<script src="{{ js_history_json2 }}"><\/script>'); }</script> 
+        <script src="{{ js_history_adapter }}"></script> 
+        <script src="{{ js_history_history }}"></script> 
+        <script src="{{ js_history_html4   }}"></script>
+        
+        <script type='text/javascript' src='{{ js_lazyload }}'></script>
+        <script type='text/javascript' src='{{ js_kernel }}'></script>
+        <script type='text/javascript' src='{{ js_facebox }}'></script>
+        <script type='text/javascript' src='{{ js_guarani }}'></script>
+
+        <link type='text/css' href='{{ css_reset }}' rel='stylesheet' />
+		<link type='text/css' href='{{ css_estilos }}' rel='stylesheet' />
+        <link type='text/css' href='{{ css_layout  }}' rel='stylesheet' />
+        <link type='text/css' href='{{ css_facebox }}' rel='stylesheet' />
+        
+        <!--[if lt IE 9]>
+            <script type='text/javascript' src='{{ js_html5 }}'></script>
+        <![endif]-->
+
+        {% if vista.get_tipo == 'vista_pagelets' %}
+            {% set pagelets_count = vista.get_pagelets_count %} 
+            {% set stall_js = 'true' %}
+        {% else %}
+            {% set pagelets_count = 0 %} 
+            {% set stall_js = 'false' %}
+        {% endif %}
+        <script type='text/javascript'>
+        var kernel_config = {
+            widget_count: {{ pagelets_count }},
+            // Stalls js load until all widgets have loaded css and rendered its content
+			stall_js: false,
+			log: true,
+			alias: '{{ alias }}',
+			pretty_urls: {{ pretty_urls }}
+        };
+        </script>
+		{{ vista.get_css_resources|raw }}
+		{{ vista.get_js_resources|raw }}
+    </head>
+    <body>
+        {% include 'header.twig' %}
+        <div id='loading'></div>
+        <section class="contenido">
+            <div class='contenedor'>
+                <div id='kernel_contenido'>
+	                {{ vista.render }}
+                </div>
+            </div>
+        </section>
+        
+        {% include 'footer.twig' %}
+    </body>
+</html>

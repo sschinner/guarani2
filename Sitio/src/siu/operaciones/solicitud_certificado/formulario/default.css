@@ -1,0 +1,31 @@
+#formulario h3 {
+	border-bottom: 1px solid #EEE;
+	line-height: 31px;
+}
+
+#formulario .row {
+	margin: 0;
+}
+
+#formulario .error_val {
+	background-color: #EED3D7;
+	color: #B94A48;
+}
+
+#formulario p.alert-error {
+	background: none;
+	border: 0;
+	color: #B94A48;
+	font-size: 11px;
+	line-height: 15px;
+	margin: 2px 0;
+}
+
+#formulario .g3w-icono-fail {
+	position: relative;
+	cursor: none;
+}
+
+#formulario .btn_imprimir_car{
+    font-weight: normal;
+}

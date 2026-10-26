@@ -1,0 +1,23 @@
+{% if js_vars %}
+	<script type='text/javascript'>
+	{% for name, value in js_vars %}
+		var {{name}} = '{{value}}';
+	{% endfor %}
+	</script>
+{% endif %}
+
+<div id='layout_bl_dos_columnas' class="row-fluid">
+    <div class="span9">
+		<div class='titulo_operacion'>
+			{% block titulo_operacion %}{% endblock %}
+		</div>
+		<div class="row-fluid">
+			<div id="columna_1" class="span4">{% block columna_1 %}{% endblock %}</div>
+			<div id="columna_2" class="span8">{% block columna_2 %}{% endblock %}</div>
+		</div>
+    </div>
+		
+    <div id="columna_3" class="span3">
+		{% block columna_3 %}{% endblock %}
+    </div>
+</div>

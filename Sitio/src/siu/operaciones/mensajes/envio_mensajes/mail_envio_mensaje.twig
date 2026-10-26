@@ -1,0 +1,16 @@
+<html>
+	<body class="body">
+	<table class="detalle">
+		<tr class="detalle_contenido">
+		<td>
+			{{ 'cuerpo_mail_envio_mensaje'|trans|raw }}
+			<h3>{{ titulo }}</h3>
+			<p>{{ mensaje|raw }}</p>
+
+			{% if link %}
+			<a href="{{ link }}">{{ link }}</a>
+			{% endif %}
+		</td>
+		</tr>
+	</body>
+</html>

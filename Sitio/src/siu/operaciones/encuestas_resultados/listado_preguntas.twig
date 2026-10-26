@@ -1,0 +1,43 @@
+{% if preguntas %}
+
+    {# Consulta ambos campos dado que segun el servicio de kolla (encuesta / habilitaciones)
+       varia el nombre del campo de la pregunta #}
+    <div class="accordion" id="accordion{{ pregunta.pregunta ? pregunta.pregunta : pregunta.pregunta_id }}">
+    {% for  pregunta  in preguntas %}
+            <div class="accordion-group" >
+                <div class="accordion-heading">
+                    <a class="accordion-toggle pregunta" data-parent="#accordion{{ id_bloque }}" data-target="#collapse{{ id_bloque~pregunta.pregunta~pregunta.pregunta_orden_bloque }}"
+                       url="{{url_ver_respuestas~pregunta.pregunta~"/"}}" data-pregunta_orden="{{pregunta.pregunta_orden_bloque}}" data-cargado="false">
+
+                        {# Consulta ambos campos dado que segun el servicio de kolla (encuesta / habilitaciones)
+                         varia el nombre del campo de la pregunta #}
+                        {{ pregunta.nombre ? pregunta.nombre : pregunta.pregunta_texto }}
+
+                    </a>
+                </div>
+                <div id="collapse{{ id_bloque~pregunta.pregunta~pregunta.pregunta_orden_bloque }}" class="accordion-body collapse">
+                    <div class="accordion-inner">
+
+                        {% if pregunta.pregunta_id %}
+
+                            {% include 'listado_respuestas.twig' with {
+                            'pregunta': pregunta,
+                            } only %}
+
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+    {% endfor %}
+    </div>
+
+{% elseif mensaje_error %}
+
+    <div id="alert-no-hay-preguntas" class="alert alert-error">{{ mensaje_error | trans }}</div>
+
+{% else  %}
+
+    <div id="alert-no-hay-preguntas" class="alert">{{ 'errores_kolla.bloque_vacio' | trans }}</div>
+
+{% endif %}

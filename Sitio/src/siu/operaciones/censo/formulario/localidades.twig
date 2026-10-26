@@ -1,0 +1,108 @@
+<div id="cuadroBuscarLocalidad">
+	<h2>{{'censo.localidad.localidad' | trans | capitalize }}</h2>
+	<form id="localidades" action="{{form.getAction}}" method="post">
+	<table class="cuadroLocalidad" summary="Complete los campos de pais, provincia y localidad">
+		<tr>
+			<th colspan="2">&nbsp;</th>
+		</tr>
+		<tr>
+			<td style="width: 88px;">
+				{{form.pais.renderLabel|raw}}
+			</td>
+			<td>
+				{{form.pais.renderViewHelper|raw}}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{{form.provincia.renderLabel|raw}}
+			</td>
+			<td>
+				{{form.provincia.renderViewHelper|raw}}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				&nbsp;
+			</td>
+			<td style="line-height: 14px;">
+				<p id="error_busqueda_provincia">{{'error_busqueda_provincia' |trans | capitalize }}</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				{{form.localidad.renderLabel|raw}}
+			</td>
+			<td>
+				{{form.localidad.renderViewHelper|raw}}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				&nbsp;
+			</td>
+			<td style="line-height: 14px;">
+				<p id="error_busqueda_localidad">{{'error_busqueda_localidad' | trans | capitalize }}</p>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				&nbsp;
+			</td>
+			<td align="right">
+				<div style="float: right; width: 68px;">
+					<input id="buscar" type="button" value="{{'buscar' | trans | capitalize }}" class="btn"/>
+				</div>
+				<div id="ajax-loader">
+					<img src="img/ajax-loader.gif" alt="cargando" />
+				</div>
+			</td>
+		</tr>
+	</table>
+	<table class="cuadroLocalidad oculto" id="tablaResultados" summary="Seleccione Codigo postal">
+		<tr>
+			<td colspan="2">
+				<hr>
+			</td>
+		</tr>
+		<tr>
+			<td style="width: 88px;">
+				<label for="cps">{{'codigo_postal' | trans | capitalize }}</label>
+			</td>
+			<td>
+				<select id="cps"></select>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				&nbsp;
+			</td>
+			<td style="line-height: 14px;">
+				<p id="error_busqueda_cp">{{'error_busqueda_codigo_postal' | trans | capitalize }}</p>
+			</td>
+		</tr>
+	</table>
+
+	{#<table style="clear: both; margin: 10px;width: 375px; display: none;" id="tablaNoResultados" summary="Error">
+		<tr>
+			<td colspan="2">
+				
+			</td>
+		</tr>
+	</table>#}
+        <div class="cuadroLocalidad oculto" id="tablaNoResultados">
+            {{'error_busqueda_sin_resultados' | trans | capitalize }}.
+         </div>
+
+	<table class="cuadroLocalidad" summary="">
+		<tr style="width: 88px;">
+			<td>
+				<br>
+			</td>
+			<td align="right">
+				<input id="agregar" type="button" value="{{'censo.form.agregar' | trans | capitalize }}" class="btn btn-info" alt="agregar"/>
+			</td>
+		</tr>
+	</table>
+	</form>
+</div>

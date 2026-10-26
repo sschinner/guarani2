@@ -1,0 +1,9 @@
+-- Alta del mensaje
+-- Mensaje: 820002.dca
+
+--********************************************
+-- mensaje 820002, asociado a correlativa especial sp_u820fca_almenosXap
+-- 
+--********************************************
+DELETE FROM mme_mensajes WHERE mensaje = 820002;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 820002, "Tiene aprobada %s de las 12 materias necesarias para la materia %s2",  "Tiene aprobada %s de las 12 materias necesarias para la materia %s2", 2, 1);

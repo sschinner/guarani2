@@ -1,0 +1,10 @@
+-- Alta del mensaje
+-- Mensaje: 82001004
+
+--********************************************
+-- mensaje 82001004, Asociado al control ctr820_septimaMate
+-- 
+--********************************************
+--SELECT * FROM mme_mensajes WHERE mensaje = 82001004;
+DELETE FROM mme_mensajes WHERE mensaje = 82001004;
+INSERT INTO  mme_mensajes (	tipo, mensaje,	mascara_original,mascara,clasificacion,	boton) VALUES (	3,82001004,"Necesitas tener aprobado Taller de Lectura y Producción de Textos","Necesitas tener aprobado Taller de Lectura y Producción de Textos",	2, 1);

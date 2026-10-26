@@ -1,0 +1,10 @@
+-- Alta del mensaje
+-- Mensaje: 82012003.dca
+
+--********************************************
+-- mensaje 82012003, asociado al control de Cursado Vertical.
+-- 
+--********************************************
+
+DELETE FROM mme_mensajes WHERE mensaje = 82012003;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82012003, "Tenés aprobado Inglés I y/o Inglés II. No te podés inscribir a la Acreditación Total",  "Tenés aprobado Inglés I y/o Inglés II. No te podés inscribir a la Acreditación Total", 2, 1);

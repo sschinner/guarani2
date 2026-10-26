@@ -1,0 +1,93 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<form id="discapacidad" action="{{this.data.form.getAction}}" method="post">
+		{% import "kernel/macro_csrf.twig" as input_csrf %}
+		{{ input_csrf.mostrar(this.generar_csrf) }}
+
+		<fieldset>
+			<legend class="clearfix">
+				<span class="pull-left"><h3 id="form-title" class="resaltar">{{'censo.discapacidad'|trans|capitalize}}</h3></span>
+				<button style="margin-top: 2px;" type="button" name="guardar" class="guardar btn btn-info pull-right" disabled="disabled">{{'guardar' |trans|capitalize}}</button>
+			</legend>
+
+		{{this.data.form.form_id.renderViewHelper|raw}}
+
+		{#<div class="js-datos-trabajo">#}
+			<div class="clearfix">
+				<div class="pull-left">
+					{{this.data.form.AUX3_TIPO_DISCAPACIDAD.renderLabel|raw}}
+					{{this.data.form.AUX3_TIPO_DISCAPACIDAD.renderViewHelper|raw}}
+				</div>
+				<div class="pull-left">
+					{{this.data.form.AUX3_TIPO_GRADO.renderLabel|raw}}
+					{{this.data.form.AUX3_TIPO_GRADO.renderViewHelper|raw}}
+				</div>	
+			</div>
+			<div class="clearfix">
+				<div class="pull-left">
+					{{this.data.form.AUX3_TIPO_CARACTER.renderLabel|raw}}
+					{{this.data.form.AUX3_TIPO_CARACTER.renderViewHelper|raw}}
+				</div>
+				<div class="pull-left">
+					{{this.data.form.AUX3_FECHA_DESDE.renderLabel|raw}}
+					{{this.data.form.AUX3_FECHA_DESDE.renderViewHelper|raw}}
+				</div>
+				<div class="pull-left">
+					{{this.data.form.AUX3_FECHA_HASTA.renderLabel|raw}}
+					{{this.data.form.AUX3_FECHA_HASTA.renderViewHelper|raw}}
+				</div>
+			</div>
+			<div class="clearfix">
+				<div class="pull-left">
+					{{this.data.form.AUX3_COBERTURA_MEDICA.renderLabel|raw}}
+					{{this.data.form.AUX3_COBERTURA_MEDICA.renderViewHelper|raw}}
+				</div>
+			</div>
+
+			{{this.data.form.AUX3_OBSERVACIONES.renderLabel|raw}}
+			{{this.data.form.AUX3_OBSERVACIONES.renderViewHelper|raw}}
+
+			{#<div class="clearfix">
+				<div class="pull-left">
+					{{this.data.form.AUX2_ALU_TRAB_OCUP.renderLabel|raw}}
+					{{this.data.form.AUX2_ALU_TRAB_OCUP.renderViewHelper|raw}}
+				</div>
+				<div class="pull-left">
+					{{this.data.form.AUX1_HORARIO_TRABAJO.renderLabel|raw}}
+					{{this.data.form.AUX1_HORARIO_TRABAJO.renderViewHelper|raw}}
+				</div>
+			</div>
+			<div class="clearfix">
+				<div class="pull-left">
+					{{this.data.form.AUX2_ALU_TRAB_TAREA.renderLabel|raw}}
+					{{this.data.form.AUX2_ALU_TRAB_TAREA.renderViewHelper|raw}}
+				</div>
+				<div class="pull-left">
+					{{this.data.form.AUX2_ALU_TRAB_HACE.renderLabel|raw}}
+					{{this.data.form.AUX2_ALU_TRAB_HACE.renderViewHelper|raw}}
+				</div>
+			</div>
+			<div class="clearfix">
+				<div class="pull-left">
+					{{this.data.form.CENS_REL_TRAB_CARRERA.renderLabel|raw}}
+					{{this.data.form.CENS_REL_TRAB_CARRERA.renderViewHelper|raw}}
+				</div>
+			</div>
+		</div>
+
+		<h2 class="resaltar divisor">{{'censo.datos_adicionales'|trans|capitalize}}</h2>
+
+		<div id="datos_trabajo_adicionales" class="clearfix">
+			{{this.data.form.AUX2_ALU_TRAB_DESJUB.renderLabel|raw}}
+			{{this.data.form.AUX2_ALU_TRAB_DESJUB.renderViewHelper|raw}}
+
+			{{this.data.form.AUX2_ALU_TRAB_FAMI.renderLabel|raw}}
+			{{this.data.form.AUX2_ALU_TRAB_FAMI.renderViewHelper|raw}}
+
+			{{this.data.form.AUX1_REMUNERACION.renderLabel|raw}}
+			{{this.data.form.AUX1_REMUNERACION.renderViewHelper|raw}}
+		</div>#}
+		</fieldset> 
+	</form>
+	<button type="button" name="guardar" class="guardar btn btn-info pull-right" disabled="disabled">{{'guardar' |trans|capitalize}}</button>
+{% endblock %}

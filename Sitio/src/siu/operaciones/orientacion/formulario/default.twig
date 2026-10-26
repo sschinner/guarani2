@@ -1,0 +1,143 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+	{% if this.data.titulos_orientacion %}
+		<h3>{{ "titulos_orientaciones" | trans | capitalize }}</h3>
+		
+		{% if this.hay_mensaje %}
+			<div class="alert alert-success" id="resultado_cambio">
+				<span id="cambio_ok">{{ "orientacion_actualizada" | trans | capitalize }} </span>
+			</div>
+		{% endif %}
+
+		<table class="table table-striped table-bordered table-condensed" summary="Titulos con Orientaciones">
+			<thead>			
+				<tr>
+					<th scope="col">{{ "orientacion_tit_titulo" | trans | capitalize }}</th>
+					<th scope="col">{{ "orientacion_tit_nivel" | trans | capitalize }}</th>
+					<th scope="col">{{ "orientacion_tit_orient_elegida" | trans | capitalize }}</th>
+					<th scope="col">{{ "orientacion_tit_elige_orient" | trans | capitalize }}</th>
+					<th scope="col"> </th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for titulo in this.data.titulos_orientacion %}
+				<tr>		
+					<td class="nombre_titulo">{{ titulo.nombre }}</td>
+					<td class="nivel">{{ titulo.nivel }}</td>
+					<td class="orient_elegida">{{ titulo.orient_elegida }}</td>
+					<td class="elige_orient">{{ titulo.elige_orient }}</td>
+					<td class="ver_orient">
+					 <span class="btn btn-mini btn_ver_orient_titulo" data-titulo="{{titulo.titulo}}" data-tit_nombre="{{titulo.nombre}}">Ver orientaciones</span>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<div class="alert">
+			{{ "reporte.no_hay_datos.orientaciones" | trans | capitalize }}
+		</div>	
+	{% endif %}
+
+	<div class = 'hide' id="data_orientaciones">
+		{% for titulo in this.data.titulos_orientacion %}
+			<span class = "hide data_orient-{{titulo.titulo}} orient">
+				{%if titulo.orientaciones%}
+					<span id="titulo_orientaciones"> <h3>{{ "orientaciones_para_titulo" | trans | capitalize }} {{titulo.nombre}}</h3> </span>
+
+					{% if titulo.orientacion_actual.orientacion%}
+
+							{% if titulo.orientacion_actual.realizo_materias %}
+								<div class="alert">
+									{{ "no_podes_cambiar_dar_baja_orientacion_elegida" | trans }}
+								</div>
+							{% endif %}
+
+
+							<h4>{{ "orientacion_actual" | trans | capitalize }}</h4>
+							<table class="table table-striped table-bordered table-condensed" summary="Orientaciones">
+								<thead>
+									<tr>
+										<th scope="col">{{ "orientacion_tit_orientacion" | trans | capitalize }}</th>
+										<th scope="col">{{ "orientacion_tit_nombre" | trans | capitalize }}</th>
+										<th scope="col">{{ "orientacion_tit_titulo" | trans | capitalize }}</th>
+										<th scope="col">{{ "orientacion_tit_plan" | trans | capitalize }}</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="orientacion-{{titulo.orientacion_actual.titulo_id}}">
+										<td class="orientacion">{{ titulo.orientacion_actual.orientacion }}</td>
+										<td class="nombre">{{ titulo.orientacion_actual.nombre }}</td>
+										<td class="titulo">{{ titulo.orientacion_actual.titulo }}</td>
+										<td>{{ titulo.orientacion_actual.plan }}</td>
+									</tr>
+								</tbody>
+							</table>
+
+							{# Si permite cambiar de orientación y no realizo ninguna materia en la orientación actual #}
+							{% if this.data.permite_baja_cambio_orientacion and not titulo.orientacion_actual.realizo_materias %}
+
+								<div id="formulario_eliminacion" class="alert formulario_eliminacion{{titulo.titulo}}" data-titulo="{{titulo.titulo}}">
+									<h4>{{'motivo_baja' | trans | capitalize}}:</h4>
+									<textarea class="texto_motivo{{titulo.titulo}}" name="texto_motivo" maxlength="255"></textarea>
+									<button id="btn_aceptar_eliminar_o" data-titulo="{{titulo.titulo}}" class="btn btn-mini pull-right btn_aceptar_eliminar_o btn_aceptar_eliminar_o{{titulo.titulo}}"><span class="icon-ok"></span> {{ "aceptar" | trans | capitalize }}</button>
+									<button id="btn_cancelar_eliminar_o" data-titulo="{{titulo.titulo}}"  class="btn btn-mini pull-left btn_cancelar_eliminar_o btn_cancelar_eliminar_o{{titulo.titulo}}"><span class="icon-remove"></span> {{ "cancelar" | trans | capitalize }}</button>
+								</div>
+								<div class="clearfix orientacion-acciones btn-eliminar{{titulo.titulo}}">
+									<button class="btn pull-right btn_eliminar_o" data-titulo="{{titulo.titulo}}"><span class="icon-trash"></span> {{ "eliminar_orientacion" | trans | capitalize }}</button>
+								</div>					
+							{% endif%}	
+					{% else %}
+						<div class="alert">
+							{{ "orientacion_no_elegida" | trans | capitalize }}
+						</div>
+					{% endif%}
+
+					{# Si permite cambiar de orientación y no realizo ninguna materia en la orientación actual #}
+
+					{% if this.data.permite_baja_cambio_orientacion and not titulo.orientacion_actual.realizo_materias %}
+
+						<div class="clearfix orientacion-acciones">
+							<button data-titulo="{{titulo.titulo}}" class="btn_cambiar_o btn pull-right"><span class="icon-random"></span> {{ "cambiar_orientacion" | trans | capitalize }}</button>
+						</div>
+
+						<div id="o_disponibles" class="clearfix well o_disponibles{{titulo.titulo}}">
+							<h4>{{ "orientaciones_disponibles" | trans | capitalize }}</h4>
+							<table class="table table-striped table-bordered table-condensed" summary="{{ "orientaciones_disponibles" | trans | capitalize }}">
+								<thead>
+									<tr>
+										<th></th>
+										<th scope="col">{{ "orientacion_tit_orientacion" | trans | capitalize }}</th>
+										<th scope="col">{{ "orientacion_tit_nombre" | trans | capitalize }}</th>
+										<th scope="col">{{ "orientacion_tit_titulo" | trans | capitalize }}</th>
+										<th scope="col">{{ "orientacion_tit_plan" | trans | capitalize }}</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for orientacion in titulo.orientaciones %}
+									<tr{% if (orientacion.__ID__) %} class="data orientacion-{{orientacion.titulo_id}}" data-link="{{orientacion.__ID__}}" data-id_titulo="{{orientacion.titulo_id}}"{% endif %}>
+										<td><span class="icon-hand-right" title="Elegir orientación"></span></td>
+										<td class="orientacion">{{ orientacion.orientacion }}</td>
+										<td class="nombre">{{ orientacion.nombre }}</td>
+										<td class="titulo">{{ orientacion.titulo }}</td>
+										<td class="plan">{{ orientacion.plan }}</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+
+							<form action="{{ this.data.form_url }}" id="form_orientacion" method="post">
+								<input type="hidden" id="id_orientacion" name="id_orientacion" />
+								<input type="hidden" id="id_titulo" name="id_titulo" />
+							</form>
+
+						</div> 
+					{% endif %} 
+
+				{%endif%}
+			</span>				
+		{% endfor %}
+				
+	</div>
+{% endblock %}

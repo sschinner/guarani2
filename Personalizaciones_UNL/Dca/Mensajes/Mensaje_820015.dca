@@ -1,0 +1,11 @@
+-- Alta del mensaje
+-- Mensaje: 820015.dca
+
+--********************************************
+-- mensaje 820015, asociado al control: Alumno Egresado
+-- 
+--********************************************
+
+DELETE FROM mme_mensajes WHERE mensaje = 820015;
+insert into mme_mensajes (tipo,	mensaje, mascara_original,mascara,clasificacion,boton)
+values (5, 820015, "El alumno %s no tiene iniciado el trámite de Egreso ó no es alumno de Carrera de Grado . Comunicarse con Alumnado","El alumno %s no tiene iniciado el trámite de Egreso ó no es alumno de Carrera de Grado. Comunicarse con Alumnado", 1, 1);

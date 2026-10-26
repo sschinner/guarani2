@@ -1,0 +1,14 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<div class="titulo_operacion">
+		<h2 class="clearfix">
+		    {{"ficha_alumno"|trans|capitalize}}{% if (this.data.datos_alumno) %}: {{" "~this.data.datos_alumno}}{% endif %}
+		</h2>
+	</div>
+	{# Obtenemos una vista del builder #}
+	{% set vista_form = this.get_builder_form().get_vista() %}
+	{{ vista_form.render_encabezado() | raw }}
+	{{ vista_form.render_cuerpo() | raw }}
+	{{ vista_form.render_acciones() | raw }}
+	{{ vista_form.render_cierre() | raw }}
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+    {% set datos=this.getDatos() %}
+    {% set nombre='Electivas: cronograma de materias'%}
+    <script>
+        $(document).ready(function () {
+            $("#frameListar").hide();
+            $("#frameInscribir").hide();
+            $("#frameConsultar").hide();
+            $("#inscribirElectivas").hide();
+            $("#consultarInscripcion").hide();
+        });
+
+        function mostrarFrameListar() {
+            $("#frameInscribir").hide();
+            $("#frameConsultar").hide();
+            $("#inscribirElectivas").show();
+            $("#consultarInscripcion").show();
+            $("#frameListar").show();
+        }
+        
+        function mostrarFrameInscribir() {
+            {#var frame1 = document.getElementById('frameInscribir');
+            frame1.src = frame1.src;#}
+            $("#frameListar").hide();
+            $("#frameConsultar").hide();
+            $("#frameInscribir").show();
+        }
+        
+        function mostrarFrameConsultar() {
+            var frame = document.getElementById('frameConsultar');
+            frame.src = frame.src;
+            $("#frameListar").hide();
+            $("#frameInscribir").hide();
+            $("#frameConsultar").show();
+        }
+
+
+    </script>
+    <fieldset>
+        <br>
+        {%if(datos.calidad == 1 and datos.control == 1)%}
+            <div>
+                <p style="text-align: justify">Las asignaturas electivas son materias que los estudiantes de 
+                    carreras de pregrado y grado pueden seleccionar independientemente
+                    de los contenidos establecidos dentro de la curr&iacute;cula, pudiendo 
+                    elegir asignaturas de planes de estudios de otras 
+                    carreras universitarias.
+                </p>    
+                <br><br>
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            <input type="button" class="btn btn-info" id="listarElectivas" value="Listado Electivas" title="Listado de materias electivas" style="cursor:pointer;" onclick="mostrarFrameListar();"/>
+                        </td>
+                        <td>
+                            <input type="button" class="btn btn-info" id="inscribirElectivas" value="Inscribirse" title="Inscribirse a las electivas" style="cursor:pointer;" onclick="mostrarFrameInscribir();"/>
+                        </td>
+                        <td>
+                            <input type="button" class="btn btn-info" title="Electivas a las que estoy inscripto" id="consultarInscripcion" value="Consultar Inscripcion" style="cursor:pointer;" onclick="mostrarFrameConsultar();"/>
+                        </td>
+                    </tr>
+                </table>
+                <br><br>
+                <iframe id="frameListar" name="frameListar" src="{{datos.url_electivas_cronograma}}" FRAMEBORDER="No" style="width: 100%;height: 600px;">
+
+                </iframe>
+                <iframe id="frameInscribir" name="frameInscribir" src="{{datos.url_electivas_inscripcion}}" FRAMEBORDER="No" style="width:100%;height: 600px;">
+
+                </iframe>
+                <iframe id="frameConsultar" name="frameConsultar" src="{{datos.url_electivas_consultar}}" FRAMEBORDER="No" style="width: 100%;height: 600px;">
+
+                </iframe>
+            </div>
+        {%else%}
+            <div align="left">
+                {%if (datos.calidad!=1)%}
+                    <div class="alert alert-error">
+                        <button type="button" class="close" data-dismiss="alert"></button>
+                        {{ 'form.alumno_no_regular_electivas'|trans }}
+                    </div>
+                {%endif%}
+                <br>
+                {%if (datos.control!=1)%}
+                    <div class="alert alert-error">
+                        <button type="button" class="close" data-dismiss="alert"></button>
+                        {{ 'form.alumno_no_reinscripto_electivas'|trans }}
+                    </div>
+
+                {%endif%}
+            </div>
+        {%endif%}
+    </fieldset>
+{% endblock contenido %}

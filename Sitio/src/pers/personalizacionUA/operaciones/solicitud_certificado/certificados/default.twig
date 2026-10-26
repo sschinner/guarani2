@@ -1,0 +1,22 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+    <span id="js-btn_esconder">
+        <i class="icon-chevron-left icon-white"></i>
+    </span>
+
+	<div class="well">
+		<ul class="nav nav-list">
+		{% for id, cert in this.opciones() %}
+                        {%if (id != '102')%} {# se oculta el certificado diploma id 102 ya que se realiza por otra operacion #}
+                            <li>
+                                    <a href="{{ cert.url }}" id="nrocert{{ cert.nrcert }}" class="{{ this.data.id_form == id ? 'active' : ''}}" role="button" aria-pressed="false" title='Solicitar {{ cert.nombre }}'>
+                                    {{ cert.solicitud_pendiente == "S" ? '<span class="icon-ok"><span class="acchide">Solicitud pendiente</span></span>' : '' }} {{ cert.nombre }}
+                                    </a>
+                            </li>
+                        {%endif%}
+		{% endfor %}
+		</ul>
+	</div>
+	<p class="referencia"><span class="icon-ok"></span> {{"certificados_pedidos" | trans }}</p>
+{% endblock %}

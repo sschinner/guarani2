@@ -1,0 +1,77 @@
+#reporte #menu li.select {
+	text-decoration: underline;
+}
+
+#reporte #menu li strong {
+	color: #666;
+}
+
+ul.ficha_alumno_ul{
+	list-style: none;
+	margin-left: 0px;
+}
+
+#js-btn_esconder {
+	float:left;
+	background-color: #08c;
+	border-radius: 4px 0 0 4px;
+	cursor: pointer;
+	margin-top: 12px;
+    margin-left: -14px;
+	height: 50px;
+}
+
+#reporte_contenido {
+	margin-left: 15px;
+	float:left;
+	width: 70%;
+	overflow: auto;
+}
+
+#reporte_contenido.completo{
+	width: 90%;
+}
+
+#filtro input {
+	width: 70%;
+}
+
+#filtro h4 {
+	padding-left: 20px;
+}
+
+#reporte_contenido table td, #reporte_contenido table th {
+	text-align: center;
+}
+
+#reporte_contenido table tr td.col_izq {
+	text-align: left;
+}
+
+table tbody tr.detalle {
+	cursor: pointer;
+}
+
+tr.hide ul li {
+	text-align: left;
+}
+
+tr.hide ul{
+	list-style: none;
+	margin-left: 20px;
+}
+
+#menu_reportes a.accordion-toggle{
+    font-weight: bold;
+    color: #0088cc;
+}
+
+#filtro .ui-autocomplete#formulario_filtro-cuadro_busqueda-autocomplete-ul {
+    max-height: 300px !important;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html #filtro .ui-autocomplete#formulario_filtro-cuadro_busqueda-autocomplete-ul {
+    height: 300px !important;
+}

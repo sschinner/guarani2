@@ -1,0 +1,20 @@
+-- inserta la operacion  de reporte simple - sui_operaciones limpia todo
+execute procedure dba.sui_operaciones ('820his02', 'Certificado de exámenes rendidos ', 'Certificado de exámenes rendidos ',NULL);
+-- inserta operacion_mod
+Begin;
+
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = "820his02";
+
+
+insert into dba.acc_operacion_mod (modulo, operacion, submodulo, orden) VALUES
+   ('82000001', '820his02', '820histo', 20); 
+insert into dba.acc_parametros (operacion, orden, ventana, parametros, cierra_anterior) VALUES
+               ('820his02', 1, 'w_reporte', 'uo_dw_filtros, dp_alumno_carrera_apr, uo_dw, dr_certificado_historico, dl_certificado_historico', 'N');
+
+insert into dba.acc_acciones_oper (operacion, accion) VALUES
+      ('820his02', 'C');
+
+
+commit;
+

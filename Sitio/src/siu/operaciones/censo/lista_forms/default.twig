@@ -1,0 +1,28 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    <div class="well">
+		<ul id="dcensales_menu" class="nav nav-list">
+		{% for item in this.data.menu %}
+			{% if item.url %}
+			<li class="{% if item.adicionales %}adicionales{% endif %}{% if item.actualizado %} linkok{% endif %}">
+			<a href="{{item.url}}" form="{{item.form}}" role="button" class="censo
+                        {% if this.data.form_actual == item.form %} active{% endif %}
+                        {% if this.data.modo_reinscripcion %}{% if item.visitado %} visitado{% endif %}{% endif %}
+                        {% if item.con_faltantes %} con-faltantes{% endif %}"
+                        {% if this.data.form_actual == item.form %}aria-pressed="true"{% endif %}
+                        >
+			{{item.nombre}}
+			</a>
+			</li>
+			{% else %}
+			<li class="nav-header">{{item.nombre}}</li>
+			{% endif %}
+		{% endfor %}
+             <li class=""><a href="{{this.data.url_form_discapacidad}}" form="discapacidad" role="button"
+                         class=" {% if this.data.form_actual == 'discapacidad'%} active {% endif %} 
+							{% if this.data.modo_reinscripcion %} {% if this.data.visitados.discapacidad %} visitado {% endif %} {% endif %}">
+			{{'discapacidad'|trans|capitalize}}
+			</a></li>
+		</ul>
+    </div>
+{% endblock %}

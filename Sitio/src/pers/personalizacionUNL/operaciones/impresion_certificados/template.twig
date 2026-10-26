@@ -1,0 +1,7 @@
+{% extends "kernel/dos_columnas.twig" %}
+{% block titulo_operacion %}<h2>{{"Descarga Certificados Analíticos"|trans|capitalize}}</h2>{% endblock %}
+{% block columna_1 %}
+{% endblock %}
+{% block columna_2 %}
+    {{ listado.render }} {# SE AGREGA EL PAGELET A LA ESTRUCTURA VISUAL EN LA 2DA COLUMNA #}
+{% endblock %}

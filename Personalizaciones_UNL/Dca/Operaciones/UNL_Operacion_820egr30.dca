@@ -1,0 +1,57 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.6.3
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones( '820egr30', '03-Controlar Historia Académica', '03-Controlar Historia Académica', null );
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( '820egr30', 1, 'w_abm_lista_maq_estados', 'uo_dw,dk_titulos_otorg,10,1,8203', 'N' );
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( '820egr30', 2, 'w_abm_detalle_maq_estados', 'uo_dw,d820_m_titulos_otorg_control,1,estado,uo_dw,d_eventos_posibles,1,uo_dw,d_forms_posibles,4,uo_ds,d_tit_otor_form,1,8203', 'N' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '820egr30', 'C' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '820egr30', 'M' );
+
+begin;
+
+set constraints all deferred;
+-- Estado:  1 - C - Control de Actas - Control de Actas
+delete from mce_estados where entidad = 1 and estado = 'C';
+insert into mce_estados values(1, 'C', 'Control de Actas', 'Control de Actas');
+
+-- Actividad: 8203 - Controlar Actas
+delete from mce_actividades where entidad = 1 and actividad = 8203;
+insert into mce_actividades values (1, 8203, 'Controlar Historia Académica', 'Controlar Historia Académica');
+
+-- Eventos: 
+--	82031 - Control de Actas OK
+--	82032 - Revisar Tramite de Expediente
+delete from mce_eventos where entidad = 1 and evento in (82031, 82032);
+insert into mce_eventos values(1, 82031, 'Iniciar Expediente de Diploma', 'Iniciar Expediente de Diploma');
+insert into mce_eventos values(1, 82032, 'Revisar Tramite Expte.', 'Revisar Tramite Expte.');
+
+-- Eventos - Actividad
+delete from mce_eventos_activ where entidad = 1 and actividad = 8203;
+insert into mce_eventos_activ values (1, 8203, 82031);
+insert into mce_eventos_activ values (1, 8203, 82032);
+
+commit;
+
+
+begin;
+set constraints all deferred;
+-- Caminos:
+--1 - 82021 - M - T
+--1 - 82022 - M - A
+delete from mce_caminos where entidad = 1 and estado = 'C' and evento in (82031, 82032);
+insert into mce_caminos values (1, 82031, 'C', 'T');
+insert into mce_caminos values (1, 82032, 'C', 'M');
+
+-- Formularios que se emiten en este paso
+
+delete from mce_form_camino where entidad = 1 and evento = 82031 and estado = 'C';
+insert into mce_form_camino values (1, 'C', 82031, 50);
+
+
+-- Modificación del camino desde egr05060
+-- Caminos:
+--1 - 5062 - 'T' - C
+update mce_caminos set nuevo_estado = 'C' where entidad = 1 and evento = 5062 and estado = 'T';
+
+commit;

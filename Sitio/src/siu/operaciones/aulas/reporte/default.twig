@@ -1,0 +1,109 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<div class="titulo_operacion">
+		<h2 class="clearfix"><span class="pull-left">{{"header.menu.aulas"|trans|capitalize}}</span>
+			<div class="pull-right">
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url.generar_pdf}}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url.generar_excel}}"><span class="acchide">{{'descargar_xls'|trans|capitalize}}</span><span class="g3w-icono-xls"></span></a>
+				<button class="btn" id="js-colapsar-filtro"><span class="icon-filter"></span> <span>{{"filtros"|trans|capitalize}}</span></button>
+			</div>
+		</h2>
+	</div>
+
+	<div class="filtros">
+		{% set filtros = this.get_filtros() %}
+		<table class="table table-bordered table-condensed" tabindex="0" summary="Seleccione d&iacute;as y materias para mostrar en la tabla inferior">
+			<caption>Filtro</caption>
+			{% if filtros.dias %}
+			<tr>
+				<th scope="row">
+					<div class="btn-group">
+					{% for clave, valor in filtros.dias %}
+						<button class="js-filtro_dias btn btn-mini active" dia="{{clave}}" role="button" aria-pressed="true" tabindex="0">{{valor |trans|capitalize}}</button>
+					{% endfor %}
+					</div>
+				</th>
+			</tr>
+			{% endif %}
+			{% if filtros.actividades %}
+			<tr>
+				<th scope="row">
+					<div class="btn-group">
+					<label class="titulo" for="js-filtro_actividades">{{"materias"|trans|capitalize}}: 
+					<select name="filtro_actividades" id="js-filtro_actividades">
+						<option value="">{{"todos"|trans|capitalize}}</option>
+						{% for clave, valor in filtros.actividades %}			
+						<option value="{{clave}}">{{valor}}</option>
+						{% endfor %}
+					</select>
+					</label>
+					</div>
+				</th>
+			</tr>
+			{% endif %}
+		</table>		
+	</div>
+	{% if this.data.datos or this.data.datos_corte %}
+		{% import "kernel/macro_pager.twig" as pager %}
+		<div class="pagination pagination-centered">
+			{{ pager.render_paginator(this.get_paginas, this.get_pagina) }}
+		</div>
+	{% endif %}
+
+	{% if this.data.datos or this.data.datos_corte %}
+		{% import "kernel/macro_columnas_tabla.twig" as macro_titulos %}
+		<table class="table table-striped table-bordered table-condensed js-resultados" tabindex="0" summary="Tabla de materias y sus aulas" >				
+			<caption>Agenda de Clases</caption>
+			{% if this.data.datos %}
+				<!-- Titulos -->
+				<thead>
+				<tr>
+					{% if this.data.titulos %}
+						{% for clave, titulo in this.data.titulos %}
+							<th id="{{clave}}" scope="col">
+								{{titulo}}
+								{% if this.data.atributos_titulos %}
+									{% for clav, atrib in this.data.atributos_titulos %}
+										{% if clav == clave %}											
+											<div class="btns-orden">
+												{% for clase, url in atrib %}
+												<a href="{{url}}">
+													<i class="{% if clase == "asc" %}icon-arrow-up{% else %}icon-arrow-down{% endif %}"></i>
+												</a>
+												{% endfor %}
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% endif %}
+							</th>
+						{% endfor %}
+					{% endif %}
+				</tr>
+				</thead>
+				<tbody>
+				<!-- Datos -->
+				{% for columnas in this.data.datos %}
+				<tr class="js-filtro" dia_sem="{{columnas.dia}}" actividad="{{columnas.actividad}}">
+					{% for keyline, columna in columnas %}
+						{% if (keyline != "URL_LINEA") %}
+							<td headers="{{keyline}}" {% if (keyline =='aula')%} scope="row"{%endif%}>
+								{#{% if columna %}#}
+									{{columna}}
+								{#{% else %}
+									{{"no informa"|trans|capitalize}}
+								{% endif %}#}
+							</td>
+						{% endif %}
+					{% endfor %}
+				</tr>
+				{% endfor %}
+				</tbody>
+			{% endif %}
+		</table>
+	{% else %}
+		<div class="alert">
+			{{"reporte.no_hay_datos.aulas"|trans|capitalize}}
+		</div>
+	{% endif %}
+	<div id="js-reporte-vacio" class="hide alert alert-warning">{{"reporte.no_hay_datos.aulas" |trans|capitalize }}</div>
+{% endblock %}

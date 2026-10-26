@@ -1,0 +1,269 @@
+#notificaciones {
+    background-color: #f0f5f9;
+    padding: 5px 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+#notificaciones .fila {
+	display: table-row;
+	position: relative;
+	font-size: 8.5px;
+}
+
+#notificaciones .fila > div {
+    /*display: table-cell;*/
+	float: left;
+    border-right: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+}
+
+#notificaciones .fila .celda {
+    background-color: white;
+    border-bottom: 1px solid #eee;
+    border-right: 1px solid #eee;
+    position: relative;
+    height: 23px;
+}
+
+#notificaciones .fila .celda {
+	width: 23px;
+}
+
+#notificaciones .fila .tit {
+    border-right: 1px solid #eee;
+    border-top: 1px solid #eee;
+    width: 23px;
+    text-align: center;
+}
+
+#notificaciones .fila .tit-lateral {
+  /*  border-left: 1px solid #eee;*/
+	width: 50px;
+}
+
+#notificaciones .fila .cuad:hover {
+	z-index: 5;
+}
+
+#notificaciones .fila .celda span {
+	margin: 3px;
+	vertical-align: middle;
+}
+
+#notificaciones .periodo {
+	margin-top: 15px;
+}
+
+#notificaciones .periodo h4 {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+#notificaciones .selector span {
+    cursor: pointer;
+    text-decoration: underline;
+    margin-right: 5px;
+    color: #08c;
+}
+
+#notificaciones .selector span.selected {
+	display: none;
+}
+
+#notificaciones .fila .mat_cuad {
+	position: absolute;
+	opacity: 0.7;
+/*	border: 1px solid black;*/
+}
+
+#notificaciones .mat_ref {
+	background-color: #8099B2;
+	border: 1px solid black;
+	height: 5px;
+	width: 5px;
+	display: inline-block;
+	margin-right: 5px;
+}
+
+#notificaciones div.tip {
+	display:none;
+	position: absolute;
+	background:url(../../../../img/white_arrow.png);
+	height:94px;
+	padding:20px 15px 5px 15px;
+	width:176px;
+	font-size:11px;
+	z-index: 999;
+}
+
+#notificaciones div.tip > div {
+	overflow: auto;
+	height: 80px;
+}
+
+.horario_tabla {
+	width: 1000px;
+	height: 370px;
+}
+.horario_tabla .tabla {
+	width: 100%;
+}
+.horario_tabla .tabla .fila {
+	width: 100%;
+	height: 50px;
+	position: relative;
+}
+
+.horario_tabla .tabla .cabecera {
+	height: 20px;
+}
+
+.horario_tabla .tabla .fila .celda{
+	bottom: 0px;
+	top: 0px;
+	position: absolute;
+	border-left:1px dashed lightgray;
+	border-bottom:1px solid black;
+}
+
+.horario_tabla .tabla .fila .celda:first-child{
+	border-left: 1px solid black;
+}
+
+.horario_tabla .tabla .fila .celda:last-child{
+	border-right: 1px solid black;
+}
+
+.horario_tabla .tabla .cabecera .celda{
+	text-align: center;
+	border-top:1px solid black;
+	border-left: 1px solid black;
+}
+
+.horario_tabla .tabla .fila .tit-lateral {
+	left: 0px;
+	width: 60px	
+}
+
+.horario_tabla .tabla .cabecera .tit-lateral {
+	border-left: none!important;
+	border-top: none;
+}
+
+.horario_tabla .tabla .fila .materia {
+	top: 0px;
+	bottom: 0px;
+	position: absolute;
+	opacity: 0.8;
+	border-left: 1px solid black;
+	border-right: 1px solid black;
+	text-align: center;
+	font-size: 9px;
+	font-weight: bold;
+	color: black;
+}
+
+.mas {
+	margin-left: 3px;
+}
+
+.scrollable {
+
+	/* required settings */
+	position:relative;
+	overflow:hidden;
+	width: 224px;
+	/*height:90px;*/
+}
+
+/*
+	root element for scrollable items. Must be absolutely positioned
+	and it should have a extremely large width to accommodate scrollable items.
+	it's enough that you set width and height for the root element and
+	not for this element.
+*/
+.scrollable .items {
+	/* this cannot be too large */
+	width:20000em;
+	position:absolute;
+}
+
+/*
+	a single item. must be floated in horizontal scrolling.
+	typically, this element is the one that *you* will style
+	the most.
+*/
+.panel {
+	float:left;
+	width: 224px;
+}
+
+
+/* position and dimensions of the navigator */
+.navi {
+	height:8px;
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0px auto;
+}
+
+
+/* items inside navigator */
+.navi a {
+	width:8px;
+	height:8px;
+	float:left;
+	margin:3px;
+	background:url(../../../../img/navigator.png) 0 0 no-repeat;
+	display:block;
+	font-size:1px;
+}
+
+/* mouseover state */
+.navi a:hover {
+	background-position:0 -8px;      
+}
+
+/* active state (current page state) */
+.navi a.active {
+	background-position:0 -16px;     
+}
+
+a.browse {
+	background:url(../../../../img/hori.png) no-repeat;
+	display:block;
+	width:20px;
+	height:20px;
+	float:left;
+	cursor:pointer;
+	font-size:1px;
+}
+
+/* right */
+a.right 				{ background-position: 0 -20px; clear:right; margin-right: 0px;}
+a.right:hover 		{ background-position:-20px -20px; }
+a.right:active 	{ background-position:-40px -20px; } 
+
+
+/* left */
+a.left				{ margin-left: 0px; } 
+a.left:hover  		{ background-position:-20px 0; }
+a.left:active  	{ background-position:-40px 0; }
+
+
+/* disabled navigational button */
+a.disabled {
+	visibility:hidden !important;		
+}
+
+#notificaciones .label-eleccion-periodo {
+	float: left;
+	margin-top: 5px;
+	margin-right: 5px;
+}
+
+#notificaciones .periodo.materias-notif {
+	width: 201px;
+}

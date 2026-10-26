@@ -1,0 +1,17 @@
+
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.0.0
+-- *******************************************************************************
+
+Execute procedure dba.sui_operaciones('820agr03','Materias Aprobadas','Reporte de Materias Aprobadas',NULL);
+Begin;
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = '820agr03';
+DELETE FROM acc_operaciones WHERE operacion = "820agr03";
+DELETE FROM par_puntos_x_pag WHERE operacion = "820agr03";
+DELETE FROM par_eventos_x_oper WHERE operacion = "820agr03";
+DELETE FROM par_puntos_x_oper WHERE operacion = "820agr03";
+DELETE FROM par_cont_x_oper WHERE operacion = "820agr03";
+DELETE FROM sga_conf_controles WHERE operacion = "820agr03";
+Commit;

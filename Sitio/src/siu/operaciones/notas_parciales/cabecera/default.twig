@@ -1,0 +1,36 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+<h3 class="titulo-navbar clearfix">
+	<div class="pull-left">
+		{{ this.data.MATERIA_NOMBRE }} ({{ this.data.MATERIA }}) - {{ this.data.FECHA_HORA }}
+	</div>
+	<div class="pull-right">
+		<button class="btn btn-small" id="js-colapsar-info-mesa"><span class="icon-th-list"></span> <span>Detalles</span></button>
+		{% if this.es_edicion %}
+		<button class="btn btn-small" id="js-colapsar-herramientas"><span class="icon-wrench"></span> <span>Autocompletar</span></button>
+		{% endif %}
+	</div>
+</h3>
+
+<div class="js-detalle-materia" aria-live="assertive" style="display: none;">
+
+	<table class="table table-condensed" summary="Detalles de parcial">
+		<tr>
+			<th id="eval" scope="row"><strong>{{'evaluacion'|trans|capitalize}}:</strong></th>
+			<td headers="eval">{{ this.data.EVALUACION_DESC }}</td>
+			<th id="escala" scope="row"><strong>{{'escala_notas'|trans|capitalize}}:</strong></th>
+			<td headers="escala">{{ this.data.ESCALA_NOTAS_DESC }}</td>
+		</tr>
+		<tr>
+			<th id="comision" scope="row"><strong>{{'comision'|trans|capitalize}}:</strong></th>
+			<td headers="comision">{{ this.data.COMISION_NOMBRE }}</td>
+			<th id="catedra" scope="row"><strong>{{'catedra'|trans|capitalize}}:</strong></th>
+			<td headers="catedra">{{ this.data.CATEDRA }}</td>
+		</tr>
+	</table>
+	
+	<a id='ver_escala' class="btn"href="#"><span class="icon-eye-open"></span> {{ 'ver_escala_notas'|trans|capitalize }}</a>	
+</div>
+
+{% endblock %}

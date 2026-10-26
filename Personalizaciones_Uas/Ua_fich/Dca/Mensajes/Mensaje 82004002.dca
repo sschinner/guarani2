@@ -1,0 +1,9 @@
+-- Alta del mensaje
+-- Mensaje: 82004002.dca
+
+--********************************************
+-- mensaje 82004002, asociado la correlativa especial: u820_quimica_x_ingreso.
+-- 
+--********************************************
+DELETE FROM mme_mensajes WHERE mensaje = 82004002;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82004002, "No podes inscribirte porque no tenés aprobado el curso Introductorio Correlativo.",  "No podes inscribirte porque no tenés aprobado el curso Introductorio Correlativo.", 2, 1);

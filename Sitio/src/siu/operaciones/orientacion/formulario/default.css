@@ -1,0 +1,48 @@
+#formulario #o_disponibles {
+	display:none;
+}
+
+#formulario tr.data {
+	cursor: pointer;
+}
+
+#formulario .orientacion {
+	width: 10%;
+}
+
+#formulario .nombre {
+	width: 30%;
+}
+
+#formulario .titulo {
+	width: 50%;
+}
+
+#formulario .orientacion-acciones {
+	margin-bottom: 20px;
+}
+
+#formulario table {
+	background-color: white;
+}
+
+#formulario #formulario_eliminacion {
+	height: auto; overflow: hidden; width: 397px; margin: 0 auto 50px auto; display: none;padding: 20px;
+}
+
+#formulario #formulario_eliminacion h4 {
+	color: #333;
+}
+
+#formulario #formulario_eliminacion textarea {
+	height: auto; 
+	overflow: hidden; 
+	width: 99%; 
+	margin: 10px 10px 30px 0; 
+	padding: 0;
+}
+
+#formulario #formulario_eliminacion textarea.error {
+	background-color: #EED3D7;
+	color: #B94A48;
+}

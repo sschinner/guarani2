@@ -1,0 +1,106 @@
+-- U820 ********************************************************************
+-- ESTE ES EL PROCEDIMIENTO ORIGINAL (MANTIENE EL  MISMO NOMBRE) MODIFICADO.***********************
+-- U820 ********************************************************************
+
+-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--  Stored Procedure: sp_i_inscsubcom
+-- Version: 1.7
+-- 
+-- PERSONALIZADO
+-- Para asignar la calida de inscripcion promocional se agrego la condicion de que la escala de notas tenga definida la calidad promocional
+-- +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 
+CREATE PROCEDURE verifica_objeto()
+BEGIN
+	IF EXISTS (SELECT procid
+			FROM sysprocedures
+			WHERE procname = 'sp_i_inscsubcom') THEN
+		DROP PROCEDURE sp_i_inscsubcom;
+	END IF;		
+END
+END PROCEDURE;
+
+EXECUTE PROCEDURE verifica_objeto();
+DROP PROCEDURE verifica_objeto();
+
+-- Creating procedure
+CREATE PROCEDURE "dba".sp_i_inscsubcom( pUnidadAcademica	LIKE sga_alumnos.unidad_academica,
+				  pCarrera		LIKE sga_alumnos.carrera,
+				  pLegajo 		LIKE sga_alumnos.legajo,
+				  pComision 		LIKE sga_comisiones.comision,
+				  pSubComision 		LIKE sga_subcomisiones.subcomision) 
+
+/* Registra una Inscripcion a las Subcomisiones Cursada */
+
+ RETURNING    smallint,		-- status -1 Error/ 1 OK
+	      varchar(255);	-- mensaje 
+
+   -- vars para el manejo de excepciones
+   DEFINE 	SQLErr 		integer		;
+
+   DEFINE 	ISAMError	integer		;
+   DEFINE 	errorInfo 		varchar(76)	;
+   DEFINE	vcUserError	varchar(10)	;
+
+   -- vars locales
+   DEFINE 	iStatus 		smallint			;
+   DEFINE 	vcMsg 		varchar(255) 		;
+   DEFINE 	iOK		smallint			;
+
+   -- vars locales
+
+
+  -- si hay algun error
+  ON EXCEPTION SET SQLErr, ISAMError, errorInfo                                        
+      LET vcUserError  = '800355' ;
+      LET iStatus 	  = -1; 
+      LET vcMsg 	  =  vcUserError || ',' || SQLErr || ' - ' || errorInfo;
+
+    RETURN iStatus, vcMsg;
+   END EXCEPTION;
+
+-- **************************** CONTROLES ************************
+-- U820 ********************************************************************
+-- 	Verifico que la Subcomision tenga Cupo.
+-- U820 ********************************************************************
+
+execute procedure ctr820_cupoSubCom (pcomision, psubcomision) Into iStatus, vcMsg;
+
+-- **************************** FIN CONTROLES ********************
+
+BEGIN
+
+IF iStatus <> -1 THEN
+
+
+  -- agrego la inscripcion
+   INSERT INTO sga_insc_Subcom (	unidad_academica, 
+				carrera, 
+				legajo, 
+				comision, 
+				subcomision)
+               		VALUES (pUnidadAcademica, 
+				pCarrera, 
+				pLegajo, 
+				pComision, 
+				pSubComision);
+
+
+
+
+   -- si llego hasta aca, esta todo OK
+   LET iStatus 	= 1; 
+   LET vcMsg  = '800350' ;
+
+END IF;
+
+   -- devuelvo el resultado
+RETURN iStatus, vcMsg;
+
+END;
+
+END PROCEDURE
+;
+-- +++++++++++++++++++++++ FIN SP sp_i_inscsubcom +++++++++++++++++++++++++
+
+

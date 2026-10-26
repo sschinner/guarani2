@@ -1,0 +1,173 @@
+<a class="acchide" href="#kernel_contenido" id="saltar_cppal">Saltar al contenido principal</a>
+<div style="background:#008BB8;height:5px;"></div>
+<div class="{{estilo}}">
+    <div style="width:20%;float:left;margin-left:1%">
+        <img  src="https://servicios.unl.edu.ar/recursosweb/institucionales/header/unl.svg">
+    </div>
+    <div style="width:20%;float:right;">
+        <a class="brand" href="{{url_inicio}}">
+            <h1><img alt='SIU Guaran&iacute; - Sistema de Gesti&oacute;n Academica' src="{{ url_img_logo }}" /></h1>
+           
+        </a>
+            <span style="margin-left:25%"><b><font style="font-size: 8pt;" > {{version}}</font></b></span>
+    </div>
+    <div class="container">
+        <div class="row-fluid">
+            <div class="span3">
+                {#<a class="brand" href="{{url_inicio}}"><h1><img alt='SIU Guaran&iacute; - Sistema de Gesti&oacute;n Academica' src="{{ url_img_logo }}" /></h1></a>#}
+            </div>
+            <span style="margin-left: 200px;font-size: 12pt;">{#{ambito}#}</span>
+            <div class="span9">
+                {% if persona.logueada %}
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <div class="navbar user-navbar clearfix">
+                                <ul class="nav pull-right">
+
+                                {% if perfil_activo == 'ALU' and perfil.get_operacion_activa('requisitos_ingreso') %}
+                                    <li class="notificaciones" title="Requisitos Pendientes">
+                                        <a href="{{ url_requisitos }}"><span class="icon-check"></span><span class="acchide">{{ 'requisitos_ingreso'|trans | capitalize }}</span> <span id='js-cant-requisitos' class="badge {{ cant_requisitos > 0 ? 'badge-warning' : '' }}">{{ cant_requisitos }}</span></a>
+                                    </li>
+                                {% endif %}
+                                   
+                                {% if perfil.get_operacion_activa('mensajes') %}
+                                    <li class="notificaciones">
+                                        <a href="{{ url_mensajes }}"><span class="icon-envelope"></span><span class="acchide">{{ 'mensajes'|trans | capitalize }}</span> <span id='js-cant-mensajes' class="badge {{ cantidad_mensajes > 0 ? 'badge-warning' : '' }}">{{ cantidad_mensajes }}</span></a>
+                                    </li>
+                                {% endif %}
+
+                                    <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="icon-user"></span> {{ persona.nombre }} <span class="caret"></span><span class="acchide">{{ 'desplegar_menu_perfil' | trans }}</span></a>
+                                        <ul class="dropdown-menu">
+
+                                    {% if perfil.get_operacion_activa('configuracion') %}
+                                            <li><a href='{{ persona.url_configuracion }}'><span class="icon-cog"></span> {{ 'configuracion'|trans | capitalize }}</a></li>
+                                    {% endif %}
+
+                                            <li><a href='{{ persona.url_logout }}'><span class="icon-off"></span> {{ 'header.cerrar_sesion'|trans }}</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if persona.carreras %}
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <div class="form-horizontal carreras">
+                                    <div class="pull-right control-group">
+                                        {% if persona.carreras.cantidad > 1 %}
+                                            <label for="js-select-carreras" class="control-label">{% trans %} header.carrera {% endtrans %}:</label>
+                                            <div class="controls">
+                                                <div class="input-append">
+                                                    <select id="js-select-carreras">
+                                                        <optgroup>
+                                                            {% for carrera in persona.carreras.lista %}
+                                        {% set selected = (persona.carrera_activa.id == carrera.carrera) ? 'SELECTED' : '' %}
+                                                                <option value="{{ carrera.id }}" {{ selected }}>{{ carrera.nombre|trans|capitalize }}</option>
+                                                            {% endfor %}
+                                                        </optgroup>
+                                                    </select>
+                                                    {# http://en.wikipedia.org/wiki/Guillemet#Typing_.22.C2.AB.22_and_.22.C2.BB.22_on_computers #}
+                                                    <!--<a href='{{ persona.carreras.url_operacion }}' class="btn">ver todas las carreras</a>-->
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <span>{% trans %} header.carrera {% endtrans %}:</span>
+                                            <span class="control-label-carrera">{{ persona.carrera_activa.nombre }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <div class="navbar main-nav">
+        <div class="navbar-inner">
+            <div class="container tb-fix-ancho-fijo">
+            <div role="navigation">
+              
+    {% if menu %}
+                        <ul id='js-nav' class='nav'>
+                            {% for item in menu %}
+
+                            {% if item.submenu is defined %}
+
+                                    <li class='dropdown js-menuitem-root {{ item.seleccionado ? 'menu-item-seleccionado' : '' }}'>
+                                    {{ _self.recursiveSubmenu(item, true) }}
+                                    </li>
+                                {% else %}
+                                    <li id='{{ item.id }}' class='js-menuitem-root {{ item.seleccionado ? 'menu-item-seleccionado' : '' }}'>
+                                        <a href='{{ item.url }}'>{{ item.nombre|trans }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                {% endif %}
+
+                        {% if perfiles %}
+                            <ul id="js-selector-perfiles" class="nav pull-right perfiles">
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class='js-texto-perfil'></span> <span class="caret"></span></a>
+                                    <ul class="dropdown-menu" id="js-select-perfil">
+                                        {% for perfil in perfiles %}
+                                            {% if perfil_activo == perfil %}
+                                                <li data-perfil="{{ perfil }}" data-perfilnombre="{{ perfil|trans|capitalize }}" class='js-seleccion-perfil js-perfil-item'>
+                                                    <a href="#"><span class="icon-ok"></span><span class="acchide">Elegido</span> {{ perfil|trans|capitalize }}</a>
+                                                </li>
+                                            {% else %}
+                                                <li data-perfil="{{ perfil }}" class="js-perfil-item"><a href="#">{{ perfil|trans|capitalize }}</a></li>
+                                                {% endif %}
+                                            {% endfor %}
+                                    </ul>
+                                </li>
+                            </ul>
+                        {% endif %}
+
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+        <!-- container-fluid -->
+    </div>
+    <!-- navbar-inner -->
+        </div><!-- navbar -->
+
+
+<!-- https://gist.github.com/tentacode/3892186 -->
+{% macro recursiveSubmenu(item, primer_nivel) %}
+
+    {% if primer_nivel %}
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ item.nombre|trans }} <b class="caret"></b></a>
+    {% else %}
+        <li class="dropdown-submenu">
+        <a href="#">{{ item.nombre|trans }}</a>
+    {% endif %}
+
+    <ul class='dropdown-menu'>
+
+        {% for subitem in item.submenu %}
+
+            <li id='{{ subitem.id }}'><a href='{{ subitem.url }}'>{{ subitem.nombre|trans }}</a></li>
+
+        {% endfor %}
+
+        {% for submenu in item.submenues %}
+
+            {{ _self.recursiveSubmenu(item[submenu], false) }}
+
+        {% endfor %}
+
+    </ul>
+
+    {% if not primer_nivel %}
+        </li>
+    {% endif %}
+
+{% endmacro %}

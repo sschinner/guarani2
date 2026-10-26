@@ -1,0 +1,17 @@
+-- inserta la operacion - sui_operaciones limpia todo
+execute procedure dba.sui_operaciones ('820mat03', 'Certificado de Promedio para Pasantías ', 'Certificado de Promedio para Pasantías',NULL);
+-- inserta operacion_mod
+Begin;
+
+set constraints all deferred;
+DELETE FROM acc_operacion_mod WHERE operacion = "820mat03";
+
+
+insert into dba.acc_operacion_mod (modulo, operacion, submodulo, orden) VALUES ('00000035', '820mat03', 'Certif',85); 
+
+insert into dba.acc_parametros (operacion, orden, ventana, parametros, cierra_anterior) VALUES ('820mat03', 1, 'w_reporte', 'uo_dw_filtros, dp_alumno_carrera_obs_int, uo_dw,dr820_certif_promedio_pasantias,dl820_certif_promedio_pasantias', 'N');
+
+insert into dba.acc_acciones_oper (operacion, accion) VALUES
+      ('820mat03', 'C');
+
+commit;

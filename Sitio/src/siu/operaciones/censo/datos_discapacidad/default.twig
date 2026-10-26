@@ -1,0 +1,70 @@
+{% extends "kernel/pagelet.twig" %}
+{% import 'kernel/macro_helpers.twig' as helper %}
+{% block contenido %}
+        <legend class="clearfix">
+                <span class="pull-left"><h3 class="resaltar">{{'censo.discapacidad' |trans|capitalize}}</h3></span>
+        </legend>
+
+	{% if this.data.modo == 'listado' %}
+            {#---- Pantalla listado ----#}
+            {% if this.data.cant_datos == 0 %}
+                    <div class='alert alert-info mensaje strong'>
+                            {{'discapacidad.sin_datos'|trans|raw}}
+                    </div>
+            {% else %}
+                    <div>
+                            <table class="table table-stripped table-hover">
+                                    <thead>
+                                            <tr>
+                                                    <th>{{'discapacidad.tipo' | trans}}</th>
+                                                    <th>{{'discapacidad.grado' | trans}}</th>
+                                                    <th>{{'discapacidad.caracter' | trans}}</th>
+                                                    <th>{{'discapacidad.fecha_desde' | trans}}</th>
+                                                    <th>{{'discapacidad.fecha_hasta' | trans}}</th>
+                                                    <th>&nbsp;</th>
+                                            </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in this.get_datos_discapacidad() %}
+                                            <tr class="item_disc">
+                                                    <td class="tipo_disc">{{item.TIPO_NOMBRE}}</td>
+                                                    <td>{{item.GRADO_NOMBRE}}</td>
+                                                    <td>{{item.CARACTER_NOMBRE}}</td>
+                                                    <td>{{item.FECHA_DESDE}}</td>
+                                                    <td>{{item.FECHA_HASTA}}</td>
+                                                    <td class='eventos-fila'>
+                                                            <a href="{{ item.LINK_EDITAR }}" class="btn btn-info btn-small" title="{{'editar'|trans|capitalize}}"><i class="icon-white icon-pencil"></i></a>
+                                                            <a href="{{ item.LINK_ELIMINAR }}" class="btn btn-info btn-small js-btnEliminar" title="{{'eliminar'|trans|capitalize}}"><i class="icon-white icon-remove"></i></a>
+                                                    </td>
+                                            </tr>
+                                    {% endfor %}
+                                    </tbody>
+                            </table>
+                    </div>
+            {% endif %}
+
+            <div class="pull-left fix-boton">
+                    <a href="{{ this.get_accion_edicion() }}" class="btn btn-inverse">
+                        {{'discapacidad.agregar_dato'|trans}} 
+                    </a>
+            </div>
+        {% else %}
+            {% set form = this.get_vista_form() %}
+            {{ form.render_encabezado() | raw }}
+            {% set acciones = form.render_acciones() %}
+            <div class='pull-right' style="margin-bottom: 20px;">
+                    <a href="{{ this.get_accion_volver_edicion() }}" class="btn btn-info">
+                            {{ 'volver'|trans|capitalize }} 
+                    </a>
+            </div>
+            <div class='row'>
+                    <div class='span10 offset1'>
+                            {{ form.render_cuerpo() | raw }}
+                    </div>
+            </div>
+            <div class='pull-right' style="margin-bottom: 20px;">
+                {{acciones|raw}}
+            </div>            
+            {{ form.render_cierre() | raw }}
+        {% endif %}
+{% endblock %}

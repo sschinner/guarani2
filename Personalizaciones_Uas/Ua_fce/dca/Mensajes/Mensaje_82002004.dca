@@ -1,0 +1,11 @@
+-- Alta del mensaje
+-- Mensaje: 82002004.dca
+
+--********************************************
+-- mensaje 82002004, asociado al control de Orden de inscripcion a Cursadas. Inscripción por bloque a 1er. año.
+-- 
+--********************************************
+
+DELETE FROM mme_mensajes WHERE mensaje = 82002004;
+
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82002004, "La Inscripción a la Materia %s no esta habilitada para Ingresantes %s2.",  "La Inscripción a la Materia %s no esta habilitada para Ingresantes %s2.", 2, 1);

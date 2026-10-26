@@ -1,0 +1,15 @@
+{% spaceless %}
+{% if this.is_visible %}
+	{% set style = '' %}
+{% else %}
+	{% set style = 'style="display: none"' %}
+{% endif %}
+
+{% if modo == 'skeleton' %}
+    <div id='{{ this.get_id }}' {{ style|raw }} class='pagelet'></div>
+{% else %}
+    {% if modo == 'completo' %}<div id='{{ this.get_id }}' class='pagelet' {{ style|raw }}>{% endif %}
+    {% block contenido %}{% endblock %}
+    {% if modo == 'completo' %}</div>{% endif %}
+{% endif %}
+{% endspaceless %}

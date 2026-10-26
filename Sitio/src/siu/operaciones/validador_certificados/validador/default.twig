@@ -1,0 +1,41 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+    {% import "kernel/macro_recaptcha.twig" as recaptcha %}
+    {{ recaptcha.script() }}
+    
+    <div class="alert alert-info">{{ "validador_certificados.descripcion" | trans | raw }}</div>
+
+	<form method="post" action="{{ this.data.url_validar }}" id="guarani_form_validar">
+
+            <div id="control_group_codigo_valid" class="control-group{% if this.data.error_codigo_validador %} error{% endif %}">
+                <label class="control-label" for="codigo_valid">{{ "validador_certificados.codigo_validacion" | trans }}</label>
+                <div class="controls">
+                    <input id="codigo_valid" name="codigo_valid" type="text" value="{{ this.data.codigo_validacion }}" maxlength="14"{% if this.data.codigo_validacion_disabled %} readonly{% endif %}/>
+                    {% if this.data.error_codigo_validador %}
+                        <div id="codigo_valid_error" class="alert alert-error">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            {{ this.data.error_codigo_validador_msj }}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+                
+                        <div class="control-group">
+                            {{ recaptcha.widget() }}
+                        </div>
+			
+			{% if this.data.mensajes %}
+				{% import "kernel/macro_notificaciones.twig" as notificaciones %}
+				{{ notificaciones.render_notif(this.data.mensajes) }}
+			{% endif %}
+						
+			
+			<div class="control-group">
+				<div class="controls">
+					<input id="validar" name="validar" type="submit" value="{{ 'validador_certificados.validar' | trans }}" class="btn btn-info" />
+				</div>
+			</div>
+
+	</form>
+{% endblock %}

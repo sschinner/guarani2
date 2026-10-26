@@ -1,0 +1,51 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_ficha_alumno.twig" as ficha_alumno %}
+{% block contenido %}
+    {{ ficha_alumno.render_menu(this.data.menu_reportes, this.data.categoria_actual, this.data.reporte_actual) }}
+	<div id="reporte_contenido">
+		<h3>{{ 'ficha_alumno.rep_historia_academica' | trans }}</h3>
+			{% for carrera in this.data.carreras %}
+				
+				<ul class="ficha_alumno_ul">
+					<li><strong>{{ 'ficha_alumno.carrera' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.carrera_nombre)}}</li>
+					<li><strong>{{ 'ficha_alumno.legajo' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.legajo)}}</li>
+				</ul>
+		
+				{% if(carrera.materias) %}
+					<table class='table table-condensed table-hover table-striped'>
+						<thead>
+							<tr>
+								<th>{{'ficha_alumno.materia'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.plan'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.fecha'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.nota'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.resultado'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.aprobacion'|trans|capitalize}}</th>
+								<th>{{'ficha_alumno.acta_o_resolucion'|trans}}</th>
+								<th>{{'ficha_alumno.folio_fisico'|trans|capitalize}}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for materia in carrera.materias %}
+								<tr{% if materia.aprobacion != 'Equivalencia' %} class="link-in-data" data-link="{{materia.link}}"{% endif %}>
+									<td class="col_izq">{{ficha_alumno.mostrar(materia.materia)}}</td>
+									<td>{{ficha_alumno.mostrar(materia.plan)}}</td>
+									<td>{{ficha_alumno.mostrar(materia.fecha)}}</td>
+									<td>{{ficha_alumno.mostrar(materia.nota)}}</td>
+									<td>{{ficha_alumno.mostrar(materia.resultado)}}</td>
+									<td>{{ficha_alumno.mostrar(materia.aprobacion)}}</td>
+									<td>{{ficha_alumno.mostrar(materia.acta_o_resolucion)}}</td>
+									<td>{{ficha_alumno.mostrar(materia.folio_fisico)}}</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				{% else %}
+					<div class="alert text-warning">{{'ficha_alumno.no_hay_materias_para_esta_carrera'|trans}}</div>
+				{% endif %}
+					
+			{% else %}
+				<div class="alert text-warning">{{'ficha_alumno.no_hay_informacion'|trans}}</div>
+			{% endfor %}
+	</div>
+{% endblock %}

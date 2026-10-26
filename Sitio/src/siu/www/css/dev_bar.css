@@ -1,0 +1,121 @@
+#loading-dev-bar {
+  background-image: url(../img/ajax-loader.gif);
+  background-repeat: no-repeat;
+  width: 16px;
+  height: 16px;
+  display: none;
+  z-index: 10;
+}
+#db_wrapper {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  border-top: 1px solid #bbb;
+}
+#development_bar {
+  background-color: #ddd;
+  font-size: 10px;
+  height: 20px;
+  font-weight: bold;
+}
+#development_bar div {
+  height: 19px;
+  padding-top: 1px;
+  text-align: right;
+  margin-right: 10px;
+}
+#db_show_log {
+  width: 100%;
+  height: 0px;
+  overflow: auto;
+  bottom: 0px;
+  background-color: #fff;
+}
+#db_error_php {
+  float: right;
+  background: url(../img/php.png) no-repeat 0px 2px;
+  width: 30px;
+}
+#db_error {
+  float: right;
+  background: url(../img/error-dev.png) no-repeat 0px 2px;
+  width: 27px;
+}
+#db_mem {
+  float: right;
+  background: url(../img/memory.png) no-repeat 0px 2px;
+  width: 60px;
+}
+#db_time {
+  float: right;
+  background: url(../img/time.png) no-repeat 0px 2px;
+  width: 58px;
+}
+#db_open {
+  float: left;
+  background: url(../img/newwindow.png) no-repeat 1px 2px;
+  cursor: pointer;
+  width: 16px;
+}
+#db_pagelets {
+  float: left;
+  background: url(../img/squares.png) no-repeat 1px 2px;
+  cursor: pointer;
+  width: 16px;
+}
+#db_catalogo {
+  float: left;
+  background: url(../img/catalogo.png) no-repeat 1px 2px;
+  cursor: pointer;
+  width: 35px;
+}
+#db_controles {
+  float: left;
+  background: url(../img/controles.png) no-repeat 1px 2px;
+  cursor: pointer;
+  width: 35px;
+}
+
+#db_catalogo_count,#db_controles_count {
+	margin-top: -2px;
+	margin-left: 18px;
+}
+
+#db_catalogo_tabla,#db_controles_tabla {
+  width: 700px;
+  background-color: #DEE0C8;
+}
+#db_catalogo_tabla th, #db_controles_tabla th {
+  background-color: #A1A374;
+}
+#db_expand {
+  float: left;
+  background: url(../img/arrow_up.png) no-repeat 1px 2px;
+  cursor: pointer;
+  width: 16px;
+}
+#db_expand.arrow-down {
+  background: url(../img/arrow_down.png) no-repeat 1px 2px;
+}
+#db_close {
+  float: left;
+  background: url(../img/close-dev.png) no-repeat 1px 2px;
+  cursor: pointer;
+  width: 16px;
+}
+#db_show_log pre {
+  display: block;
+  padding: 8.5px;
+  margin: 0 0 9px;
+  font-size: 12.025px;
+  line-height: 18px;
+  background-color: whiteSmoke;
+  border: none;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  white-space: pre;
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
+}

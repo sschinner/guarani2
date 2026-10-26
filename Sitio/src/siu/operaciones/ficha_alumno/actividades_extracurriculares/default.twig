@@ -1,0 +1,41 @@
+{% extends "kernel/pagelet.twig" %}
+{% import "macro_ficha_alumno.twig" as ficha_alumno %}
+{% block contenido %}
+	{{ ficha_alumno.render_menu(this.data.menu_reportes, this.data.categoria_actual, this.data.reporte_actual) }}
+	<div id="reporte_contenido">
+		<h3>{{ 'ficha_alumno.rep_actividades_extracurriculares' | trans }}</h3>
+		{% if (this.data.datos) %}
+		{% for carrera in this.data.datos %}
+			<ul class="ficha_alumno_ul">
+				<li><strong>{{ 'ficha_alumno.rep_actividades_extracurriculares.carrera' | trans | capitalize }}:</strong> {{'('~ficha_alumno.mostrar(carrera.carrera)~')'~ficha_alumno.mostrar(carrera.carrera_nombre)}}</li>
+				<li><strong>{{ 'ficha_alumno.rep_actividades_extracurriculares.legajo' | trans | capitalize }}:</strong> {{ficha_alumno.mostrar(carrera.legajo)}}</li>
+			</ul>
+		{% for area in carrera.areas %}		
+			<ul class="ficha_alumno_ul">
+				<li><strong>{{ 'ficha_alumno.rep_actividades_extracurriculares.area' | trans | capitalize }}:</strong> {{'('~ficha_alumno.mostrar(area.area)~')'~ficha_alumno.mostrar(area.area_nombre)}}</li>
+			</ul>
+			<table class='table table-condensed table-hover table-striped'>
+				<thead>
+					<tr>
+						<th>{{'ficha_alumno.rep_actividades_extracurriculares.resolucion'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_actividades_extracurriculares.actividad'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_actividades_extracurriculares.fecha'|trans| capitalize}}</th>
+						<th>{{'ficha_alumno.rep_actividades_extracurriculares.puntaje'|trans| capitalize}}</th>
+					</tr>
+				</thead>
+				<tbody>
+						<tr>
+							<td>{{ficha_alumno.mostrar(area.resolucion)}}</td>
+							<td>{{ficha_alumno.mostrar(area.actividad)}}</td>
+							<td>{{ficha_alumno.mostrar(area.fecha)}}</td>
+							<td>{{ficha_alumno.mostrar(area.puntaje)}}</td>
+						</tr>
+		{% endfor %}
+				</tbody>
+			</table>
+		{% endfor %}
+		{% else %}
+		<div class="alert alert-block">{{'ficha_alumno.no_hay_informacion'|trans| capitalize}}</div>
+		{% endif %}
+	</div>
+{% endblock %}

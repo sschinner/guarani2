@@ -1,0 +1,86 @@
+/* COLUMNAS */
+
+#edicion_notas .col-nota {
+	width: 45px;
+}
+
+#edicion_notas .centrar { text-align: center; }
+#edicion_notas .alinear { vertical-align: middle; }
+
+/* For the details, see: http://flowplayer.org/tools/dateinput/index.html#skinning */
+#edicion_notas .form-renglones {
+    clear: both;
+}
+
+#edicion_notas .form-renglones .table {
+    margin-bottom: 5px;
+}
+
+#edicion_notas .table-condensed th, #edicion_notas .table-condensed td {
+    padding: 2px 5px;
+}
+
+#edicion_notas .form-actions {
+	padding-top: 3px;
+	padding-bottom: 2px;
+	margin-bottom: 5px;
+	margin-top: 0;
+	padding-right: 1px;
+}
+
+/* the input field */
+#edicion_notas input[type=text] {
+    width: 100%;
+}
+
+#edicion_notas input[type=text],
+#edicion_notas textarea {
+    text-align: center;
+    margin-bottom: 0;
+    padding: 0;
+}
+#edicion_notas td.observaciones_wrapper {
+	/* Se le pone un alto fijo para que no se chigue cuando se agranda el textarea */
+	height: 21px;
+}
+
+#edicion_notas textarea {
+	width: 100px;
+	height: 20px;
+	margin: 0;
+}
+
+#edicion_notas .error {
+	background-color: #ff0000;
+}
+
+#edicion_notas .nav {
+	margin: 0;
+}
+
+#edicion_notas .error-renglon td {
+    background-color: #eed3d7 !important;
+}
+
+#edicion_notas .resultado-busqueda td {
+	background-color: #ffe45c;
+}
+
+#edicion_notas .ficha-alumno img {
+	margin-right: 5px;
+}
+
+#edicion_notas span.nombre,
+#edicion_notas span.legajo {
+	display: block;
+}
+
+#edicion_notas span.legajo {
+	color: #666;
+}
+
+#edicion_notas select.nota {
+	padding-left: 2px;
+	padding-right: 2px;
+	width: 85px;
+}

@@ -1,0 +1,10 @@
+-- Alta del mensaje
+-- Mensaje: 82012004.dca
+
+--********************************************
+-- mensaje 82012004, asociado a la correlativa especial u820_exa_da006
+-- 
+--********************************************
+
+DELETE FROM mme_mensajes WHERE mensaje = 82012004;
+INSERT INTO  mme_mensajes (tipo, mensaje, mascara_original, mascara, clasificacion, boton) VALUES (3, 82012004, "No tenés los créditos necesarios para rendir esta materia.",   "No tenés los créditos necesarios para rendir esta materia.", 2, 1);

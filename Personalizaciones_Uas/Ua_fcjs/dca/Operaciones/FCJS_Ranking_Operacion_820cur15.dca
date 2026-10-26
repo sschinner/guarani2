@@ -1,0 +1,11 @@
+Execute procedure "dba".sui_operaciones('820cur15',
+	'Ranking de Alumnos por Materia',
+	'Ranking de Alumnos por Materia',
+	NULL);
+
+DELETE FROM "dba".acc_operacion_mod WHERE operacion = '820cur15';
+INSERT INTO "dba".acc_operacion_mod VALUES ('00000015', '820cur15', 'Reportes', 102);
+
+INSERT INTO "dba".acc_parametros VALUES ('820cur15', 1, 'w_reporte', 'uo_dw_una_comision, dp820_comision_rank, uo_dw, dr820_ranking_por_comision, 	dl820_ranking_por_comision', Null, Null, 'N');
+
+INSERT INTO "dba".acc_acciones_oper VALUES ('820cur15', 'C');

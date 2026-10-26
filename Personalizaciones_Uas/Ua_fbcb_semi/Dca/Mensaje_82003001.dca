@@ -1,0 +1,23 @@
+-- Alta del mensaje
+-- Mensaje: 82003001
+
+--********************************************
+-- mensaje 82003001, Asociado al control de reinscripción anual según sede
+-- 
+--********************************************
+delete from mme_mensajes where mensaje = '82003001';
+
+INSERT INTO  mme_mensajes (	tipo,
+				mensaje,
+				mascara_original,
+				mascara,
+				clasificacion,
+				boton)
+	VALUES 		(	3,
+				82003001,
+				"Tenés que hacer la Reinsripción Anual a la Carrera %s, por UNL Virtual",
+				"Tenés que hacer la Reinsripción Anual a la Carrera %s, por UNL Virtual",
+				2,
+				1);
+
+

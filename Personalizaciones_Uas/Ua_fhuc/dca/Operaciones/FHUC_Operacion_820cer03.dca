@@ -1,0 +1,24 @@
+-- ********************************************************************************
+-- Solicitud
+-- ********************************************************************************
+execute procedure dba.sui_operaciones('820cer03',
+	'Solicitud Certif. Ciclo Inicial Común en Cs. Básicas',
+	'Solicitud Certif. Ciclo Inicial Común en Cs. Básicas',
+	NULL);
+DELETE FROM acc_operacion_mod WHERE operacion = '820cer03';
+INSERT INTO acc_operacion_mod VALUES (
+	'00000060',
+	'820cer03',
+	'Certif',
+	110);
+
+INSERT INTO acc_parametros VALUES (
+	'820cer03',
+	1,
+	'w_reporte',
+    'uo_dw_filtros,dp820_alumno_proarquibi,uo_dw,dl820_proarquibi_solicitud,dl820_proarquibi_solicitud',NULL,NULL,'N');
+
+INSERT INTO acc_acciones_oper VALUES (
+	'820cer03',
+	'C');
+

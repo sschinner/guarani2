@@ -1,0 +1,38 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+    <div>
+        <div id="volver" class="btn-group">
+            <button id="volver" type="button" class="btn js-history-back">{{ 'encuestas_resultados.volver' | trans }}</button>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+
+    {% if this.data.bloques_encuesta %}
+
+        <div id="encuesta_completa">
+
+            {% include 'listado_bloques.twig' with {
+            'data': this.data,
+            'id_habilitacion': this.data.id_habilitacion,
+            'id_formulario': this.data.id_formulario,
+            'id_elemento': this.data.id_elemento,
+            'id_encuesta':	this.data.id_encuesta ,
+            'bloques':	this.data.bloques_encuesta.bloques,
+            'unidad_gestion': this.data.kolla_unidad_gestion,
+            'url_ver_preguntas':	this.data.url_ver_preguntas,
+            } only %}
+
+        </div>
+
+    {% elseif this.data.mensaje_error %}
+
+        <div class="alert alert-error">{{ this.data.mensaje_error | trans }}</div>
+
+    {% else %}
+
+        <div class="alert">{{ 'errores_kolla.encuesta_sin_bloques' | trans }}</div>
+
+    {% endif %}
+
+{% endblock %}

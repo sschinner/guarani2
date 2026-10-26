@@ -1,0 +1,34 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+{% if this.data.clase_detalle %}
+    <form class='form-renglones' action='{{ this.data.url_guardar }}' method='post'>
+	<input type="hidden" name="clase[ID]" value="{{ this.data.clase_id }}">
+	<input type="hidden" name="clase[COMISION]" value="{{ this.data.comision }}">
+	<input type="hidden" name="clase[FILAS]" value="{{ this.data.filas }}">
+	{% for alumno in this.data.clase_detalle %}
+	{% set ausente = (alumno.INASISTENCIA > 0) %}
+	<div class='box-asistencia {{(ausente) ? 'ausente' : '' }}'>
+		{# hack para que se submitee el valor vacio #}
+		<input type="hidden" name="alumnos[{{ alumno.__ID__ }}][PRESENTE]" value="off">
+                <label class="checkbox check-asistencia" for="alumnos[{{ alumno.__ID__ }}][PRESENTE]" >
+                <input type='checkbox' id='alumnos[{{ alumno.__ID__ }}][PRESENTE]'
+				name='alumnos[{{ alumno.__ID__ }}][PRESENTE]'  
+				{#class='check-asistencia'#}
+				{{ (ausente) ? '' : 'checked' }}
+		/>Asisti&oacute;</label>
+                
+		<div class='foto pull-left'><img src='{{ alumno.URL_IMAGEN_MEDIANA }}' alt="Imagen ficha"/></div>
+		<div class='info pull-right'>
+			<div>{{ alumno.NOMBRE }}</div>
+			<div>{{ alumno.LEGAJO }}</div>
+		</div>
+	</div>
+	{% endfor %}
+	<input id='js-guardar-asistencia' type='submit' style='position:absolute' value='{{"guardar"|trans|capitalize}}' class="hide btn btn-info btn-small" />
+    </form>
+{% else %}
+    <div class="alert">{{"no_hay_renglones"|trans|capitalize}}</div>
+{% endif %}
+
+{% endblock %}

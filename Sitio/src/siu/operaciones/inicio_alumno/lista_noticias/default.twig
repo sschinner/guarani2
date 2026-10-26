@@ -1,0 +1,22 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+
+    <h3>{{ 'noticias'|trans|capitalize }}</h3>
+
+    {% if this.data.noticias|length > 0 %}
+
+    <div id="noticias">
+        {% for noticia in this.data.noticias %}
+            <div class="noticia">
+                {{ noticia.HTML|raw }}
+            </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+
+        <div class="alert alert-warning text-center text-warning">{{ 'no_hay_noticias'|trans|capitalize }}</div>
+
+    {% endif %}
+
+{% endblock %}

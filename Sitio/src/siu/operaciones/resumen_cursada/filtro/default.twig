@@ -1,0 +1,48 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+    {% set vista_form = this.get_vista_form() %}
+	{{ vista_form.render_encabezado() | raw }}
+	<div class="titulo_operacion">
+		<h2 class="clearfix">
+			<span class="pull-left">
+				{{"resumen_cursada"|trans|capitalize}}
+			</span>
+			<span class="pull-right">
+			{{ vista_form.render_acciones() | raw }}
+			</span>
+		</h2>
+	</div>
+	{{ vista_form.render_cuerpo() | raw }}
+	{{ vista_form.render_cierre() | raw }}
+    
+    {% if(this.data.comisiones) %}
+        <table class="table table-striped table-bordered table-condensed" summary="Tabla de comisiones, haga clic en la celda para ver">
+            <thead>
+                <tr>
+                    <th>Materia</th>
+                    <th>Comisión</th>
+                    <th>Período Lectivo</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comision in this.data.comisiones %}
+                <tr class="link-in-data" data-link="{{ comision.LINK }}">
+                    <td>
+						{{ comision.MATERIA_NOMBRE }}
+					</td>
+                    <td>
+						{{ comision.COMISION_NOMBRE }}
+					</td>
+                    <td>
+                        {{ comision.PERIODO_LECTIVO }}
+					</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div role="alert" class="alert">
+            {{"resumen_cursada.filtro.sin_resultados"|trans|capitalize}}
+        </div>
+    {% endif %}
+{% endblock %}

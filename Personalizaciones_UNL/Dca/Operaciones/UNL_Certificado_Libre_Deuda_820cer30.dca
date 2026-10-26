@@ -1,0 +1,19 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.5.2
+-- Autor: Jorge Azcoaga
+-- *******************************************************************************
+Execute procedure dba.sui_operaciones( '820cer30', 'Certificado de libre Deuda Biblioteca', null, null );
+DELETE FROM acc_operacion_mod WHERE operacion = '820cer30';
+INSERT INTO acc_operacion_mod VALUES ('00000035','820cer30','Certif',	110);
+INSERT INTO dba.acc_parametros ( operacion, orden, ventana, parametros, cierra_anterior ) VALUES ( '820cer30', 1, 'w_reporte', 'uo_dw_filtros, dp_alumno_carrera_corresponda, uo_dw, dr820_certif_libre_deuda_biblioteca, dl820_certif_libre_deuda_biblioteca', 'N' );
+INSERT INTO dba.acc_acciones_oper ( operacion, accion ) VALUES ( '820cer30', 'C' );
+
+-- Agregar el certificado
+Begin;
+Set constraints all deferred;
+DELETE FROM sga_certif_argum WHERE certificado = 13;
+DELETE FROM sga_certificados WHERE certificado = 13;
+INSERT INTO sga_certificados VALUES (13, 'Certificado de libre Deuda Biblioteca', 2, null, 'A', 'Manual', 'N', 90);
+
+Commit;

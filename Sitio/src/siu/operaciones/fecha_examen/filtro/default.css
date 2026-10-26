@@ -1,0 +1,29 @@
+#filtro .encabezado_cuadro {
+	background-color: #0088cc;
+	color: white;
+	padding: 10px;
+	border-radius: 4px 4px 0 0;
+}
+
+#filtro .corte {
+	border-radius: 4px;
+	border: 1px solid #E3E3E3;
+}
+
+#filtro select, #filtro #formulario_filtro-materia_descr{
+    width: 100% !important;
+}
+
+#filtro .mas_info{
+    display: none;
+}
+
+#filtro .ui-autocomplete#formulario_filtro-materia_descr-autocomplete-ul {
+    width: 894px !important;
+}
+/* IE 6 doesn't support max-height
+ * we use height instead, but this forces the menu to always be this tall
+ */
+* html #filtro .ui-autocomplete#formulario_filtro-materia_descr-autocomplete-ul {
+    width: 894px !important;
+}

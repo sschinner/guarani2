@@ -1,0 +1,12 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+	<div class="titulo_operacion">
+		<h2 class="clearfix"><span class="pull-left">{{"plan_de_estudio"|trans|capitalize}}</span></h2>
+	</div>
+	{# Obtenemos una vista del builder #}
+	{% set vista_form = this.get_vista_form() %}
+	{{ vista_form.render_encabezado() | raw }}
+	{{ vista_form.render_cuerpo() | raw }}
+	{{ vista_form.render_acciones() | raw }}
+	{{ vista_form.render_cierre() | raw }}
+{% endblock %}

@@ -1,0 +1,36 @@
+/*#actas {
+	background-color: #000
+}*/
+
+#actas .wrapper-carga {
+    width: 50px;
+    border: 1px solid;
+    border-radius: 2px;
+    height: 7px;
+    margin: 0 2px;
+    display: inline-block;
+}
+
+#actas .progreso-carga {
+    height: 7px;
+    background-color: green;
+}
+
+#actas table {
+    border-right: 0;
+	border-left: 0;
+}
+
+#actas td {
+    border-right: 0;
+	border-left: 0;
+}
+
+#actas td.columna-accion {
+    width: 100px;
+}
+
+#actas .table-bordered th, #actas .table-bordered td {
+	border-left: 0px;
+}
+

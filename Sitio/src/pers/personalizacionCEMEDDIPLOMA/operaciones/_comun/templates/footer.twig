@@ -1,0 +1,50 @@
+<style>
+    html {
+        min-height: 100%;
+        position: relative;
+    }
+    #footer {
+        position:absolute;
+        bottom: 0;
+        width: 100%;
+        border-top: 1px solid #666;
+        background: #353535;
+        margin-bottom: -4%;
+    }
+    #footer #footer-content {
+        overflow: hidden;
+        height: 40px;
+        text-align:center;
+        position: relative;
+        z-index: 1000;
+        margin: 3px;
+        width: 915px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #footer #footer-content #footer-presentation #footer-presentation-content{
+        height: 17px;
+        padding-left: 200px;
+        overflow: hidden;
+        margin: 4px 0 20px 0;
+        padding: 3px 10px 10px 9px;
+    }
+    #footer #footer-content #footer-presentation #footer-presentation-content #terms {
+        color: #fff;
+        padding-top: 6px;
+        margin-right: 4px;
+        font-size: 12px;
+    }
+
+</style>
+
+<div id="footer" sytle="{% if persona.logueada %} position:relative;{%else%}position:absolute;{%endif%}" >
+    <div id="footer-content">
+        <div id="footer-presentation">
+            <div id="footer-presentation-content">
+                <div id="terms">Universidad Nacional del Litoral | Bv. Pellegrini 2750 | (3000) Santa
+                    Fe | +54 (0342) 4587800</div>
+            </div>
+        </div>
+    </div>
+</div>

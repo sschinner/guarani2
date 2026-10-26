@@ -1,0 +1,33 @@
+{% extends notificaciones ? "kernel/contenido_barra_lateral.twig" : "kernel/una_columna.twig" %}
+
+{% block titulo_operacion %}<h2>Bienvenido {{ persona.nombre }} </h2>{% endblock %}
+
+{% block columna_1 %}
+	<div class='row-fluid'>
+		
+		{% if tiene_noticias %}
+            <div class='span5'>
+                {{ lista_encuestas_pendientes.render }}
+                {{ lista_carreras.render }}
+            </div>
+            <div class='span7'>
+                {{ lista_noticias.render }}
+            </div>		
+		{% else %}
+			<div class='span6'>
+				{{ lista_carreras.render }}
+			</div>
+			<div class='span6'>
+				{{ lista_encuestas_pendientes.render }}
+			</div>
+        {% endif %}
+	</div>
+{% endblock %}
+
+{% block columna_2 %}
+{% if notificaciones.render %}
+	<div id='wrapper-derecha-home'>
+	{{ notificaciones.render }}
+	</div>
+{% endif %}
+{% endblock %}

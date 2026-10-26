@@ -1,0 +1,114 @@
+/* COLUMNAS */
+
+#renglones .col-documento {
+	width: 100px;
+}
+
+#renglones .col-fecha {
+	width: 80px;
+}
+
+#renglones .col-fecha input {
+	width: 100%;
+}
+
+#renglones .col-condicion {
+	width: 80px;
+}
+
+#renglones .col-nota {
+	width: 85px;
+}
+
+#renglones .col-resultado {
+	width: 80px;
+}
+
+#renglones .col-concepto {
+	width: 80px;
+}
+
+#renglones td.col-alumno > span {
+	color: #666;
+}
+
+#renglones .centrar { text-align: center; }
+#renglones .alinear { vertical-align: middle; }
+
+/* For the details, see: http://flowplayer.org/tools/dateinput/index.html#skinning */
+
+#renglones .form-renglones {
+    clear: both
+}
+
+#renglones .form-renglones .table {
+    margin-bottom: 5px;
+}
+
+/* the input field */
+#renglones input[type=date],
+#renglones input[type=text],
+#renglones select {
+    text-align: center;
+    margin-bottom: 0;
+    padding: 0;
+    width: 100%;
+}
+
+#renglones .form-busqueda {
+	margin-top: 2px;
+}
+
+#renglones .form-busqueda label {
+	margin-bottom: 0;
+}
+
+#renglones #notas_examen_query {
+	width: auto;
+	text-align: left;
+}
+
+#renglones select {
+    height: 20px;
+}
+
+.table-condensed th, .table-condensed td {
+    padding: 2px 5px;
+}
+
+#renglones .error {
+    background-color: #eed3d7;
+    color: #b94a48;
+}
+
+#renglones .form-actions {
+    padding-top: 3px;
+    padding-bottom: 2px;
+    margin-bottom: 5px;
+	margin-top: 0;
+}
+
+#renglones .pagination {
+	margin: 0 30px 0 0;
+}
+
+#renglones .error-renglon td {
+    background-color: #eed3d7 !important;
+}
+
+#renglones .resultado-busqueda td {
+	background-color: #ffe45c;
+}
+
+#renglones .ficha-alumno img {
+	margin-right: 5px;
+}
+
+#renglones span.nombre,
+#renglones span.legajo {
+	display: block;
+}
+
+#renglones span.legajo {
+	color: #666;
+}

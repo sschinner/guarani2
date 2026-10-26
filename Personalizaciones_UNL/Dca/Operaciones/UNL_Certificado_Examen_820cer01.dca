@@ -1,0 +1,21 @@
+-- *******************************************************************************
+-- SIU - SIU - Guaraní. Sistema de Gestión Académica
+-- Versión 2.5.2
+-- Autor: Jorge Azcoaga
+-- *******************************************************************************
+execute procedure dba.sui_operaciones('820cer01','Certificado de Examen','Certificado de Examen',NULL);
+DELETE FROM acc_operacion_mod WHERE operacion = '820cer01';
+INSERT INTO acc_operacion_mod VALUES ('00000035','820cer01','Certif',	110);
+INSERT INTO acc_parametros VALUES ('820cer01',1,'w_reporte_vacio','uo_dw_filtros,dp820_alumno_examen_corresponda,uo_dw,dr820_certif_examen, dl820_certif_examen, dr820_sin_examen, dl820_sin_examen',NULL,NULL,'N');
+INSERT INTO acc_acciones_oper VALUES ('820cer01','C');
+
+-- Agregar el certificado
+Begin;
+Set constraints all deferred;
+DELETE FROM sga_certif_argum WHERE certificado = 10;
+DELETE FROM sga_certificados WHERE certificado = 10;
+INSERT INTO sga_certificados VALUES (10, 'Certificado de Examen', 2, null, 'A', 'Manual', 'N', 90);
+
+Commit;
+
+

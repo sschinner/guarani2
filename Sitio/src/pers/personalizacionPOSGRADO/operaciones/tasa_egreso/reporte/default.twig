@@ -1,0 +1,57 @@
+{% extends "kernel/pagelet.twig" %}
+{% block contenido %}
+{% set nombre="Imprimir Tasa Egreso" %}
+{% set datos=this.get_data_reporte() %}
+<!-- Controles -->
+	<div class="titulo_operacion">
+		<h2 class="clearfix"><span class="pull-left">{{nombre|trans}}</span>
+                    {%if(datos.calidad==1)%}
+                    <div class="pull-right">
+				<a class="btn no-ajax" target="_blank" href="{{this.data.url.generar_pdf}}"><span class="acchide">{{'descargar_pdf'|trans|capitalize}}</span><span class="g3w-icono-pdf"></span></a>
+	            </div>
+                    {%endif%}
+		</h2>
+	</div>
+
+	<div class="well">
+            {%if(datos.calidad!=1)%}
+            <div align="center">
+                <span style="font-size: 12pt;"> {%if(datos.calidad==-1)%} Usted no es Egresado {%else%} Debe completar la encuesta para egresados.{%endif%} </span>
+            </div>
+            {%else%}
+                <!--div align='center' width='100%' height='50px'>
+					<img src='../../../www/imagenes/unl.JPG' width='100px' height='100px'>
+				</div-->
+            <br>
+				<div align='center'>
+					<p style='font-size:13pt'>
+						<b>CERTIFICADO DE PAGO DE TASA POR EXPEDICI&Oacute;N DE DIPLOMA DE EGRESADO</b>
+					</p>	
+				</div>
+				<br>
+				<div >
+					<table width='75%' align='center'> 
+						<tr>
+							<td >
+								<p style='font-size:12pt' align='justify'>{{datos.parrafo1}}</p>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<br>
+				<div >
+					<table width='75%' align='center'> 
+						<tr>
+							<td>
+								<p style='font-size:12pt' align='justify'>
+								{{datos.parrafo2}}
+								</p>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<br><br><br>
+            {%endif%}
+	</div>
+	
+{% endblock %}

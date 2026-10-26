@@ -1,0 +1,9 @@
+-- Alta del mensaje
+-- Mensaje: 82001025
+
+--********************************************
+-- mensaje 82001025, Asociado a la correlativa especial u820_14_aprobadas
+-- 
+--********************************************
+DELETE FROM mme_mensajes WHERE mensaje = 82001025;
+INSERT INTO  mme_mensajes (	tipo, mensaje,	mascara_original,mascara,clasificacion,	boton) VALUES (	3,82001025,"Necesitas tener aprobado el Ciclo Inicial de Ingeniería","Necesitas tener aprobado el Ciclo Inicial de Ingeniería",	2, 1);
