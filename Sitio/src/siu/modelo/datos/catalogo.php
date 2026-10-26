@@ -242,7 +242,7 @@ class catalogo
 	{
 		$parametros = array();
 		foreach($_parametros as $_id => $_valor) {
-			$parametros[mb_strtolower($_id)] = $_valor;
+			$parametros[\mb_strtolower($_id)] = $_valor;
 		}
 		// cargo parametros automaticos
 		if(in_array('_ua',$metadata['parametros'])){

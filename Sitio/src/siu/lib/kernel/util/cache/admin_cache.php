@@ -33,6 +33,11 @@ class admin_cache
 	{
 		self::controlar_tipo($tipo);		
 		if($tipo == 'no') return false;
+		if($tipo == self::tipo_memoria) {
+			if (!function_exists('apc_fetch') && !function_exists('apcu_fetch')) {
+				return false;
+			}
+		}
 		return self::$activo;
 	}	
 	

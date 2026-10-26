@@ -10,24 +10,46 @@ class cache_memoria_apc extends cache
 	
 	function existe($id, $cache=true)
 	{
-		$retorno = false;
-		\apc_fetch($id, $retorno);
-		return $retorno;
+		if (function_exists('apc_fetch')) {
+			$retorno = false;
+			\apc_fetch($id, $retorno);
+			return $retorno;
+		} elseif (function_exists('apcu_fetch')) {
+			$retorno = false;
+			@apcu_fetch($id, $retorno);
+			return $retorno;
+		}
+		return false;
 	}
 
 	function guardar($id, $datos, $expiration=0)
 	{
-		return \apc_store($id, $datos, $expiration);
+		if (function_exists('apc_store')) {
+			return \apc_store($id, $datos, $expiration);
+		} elseif (function_exists('apcu_store')) {
+			return @apcu_store($id, $datos, $expiration);
+		}
+		return false;
 	}
 
 	function buscar($id)
 	{
-		return \apc_fetch($id);
+		if (function_exists('apc_fetch')) {
+			return \apc_fetch($id);
+		} elseif (function_exists('apcu_fetch')) {
+			return @apcu_fetch($id);
+		}
+		return false;
 	}
 
 	function eliminar($id)
 	{
-		return \apc_delete($id);
+		if (function_exists('apc_delete')) {
+			return \apc_delete($id);
+		} elseif (function_exists('apcu_delete')) {
+			return @apcu_delete($id);
+		}
+		return false;
 	}
 }
 ?>
