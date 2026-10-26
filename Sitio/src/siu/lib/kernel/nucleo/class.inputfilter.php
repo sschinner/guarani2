@@ -303,11 +303,12 @@ class InputFilter {
 	  * @return String $source
 	  */	
 	function escapeString($string, &$connection) {
-		// depreciated function
-		if (version_compare(phpversion(),"4.3.0", "<")) mysql_escape_string($string);
-		// current function
-		else mysql_real_escape_string($string);
-		return $string;
+		if (function_exists('mysql_real_escape_string')) {
+			return mysql_real_escape_string($string, $connection);
+		} elseif (function_exists('mysql_escape_string')) {
+			return mysql_escape_string($string);
+		}
+		return addslashes($string);
 	}
 }
 

@@ -1,5 +1,16 @@
 <?php
 
+if (!function_exists('utf8_decode')) {
+	function utf8_decode($data) {
+		return $data;
+	}
+}
+if (!function_exists('utf8_encode')) {
+	function utf8_encode($data) {
+		return $data;
+	}
+}
+
 if (!defined('MB_CASE_UPPER')) {
 	define('MB_CASE_UPPER', 0);
 }
@@ -185,12 +196,25 @@ function rest_encode($datos)
 
 function array_a_latin1($arreglo)
 {
+	if (!is_array($arreglo)) {
+		if (is_string($arreglo)) {
+			if (function_exists('utf8_decode')) {
+				return utf8_decode($arreglo);
+			}
+			return $arreglo;
+		}
+		return $arreglo;
+	}
 	$salida = array();
 	foreach ($arreglo as $clave => $valor) {
 		if (is_array($valor)) {
 			$salida[$clave] = array_a_latin1($valor);
 		} elseif (is_string($valor)) {
-			$salida[$clave] = utf8_decode($valor);
+			if (function_exists('utf8_decode')) {
+				$salida[$clave] = utf8_decode($valor);
+			} else {
+				$salida[$clave] = $valor;
+			}
 		} else {
 			$salida[$clave] = $valor;
 		}
@@ -200,7 +224,10 @@ function array_a_latin1($arreglo)
 
 function array_a_utf8($datos){
 	if (is_string($datos)) {
-		return utf8_encode($datos);
+		if (function_exists('utf8_encode')) {
+			return utf8_encode($datos);
+		}
+		return $datos;
 	}
 	if (!is_array($datos)) {
 		return $datos;
