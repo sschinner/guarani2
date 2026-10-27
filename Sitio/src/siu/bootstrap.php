@@ -38,7 +38,7 @@ class bootstrap
 	static function instancia()
 	{
 		if (! isset(self::$instancia)) {
-			die("no se puede solicitar la instancia sin antes haber invocado al método cargar");
+			die("no se puede solicitar la instancia sin antes haber invocado al mï¿½todo cargar");
 		}
 		
 		return self::$instancia;
@@ -99,9 +99,15 @@ class bootstrap
 	{
 		$this->check_extension('gd');
 		if (manejador_archivos::es_windows()) {
-			// $this->check_extension('pdo_informix');	forzar odbc acá?
+			// $this->check_extension('pdo_informix');	forzar odbc acï¿½?
 		} else {
 			$this->check_extension('pdo_informix');
+		}
+		if (!function_exists('xml_parser_create')) {
+			$error = "La extensiï¿½n de php 'xml' no estï¿½ instalada.";
+			$url_doc = 'http://repositorio.siu.edu.ar/trac/g3w2/wiki/doc/instalacion/';
+			echo("$error<br><a href='$url_doc'>Ver documentaciï¿½n</a>");
+			die();
 		}
 		
 	}
@@ -109,9 +115,9 @@ class bootstrap
 	private function check_extension($extension)
 	{
 		if (!\extension_loaded($extension)) {
-			$error = "La extensión de php '$extension' no está instalada.";
+			$error = "La extensiï¿½n de php '$extension' no estï¿½ instalada.";
 			$url_doc = 'http://repositorio.siu.edu.ar/trac/g3w2/wiki/doc/instalacion/';
-			echo("$error<br><a href='$url_doc'>Ver documentación</a>");
+			echo("$error<br><a href='$url_doc'>Ver documentaciï¿½n</a>");
 			die();
 		}
 	}
@@ -137,11 +143,11 @@ class bootstrap
 		$path =  self::get_dir_instalacion() . '/config.php';
 		$config = \kernel\util\config::load($path);
 		if(!isset($config['global'])) {
-			throw new \Exception('Error en la configuración, falta bloque \'global\'');
+			throw new \Exception('Error en la configuraciï¿½n, falta bloque \'global\'');
 		}
 		
 		if (! isset($config['global']['accesos'])) {
-			throw new \Exception("Error en la configuración, falta bloque 'accesos' dentro del bloque 'global'");
+			throw new \Exception("Error en la configuraciï¿½n, falta bloque 'accesos' dentro del bloque 'global'");
 		}
 		
 		return $config['global'];
@@ -160,7 +166,7 @@ class bootstrap
 	}
 
 	/** 
-	 * Testea que si existe un parametro activo en true en la entrada de configuración * testea que todos los parámetros en la lista de $obligatorios están seteados. 
+	 * Testea que si existe un parametro activo en true en la entrada de configuraciï¿½n * testea que todos los parï¿½metros en la lista de $obligatorios estï¿½n seteados. 
 	 * Si existe la entrada pero no tiene el parametro activo se pone en false 
 	 */ 
 	private function test_error_config_global_activo($entrada, $obligatorios) 
@@ -191,7 +197,7 @@ class bootstrap
 			$path =  self::get_dir_instalacion() . '/config_template.php';
 			$config  = \kernel\util\config::load($path);
 			unset($config['global']['accesos']);
-			$error = "Error en configuración (instalacion/config.php). Falta parámetro '$parametro' en bloque 'global'. Para más información vea la <a href='http://repositorio.siu.edu.ar/trac/g3w2/wiki/doc/instalacion/conf'>documentación</a>";
+			$error = "Error en configuraciï¿½n (instalacion/config.php). Falta parï¿½metro '$parametro' en bloque 'global'. Para mï¿½s informaciï¿½n vea la <a href='http://repositorio.siu.edu.ar/trac/g3w2/wiki/doc/instalacion/conf'>documentaciï¿½n</a>";
 			$ejemplo = str_replace("'$parametro'", "<b>'$parametro'</b>",var_export($config['global'], true));
 			echo("$error<br>Ejemplo:<pre>$ejemplo</pre>");
 			die();
@@ -204,7 +210,7 @@ class bootstrap
 			if (! isset($this->config['accesos'][$bloque_acceso])) {
 				$path =  self::get_dir_instalacion() . '/config_template.php';
 				$config  = \kernel\util\config::load($path);
-				$error = "Error en configuración (instalacion/config.php). El bloque de acceso '$bloque_acceso' no existe. Para más información vea la <a href='http://repositorio.siu.edu.ar/trac/g3w2/wiki/doc/instalacion/conf'>documentación</a>";
+				$error = "Error en configuraciï¿½n (instalacion/config.php). El bloque de acceso '$bloque_acceso' no existe. Para mï¿½s informaciï¿½n vea la <a href='http://repositorio.siu.edu.ar/trac/g3w2/wiki/doc/instalacion/conf'>documentaciï¿½n</a>";
 				$ejemplo = str_replace("'accesos'", "<b>'accesos'</b>",var_export($config['global'], true));
 				echo("$error<br>Ejemplo:<pre>$ejemplo</pre>");
 				die();
@@ -213,7 +219,7 @@ class bootstrap
 			if (! isset($this->config['accesos'][$bloque_acceso][$parametro])) {
 				$path =  self::get_dir_instalacion() . '/config_template.php';
 				$config  = \kernel\util\config::load($path);
-				$error = "Error en configuración (instalacion/config.php). Falta el parámetro '$parametro' en el bloque de acceso '$bloque_acceso'. Para más información vea la <a href='http://repositorio.siu.edu.ar/trac/g3w2/wiki/doc/instalacion/conf'>documentación</a>";
+				$error = "Error en configuraciï¿½n (instalacion/config.php). Falta el parï¿½metro '$parametro' en el bloque de acceso '$bloque_acceso'. Para mï¿½s informaciï¿½n vea la <a href='http://repositorio.siu.edu.ar/trac/g3w2/wiki/doc/instalacion/conf'>documentaciï¿½n</a>";
 				$ejemplo = str_replace("'accesos'", "<b>'accesos'</b>",var_export($config['global'], true));
 				$ejemplo = str_replace("'$parametro'", "<b>'$parametro'</b>",$ejemplo);
 				echo("$error<br>Ejemplo:<pre>$ejemplo</pre>");
@@ -246,14 +252,14 @@ class bootstrap
 	function get_id_bloque_acceso()
 	{
 		if ($this->acceso_consola) {
-			// si es acceso consola la ua viene preseteada por parámetro
+			// si es acceso consola la ua viene preseteada por parï¿½metro
 			return $this->bloque_acceso_id;
 		}
 		if(isset($_SERVER['ACC_ID'])) {
 			return $_SERVER['ACC_ID'];
 		}
 
-		throw new \Exception('La entrada $_SERVER["ACC_ID"] no está definida, hay un error en la configuración');
+		throw new \Exception('La entrada $_SERVER["ACC_ID"] no estï¿½ definida, hay un error en la configuraciï¿½n');
 	}
 
 	private function get_alias()
@@ -347,14 +353,14 @@ class bootstrap
 	protected function cargar_proyecto()
 	{
 
-        //Configuración global
+        //Configuraciï¿½n global
         $config_global = $this->config;
-        //Le quito los bloques de accesos a la configuración global
+        //Le quito los bloques de accesos a la configuraciï¿½n global
         unset($config_global['accesos']);
-        //Acá va todo lo que NO puede ser configurable por bloque de acceso
+        //Acï¿½ va todo lo que NO puede ser configurable por bloque de acceso
         unset($this->bloque_acceso['manejador_cache_memoria']);
         unset($this->bloque_acceso['memcached']);
-        //Reemplazo en la configuración global lo configurado en el bloque de acceso (configuración en cascada).
+        //Reemplazo en la configuraciï¿½n global lo configurado en el bloque de acceso (configuraciï¿½n en cascada).
         $config_final = array_replace_recursive($config_global, $this->bloque_acceso);
 
 		// VALORES por DEFECTO
@@ -511,7 +517,7 @@ class bootstrap
 		
 		if (!$this->acceso_consola && ! version::es_valida()) {
 			$ver_requerida = version::requerida();
-			die("La base no está actualizada, se requiere que se haya ejecutado alguno de los siguientes scripts: '$ver_requerida'");
+			die("La base no estï¿½ actualizada, se requiere que se haya ejecutado alguno de los siguientes scripts: '$ver_requerida'");
 		}
 	}
 }

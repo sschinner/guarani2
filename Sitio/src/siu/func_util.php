@@ -2,11 +2,17 @@
 
 if (!function_exists('utf8_decode')) {
 	function utf8_decode($data) {
+		if (function_exists('mb_convert_encoding')) {
+			return mb_convert_encoding($data, 'ISO-8859-1', 'UTF-8');
+		}
 		return $data;
 	}
 }
 if (!function_exists('utf8_encode')) {
 	function utf8_encode($data) {
+		if (function_exists('mb_convert_encoding')) {
+			return mb_convert_encoding($data, 'UTF-8', 'ISO-8859-1');
+		}
 		return $data;
 	}
 }
@@ -92,6 +98,11 @@ if (!function_exists('mb_detect_encoding')) {
 if (!function_exists('mb_split')) {
 	function mb_split($pattern, $string, $limit = -1) {
 		return preg_split('/' . str_replace('/', '\/', $pattern) . '/u', $string, $limit);
+	}
+}
+if (!function_exists('mb_list_encodings')) {
+	function mb_list_encodings() {
+		return array('ISO-8859-1', 'UTF-8', 'ASCII');
 	}
 }
 if (!function_exists('mb_ereg')) {

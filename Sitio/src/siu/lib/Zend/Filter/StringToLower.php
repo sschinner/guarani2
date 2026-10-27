@@ -87,14 +87,16 @@ class Zend_Filter_StringToLower implements Zend_Filter_Interface
     {
         if ($encoding !== null) {
             if (!function_exists('mb_strtolower')) {
-                require_once 'Zend/Filter/Exception.php';
-                throw new Zend_Filter_Exception('mbstring is required for this feature');
+                $this->_encoding = null;
+                return $this;
             }
 
             $encoding = (string) $encoding;
-            if (!in_array(strtolower($encoding), array_map('strtolower', mb_list_encodings()))) {
-                require_once 'Zend/Filter/Exception.php';
-                throw new Zend_Filter_Exception("The given encoding '$encoding' is not supported by mbstring");
+            if (function_exists('mb_list_encodings')) {
+                if (!in_array(strtolower($encoding), array_map('strtolower', mb_list_encodings()))) {
+                    require_once 'Zend/Filter/Exception.php';
+                    throw new Zend_Filter_Exception("The given encoding '$encoding' is not supported by mbstring");
+                }
             }
         }
 
